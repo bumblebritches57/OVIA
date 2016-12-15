@@ -47,7 +47,7 @@ int main(int argc, const char *argv[]) {
         // error
         char Description[BitIOStringSize];
         snprintf(Description, BitIOStringSize, "Input file is not a FLAC file.\n");
-        Log(SYSPanic, NULL, NULL, "NewFLAC", "main", Description);
+        Log(SYSPanic, "NewFLAC", "main", Description);
         exit(EXIT_FAILURE);
     }
 
