@@ -1,13 +1,46 @@
-//
-//  main.c
-//  NewFLAC
-//
-//  Created by Marcus Johnson on 10/8/16.
-//  Copyright © 2016 Marcus Johnson. All rights reserved.
-//
-
 #include "../include/DecodeFLAC.h"
-//#include "../include/EncodeFLAC.h"
+#include "../include/EncodeFLAC.h"
+
+void FLACDecodeFile(int argc, const char *argv[]) {
+    BitInput    *BitI  = calloc(sizeof(BitInput), 1);
+    BitOutput   *BitO  = calloc(sizeof(BitOutput), 1);
+    ErrorStatus *Error = calloc(sizeof(ErrorStatus), 1);
+    FLACFile    *FLAC  = calloc(sizeof(FLACFile), 1);
+    InitBitInput(BitI, Error, argc, argv);
+    InitBitOutput(BitO, Error, argc, argv);
+    InitDecodeFLACFile(FLAC);
+    
+    uint32_t FileMagic = ReadBits(BitI, 32);
+    
+    if (FileMagic != FLACMagic) {
+        // Not a FLAC file
+        char Error[1024];
+        snprintf(Error, 1024, "Not a FLAC file, magic was: 0x%X\n", FileMagic);
+        Log(SYSError, "NewFLAC", "FLACDecodeFile", Error);
+    } else {
+        SkipBits(BitI, 32);
+        FLACReadMetadata(BitI, FLAC);
+        while (BitI->FileSize > 0) {
+            FLACReadFrame(BitI, FLAC);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int main(int argc, const char *argv[]) {
     BitInput    *BitI  = calloc(sizeof(BitInput), 1);
