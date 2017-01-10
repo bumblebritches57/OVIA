@@ -11,6 +11,7 @@ extern "C" {
         FLACFrameMagic                                              =     0x3FFE,
         FLACMaxChannels                                             =          8,
         FLACMaxSamplesInBlock                                       =      65535,
+        FLACMaxChannelsInBlock                                      =          1,
         FLACMaxBitDepth                                             =         32,
         FLACMaxSampleRate                                           =     655350,
         FLACMaxMIMEString                                           =         32,
@@ -219,22 +220,26 @@ extern "C" {
         
     } FLACLPC;
     
+    typedef struct FLACMeta {
+        uint32_t           MetadataSize;
+        FLACStreamInfo    *StreamInfo;
+        FLACSeekTable     *Seek; // Because the user may want to skip around, but this has nothing to do with decoding.
+        FLACVorbisComment *Vorbis;
+        FLACCueSheet      *Cue;
+        FLACPicture       *Pic;
+    } FLACMeta;
     
+    typedef struct FLACData {
+        bool               GetSampleRateFromStreamInfo;
+        FLACFrame         *Frame;
+        FLACLPC           *LPC;
+        uint32_t           RAWAudio[FLACMaxChannels][FLACMaxSamplesInBlock];
+    } FLACData;
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    typedef struct FLACFile {
+        FLACMeta *Meta;
+        FLACData *Data;
+    } FLACFile;
     
     void FLACSampleRate(BitInput *BitI, FLACFile *FLAC) {
         switch (FLAC->Meta->StreamInfo->CodedSampleRate) {

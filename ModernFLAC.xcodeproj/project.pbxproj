@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2CC504A21E194A61004A3685 /* NewFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CC504A11E194A61004A3685 /* NewFLAC.c */; };
-		2CC504AE1E194BDD004A3685 /* DecodeFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5049D1E194A4D004A3685 /* DecodeFLAC.c */; };
-		2CC504AF1E194BDD004A3685 /* EncodeFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5049E1E194A4D004A3685 /* EncodeFLAC.c */; };
-		2CC504B01E194BE9004A3685 /* libNewFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CC5049A1E194A29004A3685 /* libNewFLAC.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2CC504B11E194BF9004A3685 /* EncodeFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CC5049B1E194A29004A3685 /* EncodeFLAC.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2CC504B21E194BF9004A3685 /* DecodeFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CC5049C1E194A29004A3685 /* DecodeFLAC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2C070F341E2596A600EDBA66 /* ModernFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C070F331E2596A600EDBA66 /* ModernFLAC.c */; };
+		2C070F381E2596C700EDBA66 /* libModernFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C070F351E2596C700EDBA66 /* libModernFLAC.h */; };
+		2C070F391E2596C700EDBA66 /* DecodeFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C070F361E2596C700EDBA66 /* DecodeFLAC.h */; };
+		2C070F3A1E2596C700EDBA66 /* EncodeFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C070F371E2596C700EDBA66 /* EncodeFLAC.h */; };
+		2C070F3D1E2596DE00EDBA66 /* DecodeFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C070F3B1E2596DE00EDBA66 /* DecodeFLAC.c */; };
+		2C070F3E1E2596DE00EDBA66 /* EncodeFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C070F3C1E2596DE00EDBA66 /* EncodeFLAC.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,15 +28,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2C7D1E041DCB0FF10014CAA2 /* NewFLAC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = NewFLAC; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C070F331E2596A600EDBA66 /* ModernFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ModernFLAC.c; path = ModernFLAC/ModernFLAC.c; sourceTree = SOURCE_ROOT; };
+		2C070F351E2596C700EDBA66 /* libModernFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libModernFLAC.h; path = libModernFLAC/include/libModernFLAC.h; sourceTree = "<group>"; };
+		2C070F361E2596C700EDBA66 /* DecodeFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DecodeFLAC.h; path = libModernFLAC/include/DecodeFLAC.h; sourceTree = "<group>"; };
+		2C070F371E2596C700EDBA66 /* EncodeFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncodeFLAC.h; path = libModernFLAC/include/EncodeFLAC.h; sourceTree = "<group>"; };
+		2C070F3B1E2596DE00EDBA66 /* DecodeFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DecodeFLAC.c; path = libModernFLAC/src/DecodeFLAC.c; sourceTree = "<group>"; };
+		2C070F3C1E2596DE00EDBA66 /* EncodeFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = EncodeFLAC.c; path = libModernFLAC/src/EncodeFLAC.c; sourceTree = "<group>"; };
+		2C7D1E041DCB0FF10014CAA2 /* ModernFLAC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ModernFLAC; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C7D1E261DCB10A00014CAA2 /* libBitIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBitIO.a; path = ../../../../../../../../usr/local/Packages/BitIO/lib/libBitIO.a; sourceTree = "<group>"; };
-		2CC5049A1E194A29004A3685 /* libNewFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libNewFLAC.h; path = libNewFLAC/include/libNewFLAC.h; sourceTree = "<group>"; };
-		2CC5049B1E194A29004A3685 /* EncodeFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncodeFLAC.h; path = libNewFLAC/include/EncodeFLAC.h; sourceTree = "<group>"; };
-		2CC5049C1E194A29004A3685 /* DecodeFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DecodeFLAC.h; path = libNewFLAC/include/DecodeFLAC.h; sourceTree = "<group>"; };
-		2CC5049D1E194A4D004A3685 /* DecodeFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DecodeFLAC.c; path = libNewFLAC/src/DecodeFLAC.c; sourceTree = "<group>"; };
-		2CC5049E1E194A4D004A3685 /* EncodeFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = EncodeFLAC.c; path = libNewFLAC/src/EncodeFLAC.c; sourceTree = "<group>"; };
-		2CC504A11E194A61004A3685 /* NewFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NewFLAC.c; sourceTree = "<group>"; };
-		2CC504AA1E194B58004A3685 /* libNewFLAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNewFLAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CC504AA1E194B58004A3685 /* libModernFLAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libModernFLAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				2C7D1E251DCB109F0014CAA2 /* Frameworks */,
-				2C7D1E101DCB10260014CAA2 /* libNewFLAC */,
-				2C7D1E061DCB0FF10014CAA2 /* NewFLAC */,
+				2C7D1E101DCB10260014CAA2 /* libModernFLAC */,
+				2C7D1E061DCB0FF10014CAA2 /* ModernFLAC */,
 				2C7D1E051DCB0FF10014CAA2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -70,35 +70,36 @@
 		2C7D1E051DCB0FF10014CAA2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2C7D1E041DCB0FF10014CAA2 /* NewFLAC */,
-				2CC504AA1E194B58004A3685 /* libNewFLAC.a */,
+				2C7D1E041DCB0FF10014CAA2 /* ModernFLAC */,
+				2CC504AA1E194B58004A3685 /* libModernFLAC.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2C7D1E061DCB0FF10014CAA2 /* NewFLAC */ = {
+		2C7D1E061DCB0FF10014CAA2 /* ModernFLAC */ = {
 			isa = PBXGroup;
 			children = (
-				2CC504A11E194A61004A3685 /* NewFLAC.c */,
+				2C070F331E2596A600EDBA66 /* ModernFLAC.c */,
 			);
+			name = ModernFLAC;
 			path = NewFLAC;
 			sourceTree = "<group>";
 		};
-		2C7D1E101DCB10260014CAA2 /* libNewFLAC */ = {
+		2C7D1E101DCB10260014CAA2 /* libModernFLAC */ = {
 			isa = PBXGroup;
 			children = (
 				2C7D1E111DCB10300014CAA2 /* Include */,
 				2C7D1E121DCB10360014CAA2 /* src */,
 			);
-			name = libNewFLAC;
+			name = libModernFLAC;
 			sourceTree = "<group>";
 		};
 		2C7D1E111DCB10300014CAA2 /* Include */ = {
 			isa = PBXGroup;
 			children = (
-				2CC5049A1E194A29004A3685 /* libNewFLAC.h */,
-				2CC5049B1E194A29004A3685 /* EncodeFLAC.h */,
-				2CC5049C1E194A29004A3685 /* DecodeFLAC.h */,
+				2C070F351E2596C700EDBA66 /* libModernFLAC.h */,
+				2C070F361E2596C700EDBA66 /* DecodeFLAC.h */,
+				2C070F371E2596C700EDBA66 /* EncodeFLAC.h */,
 			);
 			name = Include;
 			sourceTree = "<group>";
@@ -106,8 +107,8 @@
 		2C7D1E121DCB10360014CAA2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				2CC5049D1E194A4D004A3685 /* DecodeFLAC.c */,
-				2CC5049E1E194A4D004A3685 /* EncodeFLAC.c */,
+				2C070F3B1E2596DE00EDBA66 /* DecodeFLAC.c */,
+				2C070F3C1E2596DE00EDBA66 /* EncodeFLAC.c */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -127,18 +128,18 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CC504B01E194BE9004A3685 /* libNewFLAC.h in Headers */,
-				2CC504B11E194BF9004A3685 /* EncodeFLAC.h in Headers */,
-				2CC504B21E194BF9004A3685 /* DecodeFLAC.h in Headers */,
+				2C070F3A1E2596C700EDBA66 /* EncodeFLAC.h in Headers */,
+				2C070F381E2596C700EDBA66 /* libModernFLAC.h in Headers */,
+				2C070F391E2596C700EDBA66 /* DecodeFLAC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		2C7D1E031DCB0FF10014CAA2 /* NewFLAC */ = {
+		2C7D1E031DCB0FF10014CAA2 /* ModernFLAC */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2C7D1E0B1DCB0FF10014CAA2 /* Build configuration list for PBXNativeTarget "NewFLAC" */;
+			buildConfigurationList = 2C7D1E0B1DCB0FF10014CAA2 /* Build configuration list for PBXNativeTarget "ModernFLAC" */;
 			buildPhases = (
 				2C7D1E001DCB0FF10014CAA2 /* Sources */,
 				2C7D1E011DCB0FF10014CAA2 /* Frameworks */,
@@ -148,14 +149,14 @@
 			);
 			dependencies = (
 			);
-			name = NewFLAC;
+			name = ModernFLAC;
 			productName = NewFLAC;
-			productReference = 2C7D1E041DCB0FF10014CAA2 /* NewFLAC */;
+			productReference = 2C7D1E041DCB0FF10014CAA2 /* ModernFLAC */;
 			productType = "com.apple.product-type.tool";
 		};
-		2CC504A91E194B58004A3685 /* libNewFLAC */ = {
+		2CC504A91E194B58004A3685 /* libModernFLAC */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2CC504AB1E194B58004A3685 /* Build configuration list for PBXNativeTarget "libNewFLAC" */;
+			buildConfigurationList = 2CC504AB1E194B58004A3685 /* Build configuration list for PBXNativeTarget "libModernFLAC" */;
 			buildPhases = (
 				2CC504A61E194B58004A3685 /* Sources */,
 				2CC504A71E194B58004A3685 /* Frameworks */,
@@ -165,9 +166,9 @@
 			);
 			dependencies = (
 			);
-			name = libNewFLAC;
+			name = libModernFLAC;
 			productName = libNewFLAC;
-			productReference = 2CC504AA1E194B58004A3685 /* libNewFLAC.a */;
+			productReference = 2CC504AA1E194B58004A3685 /* libModernFLAC.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -190,7 +191,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2C7D1DFF1DCB0FF10014CAA2 /* Build configuration list for PBXProject "NewFLAC" */;
+			buildConfigurationList = 2C7D1DFF1DCB0FF10014CAA2 /* Build configuration list for PBXProject "ModernFLAC" */;
 			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -202,8 +203,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2C7D1E031DCB0FF10014CAA2 /* NewFLAC */,
-				2CC504A91E194B58004A3685 /* libNewFLAC */,
+				2C7D1E031DCB0FF10014CAA2 /* ModernFLAC */,
+				2CC504A91E194B58004A3685 /* libModernFLAC */,
 			);
 		};
 /* End PBXProject section */
@@ -213,7 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CC504A21E194A61004A3685 /* NewFLAC.c in Sources */,
+				2C070F341E2596A600EDBA66 /* ModernFLAC.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,8 +222,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CC504AE1E194BDD004A3685 /* DecodeFLAC.c in Sources */,
-				2CC504AF1E194BDD004A3685 /* EncodeFLAC.c in Sources */,
+				2C070F3D1E2596DE00EDBA66 /* DecodeFLAC.c in Sources */,
+				2C070F3E1E2596DE00EDBA66 /* EncodeFLAC.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +266,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -312,7 +313,7 @@
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = fast;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -391,7 +392,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2C7D1DFF1DCB0FF10014CAA2 /* Build configuration list for PBXProject "NewFLAC" */ = {
+		2C7D1DFF1DCB0FF10014CAA2 /* Build configuration list for PBXProject "ModernFLAC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C7D1E091DCB0FF10014CAA2 /* Debug */,
@@ -400,7 +401,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2C7D1E0B1DCB0FF10014CAA2 /* Build configuration list for PBXNativeTarget "NewFLAC" */ = {
+		2C7D1E0B1DCB0FF10014CAA2 /* Build configuration list for PBXNativeTarget "ModernFLAC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2C7D1E0C1DCB0FF10014CAA2 /* Debug */,
@@ -409,13 +410,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2CC504AB1E194B58004A3685 /* Build configuration list for PBXNativeTarget "libNewFLAC" */ = {
+		2CC504AB1E194B58004A3685 /* Build configuration list for PBXNativeTarget "libModernFLAC" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2CC504AC1E194B58004A3685 /* Debug */,
 				2CC504AD1E194B58004A3685 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
