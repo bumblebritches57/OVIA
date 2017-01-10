@@ -1,0 +1,423 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 47;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2CC504A21E194A61004A3685 /* NewFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CC504A11E194A61004A3685 /* NewFLAC.c */; };
+		2CC504AE1E194BDD004A3685 /* DecodeFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5049D1E194A4D004A3685 /* DecodeFLAC.c */; };
+		2CC504AF1E194BDD004A3685 /* EncodeFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CC5049E1E194A4D004A3685 /* EncodeFLAC.c */; };
+		2CC504B01E194BE9004A3685 /* libNewFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CC5049A1E194A29004A3685 /* libNewFLAC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2CC504B11E194BF9004A3685 /* EncodeFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CC5049B1E194A29004A3685 /* EncodeFLAC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2CC504B21E194BF9004A3685 /* DecodeFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CC5049C1E194A29004A3685 /* DecodeFLAC.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2C7D1E021DCB0FF10014CAA2 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2C7D1E041DCB0FF10014CAA2 /* NewFLAC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = NewFLAC; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C7D1E261DCB10A00014CAA2 /* libBitIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBitIO.a; path = ../../../../../../../../usr/local/Packages/BitIO/lib/libBitIO.a; sourceTree = "<group>"; };
+		2CC5049A1E194A29004A3685 /* libNewFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libNewFLAC.h; path = libNewFLAC/include/libNewFLAC.h; sourceTree = "<group>"; };
+		2CC5049B1E194A29004A3685 /* EncodeFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncodeFLAC.h; path = libNewFLAC/include/EncodeFLAC.h; sourceTree = "<group>"; };
+		2CC5049C1E194A29004A3685 /* DecodeFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DecodeFLAC.h; path = libNewFLAC/include/DecodeFLAC.h; sourceTree = "<group>"; };
+		2CC5049D1E194A4D004A3685 /* DecodeFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DecodeFLAC.c; path = libNewFLAC/src/DecodeFLAC.c; sourceTree = "<group>"; };
+		2CC5049E1E194A4D004A3685 /* EncodeFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = EncodeFLAC.c; path = libNewFLAC/src/EncodeFLAC.c; sourceTree = "<group>"; };
+		2CC504A11E194A61004A3685 /* NewFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = NewFLAC.c; sourceTree = "<group>"; };
+		2CC504AA1E194B58004A3685 /* libNewFLAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNewFLAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2C7D1E011DCB0FF10014CAA2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CC504A71E194B58004A3685 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2C7D1DFB1DCB0FF10014CAA2 = {
+			isa = PBXGroup;
+			children = (
+				2C7D1E251DCB109F0014CAA2 /* Frameworks */,
+				2C7D1E101DCB10260014CAA2 /* libNewFLAC */,
+				2C7D1E061DCB0FF10014CAA2 /* NewFLAC */,
+				2C7D1E051DCB0FF10014CAA2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2C7D1E051DCB0FF10014CAA2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2C7D1E041DCB0FF10014CAA2 /* NewFLAC */,
+				2CC504AA1E194B58004A3685 /* libNewFLAC.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2C7D1E061DCB0FF10014CAA2 /* NewFLAC */ = {
+			isa = PBXGroup;
+			children = (
+				2CC504A11E194A61004A3685 /* NewFLAC.c */,
+			);
+			path = NewFLAC;
+			sourceTree = "<group>";
+		};
+		2C7D1E101DCB10260014CAA2 /* libNewFLAC */ = {
+			isa = PBXGroup;
+			children = (
+				2C7D1E111DCB10300014CAA2 /* Include */,
+				2C7D1E121DCB10360014CAA2 /* src */,
+			);
+			name = libNewFLAC;
+			sourceTree = "<group>";
+		};
+		2C7D1E111DCB10300014CAA2 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				2CC5049A1E194A29004A3685 /* libNewFLAC.h */,
+				2CC5049B1E194A29004A3685 /* EncodeFLAC.h */,
+				2CC5049C1E194A29004A3685 /* DecodeFLAC.h */,
+			);
+			name = Include;
+			sourceTree = "<group>";
+		};
+		2C7D1E121DCB10360014CAA2 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2CC5049D1E194A4D004A3685 /* DecodeFLAC.c */,
+				2CC5049E1E194A4D004A3685 /* EncodeFLAC.c */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		2C7D1E251DCB109F0014CAA2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2C7D1E261DCB10A00014CAA2 /* libBitIO.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2CC504A81E194B58004A3685 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CC504B01E194BE9004A3685 /* libNewFLAC.h in Headers */,
+				2CC504B11E194BF9004A3685 /* EncodeFLAC.h in Headers */,
+				2CC504B21E194BF9004A3685 /* DecodeFLAC.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2C7D1E031DCB0FF10014CAA2 /* NewFLAC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C7D1E0B1DCB0FF10014CAA2 /* Build configuration list for PBXNativeTarget "NewFLAC" */;
+			buildPhases = (
+				2C7D1E001DCB0FF10014CAA2 /* Sources */,
+				2C7D1E011DCB0FF10014CAA2 /* Frameworks */,
+				2C7D1E021DCB0FF10014CAA2 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NewFLAC;
+			productName = NewFLAC;
+			productReference = 2C7D1E041DCB0FF10014CAA2 /* NewFLAC */;
+			productType = "com.apple.product-type.tool";
+		};
+		2CC504A91E194B58004A3685 /* libNewFLAC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CC504AB1E194B58004A3685 /* Build configuration list for PBXNativeTarget "libNewFLAC" */;
+			buildPhases = (
+				2CC504A61E194B58004A3685 /* Sources */,
+				2CC504A71E194B58004A3685 /* Frameworks */,
+				2CC504A81E194B58004A3685 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libNewFLAC;
+			productName = libNewFLAC;
+			productReference = 2CC504AA1E194B58004A3685 /* libNewFLAC.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2C7D1DFC1DCB0FF10014CAA2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Marcus Johnson";
+				TargetAttributes = {
+					2C7D1E031DCB0FF10014CAA2 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 628J9L7WK5;
+						ProvisioningStyle = Automatic;
+					};
+					2CC504A91E194B58004A3685 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 2C7D1DFF1DCB0FF10014CAA2 /* Build configuration list for PBXProject "NewFLAC" */;
+			compatibilityVersion = "Xcode 6.3";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2C7D1DFB1DCB0FF10014CAA2;
+			productRefGroup = 2C7D1E051DCB0FF10014CAA2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2C7D1E031DCB0FF10014CAA2 /* NewFLAC */,
+				2CC504A91E194B58004A3685 /* libNewFLAC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2C7D1E001DCB0FF10014CAA2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CC504A21E194A61004A3685 /* NewFLAC.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CC504A61E194B58004A3685 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CC504AE1E194BDD004A3685 /* DecodeFLAC.c in Sources */,
+				2CC504AF1E194BDD004A3685 /* EncodeFLAC.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2C7D1E091DCB0FF10014CAA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_OUTPUT_FORMAT = binary;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
+				SDKROOT = macosx;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
+			};
+			name = Debug;
+		};
+		2C7D1E0A1DCB0FF10014CAA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = c11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_OUTPUT_FORMAT = binary;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PLIST_FILE_OUTPUT_FORMAT = binary;
+				SDKROOT = macosx;
+				STRINGS_FILE_OUTPUT_ENCODING = binary;
+			};
+			name = Release;
+		};
+		2C7D1E0C1DCB0FF10014CAA2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = 628J9L7WK5;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_LINK_WITH_DYNAMIC_LIBRARIES = NO;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Packages/BitIO/lib,
+				);
+				MACH_O_TYPE = mh_execute;
+				OTHER_LDFLAGS = (
+					"-lNewFLAC",
+					"-lBitIO",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2C7D1E0D1DCB0FF10014CAA2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				DEVELOPMENT_TEAM = 628J9L7WK5;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_LINK_WITH_DYNAMIC_LIBRARIES = NO;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Packages/BitIO/lib,
+				);
+				MACH_O_TYPE = mh_execute;
+				OTHER_LDFLAGS = (
+					"-lNewFLAC",
+					"-lBitIO",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2CC504AC1E194B58004A3685 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				EXECUTABLE_PREFIX = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2CC504AD1E194B58004A3685 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
+				EXECUTABLE_PREFIX = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2C7D1DFF1DCB0FF10014CAA2 /* Build configuration list for PBXProject "NewFLAC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C7D1E091DCB0FF10014CAA2 /* Debug */,
+				2C7D1E0A1DCB0FF10014CAA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C7D1E0B1DCB0FF10014CAA2 /* Build configuration list for PBXNativeTarget "NewFLAC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C7D1E0C1DCB0FF10014CAA2 /* Debug */,
+				2C7D1E0D1DCB0FF10014CAA2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CC504AB1E194B58004A3685 /* Build configuration list for PBXNativeTarget "libNewFLAC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CC504AC1E194B58004A3685 /* Debug */,
+				2CC504AD1E194B58004A3685 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2C7D1DFC1DCB0FF10014CAA2 /* Project object */;
+}
