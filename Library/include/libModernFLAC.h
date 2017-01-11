@@ -27,6 +27,7 @@ extern "C" {
         FLACMaxLPCCoefficents                                       =         32,
         FLACMedizCatalogNumberSize                                  =        128,
         FLACMaxCoeffs                                               =        882,
+        FLACMaxRicePartitions                                       =         16,
     } FLACConstants;
 
     extern enum FLACPictureTypes {
@@ -218,6 +219,12 @@ extern "C" {
         uint8_t       SamplesInPartition;
     } FLACFrame;
     
+    typedef struct RICEPartition {
+        uint8_t NumRICEPartitions:4;
+        uint8_t EscapeBitDepth:5;
+        uint8_t RICEParameter[FLACMaxRicePartitions];
+    } RICEPartition;
+    
     typedef struct FLACMeta {
         uint32_t           MetadataSize;
         FLACStreamInfo    *StreamInfo;
@@ -242,14 +249,9 @@ extern "C" {
         FLACFrame         *Frame;
         FLACSubFrame      *SubFrame;
         FLACLPC           *LPC;
+        RICEPartition     *Rice;
         uint32_t           RAWAudio[FLACMaxChannels][FLACMaxSamplesInBlock];
     } FLACData;
-    
-    typedef struct FLACFile {
-        FLACMeta *Meta;
-        FLACData *Data;
-        int64_t   DecodedSamples[FLACMaxSamplesInBlock];
-    } FLACFile;
     
     extern enum FLACRicePartitionType {
         RICE1 = 0,
