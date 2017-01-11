@@ -15,6 +15,8 @@
 		2C070F3E1E2596DE00EDBA66 /* EncodeFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C070F3C1E2596DE00EDBA66 /* EncodeFLAC.c */; };
 		2C070F401E25AF5A00EDBA66 /* ParseFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C070F3F1E25AF5A00EDBA66 /* ParseFLAC.c */; };
 		2C070F421E25B14F00EDBA66 /* ParseFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C070F411E25B14F00EDBA66 /* ParseFLAC.h */; };
+		2C070F451E26D74400EDBA66 /* libModernFLAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC504AA1E194B58004A3685 /* libModernFLAC.a */; };
+		2C070F461E26D75D00EDBA66 /* libBitIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C7D1E261DCB10A00014CAA2 /* libBitIO.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C070F451E26D74400EDBA66 /* libModernFLAC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C070F461E26D75D00EDBA66 /* libBitIO.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +161,7 @@
 			dependencies = (
 			);
 			name = ModernFLAC;
-			productName = NewFLAC;
+			productName = ModernFLAC;
 			productReference = 2C7D1E041DCB0FF10014CAA2 /* ModernFLAC */;
 			productType = "com.apple.product-type.tool";
 		};
@@ -174,7 +178,7 @@
 			dependencies = (
 			);
 			name = libModernFLAC;
-			productName = libNewFLAC;
+			productName = libModernFLAC;
 			productReference = 2CC504AA1E194B58004A3685 /* libModernFLAC.a */;
 			productType = "com.apple.product-type.library.static";
 		};
@@ -194,6 +198,7 @@
 					};
 					2CC504A91E194B58004A3685 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 628J9L7WK5;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -260,10 +265,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: bumblebritches571@gmail.com (JLFPN349F8)";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 628J9L7WK5;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
@@ -312,10 +318,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Mac Developer: bumblebritches571@gmail.com (JLFPN349F8)";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 628J9L7WK5;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
@@ -349,7 +356,7 @@
 				);
 				MACH_O_TYPE = mh_execute;
 				OTHER_LDFLAGS = (
-					"-lNewFLAC",
+					"-lModernFLAC",
 					"-lBitIO",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -380,8 +387,14 @@
 		2CC504AC1E194B58004A3685 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer: bumblebritches571@gmail.com (JLFPN349F8)";
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 628J9L7WK5;
 				EXECUTABLE_PREFIX = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Packages/BitIO/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -390,8 +403,14 @@
 		2CC504AD1E194B58004A3685 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer: bumblebritches571@gmail.com (JLFPN349F8)";
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = 628J9L7WK5;
 				EXECUTABLE_PREFIX = "";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Packages/BitIO/lib,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
