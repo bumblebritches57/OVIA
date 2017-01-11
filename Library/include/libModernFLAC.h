@@ -26,6 +26,7 @@ extern "C" {
         FLACISRCSize                                                =         12,
         FLACMaxLPCCoefficents                                       =         32,
         FLACMedizCatalogNumberSize                                  =        128,
+        FLACMaxCoeffs                                               =        882,
     } FLACConstants;
 
     extern enum FLACPictureTypes {
@@ -191,13 +192,14 @@ extern "C" {
     } FLACPicture;
 
     typedef struct FLACSubFrame {
-        bool    ZeroBit;
         uint8_t SubFrameType:6;
+        bool    WastedBitsFlag:1;
         uint8_t WastedBits:6; // Uses unary coding
     } FLACSubFrame;
 
     typedef struct FLACFrame {
         bool          BlockType:1;
+        uint8_t       CodedSamplesInBlock;
         uint16_t      BlockSize; // SamplesInBlock
         uint8_t       CodedSampleRate:5;
         uint32_t      SampleRate;
@@ -216,10 +218,6 @@ extern "C" {
         uint8_t       SamplesInPartition;
     } FLACFrame;
     
-    typedef struct FLACLPC {
-        
-    } FLACLPC;
-    
     typedef struct FLACMeta {
         uint32_t           MetadataSize;
         FLACStreamInfo    *StreamInfo;
@@ -229,9 +227,20 @@ extern "C" {
         FLACPicture       *Pic;
     } FLACMeta;
     
+    typedef struct FLACLPC {
+        uint8_t LPCOrder;
+        uint8_t LPCPrecision:4;
+        uint8_t LPCShift:5;
+        uint8_t NumLPCCoeffs;
+        int8_t  LPCCoeff[FLACMaxCoeffs];
+        uint8_t RicePartitionType:2;
+        uint8_t PartitionOrder:4;
+    } FLACLPC;
+    
     typedef struct FLACData {
         bool               GetSampleRateFromStreamInfo;
         FLACFrame         *Frame;
+        FLACSubFrame      *SubFrame;
         FLACLPC           *LPC;
         uint32_t           RAWAudio[FLACMaxChannels][FLACMaxSamplesInBlock];
     } FLACData;
@@ -239,96 +248,13 @@ extern "C" {
     typedef struct FLACFile {
         FLACMeta *Meta;
         FLACData *Data;
+        int64_t   DecodedSamples[FLACMaxSamplesInBlock];
     } FLACFile;
     
-    void FLACSampleRate(BitInput *BitI, FLACFile *FLAC) {
-        switch (FLAC->Meta->StreamInfo->CodedSampleRate) {
-            case 0:
-                FLAC->Data->Frame->SampleRate = FLAC->Meta->StreamInfo->SampleRate;
-                break;
-            case 1:
-                FLAC->Data->Frame->SampleRate = 88200;
-                break;
-            case 2:
-                FLAC->Data->Frame->SampleRate = 176400;
-                break;
-            case 3:
-                FLAC->Data->Frame->SampleRate = 192000;
-                break;
-            case 4:
-                FLAC->Data->Frame->SampleRate = 8000;
-                break;
-            case 5:
-                FLAC->Data->Frame->SampleRate = 16000;
-                break;
-            case 6:
-                FLAC->Data->Frame->SampleRate = 22050;
-                break;
-            case 7:
-                FLAC->Data->Frame->SampleRate = 24000;
-                break;
-            case 8:
-                FLAC->Data->Frame->SampleRate = 32000;
-                break;
-            case 9:
-                FLAC->Data->Frame->SampleRate = 44100;
-                break;
-            case 10:
-                FLAC->Data->Frame->SampleRate = 48000;
-                break;
-            case 11:
-                FLAC->Data->Frame->SampleRate = 96000;
-                break;
-            default:
-                break;
-        }
-    }
-    
-    
-    void FLACBitDepth(FLACFile *FLAC) {
-        switch (FLAC->Meta->StreamInfo->CodedBitDepth) {
-            case 0:
-                FLAC->Data->Frame->BitDepth = FLAC->Meta->StreamInfo->BitDepth;
-                break;
-            case 1:
-                FLAC->Data->Frame->BitDepth = 8;
-                break;
-            case 2:
-                FLAC->Data->Frame->BitDepth = 12;
-                break;
-            case 4:
-                FLAC->Data->Frame->BitDepth = 16;
-                break;
-            case 5:
-                FLAC->Data->Frame->BitDepth = 20;
-                break;
-            case 6:
-                FLAC->Data->Frame->BitDepth = 24;
-                break;
-            default:
-                FLAC->Data->Frame->BitDepth = 0;
-                break;
-        }
-    }
-    
-    uint8_t GetBlockSizeInSamples(uint8_t BlockSize) {
-        uint16_t SamplesInBlock = 0;
-        if (BlockSize == 1) {
-            SamplesInBlock = 192;
-        } else if ((BlockSize >= 2) && (BlockSize <= 5)) {
-            SamplesInBlock = (576 * pow(2, BlockSize - 2)); // 576/1152/2304/4608, pow(2, (BlockSize - 2))
-        } else if (BlockSize == 6) {
-            // get 8 bit block from the end of the header
-        } else if (BlockSize == 7) {
-            // get 16 bit block from the end of the header
-        } else if ((BlockSize >= 8) && (BlockSize <= 15)) {
-            SamplesInBlock = (256 * pow(2, (BlockSize - 8))); // 256/512/1024/2048/4096/8192/16384/32768
-        } else {
-            // Reserved
-        }
-        
-        return SamplesInBlock;
-    }
+    extern enum FLACRicePartitionType {
+        RICE1 = 0,
+        RICE2 = 1,
+    } FLACRicePartitionType;
     
 #ifdef __cplusplus
 }
