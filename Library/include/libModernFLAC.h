@@ -160,9 +160,12 @@ extern "C" {
     } FLACCueSheet;
 
     typedef struct FLACVorbisComment {
-        char     VendorString[FLACMaxVorbisCommentSize];
-        char     UserCommentString[FLACVorbisMaxComments][FLACMaxVorbisCommentSize];
-        bool     VorbisFramingBit;
+        bool      VorbisFramingBit;
+        uint8_t   VendorTagSize;
+        char     *VendorTag;
+        uint8_t   NumUserTags; // Number of tags.
+        uint8_t  *UserTagSize; // array for each tag, that says the size of the tag
+        char     *UserTagString; // Array of tags.
     } FLACVorbisComment;
 
     typedef struct FLACSeekTable {
