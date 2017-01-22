@@ -161,6 +161,7 @@ extern "C" {
         uint32_t     NumSamples; // Channel agnostic
         uint32_t     ChannelMask;
         bool         MetadataHasBeenParsed;
+        WAVHeader   *WAV;
         PCMMetadata *Meta;
         PCMData     *Data;
         uint32_t    *Samples;
