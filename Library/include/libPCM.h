@@ -140,6 +140,18 @@ extern "C" {
         AIF_SSND = 0x53534E44,
     } AIFChunkIDs;
     
+    typedef struct PCMFile {
+        uint8_t      FileType;
+        bool         FilledRequest; // Were there enough samples left to fill the request?
+        uint32_t     NumSamples; // Channel agnostic
+        PCMMetadata *Meta;
+        uint8_t     *Data;
+    } PCMFile;
+    
+    // So if it's a WAV file the input file metadata reader thing will set it to WAV, then read the meta into Meta
+    // Then once it comes across the equilivent of a data chunk, it will set Data to the pointer, then for extracting
+    // samples it will read the type call the correct reader and extract the requested samples.
+    
 #ifdef __cplusplus
 }
 #endif
