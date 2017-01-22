@@ -1,0 +1,312 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2CF204351E33E4EC00C086C8 /* WAVDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204301E33E4EC00C086C8 /* WAVDecoder.c */; };
+		2CF204361E33E4EC00C086C8 /* libPCM.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204311E33E4EC00C086C8 /* libPCM.c */; };
+		2CF204371E33E4EC00C086C8 /* W64Decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204321E33E4EC00C086C8 /* W64Decoder.c */; };
+		2CF204381E33E4EC00C086C8 /* W64Encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204331E33E4EC00C086C8 /* W64Encoder.c */; };
+		2CF204391E33E4EC00C086C8 /* WAVEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204341E33E4EC00C086C8 /* WAVEncoder.c */; };
+		2CF2043D1E33E4FE00C086C8 /* libPCM.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CF2043A1E33E4FE00C086C8 /* libPCM.h */; };
+		2CF2043E1E33E4FE00C086C8 /* W64Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CF2043B1E33E4FE00C086C8 /* W64Common.h */; };
+		2CF2043F1E33E4FE00C086C8 /* WAVCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CF2043C1E33E4FE00C086C8 /* WAVCommon.h */; };
+		2CF204411E3423F500C086C8 /* AIFDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204401E3423F500C086C8 /* AIFDecoder.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2CE851771DA99758004F3B90 /* libPCM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPCM.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CF204301E33E4EC00C086C8 /* WAVDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVDecoder.c; path = libPCM/src/WAVDecoder.c; sourceTree = "<group>"; };
+		2CF204311E33E4EC00C086C8 /* libPCM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = libPCM.c; path = libPCM/src/libPCM.c; sourceTree = "<group>"; };
+		2CF204321E33E4EC00C086C8 /* W64Decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Decoder.c; path = libPCM/src/W64Decoder.c; sourceTree = "<group>"; };
+		2CF204331E33E4EC00C086C8 /* W64Encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Encoder.c; path = libPCM/src/W64Encoder.c; sourceTree = "<group>"; };
+		2CF204341E33E4EC00C086C8 /* WAVEncoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVEncoder.c; path = libPCM/src/WAVEncoder.c; sourceTree = "<group>"; };
+		2CF2043A1E33E4FE00C086C8 /* libPCM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libPCM.h; path = libPCM/include/libPCM.h; sourceTree = "<group>"; };
+		2CF2043B1E33E4FE00C086C8 /* W64Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = W64Common.h; path = libPCM/include/W64Common.h; sourceTree = "<group>"; };
+		2CF2043C1E33E4FE00C086C8 /* WAVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WAVCommon.h; path = libPCM/include/WAVCommon.h; sourceTree = "<group>"; };
+		2CF204401E3423F500C086C8 /* AIFDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFDecoder.c; path = libPCM/src/AIFDecoder.c; sourceTree = "<group>"; };
+		2CF204421E34246600C086C8 /* AIFCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AIFCommon.h; path = libPCM/include/AIFCommon.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2CE851741DA99758004F3B90 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2CE8516E1DA99758004F3B90 = {
+			isa = PBXGroup;
+			children = (
+				2CF204121E319AD500C086C8 /* libPCM */,
+				2CE851781DA99758004F3B90 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2CE851781DA99758004F3B90 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2CE851771DA99758004F3B90 /* libPCM.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2CF204121E319AD500C086C8 /* libPCM */ = {
+			isa = PBXGroup;
+			children = (
+				2CF204141E319AE300C086C8 /* Headers */,
+				2CF204131E319ADC00C086C8 /* Source */,
+			);
+			name = libPCM;
+			sourceTree = "<group>";
+		};
+		2CF204131E319ADC00C086C8 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2CF204311E33E4EC00C086C8 /* libPCM.c */,
+				2CF204401E3423F500C086C8 /* AIFDecoder.c */,
+				2CF204301E33E4EC00C086C8 /* WAVDecoder.c */,
+				2CF204341E33E4EC00C086C8 /* WAVEncoder.c */,
+				2CF204321E33E4EC00C086C8 /* W64Decoder.c */,
+				2CF204331E33E4EC00C086C8 /* W64Encoder.c */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		2CF204141E319AE300C086C8 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				2CF2043A1E33E4FE00C086C8 /* libPCM.h */,
+				2CF2043B1E33E4FE00C086C8 /* W64Common.h */,
+				2CF2043C1E33E4FE00C086C8 /* WAVCommon.h */,
+				2CF204421E34246600C086C8 /* AIFCommon.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2CE851751DA99758004F3B90 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CF2043D1E33E4FE00C086C8 /* libPCM.h in Headers */,
+				2CF2043E1E33E4FE00C086C8 /* W64Common.h in Headers */,
+				2CF2043F1E33E4FE00C086C8 /* WAVCommon.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2CE851761DA99758004F3B90 /* PCM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CE8517B1DA99758004F3B90 /* Build configuration list for PBXNativeTarget "PCM" */;
+			buildPhases = (
+				2CE851731DA99758004F3B90 /* Sources */,
+				2CE851741DA99758004F3B90 /* Frameworks */,
+				2CE851751DA99758004F3B90 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PCM;
+			productName = PCM;
+			productReference = 2CE851771DA99758004F3B90 /* libPCM.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2CE8516F1DA99758004F3B90 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Marcus Johnson";
+				TargetAttributes = {
+					2CE851761DA99758004F3B90 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 628J9L7WK5;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 2CE851721DA99758004F3B90 /* Build configuration list for PBXProject "PCM" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2CE8516E1DA99758004F3B90;
+			productRefGroup = 2CE851781DA99758004F3B90 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2CE851761DA99758004F3B90 /* PCM */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2CE851731DA99758004F3B90 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CF204391E33E4EC00C086C8 /* WAVEncoder.c in Sources */,
+				2CF204361E33E4EC00C086C8 /* libPCM.c in Sources */,
+				2CF204371E33E4EC00C086C8 /* W64Decoder.c in Sources */,
+				2CF204411E3423F500C086C8 /* AIFDecoder.c in Sources */,
+				2CF204381E33E4EC00C086C8 /* W64Encoder.c in Sources */,
+				2CF204351E33E4EC00C086C8 /* WAVDecoder.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2CE851791DA99758004F3B90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer: bumblebritches571@gmail.com (JLFPN349F8)";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 628J9L7WK5;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2CE8517A1DA99758004F3B90 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer: bumblebritches571@gmail.com (JLFPN349F8)";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 628J9L7WK5;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2CE8517C1DA99758004F3B90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2CE8517D1DA99758004F3B90 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2CE851721DA99758004F3B90 /* Build configuration list for PBXProject "PCM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CE851791DA99758004F3B90 /* Debug */,
+				2CE8517A1DA99758004F3B90 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CE8517B1DA99758004F3B90 /* Build configuration list for PBXNativeTarget "PCM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CE8517C1DA99758004F3B90 /* Debug */,
+				2CE8517D1DA99758004F3B90 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2CE8516F1DA99758004F3B90 /* Project object */;
+}
