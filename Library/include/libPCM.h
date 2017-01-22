@@ -48,6 +48,13 @@ extern "C" {
         char    *EncoderTag;
     } PCMMetadata;
     
+    typedef struct PCMData {
+        uint64_t  SampleRate;
+        uint64_t  BitDepth;
+        uint64_t  NumChannels;
+        uint64_t  NumChannelAgnosticSamplesInBuffer;
+    } PCMData;
+    
     typedef struct W64Header {
         uint16_t FormatType;
         uint16_t Channels;
@@ -140,17 +147,30 @@ extern "C" {
         AIF_SSND = 0x53534E44,
     } AIFChunkIDs;
     
+    enum PCMFileTypes {
+        Unknown_Type = 0,
+        WAV_Type     = 1,
+        RF64_Type    = 2,
+        W64_Type     = 3,
+        AIFF_Type    = 4,
+    } PCMFileTypes;
+    
     typedef struct PCMFile {
         uint8_t      FileType;
         bool         FilledRequest; // Were there enough samples left to fill the request?
         uint32_t     NumSamples; // Channel agnostic
+        uint32_t     ChannelMask;
+        bool         MetadataHasBeenParsed;
         PCMMetadata *Meta;
-        uint8_t     *Data;
+        PCMData     *Data;
+        uint32_t    *Samples;
     } PCMFile;
     
     // So if it's a WAV file the input file metadata reader thing will set it to WAV, then read the meta into Meta
     // Then once it comes across the equilivent of a data chunk, it will set Data to the pointer, then for extracting
     // samples it will read the type call the correct reader and extract the requested samples.
+    
+    void IdentifyPCMFile(BitInput *BitI, PCMFile *PCM);
     
 #ifdef __cplusplus
 }
