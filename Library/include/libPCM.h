@@ -172,6 +172,8 @@ extern "C" {
     // samples it will read the type call the correct reader and extract the requested samples.
     
     void IdentifyPCMFile(BitInput *BitI, PCMFile *PCM);
+    void ParseWAVFile(BitInput *BitI, PCMFile *PCM);
+    void ParseW64File(BitInput *BitI, W64Header *W64);
     
 #ifdef __cplusplus
 }
