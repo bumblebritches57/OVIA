@@ -111,8 +111,8 @@
 			isa = PBXGroup;
 			children = (
 				2C070F351E2596C700EDBA66 /* libModernFLAC.h */,
-				2C070F361E2596C700EDBA66 /* DecodeFLAC.h */,
 				2C070F371E2596C700EDBA66 /* EncodeFLAC.h */,
+				2C070F361E2596C700EDBA66 /* DecodeFLAC.h */,
 				2C070F411E25B14F00EDBA66 /* ParseFLAC.h */,
 			);
 			name = Include;
@@ -121,9 +121,9 @@
 		2C7D1E121DCB10360014CAA2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				2C070F3F1E25AF5A00EDBA66 /* ParseFLAC.c */,
-				2C070F3B1E2596DE00EDBA66 /* DecodeFLAC.c */,
 				2C070F3C1E2596DE00EDBA66 /* EncodeFLAC.c */,
+				2C070F3B1E2596DE00EDBA66 /* DecodeFLAC.c */,
+				2C070F3F1E25AF5A00EDBA66 /* ParseFLAC.c */,
 			);
 			name = src;
 			sourceTree = "<group>";

@@ -54,7 +54,7 @@ extern "C" {
         PublisherLogo                                               = 20,
     } FLACPictureTypes;
 
-    extern enum SpeakerLayout {
+    extern enum FLACSpeakerLayout {
         Mono                                                        = 0,
         Left_Right                                                  = 1,
         Left_Right_Center                                           = 2,
@@ -66,12 +66,7 @@ extern "C" {
         Left_Diff                                                   = 8,
         Right_Diff                                                  = 9,
         Average_Diff                                                = 10,
-    };
-
-    extern enum WAVEConstants {
-        RIFFMagic                                                   = 0x52494646,
-        WAVEMagic                                                   = 0x57415645,
-    } WAVEConstants;
+    } FLACSpeakerLayout;
 
     extern enum FLACPredictionTypes {
         Verbatim                                                    = 0,
