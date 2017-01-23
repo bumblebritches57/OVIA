@@ -17,6 +17,8 @@
 		2C070F421E25B14F00EDBA66 /* ParseFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C070F411E25B14F00EDBA66 /* ParseFLAC.h */; };
 		2C070F451E26D74400EDBA66 /* libModernFLAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC504AA1E194B58004A3685 /* libModernFLAC.a */; };
 		2CF204441E347A5200C086C8 /* libBitIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CF204431E347A5200C086C8 /* libBitIO.a */; };
+		2CF204661E3547D200C086C8 /* libPCM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CF204641E3545D300C086C8 /* libPCM.a */; };
+		2CF204671E35484700C086C8 /* libPCM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CF204641E3545D300C086C8 /* libPCM.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +45,7 @@
 		2C7D1E041DCB0FF10014CAA2 /* ModernFLAC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ModernFLAC; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC504AA1E194B58004A3685 /* libModernFLAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libModernFLAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CF204431E347A5200C086C8 /* libBitIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBitIO.a; path = ../../../../../usr/local/Packages/libBitIO/lib/libBitIO.a; sourceTree = "<group>"; };
+		2CF204641E3545D300C086C8 /* libPCM.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPCM.a; path = ../../../../../usr/local/Packages/libPCM/lib/libPCM.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CF204671E35484700C086C8 /* libPCM.a in Frameworks */,
 				2C070F451E26D74400EDBA66 /* libModernFLAC.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CF204661E3547D200C086C8 /* libPCM.a in Frameworks */,
 				2CF204441E347A5200C086C8 /* libBitIO.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,6 +131,7 @@
 		2C7D1E251DCB109F0014CAA2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CF204641E3545D300C086C8 /* libPCM.a */,
 				2CF204431E347A5200C086C8 /* libBitIO.a */,
 			);
 			name = Frameworks;
@@ -287,7 +293,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
@@ -335,7 +341,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				SDKROOT = macosx;
@@ -352,13 +358,10 @@
 				GCC_LINK_WITH_DYNAMIC_LIBRARIES = NO;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/Packages/libBitIO/lib,
+					/usr/local/Packages/libPCM/lib,
 				);
 				MACH_O_TYPE = mh_execute;
-				OTHER_LDFLAGS = (
-					"-lModernFLAC",
-					"-lBitIO",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -373,13 +376,10 @@
 				GCC_OPTIMIZATION_LEVEL = fast;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/Packages/libBitIO/lib,
+					/usr/local/Packages/libPCM/lib,
 				);
 				MACH_O_TYPE = mh_execute;
-				OTHER_LDFLAGS = (
-					"-lModernFLAC",
-					"-lBitIO",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -393,8 +393,8 @@
 				EXECUTABLE_PREFIX = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/Packages/BitIO/lib,
 					/usr/local/Packages/libBitIO/lib,
+					/usr/local/Packages/libPCM/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -410,8 +410,8 @@
 				EXECUTABLE_PREFIX = "";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/Packages/BitIO/lib,
 					/usr/local/Packages/libBitIO/lib,
+					/usr/local/Packages/libPCM/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_NAME = "$(TARGET_NAME)";
