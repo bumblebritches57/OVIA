@@ -13,8 +13,6 @@
 		2C070F3A1E2596C700EDBA66 /* EncodeFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C070F371E2596C700EDBA66 /* EncodeFLAC.h */; };
 		2C070F3D1E2596DE00EDBA66 /* DecodeFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C070F3B1E2596DE00EDBA66 /* DecodeFLAC.c */; };
 		2C070F3E1E2596DE00EDBA66 /* EncodeFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C070F3C1E2596DE00EDBA66 /* EncodeFLAC.c */; };
-		2C070F401E25AF5A00EDBA66 /* ParseFLAC.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C070F3F1E25AF5A00EDBA66 /* ParseFLAC.c */; };
-		2C070F421E25B14F00EDBA66 /* ParseFLAC.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C070F411E25B14F00EDBA66 /* ParseFLAC.h */; };
 		2C070F451E26D74400EDBA66 /* libModernFLAC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CC504AA1E194B58004A3685 /* libModernFLAC.a */; };
 		2CF204441E347A5200C086C8 /* libBitIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CF204431E347A5200C086C8 /* libBitIO.a */; };
 		2CF204661E3547D200C086C8 /* libPCM.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CF204641E3545D300C086C8 /* libPCM.a */; };
@@ -40,8 +38,6 @@
 		2C070F371E2596C700EDBA66 /* EncodeFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EncodeFLAC.h; path = libModernFLAC/include/EncodeFLAC.h; sourceTree = "<group>"; };
 		2C070F3B1E2596DE00EDBA66 /* DecodeFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DecodeFLAC.c; path = libModernFLAC/src/DecodeFLAC.c; sourceTree = "<group>"; };
 		2C070F3C1E2596DE00EDBA66 /* EncodeFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = EncodeFLAC.c; path = libModernFLAC/src/EncodeFLAC.c; sourceTree = "<group>"; };
-		2C070F3F1E25AF5A00EDBA66 /* ParseFLAC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ParseFLAC.c; path = libModernFLAC/src/ParseFLAC.c; sourceTree = "<group>"; };
-		2C070F411E25B14F00EDBA66 /* ParseFLAC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParseFLAC.h; path = libModernFLAC/include/ParseFLAC.h; sourceTree = "<group>"; };
 		2C7D1E041DCB0FF10014CAA2 /* ModernFLAC */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ModernFLAC; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CC504AA1E194B58004A3685 /* libModernFLAC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libModernFLAC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CF204431E347A5200C086C8 /* libBitIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBitIO.a; path = ../../../../../usr/local/Packages/libBitIO/lib/libBitIO.a; sourceTree = "<group>"; };
@@ -113,7 +109,6 @@
 				2C070F351E2596C700EDBA66 /* libModernFLAC.h */,
 				2C070F371E2596C700EDBA66 /* EncodeFLAC.h */,
 				2C070F361E2596C700EDBA66 /* DecodeFLAC.h */,
-				2C070F411E25B14F00EDBA66 /* ParseFLAC.h */,
 			);
 			name = Include;
 			sourceTree = "<group>";
@@ -123,7 +118,6 @@
 			children = (
 				2C070F3C1E2596DE00EDBA66 /* EncodeFLAC.c */,
 				2C070F3B1E2596DE00EDBA66 /* DecodeFLAC.c */,
-				2C070F3F1E25AF5A00EDBA66 /* ParseFLAC.c */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -146,7 +140,6 @@
 			files = (
 				2C070F3A1E2596C700EDBA66 /* EncodeFLAC.h in Headers */,
 				2C070F381E2596C700EDBA66 /* libModernFLAC.h in Headers */,
-				2C070F421E25B14F00EDBA66 /* ParseFLAC.h in Headers */,
 				2C070F391E2596C700EDBA66 /* DecodeFLAC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -241,7 +234,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C070F3D1E2596DE00EDBA66 /* DecodeFLAC.c in Sources */,
-				2C070F401E25AF5A00EDBA66 /* ParseFLAC.c in Sources */,
 				2C070F3E1E2596DE00EDBA66 /* EncodeFLAC.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
