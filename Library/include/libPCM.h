@@ -7,7 +7,7 @@
 extern "C" {
 #endif
     
-    enum libPCMConstants {
+    extern enum libPCMConstants {
         WAVMagic            = 0x52494646,
         W64Magic            = 0x72696666,
         AIFMagic            = 0x464F524D,
@@ -103,7 +103,7 @@ extern "C" {
         PCMMetadata *Meta;
     } AIFHeader;
     
-    enum W64ChunkIDs {
+    extern enum W64ChunkIDs {
         W64_RIFF = 0x72696666,
         W64_WAVE = 0x77617665,
         W64_FMT  = 0x666D7420,
@@ -117,7 +117,7 @@ extern "C" {
         W64_SUMM = 0x925F94BC,
     } W64ChunkIDs;
     
-    enum WAVChunkIDs { // odd sized chunks have a trailing 0 byte, and strings are null padded
+    extern enum WAVChunkIDs { // odd sized chunks have a trailing 0 byte, and strings are null padded
         WAV_RIFF = 0x52494646,
         WAV_WAVE = 0x57415645,
         WAV_FMT  = 0x666D7420,
@@ -138,7 +138,7 @@ extern "C" {
         WAV_DATA = 0x64617461,
     } WAVChunkIDs;
     
-    enum AIFChunkIDs {
+    extern enum AIFChunkIDs {
         AIF_FORM = 0x464F524D,
         AIF_AIFF = 0x41494646,
         AIF_AIFC = 0x41494643,
@@ -147,7 +147,7 @@ extern "C" {
         AIF_SSND = 0x53534E44,
     } AIFChunkIDs;
     
-    enum PCMFileTypes {
+    extern enum PCMFileTypes {
         Unknown_Type = 0,
         WAV_Type     = 1,
         RF64_Type    = 2,
