@@ -1,4 +1,7 @@
-#include "../include/W64Common.h"
+#include "/usr/local/Packages/libBitIO/include/BitIO.h"
+
+#include "../../include/libPCM.h"
+#include "../../include/W64Common.h"
 
 #ifdef __cplusplus
 extern "C" {
