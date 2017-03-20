@@ -7,29 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2CF204351E33E4EC00C086C8 /* WAVDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204301E33E4EC00C086C8 /* WAVDecoder.c */; };
-		2CF204361E33E4EC00C086C8 /* libPCM.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204311E33E4EC00C086C8 /* libPCM.c */; };
-		2CF204371E33E4EC00C086C8 /* W64Decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204321E33E4EC00C086C8 /* W64Decoder.c */; };
-		2CF204381E33E4EC00C086C8 /* W64Encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204331E33E4EC00C086C8 /* W64Encoder.c */; };
-		2CF204391E33E4EC00C086C8 /* WAVEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204341E33E4EC00C086C8 /* WAVEncoder.c */; };
-		2CF2043D1E33E4FE00C086C8 /* libPCM.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CF2043A1E33E4FE00C086C8 /* libPCM.h */; };
-		2CF2043E1E33E4FE00C086C8 /* W64Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CF2043B1E33E4FE00C086C8 /* W64Common.h */; };
-		2CF2043F1E33E4FE00C086C8 /* WAVCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CF2043C1E33E4FE00C086C8 /* WAVCommon.h */; };
-		2CF204411E3423F500C086C8 /* AIFDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CF204401E3423F500C086C8 /* AIFDecoder.c */; };
+		2CE3123D1E7FBA5100E8A4E1 /* WAVEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3123A1E7FBA5100E8A4E1 /* WAVEncoder.c */; };
+		2CE3123E1E7FBA5100E8A4E1 /* W64Encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3123B1E7FBA5100E8A4E1 /* W64Encoder.c */; };
+		2CE3123F1E7FBA5100E8A4E1 /* AIFEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE3123C1E7FBA5100E8A4E1 /* AIFEncoder.c */; };
+		2CE312431E7FBA6200E8A4E1 /* WAVDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE312401E7FBA6200E8A4E1 /* WAVDecoder.c */; };
+		2CE312441E7FBA6200E8A4E1 /* W64Decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE312411E7FBA6200E8A4E1 /* W64Decoder.c */; };
+		2CE312451E7FBA6200E8A4E1 /* AIFDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE312421E7FBA6200E8A4E1 /* AIFDecoder.c */; };
+		2CE312481E7FBA8500E8A4E1 /* libPCM.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE312471E7FBA8500E8A4E1 /* libPCM.c */; };
+		2CE3124C1E7FBA9900E8A4E1 /* AIFCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CE312491E7FBA9900E8A4E1 /* AIFCommon.h */; };
+		2CE3124D1E7FBA9900E8A4E1 /* W64Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CE3124A1E7FBA9900E8A4E1 /* W64Common.h */; };
+		2CE3124E1E7FBA9900E8A4E1 /* WAVCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CE3124B1E7FBA9900E8A4E1 /* WAVCommon.h */; };
+		2CE312501E7FBAA200E8A4E1 /* libPCM.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CE3124F1E7FBAA200E8A4E1 /* libPCM.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2CE3123A1E7FBA5100E8A4E1 /* WAVEncoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVEncoder.c; path = ../libPCM/src/Encode/WAVEncoder.c; sourceTree = "<group>"; };
+		2CE3123B1E7FBA5100E8A4E1 /* W64Encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Encoder.c; path = ../libPCM/src/Encode/W64Encoder.c; sourceTree = "<group>"; };
+		2CE3123C1E7FBA5100E8A4E1 /* AIFEncoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFEncoder.c; path = ../libPCM/src/Encode/AIFEncoder.c; sourceTree = "<group>"; };
+		2CE312401E7FBA6200E8A4E1 /* WAVDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVDecoder.c; path = ../libPCM/src/Decode/WAVDecoder.c; sourceTree = "<group>"; };
+		2CE312411E7FBA6200E8A4E1 /* W64Decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Decoder.c; path = ../libPCM/src/Decode/W64Decoder.c; sourceTree = "<group>"; };
+		2CE312421E7FBA6200E8A4E1 /* AIFDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFDecoder.c; path = ../libPCM/src/Decode/AIFDecoder.c; sourceTree = "<group>"; };
+		2CE312471E7FBA8500E8A4E1 /* libPCM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = libPCM.c; path = ../libPCM/src/libPCM.c; sourceTree = "<group>"; };
+		2CE312491E7FBA9900E8A4E1 /* AIFCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AIFCommon.h; path = ../libPCM/include/AIFCommon.h; sourceTree = "<group>"; };
+		2CE3124A1E7FBA9900E8A4E1 /* W64Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = W64Common.h; path = ../libPCM/include/W64Common.h; sourceTree = "<group>"; };
+		2CE3124B1E7FBA9900E8A4E1 /* WAVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WAVCommon.h; path = ../libPCM/include/WAVCommon.h; sourceTree = "<group>"; };
+		2CE3124F1E7FBAA200E8A4E1 /* libPCM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libPCM.h; path = ../libPCM/include/libPCM.h; sourceTree = "<group>"; };
 		2CE851771DA99758004F3B90 /* libPCM.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPCM.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		2CF204301E33E4EC00C086C8 /* WAVDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVDecoder.c; path = libPCM/src/WAVDecoder.c; sourceTree = "<group>"; };
-		2CF204311E33E4EC00C086C8 /* libPCM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = libPCM.c; path = libPCM/src/libPCM.c; sourceTree = "<group>"; };
-		2CF204321E33E4EC00C086C8 /* W64Decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Decoder.c; path = libPCM/src/W64Decoder.c; sourceTree = "<group>"; };
-		2CF204331E33E4EC00C086C8 /* W64Encoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Encoder.c; path = libPCM/src/W64Encoder.c; sourceTree = "<group>"; };
-		2CF204341E33E4EC00C086C8 /* WAVEncoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVEncoder.c; path = libPCM/src/WAVEncoder.c; sourceTree = "<group>"; };
-		2CF2043A1E33E4FE00C086C8 /* libPCM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libPCM.h; path = libPCM/include/libPCM.h; sourceTree = "<group>"; };
-		2CF2043B1E33E4FE00C086C8 /* W64Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = W64Common.h; path = libPCM/include/W64Common.h; sourceTree = "<group>"; };
-		2CF2043C1E33E4FE00C086C8 /* WAVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WAVCommon.h; path = libPCM/include/WAVCommon.h; sourceTree = "<group>"; };
-		2CF204401E3423F500C086C8 /* AIFDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFDecoder.c; path = libPCM/src/AIFDecoder.c; sourceTree = "<group>"; };
-		2CF204421E34246600C086C8 /* AIFCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AIFCommon.h; path = libPCM/include/AIFCommon.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +46,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2CE312381E7FBA3500E8A4E1 /* Decode */ = {
+			isa = PBXGroup;
+			children = (
+				2CE312401E7FBA6200E8A4E1 /* WAVDecoder.c */,
+				2CE312411E7FBA6200E8A4E1 /* W64Decoder.c */,
+				2CE312421E7FBA6200E8A4E1 /* AIFDecoder.c */,
+			);
+			name = Decode;
+			sourceTree = "<group>";
+		};
+		2CE312391E7FBA3B00E8A4E1 /* Encode */ = {
+			isa = PBXGroup;
+			children = (
+				2CE3123A1E7FBA5100E8A4E1 /* WAVEncoder.c */,
+				2CE3123B1E7FBA5100E8A4E1 /* W64Encoder.c */,
+				2CE3123C1E7FBA5100E8A4E1 /* AIFEncoder.c */,
+			);
+			name = Encode;
+			sourceTree = "<group>";
+		};
 		2CE8516E1DA99758004F3B90 = {
 			isa = PBXGroup;
 			children = (
@@ -71,12 +94,9 @@
 		2CF204131E319ADC00C086C8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				2CF204311E33E4EC00C086C8 /* libPCM.c */,
-				2CF204401E3423F500C086C8 /* AIFDecoder.c */,
-				2CF204301E33E4EC00C086C8 /* WAVDecoder.c */,
-				2CF204341E33E4EC00C086C8 /* WAVEncoder.c */,
-				2CF204321E33E4EC00C086C8 /* W64Decoder.c */,
-				2CF204331E33E4EC00C086C8 /* W64Encoder.c */,
+				2CE312471E7FBA8500E8A4E1 /* libPCM.c */,
+				2CE312391E7FBA3B00E8A4E1 /* Encode */,
+				2CE312381E7FBA3500E8A4E1 /* Decode */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -84,10 +104,10 @@
 		2CF204141E319AE300C086C8 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				2CF2043A1E33E4FE00C086C8 /* libPCM.h */,
-				2CF2043B1E33E4FE00C086C8 /* W64Common.h */,
-				2CF2043C1E33E4FE00C086C8 /* WAVCommon.h */,
-				2CF204421E34246600C086C8 /* AIFCommon.h */,
+				2CE3124F1E7FBAA200E8A4E1 /* libPCM.h */,
+				2CE312491E7FBA9900E8A4E1 /* AIFCommon.h */,
+				2CE3124A1E7FBA9900E8A4E1 /* W64Common.h */,
+				2CE3124B1E7FBA9900E8A4E1 /* WAVCommon.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -99,9 +119,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CF2043D1E33E4FE00C086C8 /* libPCM.h in Headers */,
-				2CF2043E1E33E4FE00C086C8 /* W64Common.h in Headers */,
-				2CF2043F1E33E4FE00C086C8 /* WAVCommon.h in Headers */,
+				2CE3124C1E7FBA9900E8A4E1 /* AIFCommon.h in Headers */,
+				2CE312501E7FBAA200E8A4E1 /* libPCM.h in Headers */,
+				2CE3124E1E7FBA9900E8A4E1 /* WAVCommon.h in Headers */,
+				2CE3124D1E7FBA9900E8A4E1 /* W64Common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,12 +184,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CF204391E33E4EC00C086C8 /* WAVEncoder.c in Sources */,
-				2CF204361E33E4EC00C086C8 /* libPCM.c in Sources */,
-				2CF204371E33E4EC00C086C8 /* W64Decoder.c in Sources */,
-				2CF204411E3423F500C086C8 /* AIFDecoder.c in Sources */,
-				2CF204381E33E4EC00C086C8 /* W64Encoder.c in Sources */,
-				2CF204351E33E4EC00C086C8 /* WAVDecoder.c in Sources */,
+				2CE3123D1E7FBA5100E8A4E1 /* WAVEncoder.c in Sources */,
+				2CE312431E7FBA6200E8A4E1 /* WAVDecoder.c in Sources */,
+				2CE3123F1E7FBA5100E8A4E1 /* AIFEncoder.c in Sources */,
+				2CE312481E7FBA8500E8A4E1 /* libPCM.c in Sources */,
+				2CE312451E7FBA6200E8A4E1 /* AIFDecoder.c in Sources */,
+				2CE312441E7FBA6200E8A4E1 /* W64Decoder.c in Sources */,
+				2CE3123E1E7FBA5100E8A4E1 /* W64Encoder.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
