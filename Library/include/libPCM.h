@@ -1,4 +1,4 @@
-#include "/usr/local/Packages/libBitIO/include/BitIO.h"
+#include "../../Dependencies/BitIO/libBitIO/include/BitIO.h"
 
 #ifndef LIBPCM_H
 #define LIBPCM_H
@@ -40,21 +40,15 @@ extern "C" {
         TopBackRight     = 0x20000,
     };
     
-    typedef struct PCMMetadata {
-        uint8_t  NumTags;
-        char    *ArtistTag;
-        char    *ReleaseDateTag;
-        char    *GenreTag;
-        char    *AlbumTag;
-        char    *SongTitleTag;
-        char    *EncoderTag;
-    };
-    
     typedef struct W64Header W64Header;
     
     typedef struct WAVHeader WAVHeader;
     
     typedef struct AIFHeader AIFHeader;
+    
+    typedef struct PCMFile PCMFile;
+    
+    typedef struct PCMMetadata PCMMetadata;
     
     enum PCMFileTypes {
         Unknown_Type = 0,
@@ -62,20 +56,6 @@ extern "C" {
         RF64_File    = 2,
         W64_File     = 3,
         AIFF_File    = 4,
-    };
-    
-    typedef struct PCMFile {
-        uint8_t      FileType;
-        bool         FilledRequest; // Were there enough samples left to fill the request?
-        uint64_t     NumSamples;    // Channel agnostic
-        uint64_t     SampleRate;
-        uint64_t     BitDepth;
-        uint8_t      NumChannels;
-        uint32_t     ChannelMask;
-        bool         MetadataHasBeenParsed;
-        WAVHeader   *WAV;
-        PCMMetadata *Meta;
-        uint64_t    **Samples;
     };
     
     // So if it's a WAV file the input file metadata reader thing will set it to WAV, then read the meta into Meta
