@@ -1,9 +1,9 @@
 #include "../../Dependencies/BitIO/libBitIO/include/BitIO.h"
 
+#pragma once
+
 #ifndef LIBPCM_H
 #define LIBPCM_H
-
-#pragma once
 
 #ifdef __cplusplus
 extern "C" {

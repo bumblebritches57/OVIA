@@ -1,9 +1,9 @@
 #include "libPCM.h"
 
+#pragma once
+
 #ifndef LIBPCM_WAVCOMMON_H
 #define LIBPCM_WAVCOMMON_H
-
-#pragma once
 
 #ifdef __cplusplus
 extern "C" {
