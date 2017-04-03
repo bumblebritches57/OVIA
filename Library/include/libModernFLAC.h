@@ -116,6 +116,10 @@ extern "C" {
     
     DecodeFLAC *InitFLACDecoder(void);
     
+    void        CloseFLACEncoder(EncodeFLAC *Enc);
+    
+    void        CloseFLACDecoder(DecodeFLAC *Dec);
+    
 #ifdef __cplusplus
 }
 #endif
