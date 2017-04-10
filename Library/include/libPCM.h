@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef LIBPCM_H
-#define LIBPCM_H
+#ifndef LIBPCM_LIBPCM_H
+#define LIBPCM_LIBPCM_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -72,4 +72,4 @@ extern "C" {
 }
 #endif
 
-#endif /* LIBPCM_H */
+#endif /* LIBPCM_LIBPCM_H */

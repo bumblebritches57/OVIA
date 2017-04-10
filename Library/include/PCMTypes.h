@@ -1,3 +1,6 @@
+#include <stdbool.h>
+#include <stdint.h>
+
 #pragma once
 
 #ifndef LIBPCM_PCMTYPES_H
@@ -7,7 +10,7 @@
 extern "C" {
 #endif
     
-    struct PCMMetadata {
+    typedef struct PCMMetadata {
         uint8_t  NumTags;
         char    *ArtistTag;
         char    *ReleaseDateTag;
@@ -15,35 +18,9 @@ extern "C" {
         char    *AlbumTag;
         char    *SongTitleTag;
         char    *EncoderTag;
-    };
+    } PCMMetadata;
     
-    struct PCMFile {
-        uint8_t      FileType;
-        bool         FilledRequest; // Were there enough samples left to fill the request?
-        uint64_t     NumSamples;    // Channel agnostic
-        uint64_t     SampleRate;
-        uint64_t     BitDepth;
-        uint8_t      NumChannels;
-        uint32_t     ChannelMask;
-        bool         MetadataHasBeenParsed;
-        WAVHeader   *WAV;
-        PCMMetadata *Meta;
-        uint64_t    **Samples;
-    };
-    
-    struct AIFHeader {
-        uint16_t     Channels;
-        uint32_t     NumFrames; // More accurately described as number of channel agnostic samples.
-        uint16_t     BitDepth; // Samples are padded to the next complete byte
-        
-        /* SNSD */
-        uint32_t     Offset;
-        uint32_t     BlockSize;
-        
-        PCMMetadata *Meta;
-    };
-    
-    struct WAVHeader {
+    typedef struct WAVHeader {
         uint32_t RIFF;
         uint32_t RIFFSize; // Everything except RIFF or RIFF size aka -8
         uint32_t WAVE;
@@ -66,9 +43,35 @@ extern "C" {
         uint64_t SampleCount;
         uint8_t  HeaderSize;
         PCMMetadata *Meta;
-    };
+    } WAVHeader;
     
-    struct W64Header {
+    typedef struct PCMFile {
+        uint8_t      FileType;
+        bool         FilledRequest; // Were there enough samples left to fill the request?
+        uint64_t     NumSamples;    // Channel agnostic
+        uint64_t     SampleRate;
+        uint64_t     BitDepth;
+        uint8_t      NumChannels;
+        uint32_t     ChannelMask;
+        bool         MetadataHasBeenParsed;
+        WAVHeader   *WAV;
+        PCMMetadata *Meta;
+        uint64_t    **Samples;
+    } PCMFile;
+    
+    typedef struct AIFHeader {
+        uint16_t     Channels;
+        uint32_t     NumFrames; // More accurately described as number of channel agnostic samples.
+        uint16_t     BitDepth; // Samples are padded to the next complete byte
+        
+        /* SNSD */
+        uint32_t     Offset;
+        uint32_t     BlockSize;
+        
+        PCMMetadata *Meta;
+    } AIFHeader;
+    
+    typedef struct W64Header {
         uint16_t FormatType;
         uint16_t Channels;
         uint32_t SampleRate;
@@ -77,7 +80,7 @@ extern "C" {
         uint16_t BitDepth;
         uint64_t DataSize;
         uint64_t NumSamples; // Channel independent
-    };
+    } W64Header;
     
     enum AIFChunkIDs {
         AIF_FORM = 0x464F524D,

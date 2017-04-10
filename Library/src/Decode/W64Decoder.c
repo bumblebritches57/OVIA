@@ -11,7 +11,7 @@ extern "C" {
     void ParseW64Metadata(BitInput *BitI, W64Header *W64) {
         SkipBits(BitI, 96); // Skip the rest of the RIFF GUID
         SkipBits(BitI, 64); // RIFF Size
-        uint32_t ChunkID = ReadBits(BitI, 32, true);
+        uint32_t ChunkID   = ReadBits(BitI, 32, true);
         SkipBits(BitI, 96); // Rest of the chunk GUID
         uint64_t ChunkSize = ReadBits(BitI, 64, true);
         switch (ChunkID) {
