@@ -1,4 +1,4 @@
-#include "../include/Shared.h"
+#include "../include/PNGShared.h"
 
 #ifdef __cplusplus
 extern "C" {
