@@ -62,9 +62,10 @@ extern "C" {
     // Then once it comes across the equilivent of a data chunk, it will set Data to the pointer, then for extracting
     // samples it will read the type call the correct reader and extract the requested samples.
     
-    void     IdentifyPCMFile(BitInput *BitI, PCMFile *PCM);
     void     ParseWAVFile(BitInput *BitI, PCMFile *PCM);
     void     ParseW64File(BitInput *BitI, W64Header *W64);
+    
+    void     IdentifyPCMFile(BitInput *BitI, PCMFile *PCM);
     PCMFile *InitPCMFile(void);
     void     ClosePCMFile(PCMFile *PCM);
     
