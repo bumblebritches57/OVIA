@@ -11,37 +11,37 @@ extern "C" {
 #endif
     
     typedef struct PCMMetadata {
-        uint8_t  NumTags;
-        char    *ArtistTag;
-        char    *ReleaseDateTag;
-        char    *GenreTag;
-        char    *AlbumTag;
-        char    *SongTitleTag;
-        char    *EncoderTag;
+        uint8_t      NumTags;
+        char        *ArtistTag;
+        char        *ReleaseDateTag;
+        char        *GenreTag;
+        char        *AlbumTag;
+        char        *SongTitleTag;
+        char        *EncoderTag;
     } PCMMetadata;
     
     typedef struct WAVHeader {
-        uint32_t RIFF;
-        uint32_t RIFFSize; // Everything except RIFF or RIFF size aka -8
-        uint32_t WAVE;
-        uint32_t FMT;
-        uint32_t FMTSize; // Size of the format chunk
-        uint16_t FMTType;
-        uint16_t CompressionAlgorithm;
-        uint16_t Channels;
+        uint32_t     RIFF;
+        uint32_t     RIFFSize; // Everything except RIFF or RIFF size aka -8
+        uint32_t     WAVE;
+        uint32_t     FMT;
+        uint32_t     FMTSize; // Size of the format chunk
+        uint16_t     FMTType;
+        uint16_t     CompressionAlgorithm;
+        uint16_t     Channels;
         // START WAVE_FORMAT_EXTENSIBLE
-        uint16_t ValidBitsPerSample;
-        uint32_t SpeakerMask; // is actually 18 bits long
+        uint16_t     ValidBitsPerSample;
+        uint32_t     SpeakerMask; // is actually 18 bits long
                               // END WAVE_FORMAT_EXTENSIBLE
-        uint32_t SampleRate;
-        uint32_t ByteRate;
-        uint16_t BlockSize; // Padding
-        uint16_t BitDepth; // BitDepth
-        uint16_t ExtensionSize;
-        uint32_t DATAChunk;
-        uint32_t AudioDataSize;
-        uint64_t SampleCount;
-        uint8_t  HeaderSize;
+        uint32_t     SampleRate;
+        uint32_t     ByteRate;
+        uint16_t     BlockSize; // Padding
+        uint16_t     BitDepth; // BitDepth
+        uint16_t     ExtensionSize;
+        uint32_t     DATAChunk;
+        uint32_t     AudioDataSize;
+        uint64_t     SampleCount;
+        uint8_t      HeaderSize;
         PCMMetadata *Meta;
     } WAVHeader;
     
@@ -56,7 +56,7 @@ extern "C" {
         bool         MetadataHasBeenParsed;
         WAVHeader   *WAV;
         PCMMetadata *Meta;
-        uint64_t    **Samples;
+        uint64_t   **Samples;
     } PCMFile;
     
     typedef struct AIFHeader {
@@ -72,14 +72,14 @@ extern "C" {
     } AIFHeader;
     
     typedef struct W64Header {
-        uint16_t FormatType;
-        uint16_t Channels;
-        uint32_t SampleRate;
-        uint32_t ByteRate;
-        uint16_t BlockAlign;
-        uint16_t BitDepth;
-        uint64_t DataSize;
-        uint64_t NumSamples; // Channel independent
+        uint16_t     FormatType;
+        uint16_t     Channels;
+        uint32_t     SampleRate;
+        uint32_t     ByteRate;
+        uint16_t     BlockAlign;
+        uint16_t     BitDepth;
+        uint64_t     DataSize;
+        uint64_t     NumSamples; // Channel independent
     } W64Header;
     
     enum AIFChunkIDs {

@@ -1,5 +1,9 @@
 #include "../../Dependencies/BitIO/libBitIO/include/BitIO.h"
 
+/*
+ We should add support for BMP and PXM images as well.
+ */
+
 #pragma once
 
 #ifndef LIBPCM_LIBPCM_H
