@@ -12,12 +12,12 @@ extern "C" {
     
     typedef struct PCMMetadata {
         uint8_t      NumTags;
-        char        *ArtistTag;
-        char        *ReleaseDateTag;
-        char        *GenreTag;
-        char        *AlbumTag;
-        char        *SongTitleTag;
-        char        *EncoderTag;
+        const char  *ArtistTag;
+        const char  *ReleaseDateTag;
+        const char  *GenreTag;
+        const char  *AlbumTag;
+        const char  *SongTitleTag;
+        const char  *EncoderTag;
     } PCMMetadata;
     
     typedef struct WAVHeader {
@@ -42,21 +42,20 @@ extern "C" {
         uint32_t     AudioDataSize;
         uint64_t     SampleCount;
         uint8_t      HeaderSize;
-        PCMMetadata *Meta;
     } WAVHeader;
     
     typedef struct PCMFile {
-        uint8_t      FileType;
+        bool         MetadataHasBeenParsed;
         bool         FilledRequest; // Were there enough samples left to fill the request?
+        uint8_t      FileType;
         uint64_t     NumSamples;    // Channel agnostic
         uint64_t     SampleRate;
         uint64_t     BitDepth;
-        uint8_t      NumChannels;
+        uint64_t     NumChannels;
         uint32_t     ChannelMask;
-        bool         MetadataHasBeenParsed;
         WAVHeader   *WAV;
         PCMMetadata *Meta;
-        uint64_t   **Samples;
+        uint64_t   **SamplesOrLines;
     } PCMFile;
     
     typedef struct AIFHeader {
@@ -124,6 +123,21 @@ extern "C" {
         W64_LIST = 0x7473696C,
         W64_MRKR = 0xABF76256,
         W64_SUMM = 0x925F94BC,
+    };
+    
+    enum BMPMagic {
+        BMP_BM   = 0x424D,
+        
+    };
+    
+    enum PXMMagic {
+        PXM_P1   = 0x5031,
+        PXM_P2   = 0x5032,
+        PXM_P3   = 0x5033,
+        PXM_P4   = 0x5034,
+        PXM_P5   = 0x5035,
+        PXM_P6   = 0x5036,
+        PXM_P7   = 0x5037,
     };
     
 #ifdef __cplusplus

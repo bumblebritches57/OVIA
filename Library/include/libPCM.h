@@ -50,24 +50,18 @@ extern "C" {
         RF64_File           = 2,
         W64_File            = 3,
         AIFF_File           = 4,
+        BMP_File            = 5,
+        PXM_File            = 6,
     };
     
-    typedef struct W64Header W64Header;
-    
-    typedef struct WAVHeader WAVHeader;
-    
-    typedef struct AIFHeader AIFHeader;
-    
     typedef struct PCMFile PCMFile;
-    
-    typedef struct PCMMetadata PCMMetadata;
     
     // So if it's a WAV file the input file metadata reader thing will set it to WAV, then read the meta into Meta
     // Then once it comes across the equilivent of a data chunk, it will set Data to the pointer, then for extracting
     // samples it will read the type call the correct reader and extract the requested samples.
     
     void     ParseWAVFile(BitInput *BitI, PCMFile *PCM);
-    void     ParseW64File(BitInput *BitI, W64Header *W64);
+    void     ParseW64File(BitInput *BitI, PCMFile *PCM);
     
     void     IdentifyPCMFile(BitInput *BitI, PCMFile *PCM);
     PCMFile *InitPCMFile(void);
