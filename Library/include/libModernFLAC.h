@@ -126,51 +126,51 @@ extern "C" {
     
     /* Decode specific functions */
     
-    void        FLACReadFrame(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACReadFrame(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACReadSubFrame(BitInput *BitI, DecodeFLAC *Dec, uint8_t Channel);
+    void        FLACReadSubFrame(BitBuffer *InputFLAC, DecodeFLAC *Dec, uint8_t Channel);
     
-    void        FLACDecodeSubFrameVerbatim(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACDecodeSubFrameVerbatim(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACDecodeSubFrameConstant(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACDecodeSubFrameConstant(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACDecodeSubFrameFixed(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACDecodeSubFrameFixed(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACDecodeSubFrameLPC(BitInput *BitI, DecodeFLAC *Dec, uint8_t Channel);
+    void        FLACDecodeSubFrameLPC(BitBuffer *InputFLAC, DecodeFLAC *Dec, uint8_t Channel);
     
-    void        DecodeFLACesidual(BitInput *BitI, DecodeFLAC *Dec);
+    void        DecodeFLACesidual(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        DecodeFLACice1Partition(BitInput *BitI, DecodeFLAC *Dec);
+    void        DecodeFLACice1Partition(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        DecodeFLACice2Partition(BitInput *BitI, DecodeFLAC *Dec);
+    void        DecodeFLACice2Partition(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
     void        FLACBitDepth(DecodeFLAC *Dec);
     
-    void        FLACSampleRate(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACSampleRate(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
     uint8_t     GetBlockSizeInSamples(uint8_t BlockSize);
     
-    void        FLACReadStream(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACReadStream(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACParseMetadata(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACParseMetadata(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACParseStreamInfo(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACParseStreamInfo(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACSkipPadding(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACSkipPadding(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACSkipCustom(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACSkipCustom(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACParseSeekTable(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACParseSeekTable(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACParseVorbisComment(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACParseVorbisComment(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACParseCuesheet(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACParseCuesheet(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
-    void        FLACParsePicture(BitInput *BitI, DecodeFLAC *Dec);
+    void        FLACParsePicture(BitBuffer *InputFLAC, DecodeFLAC *Dec);
     
     /* Encode specific functions */
     
-    int8_t      EncodeFLACFile(PCMFile *PCM, BitOutput *BitO, EncodeFLAC *Enc);
+    int8_t      EncodeFLACFile(PCMFile *PCM, BitBuffer *OutputFLAC, EncodeFLAC *Enc);
     
     
 #ifdef __cplusplus
