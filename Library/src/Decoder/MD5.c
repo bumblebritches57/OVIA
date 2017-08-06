@@ -1,4 +1,4 @@
-#include "../../include/Decoder/MD5.h"
+#include "../../include/Private/Decode/MD5.h"
 
 #ifdef __cplusplus
 extern "C" {
