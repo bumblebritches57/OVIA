@@ -1,10 +1,9 @@
-#include <stdbool.h>
-#include <stdint.h>
+#include "../libPCM.h"
 
 #pragma once
 
-#ifndef LIBPCM_PCMTYPES_H
-#define LIBPCM_PCMTYPES_H
+#ifndef LIBPCM_libPCMTypes_H
+#define LIBPCM_libPCMTypes_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -144,4 +143,4 @@ extern "C" {
 }
 #endif
 
-#endif /* LIBPCM_PCMTYPES_H */
+#endif /* LIBPCM_libPCMTypes_H */

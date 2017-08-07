@@ -1,9 +1,9 @@
-#include "libPCM.h"
+#include "../../libPCM.h"
 
 #pragma once
 
-#ifndef LIBPCM_WAVCOMMON_H
-#define LIBPCM_WAVCOMMON_H
+#ifndef LIBPCM_WAVCommon_H
+#define LIBPCM_WAVCommon_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,4 +24,4 @@ extern "C" {
 }
 #endif
 
-#endif /* LIBPCM_WAVCOMMON_H */
+#endif /* LIBPCM_WAVCommon_H */
