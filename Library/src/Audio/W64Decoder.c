@@ -7,10 +7,12 @@ extern "C" {
 #endif
     
     void ParseW64Metadata(W64Header *W64, BitBuffer *BitB) {
-        SkipBits(BitB, 96); // Skip the rest of the RIFF GUID
-        SkipBits(BitB, 64); // RIFF Size
-        uint32_t ChunkID   = ReadBits(BitB, 32, true);
-        SkipBits(BitB, 96); // Rest of the chunk GUID
+        uint8_t  ChunkID[16];
+        
+        uint64_t RiffSize  = ReadBits(BitB, 64, true);
+        for (uint8_t GUIDByte = 0; GUIDByte < BitIOBinaryGUIDSize; GUIDByte++) {
+            ChunkID[GUIDByte] = ReadBits(BitB, 8, true);
+        }
         uint64_t ChunkSize = ReadBits(BitB, 64, true);
         switch (ChunkID) {
             case W64_FMT:

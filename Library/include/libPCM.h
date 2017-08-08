@@ -68,7 +68,7 @@ extern "C" {
     
     void     IdentifyPCMFile(BitInput *BitI, PCMFile *PCM);
     PCMFile *InitPCMFile(void);
-    void     ClosePCMFile(PCMFile *PCM);
+    void     DeinitPCMFile(PCMFile *PCM);
     
 #ifdef __cplusplus
 }
