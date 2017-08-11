@@ -21,6 +21,9 @@ extern "C" {
     
     struct PCMFile {
         uint8_t      FileFormat;
+        uint64_t     FileSize;
+        uint8_t      WAVW64FormatType;
+        uint8_t      BlockAlignment;
         uint64_t     NumSamples;
         uint64_t     BitDepth;
         uint64_t     SampleRate;

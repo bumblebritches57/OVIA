@@ -6,46 +6,47 @@
 extern "C" {
 #endif
     
-    void ParseW64Metadata(W64Header *W64, BitBuffer *BitB) {
-        uint8_t  ChunkID[16];
+    void ParseW64Metadata(PCMFile *PCM, BitBuffer *BitB) {
+        uint8_t  *ChunkID = calloc(1, BitIOBinaryGUIDSize);
         
-        uint64_t RiffSize  = ReadBits(BitB, 64, true);
-        for (uint8_t GUIDByte = 0; GUIDByte < BitIOBinaryGUIDSize; GUIDByte++) {
-            ChunkID[GUIDByte] = ReadBits(BitB, 8, true);
-        }
+        ChunkID           = ReadUUID(BitB);
+        uint64_t RiffSize = ReadBits(BitB, 64, true);
+        
+        
+        
+        
+        
         uint64_t ChunkSize = ReadBits(BitB, 64, true);
-        switch (ChunkID) {
-            case W64_FMT:
-                ParseW64FMTChunk(BitB, W64);
-                break;
-            case W64_BEXT:
-                ParseW64BEXTChunk(BitB, W64);
-                break;
-                
-            default:
-                break;
+        
+        if (CompareUUIDs(ChunkID, W64_WAVE) == 0) {
+            
+        }
+        if (CompareUUIDs(ChunkID, W64_FMT) == 0) {
+            ParseW64FMTChunk(PCM, BitB);
+        } else if (CompareUUIDs(ChunkID, W64_BEXT) == 0) {
+            ParseW64BEXTChunk(PCM, BitB);
         }
     }
     
     /* Format decoding */
-    void ParseW64FMTChunk(W64Header *W64, BitBuffer *BitB) {
-        W64->FormatType  = ReadBits(BitB, 16, true);
-        W64->Channels    = ReadBits(BitB, 16, true);
-        W64->SampleRate  = ReadBits(BitB, 32, true);
-        W64->ByteRate    = ReadBits(BitB, 32, true);
-        W64->BlockAlign  = ReadBits(BitB, 16, true);
-        W64->BitDepth    = ReadBits(BitB, 16, true);
+    void ParseW64FMTChunk(PCMFile *PCM, BitBuffer *BitB) {
+        PCM->WAVW64FormatType = ReadBits(BitB, 16, true);
+        PCM->NumChannels      = ReadBits(BitB, 16, true);
+        PCM->SampleRate       = ReadBits(BitB, 32, true);
+        SkipBits(BitB, 32); // ByteRate
+        PCM->BlockAlignment   = ReadBits(BitB, 16, true);
+        PCM->BitDepth         = ReadBits(BitB, 16, true);
     }
     
-    void ParseW64BEXTChunk(W64Header *W64, BitBuffer *BitB) {
+    void ParseW64BEXTChunk(PCMFile *PCM, BitBuffer *BitB) {
         
     }
     
-    void ParseW64DataChunk(W64Header *W64, BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
+    void ParseW64DataChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
         W64->NumSamples = (((ChunkSize - 24 / W64->BlockAlign) / W64->Channels) / W64->BitDepth);
     }
     
-    void ParseW64LEVL(W64Header *W64, BitBuffer *BitB) { // aka Peak Envelope Chunk
+    void ParseW64LEVL(PCMFile *PCM, BitBuffer *BitB) { // aka Peak Envelope Chunk
         
     }
     

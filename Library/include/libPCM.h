@@ -119,9 +119,13 @@ extern "C" {
     
     PCMFile *InitPCMFile(void);
     
-    void     DeinitPCMFile(PCMFile *PCM);
+    void     IdentifyPCMFile(PCMFile *PCM, BitBuffer *BitB);
     
-    void     IdentifyPCMFile(BitBuffer *BitB, PCMFile *PCM);
+    void     ParsePCMMetadata(PCMFile *PCM, BitBuffer *BitB);
+    
+    void     ExtractPCMSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t Samples2Extract);
+    
+    void     DeinitPCMFile(PCMFile *PCM);
     
 #ifdef __cplusplus
 }
