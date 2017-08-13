@@ -3,8 +3,8 @@
 
 #pragma once
 
-#ifndef LIBMODERNPNG_ModernPNGAdler32_H
-#define LIBMODERNPNG_ModernPNGAdler32_H
+#ifndef LIBMODERNPNG_libModernPNGAdler32_H
+#define LIBMODERNPNG_libModernPNGAdler32_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,4 +31,4 @@ extern "C" {
 }
 #endif
 
-#endif /* LIBMODERNPNG_ModernPNGAdler32_H */
+#endif /* LIBMODERNPNG_libModernPNGAdler32_H */

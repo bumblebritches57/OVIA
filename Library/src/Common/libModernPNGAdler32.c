@@ -1,4 +1,4 @@
-#include "../include/Private/ModernPNGAdler32.h"
+#include "../../include/Private/Common/libModernPNGAdler32.h"
 
 #ifdef __cplusplus
 extern "C" {
