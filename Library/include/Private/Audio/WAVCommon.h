@@ -9,16 +9,16 @@
 extern "C" {
 #endif
     
-    void ReadINFO_IART(WAVHeader *Wav, BitBuffer *BitB, uint32_t ChunkSize);
-    void ReadINFO_ICRD(WAVHeader *Wav, BitBuffer *BitB, uint32_t ChunkSize);
-    void ReadINFO_IGNR(WAVHeader *Wav, BitBuffer *BitB, uint32_t ChunkSize);
-    void ReadINFO_INAM(WAVHeader *Wav, BitBuffer *BitB, uint32_t ChunkSize);
-    void ReadINFO_IPRD(WAVHeader *Wav, BitBuffer *BitB, uint32_t ChunkSize);
-    void ReadINFO_ISFT(WAVHeader *Wav, BitBuffer *BitB, uint32_t ChunkSize);
-    void ParseWavLISTChunk(WAVHeader *Wav, BitBuffer *BitB, uint32_t ChunkSize);
-    void ParseWavDATAChunk(WAVHeader *Wav, BitBuffer *BitB, uint32_t ChunkSize);
-    void ParseWavFMTChunk(WAVHeader *Wav, BitBuffer *BitB, uint32_t ChunkSize);
-    void WAVExtractSamples(WAVHeader *Wav, BitBuffer *BitB, uint64_t NumSamples2Extract);
+    void ReadINFO_IART(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
+    void ReadINFO_ICRD(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
+    void ReadINFO_IGNR(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
+    void ReadINFO_INAM(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
+    void ReadINFO_IPRD(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
+    void ReadINFO_ISFT(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
+    void ParseWavLISTChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
+    void ParseWavDATAChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
+    void ParseWavFMTChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
+    void WAVExtractSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t NumSamples2Extract);
     
 #ifdef __cplusplus
 }

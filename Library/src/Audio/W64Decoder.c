@@ -43,7 +43,7 @@ extern "C" {
     }
     
     void ParseW64DataChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
-        W64->NumSamples = (((ChunkSize - 24 / W64->BlockAlign) / W64->Channels) / W64->BitDepth);
+        PCM->NumSamples = (((ChunkSize - 24 / PCM->BlockAlign) / PCM->Channels) / PCM->BitDepth);
     }
     
     void ParseW64LEVL(PCMFile *PCM, BitBuffer *BitB) { // aka Peak Envelope Chunk
