@@ -1,11 +1,11 @@
-#include "../../Dependencies/libPCM/Dependencies/BitIO/libBitIO/include/BitIO.h"
+#include <math.h>
 
-#include "../../Dependencies/libPCM/libPCM/include/libPCM.h"
+#include "../../Dependencies/libPCM/Dependencies/BitIO/libBitIO/include/BitIO.h"
 
 #pragma once
 
-#ifndef LIBMODERNFLAC_LIBMODERNFLAC_H
-#define LIBMODERNFLAC_LIBMODERNFLAC_H
+#ifndef LIBMODERNFLAC_libModernFLAC_H
+#define LIBMODERNFLAC_libModernFLAC_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -120,9 +120,9 @@ extern "C" {
     
     DecodeFLAC *InitFLACDecoder(void);
     
-    void        CloseFLACEncoder(EncodeFLAC *Enc);
+    void        DeinitFLACEncoder(EncodeFLAC *Enc);
     
-    void        CloseFLACDecoder(DecodeFLAC *Dec);
+    void        DeinitFLACDecoder(DecodeFLAC *Dec);
     
     /* Decode specific functions */
     
@@ -177,4 +177,4 @@ extern "C" {
 }
 #endif
 
-#endif /* LIBMODERNFLAC_LIBMODERNFLAC_H */
+#endif /* LIBMODERNFLAC_libModernFLAC_H */

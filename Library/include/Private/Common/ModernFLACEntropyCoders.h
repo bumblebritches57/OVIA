@@ -1,10 +1,9 @@
-#include <stdbool.h>
-#include <stdint.h>
+#include "../../libModernFLAC.h"
 
 #pragma once
 
-#ifndef LIBBITIO_MD5_H
-#define LIBBITIO_MD5_H
+#ifndef LIBMODERNFLAC_ModernFLACEntropyCoders_H
+#define LIBMODERNFLAC_ModernFLACEntropyCoders_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -22,4 +21,4 @@ extern "C" {
 }
 #endif
 
-#endif /* LIBBITIO_MD5_H */
+#endif /* LIBMODERNFLAC_ModernFLACEntropyCoders_H */
