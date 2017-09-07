@@ -1,6 +1,7 @@
 #include <math.h>
 
 #include "../../Dependencies/libPCM/Dependencies/BitIO/libBitIO/include/BitIO.h"
+#include "../../Dependencies/libPCM/libPCM/include/libPCM.h"
 
 #pragma once
 
