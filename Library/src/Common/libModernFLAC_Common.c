@@ -1,4 +1,4 @@
-#include "../../include/Private/Common/ModernFLACCommon.h"
+#include "../../include/Private/Common/libModernFLAC_Common.h"
 
 inline int64_t OnesCompliment2TwosCompliment(const int64_t OnesCompliment) {
     return ~OnesCompliment + 1;

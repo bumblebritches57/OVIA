@@ -5,8 +5,8 @@
 
 #pragma once
 
-#ifndef LIBMODERNFLAC_libModernFLAC_H
-#define LIBMODERNFLAC_libModernFLAC_H
+#ifndef libModernFLAC_H
+#define libModernFLAC_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -178,4 +178,4 @@ extern "C" {
 }
 #endif
 
-#endif /* LIBMODERNFLAC_libModernFLAC_H */
+#endif /* libModernFLAC_H */
