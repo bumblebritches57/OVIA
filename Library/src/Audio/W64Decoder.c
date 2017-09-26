@@ -7,16 +7,11 @@ extern "C" {
 #endif
     
     void ParseW64Metadata(PCMFile *PCM, BitBuffer *BitB) {
-        uint8_t  *ChunkID = calloc(1, BitIOBinaryGUIDSize);
+        uint8_t  *ChunkID  = NULL;
+        ChunkID            = ReadGUUID(BitIOBinaryGUID, BitB);
+        uint64_t W64Size   = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 64);
         
-        ChunkID           = ReadUUID(BitB);
-        uint64_t RiffSize = ReadBits(BitB, 64, true);
-        
-        
-        
-        
-        
-        uint64_t ChunkSize = ReadBits(BitB, 64, true);
+        uint64_t ChunkSize = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 64);
         
         if (CompareUUIDs(ChunkID, W64_WAVE) == 0) {
             
@@ -30,12 +25,12 @@ extern "C" {
     
     /* Format decoding */
     void ParseW64FMTChunk(PCMFile *PCM, BitBuffer *BitB) {
-        PCM->WAVW64FormatType = ReadBits(BitB, 16, true);
-        PCM->NumChannels      = ReadBits(BitB, 16, true);
-        PCM->SampleRate       = ReadBits(BitB, 32, true);
+        PCM->WAVW64FormatType = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->NumChannels      = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->SampleRate       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 32);
         SkipBits(BitB, 32); // ByteRate
-        PCM->BlockAlignment   = ReadBits(BitB, 16, true);
-        PCM->BitDepth         = ReadBits(BitB, 16, true);
+        PCM->BlockAlignment   = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->BitDepth         = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
     }
     
     void ParseW64BEXTChunk(PCMFile *PCM, BitBuffer *BitB) {

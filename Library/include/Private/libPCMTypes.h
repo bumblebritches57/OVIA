@@ -36,6 +36,10 @@ extern "C" {
         PCMMetadata *Meta;
     };
     
+    typedef struct PCMMetadata PCMMetadata;
+    
+    typedef struct PCMFile PCMFile;
+    
 #ifdef __cplusplus
 }
 #endif
