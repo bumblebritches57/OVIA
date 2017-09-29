@@ -34,7 +34,7 @@ extern "C" {
         uint64_t     NumChannels;
         uint64_t     ChannelMask;
         
-        uint64_t    *Samples;
+        uint64_t   **Samples;
         PCMMetadata *Meta;
     };
     

@@ -13,9 +13,10 @@ extern "C" {
         UnknownFormat       = 0,
         AIFFormat           = 1,
         WAVFormat           = 2,
-        W64Format           = 3,
-        BMPFormat           = 4,
-        PXMFormat           = 5,
+        WAVFormatExtensible = 3,
+        W64Format           = 4,
+        BMPFormat           = 5,
+        PXMFormat           = 6,
     };
     
     enum AIFSpeakerMask {
@@ -85,13 +86,13 @@ extern "C" {
     };
     
     enum PXMMagic {
-        PXM_P1              = 0x5031,
-        PXM_P2              = 0x5032,
-        PXM_P3              = 0x5033,
-        PXM_P4              = 0x5034,
-        PXM_P5              = 0x5035,
-        PXM_P6              = 0x5036,
-        PXM_P7              = 0x5037,
+        PortableBitMap1  = 0x5031, // P1 or P4
+        PortableBitMap2  = 0x5034,
+        PortableGrayMap1 = 0x5032, // P2 or P5
+        PortableGrayMap2 = 0x5035,
+        PortablePixMap1  = 0x5033, // P3 or P6
+        PortablePixMap2  = 0x5036,
+        PortableAnyMap   = 0x5037, // P7
     };
     
     typedef struct PCMFile PCMFile;
