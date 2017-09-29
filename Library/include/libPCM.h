@@ -94,7 +94,7 @@ extern "C" {
         PXM_P7              = 0x5037,
     };
     
-    typedef PCMFile PCMFile;
+    typedef struct PCMFile PCMFile;
     
     PCMFile *InitPCMFile(void);
     

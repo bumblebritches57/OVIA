@@ -9,7 +9,7 @@
 extern "C" {
 #endif
     
-    typedef struct PCMMetadata {
+ 	struct PCMMetadata {
         uint8_t      NumTags;
         const char  *ArtistTag;
         const char  *ReleaseDateTag;
@@ -17,9 +17,11 @@ extern "C" {
         const char  *AlbumTag;
         const char  *SongTitleTag;
         const char  *EncoderTag;
-    } PCMMetadata;
+    };
     
-    typedef struct PCMFile {
+    typedef struct PCMMetadata PCMMetadata;
+    
+ 	struct PCMFile {
         bool         MetaIsPresent;
         uint8_t      WAVW64FormatType;
         uint8_t      FileFormat;
@@ -34,7 +36,7 @@ extern "C" {
         
         uint64_t    *Samples;
         PCMMetadata *Meta;
-    } PCMFile;
+    };
     
 #ifdef __cplusplus
 }
