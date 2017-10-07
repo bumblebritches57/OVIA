@@ -13,10 +13,11 @@ extern "C" {
         UnknownFormat       = 0,
         AIFFormat           = 1,
         WAVFormat           = 2,
-        WAVFormatExtensible = 3,
-        W64Format           = 4,
-        BMPFormat           = 5,
-        PXMFormat           = 6,
+        WAVFormatEx         = 3,
+        WAVFormatExtensible = 4,
+        W64Format           = 5,
+        BMPFormat           = 6,
+        PXMFormat           = 7,
     };
     
     enum AIFSpeakerMask {
