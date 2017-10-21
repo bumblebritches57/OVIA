@@ -10,13 +10,14 @@ extern "C" {
 #endif
     
     typedef struct BMPHeader {
-        uint16_t Magic;
         uint32_t FileSize;
         uint16_t Reserved1;
         uint16_t Reserved2;
         uint32_t PixelOffset;
+        /* This isn't actually present but we need it */
+        uint16_t NumChannels;
         /* This is technically the DIB header */
-        uint32_t DIBType;
+        uint32_t DIBSize;
         int32_t  Width;
         int32_t  Height;
         uint16_t BiPlanes;
@@ -40,6 +41,7 @@ extern "C" {
         uint32_t ICCProfilePayload; // bV5ProfileData
         uint32_t ICCProfilePayloadSize; // bV5ProfileSize
         uint32_t Reserved;
+        uint32_t BMPBitMasks;
     } BMPHeader;
     
     typedef struct PXMHeader {
