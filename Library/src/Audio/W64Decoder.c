@@ -25,12 +25,12 @@ extern "C" {
     
     /* Format decoding */
     void ParseW64FMTChunk(PCMFile *PCM, BitBuffer *BitB) {
-        PCM->WAVW64FormatType = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
-        PCM->NumChannels      = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
-        PCM->SampleRate       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 32);
-        SkipBits(BitB, 32); // ByteRate
-        PCM->BlockAlignment   = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
-        PCM->BitDepth         = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->AUD->FormatType       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->AUD->NumChannels      = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->AUD->SampleRate       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 32);
+        BitBufferSkip(BitB, 32); // ByteRate
+        PCM->AUD->BlockAlignment   = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->AUD->BitDepth         = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
     }
     
     void ParseW64BEXTChunk(PCMFile *PCM, BitBuffer *BitB) {
@@ -38,7 +38,7 @@ extern "C" {
     }
     
     void ParseW64DataChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
-        PCM->NumSamples = (((ChunkSize - 24 / PCM->BlockAlignment) / PCM->NumChannels) / PCM->BitDepth);
+        PCM->AUD->NumSamples = (((ChunkSize - 24 / PCM->AUD->BlockAlignment) / PCM->AUD->NumChannels) / PCM->AUD->BitDepth);
     }
     
     void ParseW64LEVL(PCMFile *PCM, BitBuffer *BitB) { // aka Peak Envelope Chunk

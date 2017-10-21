@@ -18,7 +18,7 @@ extern "C" {
     void ParseWavLISTChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
     void ParseWavDATAChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
     void ParseWavFMTChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
-    void WAVExtractSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t NumSamples2Extract);
+    uint32_t **WAVExtractSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t NumSamples2Extract);
     
 #ifdef __cplusplus
 }
