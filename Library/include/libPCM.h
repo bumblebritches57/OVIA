@@ -98,7 +98,7 @@ extern "C" {
     
     typedef struct PCMFile PCMFile;
     
-    PCMFile *InitPCMFile(void);
+    PCMFile *PCMFileInit(void);
     
     void     IdentifyPCMFile(PCMFile *PCM, BitBuffer *BitB);
     
@@ -106,7 +106,7 @@ extern "C" {
     
     void     ExtractPCMSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t Samples2Extract);
     
-    void     DeinitPCMFile(PCMFile *PCM);
+    void     PCMFileDeinit(PCMFile *PCM);
     
 #ifdef __cplusplus
 }
