@@ -44,11 +44,17 @@ extern "C" {
         uint32_t BMPBitMasks;
     } BMPHeader;
     
+    enum PXMTupleTypes {
+        PXM_TUPLE_Unknown = 0,
+        PXM_TUPLE_RGB     = 1,
+    }
+    
     typedef struct PXMHeader {
         uint64_t Width;
         uint64_t Height;
         uint64_t NumChannels;
         uint64_t MaxVal;
+        uint8_t  TupleType;
     } PXMHeader;
     /*
  	struct AudioMetadata {
