@@ -17,29 +17,29 @@ extern "C" {
         /* This isn't actually present but we need it */
         uint16_t NumChannels;
         /* This is technically the DIB header */
-        uint32_t DIBSize;
-        int32_t  Width;
-        int32_t  Height;
-        uint16_t BiPlanes;
-        uint16_t BitDepth;
-        uint32_t CompressionType;
-        uint32_t ImageSize;
-        int32_t  WidthPixelsPerMeter;
-        int32_t  HeightPixelsPerMeter;
-        uint32_t NumColorsInIndexUsed;
-        uint32_t NumImportantColorsInIndex;
+        uint32_t DIBSize;                   // biSize
+        int32_t  Width;                     // biWidth
+        int32_t  Height;                    // biHeight
+        uint16_t Planes;                    // biPlanes
+        uint16_t BitDepth;                  // biBitCount
+        uint32_t CompressionType;           // biCompression
+        uint32_t ImageSize;                 // biSizeImage
+        int32_t  WidthPixelsPerMeter;       // biXPelsPerMeter
+        int32_t  HeightPixelsPerMeter;      // biYPelsPerMeter
+        uint32_t NumColorsInIndexUsed;      // biClrUsed
+        uint32_t NumImportantColorsInIndex; // biClrImportant
         uint32_t RedMask;
         uint32_t BlueMask;
         uint32_t GreenMask;
         uint32_t AlphaMask;
-        uint32_t ColorSpaceType; // bV4CSType
-        uint32_t XYZCoordinates[3]; // bV4Endpoints
+        uint32_t ColorSpaceType;            // bV4CSType
+        uint32_t XYZCoordinates[3];         // bV4Endpoints
         uint32_t GammaRed;
         uint32_t GammaGreen;
         uint32_t GammaBlue;
-        uint32_t ICCIntent; // bV5Intent
-        uint32_t ICCProfilePayload; // bV5ProfileData
-        uint32_t ICCProfilePayloadSize; // bV5ProfileSize
+        uint32_t ICCIntent;                 // bV5Intent
+        uint32_t ICCProfilePayload;         // bV5ProfileData
+        uint32_t ICCProfilePayloadSize;     // bV5ProfileSize
         uint32_t Reserved;
         uint32_t BMPBitMasks;
     } BMPHeader;
