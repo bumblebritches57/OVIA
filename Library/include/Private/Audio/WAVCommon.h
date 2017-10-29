@@ -9,6 +9,7 @@
 extern "C" {
 #endif
     
+    void ParseWAVFile(PCMFile *PCM, BitBuffer *BitB);
     void ReadINFO_IART(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
     void ReadINFO_ICRD(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
     void ReadINFO_IGNR(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize);
