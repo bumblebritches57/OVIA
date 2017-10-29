@@ -105,12 +105,12 @@ extern "C" {
     };
     
     enum PXMMagic {
-        PortableBitMap1  = 0x5031, // P1 or P4
-        PortableBitMap2  = 0x5034,
-        PortableGrayMap1 = 0x5032, // P2 or P5
-        PortableGrayMap2 = 0x5035,
-        PortablePixMap1  = 0x5033, // P3 or P6
-        PortablePixMap2  = 0x5036,
+        PortableBitMap1  = 0x5031, // P1
+        PortableBitMap2  = 0x5034, // P4
+        PortableGrayMap1 = 0x5032, // P2
+        PortableGrayMap2 = 0x5035, // P5
+        PortablePixMap1  = 0x5033, // P3
+        PortablePixMap2  = 0x5036, // P6
         PortableAnyMap   = 0x5037, // P7
     };
     

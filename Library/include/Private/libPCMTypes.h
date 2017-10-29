@@ -45,8 +45,12 @@ extern "C" {
     } BMPHeader;
     
     enum PXMTupleTypes {
-        PXM_TUPLE_Unknown = 0,
-        PXM_TUPLE_RGB     = 1,
+        PXM_TUPLE_Unknown   = 0,
+        PXM_TUPLE_BnW       = 1,
+        PXM_TUPLE_Gray      = 2,
+        PXM_TUPLE_GrayAlpha = 3,
+        PXM_TUPLE_RGB       = 4,
+        PXM_TUPLE_RGBAlpha  = 5,
     };
     
     typedef struct PXMHeader {
