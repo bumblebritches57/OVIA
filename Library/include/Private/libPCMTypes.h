@@ -47,7 +47,7 @@ extern "C" {
     enum PXMTupleTypes {
         PXM_TUPLE_Unknown = 0,
         PXM_TUPLE_RGB     = 1,
-    }
+    };
     
     typedef struct PXMHeader {
         uint64_t Width;
