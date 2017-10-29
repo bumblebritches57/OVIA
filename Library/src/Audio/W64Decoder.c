@@ -13,12 +13,12 @@ extern "C" {
         
         uint64_t ChunkSize = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 64);
         
-        if (CompareGUUIDs(ChunkID, W64_WAVE_GUIDString, BitIOBinaryGUUIDSize) == true) {
+        if (CompareGUUIDs(ChunkID, W64_WAVE_GUIDString, BitIOBinaryGUUIDSize) == Yes) {
             
         }
-        if (CompareGUUIDs(ChunkID, W64_FMT_GUIDString, BitIOBinaryGUUIDSize) == true) {
+        if (CompareGUUIDs(ChunkID, W64_FMT_GUIDString, BitIOBinaryGUUIDSize) == Yes) {
             ParseW64FMTChunk(PCM, BitB);
-        } else if (CompareGUUIDs(ChunkID, W64_BEXT_GUIDString, BitIOBinaryGUUIDSize) == true) {
+        } else if (CompareGUUIDs(ChunkID, W64_BEXT_GUIDString, BitIOBinaryGUUIDSize) == Yes) {
             ParseW64BEXTChunk(PCM, BitB);
         }
     }
