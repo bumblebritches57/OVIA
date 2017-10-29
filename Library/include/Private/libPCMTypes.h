@@ -56,36 +56,7 @@ extern "C" {
         uint64_t MaxVal;
         uint8_t  TupleType;
     } PXMHeader;
-    /*
- 	struct AudioMetadata {
-        uint8_t      NumTags;
-        const char  *ArtistTag;
-        const char  *ReleaseDateTag;
-        const char  *GenreTag;
-        const char  *AlbumTag;
-        const char  *SongTitleTag;
-        const char  *EncoderTag;
-    };
     
-    typedef struct PCMMetadata PCMMetadata;
-    
- 	struct PCMFile {
-        bool         MetaIsPresent;
-        uint8_t      WAVW64FormatType;
-        uint8_t      FileFormat;
-        uint8_t      BlockAlignment;
-        uint64_t     NumSamples;
-        uint64_t     FileSize;
-        
-        uint64_t     BitDepth;
-        uint64_t     SampleRate;
-        uint64_t     NumChannels;
-        uint64_t     ChannelMask;
-        
-        uint64_t   **Samples;
-        PCMMetadata *Meta;
-    };
-    */
     typedef struct AUDMetadata {
         uint8_t      NumTags;
         const char  *ArtistTag;
