@@ -44,21 +44,21 @@ extern "C" {
         uint32_t BMPBitMasks;
     } BMPHeader;
     
-    enum PXMTupleTypes {
+    typedef enum PXMTupleTypes {
         PXM_TUPLE_Unknown   = 0,
         PXM_TUPLE_BnW       = 1,
         PXM_TUPLE_Gray      = 2,
         PXM_TUPLE_GrayAlpha = 3,
         PXM_TUPLE_RGB       = 4,
         PXM_TUPLE_RGBAlpha  = 5,
-    };
+    } PXMTupleTypes;
     
     typedef struct PXMHeader {
-        uint64_t Width;
-        uint64_t Height;
-        uint64_t NumChannels;
-        uint64_t MaxVal;
-        uint8_t  TupleType;
+        uint64_t      Width;
+        uint64_t      Height;
+        uint64_t      NumChannels;
+        uint64_t      MaxVal;
+        PXMTupleTypes TupleType;
     } PXMHeader;
     
     typedef struct AUDMetadata {
