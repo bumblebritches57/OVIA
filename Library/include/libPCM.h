@@ -11,6 +11,8 @@ extern "C" {
     
     enum libPCMConstants {
         PXMMagicSize        = 2,
+        PXMFieldSeperator   = 0x20,
+        PXMEndField         = 0x0A,
     };
     
     enum libPCMFileFormats {
