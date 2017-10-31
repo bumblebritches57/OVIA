@@ -70,6 +70,8 @@ extern "C" {
         const char  *AlbumTag;
         const char  *SongTitleTag;
         const char  *EncoderTag;
+        uint32_t     NumANNOChunks;
+        const char **AnnoChunks;
     } AUDMetadata;
     
     typedef struct AUDHeader {

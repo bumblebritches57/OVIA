@@ -6,23 +6,6 @@
 extern "C" {
 #endif
     
-    void ParseW64Metadata(PCMFile *PCM, BitBuffer *BitB) {
-        uint8_t  *ChunkID  = NULL;
-        ChunkID            = ReadGUUID(BitIOBinaryGUID, BitB);
-        uint64_t W64Size   = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 64);
-        
-        uint64_t ChunkSize = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 64);
-        
-        if (CompareGUUIDs(ChunkID, W64_WAVE_GUIDString, BitIOBinaryGUUIDSize) == Yes) {
-            
-        }
-        if (CompareGUUIDs(ChunkID, W64_FMT_GUIDString, BitIOBinaryGUUIDSize) == Yes) {
-            ParseW64FMTChunk(PCM, BitB);
-        } else if (CompareGUUIDs(ChunkID, W64_BEXT_GUIDString, BitIOBinaryGUUIDSize) == Yes) {
-            ParseW64BEXTChunk(PCM, BitB);
-        }
-    }
-    
     /* Format decoding */
     void ParseW64FMTChunk(PCMFile *PCM, BitBuffer *BitB) {
         PCM->AUD->FormatType       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
@@ -43,6 +26,38 @@ extern "C" {
     
     void ParseW64LEVL(PCMFile *PCM, BitBuffer *BitB) { // aka Peak Envelope Chunk
         
+    }
+    
+    void W64ParseMetadata(PCMFile *PCM, BitBuffer *BitB) {
+        uint8_t *ChunkUUIDString = ReadGUUID(BitIOUUIDString, BitB);
+        uint64_t W64Size         = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 64);
+        if (CompareGUUIDs(ChunkUUIDString, W64_RIFF_GUIDString, BitIOGUUIDString) == Yes) {
+            
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_WAVE_GUIDString, BitIOGUUIDString) == Yes) {
+            
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_FMT_GUIDString, BitIOGUUIDString) == Yes) {
+            ParseW64FMTChunk(PCM, BitB);
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_DATA_GUIDString, BitIOGUUIDString) == Yes) {
+            
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_LEVL_GUIDString, BitIOGUUIDString) == Yes) {
+            
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_BEXT_GUIDString, BitIOGUUIDString) == Yes) {
+            ParseW64BEXTChunk(PCM, BitB);
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_FACT_GUIDString, BitIOGUUIDString) == Yes) {
+            
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_JUNK_GUIDString, BitIOGUUIDString) == Yes) {
+            
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_MRKR_GUIDString, BitIOGUUIDString) == Yes) {
+            
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_SUMM_GUIDString, BitIOGUUIDString) == Yes) {
+            
+        } else if (CompareGUUIDs(ChunkUUIDString, W64_LIST_GUIDString, BitIOGUUIDString) == Yes) {
+            
+        }
+    }
+    
+    uint32_t **W64ExtractSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t NumSamples2Extract) {
+        return NULL;
     }
     
 #ifdef __cplusplus
