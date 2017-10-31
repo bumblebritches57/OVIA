@@ -16,6 +16,10 @@ extern "C" {
         PXMEndField           = 0x0A,
     };
     
+    enum WAVFormatCode {
+        PCM                   = 1,
+    };
+    
     typedef enum libPCMFileFormats {
         UnknownFormat         = 0,
         AIFFormat             = 1,
