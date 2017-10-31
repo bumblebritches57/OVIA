@@ -145,7 +145,9 @@ extern "C" {
     
     void       ParsePCMMetadata(PCMFile *PCM, BitBuffer *BitB);
     
-    uint32_t **ExtractAudioSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract);
+    uint32_t **ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract);
+    
+    bool       IsThereMoreMetadata(PCMFile *PCM);
     
     void       PCMFileDeinit(PCMFile *PCM);
     
