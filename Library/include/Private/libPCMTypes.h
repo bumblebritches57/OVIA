@@ -58,7 +58,7 @@ extern "C" {
         uint64_t      Width;
         uint64_t      Height;
         uint64_t      NumChannels;
-        uint64_t      MaxVal;
+        uint8_t       BitDepth;
         PXMTupleTypes TupleType;
     } PXMHeader;
     
