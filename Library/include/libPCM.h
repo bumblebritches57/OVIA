@@ -16,7 +16,7 @@ extern "C" {
         PXMEndField         = 0x0A,
     };
     
-    enum libPCMFileFormats {
+    typedef enum libPCMFileFormats {
         UnknownFormat       = 0,
         AIFFormat           = 1,
         WAVFormat           = 2,
@@ -25,7 +25,7 @@ extern "C" {
         W64Format           = 5,
         BMPFormat           = 6,
         PXMFormat           = 7,
-    };
+    } libPCMFileFormats;
     
     enum AIFSpeakerMask {
         AIFFrontLeft        = 0x1,

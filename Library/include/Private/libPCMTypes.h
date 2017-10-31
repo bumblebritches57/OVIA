@@ -86,10 +86,10 @@ extern "C" {
     } AUDHeader;
     
     struct PCMFile {
-        uint8_t    PCMFileType;
-        BMPHeader *BMP;
-        PXMHeader *PXM;
-        AUDHeader *AUD;
+        libPCMFileFormats PCMFileType;
+        BMPHeader        *BMP;
+        PXMHeader        *PXM;
+        AUDHeader        *AUD;
     };
     
 #ifdef __cplusplus
