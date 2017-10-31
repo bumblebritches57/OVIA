@@ -9,6 +9,10 @@
 extern "C" {
 #endif
     
+    enum libPCMConstants {
+        PXMMagicSize        = 2,
+    };
+    
     enum libPCMFileFormats {
         UnknownFormat       = 0,
         AIFFormat           = 1,
@@ -113,6 +117,13 @@ extern "C" {
         PortablePixMap2  = 0x5036, // P6
         PortableAnyMap   = 0x5037, // P7
     };
+    
+    typedef enum PXMTypes {
+        UnknownPXM = 0,
+        BinaryPXM  = 1,
+        ASCIIPXM   = 2,
+        PAMPXM     = 3,
+    } PXMTypes;
     
     typedef struct PCMFile PCMFile;
     

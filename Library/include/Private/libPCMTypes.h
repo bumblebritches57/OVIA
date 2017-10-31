@@ -54,6 +54,7 @@ extern "C" {
     } PXMTupleTypes;
     
     typedef struct PXMHeader {
+        PXMTypes      PXMType;
         uint64_t      Width;
         uint64_t      Height;
         uint64_t      NumChannels;
