@@ -136,9 +136,10 @@ extern "C" {
     
     typedef enum PXMTypes {
         UnknownPXM            = 0,
-        BinaryPXM             = 1,
-        ASCIIPXM              = 2,
-        PAMPXM                = 3,
+        BlackAndWhitePXM      = 1,
+        BinaryPXM             = 2,
+        ASCIIPXM              = 3,
+        PAMPXM                = 4,
     } PXMTypes;
     
     typedef struct PCMFile PCMFile;
@@ -154,6 +155,8 @@ extern "C" {
     bool       IsThereMoreMetadata(PCMFile *PCM);
     
     void       PCMSetOutputFileType(PCMFile *PCM, libPCMFileFormats OutputFileType);
+    
+    void       PCMSetOutputPXMType(PCMFile *PCM, PXMTypes PXMType);
     
     void       PCMSetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
     
