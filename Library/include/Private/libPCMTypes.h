@@ -70,12 +70,20 @@ extern "C" {
         const char  *AlbumTag;
         const char  *SongTitleTag;
         const char  *EncoderTag;
+        uint8_t      ArtistTagSize;
+        uint8_t      ReleaseDataSize;
+        uint8_t      GenreSize;
+        uint8_t      AlbumSize;
+        uint8_t      TitleSize;
+        uint8_t      EncoderSize;
         uint32_t     NumANNOChunks;
         const char **AnnoChunks;
     } AUDMetadata;
     
     typedef struct AUDHeader {
         uint8_t      FormatType;
+        uint32_t     AIFOffset;
+        uint32_t     AIFBlockSize;
         uint8_t      BlockAlignment;
         uint64_t     FileSize;
         uint64_t     NumSamples;

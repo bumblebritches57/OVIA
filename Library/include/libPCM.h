@@ -155,6 +155,8 @@ extern "C" {
     
     void       PCMSetOutputFileType(PCMFile *PCM, libPCMFileFormats OutputFileType);
     
+    void       PCMSetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
+    
     void       PCMFileDeinit(PCMFile *PCM);
     
 #ifdef __cplusplus
