@@ -153,6 +153,8 @@ extern "C" {
     
     bool       IsThereMoreMetadata(PCMFile *PCM);
     
+    void       PCMSetOutputFileType(PCMFile *PCM, libPCMFileFormats OutputFileType);
+    
     void       PCMFileDeinit(PCMFile *PCM);
     
 #ifdef __cplusplus

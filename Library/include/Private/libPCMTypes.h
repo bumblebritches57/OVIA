@@ -88,7 +88,8 @@ extern "C" {
     } AUDHeader;
     
     struct PCMFile {
-        libPCMFileFormats PCMFileType;
+        libPCMFileFormats InputFileType;
+        libPCMFileFormats OutputFileType;
         uint64_t          DataLeft;
         BMPHeader        *BMP;
         PXMHeader        *PXM;
