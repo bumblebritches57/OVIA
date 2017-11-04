@@ -142,6 +142,8 @@ extern "C" {
         PAMPXM                = 4,
     } PXMTypes;
     
+    static const char *libPCMLibraryName = "libPCM";
+    
     typedef struct PCMFile PCMFile;
     
     PCMFile   *PCMFileInit(void);
