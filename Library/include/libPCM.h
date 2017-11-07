@@ -125,13 +125,13 @@ extern "C" {
     };
     
     enum PXMMagic {
-        PortableBitMapASCII   = 0x5031, // P1
-        PortableBitMapBinary  = 0x5034, // P4
-        PortableGrayMapASCII  = 0x5032, // P2
-        PortableGrayMapBinary = 0x5035, // P5
-        PortablePixMapASCII   = 0x5033, // P3
-        PortablePixMapBinary  = 0x5036, // P6
-        PortableAnyMap        = 0x5037, // P7
+        PXM_PBMA = 0x5031, // PortableBitMapASCII
+        PXM_PBMB = 0x5034, // PortableBitMapBinary
+        PXM_PGMA = 0x5032, // PortableGrayMapASCII
+        PXM_PGMB = 0x5035, // PortableGrayMapBinary
+        PXM_PPMA = 0x5033, // PortablePixMapASCII
+        PXM_PPMB = 0x5036, // PortablePixMapBinary
+        PXM_PAMB = 0x5037, // PortableAnyMap
     };
     
     typedef enum PXMTypes {
