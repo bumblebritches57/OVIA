@@ -15,7 +15,7 @@ extern "C" {
         uint16_t Reserved2;
         uint32_t PixelOffset;
         /* This isn't actually present but we need it */
-        uint16_t NumChannels;
+        uint32_t NumChannels;
         /* This is technically the DIB header */
         uint32_t DIBSize;                   // biSize
         int32_t  Width;                     // biWidth

@@ -162,6 +162,8 @@ extern "C" {
     
     void       PCMSetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
     
+    uint8_t    PCMGetBitDepth(PCMFile *PCM);
+    
     void       PCMFileDeinit(PCMFile *PCM);
     
 #ifdef __cplusplus
