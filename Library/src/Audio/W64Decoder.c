@@ -9,11 +9,11 @@ extern "C" {
     /* Format decoding */
     void W64ParseFMTChunk(PCMFile *PCM, BitBuffer *BitB) {
         PCM->AUD->FormatType       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
-        PCM->AUD->NumChannels      = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->NumChannels      = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
         PCM->AUD->SampleRate       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 32);
         BitBuffer_Skip(BitB, 32); // ByteRate
         PCM->AUD->BlockAlignment   = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
-        PCM->AUD->BitDepth         = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->BitDepth         = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
     }
     
     void W64ParseBEXTChunk(PCMFile *PCM, BitBuffer *BitB) {
@@ -21,7 +21,7 @@ extern "C" {
     }
     
     void W64ParseDATAChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
-        PCM->AUD->NumSamples = (((ChunkSize - 24 / PCM->AUD->BlockAlignment) / PCM->AUD->NumChannels) / PCM->AUD->BitDepth);
+        PCM->NumChannelAgnosticSamples = (((ChunkSize - 24 / PCM->AUD->BlockAlignment) / PCM->NumChannels) / PCM->BitDepth);
     }
     
     void W64ParseLEVLChunk(PCMFile *PCM, BitBuffer *BitB) { // aka Peak Envelope Chunk

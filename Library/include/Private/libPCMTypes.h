@@ -9,99 +9,70 @@
 extern "C" {
 #endif
     
-    typedef struct BMPHeader {
-        uint32_t FileSize;
-        uint16_t Reserved1;
-        uint16_t Reserved2;
-        uint32_t PixelOffset;
-        /* This isn't actually present but we need it */
-        uint32_t NumChannels;
-        /* This is technically the DIB header */
-        uint32_t DIBSize;                   // biSize
-        int32_t  Width;                     // biWidth
-        int32_t  Height;                    // biHeight
-        uint16_t Planes;                    // biPlanes
-        uint16_t BitDepth;                  // biBitCount
-        uint32_t CompressionType;           // biCompression
-        uint32_t ImageSize;                 // biSizeImage
-        int32_t  WidthPixelsPerMeter;       // biXPelsPerMeter
-        int32_t  HeightPixelsPerMeter;      // biYPelsPerMeter
-        uint32_t NumColorsInIndexUsed;      // biClrUsed
-        uint32_t NumImportantColorsInIndex; // biClrImportant
-        uint32_t RedMask;
-        uint32_t BlueMask;
-        uint32_t GreenMask;
-        uint32_t AlphaMask;
-        uint32_t ColorSpaceType;            // bV4CSType
-        uint32_t XYZCoordinates[3];         // bV4Endpoints
-        uint32_t GammaRed;
-        uint32_t GammaGreen;
-        uint32_t GammaBlue;
-        uint32_t ICCIntent;                 // bV5Intent
-        uint32_t ICCProfilePayload;         // bV5ProfileData
-        uint32_t ICCProfilePayloadSize;     // bV5ProfileSize
-        uint32_t Reserved;
-        uint32_t BMPBitMasks;
-    } BMPHeader;
-    
-    typedef enum PXMTupleTypes {
-        PXM_TUPLE_Unknown   = 0,
-        PXM_TUPLE_BnW       = 1,
-        PXM_TUPLE_Gray      = 2,
-        PXM_TUPLE_GrayAlpha = 3,
-        PXM_TUPLE_RGB       = 4,
-        PXM_TUPLE_RGBAlpha  = 5,
-    } PXMTupleTypes;
-    
-    typedef struct PXMHeader {
-        PXMTypes      PXMType;
-        uint64_t      Width;
-        uint64_t      Height;
-        uint64_t      NumChannels;
-        uint8_t       BitDepth;
-        PXMTupleTypes TupleType;
-    } PXMHeader;
-    
     typedef struct AUDMetadata {
-        uint8_t      NumTags;
-        const char  *ArtistTag;
-        const char  *ReleaseDateTag;
-        const char  *GenreTag;
-        const char  *AlbumTag;
-        const char  *SongTitleTag;
-        const char  *EncoderTag;
-        uint8_t      ArtistTagSize;
-        uint8_t      ReleaseDataSize;
-        uint8_t      GenreSize;
-        uint8_t      AlbumSize;
-        uint8_t      TitleSize;
-        uint8_t      EncoderSize;
-        uint32_t     NumANNOChunks;
-        const char **AnnoChunks;
+        uint8_t           NumTags;
+        uint8_t           ArtistTagSize;
+        uint8_t           ReleaseDataSize;
+        uint8_t           GenreSize;
+        uint8_t           AlbumSize;
+        uint8_t           TitleSize;
+        uint8_t           EncoderSize;
+        uint32_t          NumANNOChunks;
+        const char       *ArtistTag;
+        const char       *ReleaseDateTag;
+        const char       *GenreTag;
+        const char       *AlbumTag;
+        const char       *SongTitleTag;
+        const char       *EncoderTag;
+        const char      **AnnoChunks;
     } AUDMetadata;
     
     typedef struct AUDHeader {
-        uint8_t      FormatType;
-        uint32_t     AIFOffset;
-        uint32_t     AIFBlockSize;
-        uint8_t      BlockAlignment;
-        uint64_t     FileSize;
-        uint64_t     NumSamples;
-        
-        uint64_t     BitDepth;
-        uint64_t     SampleRate;
-        uint64_t     NumChannels;
-        uint64_t     ChannelMask;
-        AUDMetadata *Meta;
+        uint64_t          SampleRate;
+        uint64_t          ChannelMask;
+        uint32_t          AIFOffset;
+        uint32_t          AIFBlockSize;
+        uint8_t           BlockAlignment;
+        uint8_t           FormatType;
+        AUDMetadata      *Meta;
     } AUDHeader;
+    
+    typedef struct PICHeader {
+        uint64_t          NumBytesUsedBySamples;
+        uint64_t          Width;
+        uint64_t          Height;
+        uint64_t          ChannelType;
+        uint64_t          BMPPixelOffset;
+        uint32_t          BMPColorsIndexed;
+        uint32_t          BMPIndexColorsUsed;
+        uint32_t          BMPColorSpaceType;
+        uint32_t          BMPXYZCoordinates[3];
+        uint32_t          BMPRedMask;
+        uint32_t          BMPBlueMask;
+        uint32_t          BMPGreenMask;
+        uint32_t          BMPAlphaMask;
+        uint32_t          BMPRedGamma;
+        uint32_t          BMPGreenGamma;
+        uint32_t          BMPBlueGamma;
+        uint32_t          BMPICCIntent;
+        uint32_t          BMPICCPayload;
+        uint32_t          BMPICCPayloadSize;
+        int32_t           BMPWidthPixelsPerMeter;
+        int32_t           BMPHeightPixelsPerMeter;
+        uint16_t          BMPCompressionType;
+        uint8_t           PXMTupleType;
+        PXMTypes          PXMType;
+    } PICHeader;
     
     struct PCMFile {
         libPCMFileFormats InputFileType;
         libPCMFileFormats OutputFileType;
-        uint64_t          DataLeft;
-        BMPHeader        *BMP;
-        PXMHeader        *PXM;
+        uint64_t          FileSize;
+        uint64_t          BitDepth;
+        uint64_t          NumChannels;
+        uint64_t          NumChannelAgnosticSamples;
         AUDHeader        *AUD;
+        PICHeader        *PIC;
     };
     
 #ifdef __cplusplus

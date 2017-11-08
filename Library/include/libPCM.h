@@ -24,7 +24,6 @@ extern "C" {
         UnknownFormat         = 0,
         AIFFormat             = 1,
         WAVFormat             = 2,
-        WAVFormatEx           = 3,
         WAVFormatExtensible   = 4,
         W64Format             = 5,
         BMPFormat             = 6,
@@ -133,6 +132,15 @@ extern "C" {
         PXM_PPMB = 0x5036, // PortablePixMapBinary
         PXM_PAMB = 0x5037, // PortableAnyMap
     };
+    
+    typedef enum PXMTupleTypes {
+        PXM_TUPLE_Unknown   = 0,
+        PXM_TUPLE_BnW       = 1,
+        PXM_TUPLE_Gray      = 2,
+        PXM_TUPLE_GrayAlpha = 3,
+        PXM_TUPLE_RGB       = 4,
+        PXM_TUPLE_RGBAlpha  = 5,
+    } PXMTupleTypes;
     
     typedef enum PXMTypes {
         UnknownPXM            = 0,
