@@ -154,13 +154,13 @@ extern "C" {
     
     typedef struct PCMFile PCMFile;
     
-    PCMFile   *PCMFileInit(void);
+    PCMFile   *PCMFile_Init(void);
     
-    void       IdentifyPCMFile(PCMFile *PCM, BitBuffer *BitB);
+    void       PCMFile_Identify(PCMFile *PCM, BitBuffer *BitB);
     
-    void       ParsePCMMetadata(PCMFile *PCM, BitBuffer *BitB);
+    void       PCMFile_ParseMetadata(PCMFile *PCM, BitBuffer *BitB);
     
-    uint32_t **ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract);
+    uint32_t **PCM_ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract);
     
     bool       IsThereMoreMetadata(PCMFile *PCM);
     
@@ -171,6 +171,10 @@ extern "C" {
     void       PCMSetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
     
     uint8_t    PCMGetBitDepth(PCMFile *PCM);
+    
+    uint64_t   PCMGetNumChannels(PCMFile *PCM);
+    
+    uint64_t   PCMGetNumSamples(PCMFile *PCM);
     
     void       PCMFileDeinit(PCMFile *PCM);
     
