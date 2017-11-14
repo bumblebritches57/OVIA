@@ -30,6 +30,8 @@ extern "C" {
     typedef struct AUDHeader {
         uint64_t          SampleRate;
         uint64_t          ChannelMask;
+        uint16_t          WAVCompressionFormat;
+        uint16_t          WAVAvgBytesPerSecond;
         uint32_t          AIFOffset;
         uint32_t          AIFBlockSize;
         uint8_t           BlockAlignment;

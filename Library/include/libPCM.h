@@ -66,6 +66,8 @@ extern "C" {
     
     typedef struct     BitBuffer BitBuffer;
     
+    void               IFFSkipPadding(BitBuffer *BitB, uint32_t SubChunkSize);
+    
     PCMFile           *PCMFile_Init(void);
     
     void               PCMFile_Identify(PCMFile *PCM, BitBuffer *BitB);
@@ -86,9 +88,9 @@ extern "C" {
     
     void               PCMSetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
     
-    uint32_t         **PCM_ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract);
+    void               PCM_ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract, uint32_t **ExtractedSamples);
     
-    uint16_t         **PCM_ExtractPixels(PCMFile *PCM, BitBuffer *PixelArray, uint64_t NumPixels2Extract);
+    void               PCM_ExtractPixels(PCMFile *PCM, BitBuffer *PixelArray, uint64_t NumPixels2Extract, uint16_t **ExtractedPixels);
     
     void               PCM_InsertSamples(PCMFile *PCM, BitBuffer *OutputSamples, uint32_t NumSamples2Write, uint32_t **Samples2Write);
     

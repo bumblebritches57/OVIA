@@ -58,8 +58,12 @@ extern "C" {
         }
     }
     
-    uint32_t **W64ExtractSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t NumSamples2Extract) {
-        return NULL;
+    void W64ExtractSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t NumSamples2Extract, uint32_t **ExtractedSamples) {
+        for (uint64_t Channel = 0; Channel < PCM->NumChannels; Channel++) {
+            for (uint64_t Sample = 0; Sample < NumSamples2Extract; Sample++) {
+                ExtractedSamples[Channel][Sample] = ReadBits(BitIOLSByte, BitIOLSBit, BitB, (uint64_t) Bits2Bytes(PCM->BitDepth, Yes));
+            }
+        }
     }
     
 #ifdef __cplusplus
