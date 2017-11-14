@@ -1,3 +1,5 @@
+#include "../../../Dependencies/BitIO/libBitIO/include/BitIO.h"
+
 #include "../../include/libPCM.h"
 #include "../../include/Private/libPCMTypes.h"
 #include "../../include/Private/Audio/WAVCommon.h"
@@ -8,7 +10,7 @@ extern "C" {
     
     static const uint8_t WAVNULLBinaryGUID[BitIOBinaryGUUIDSize] = {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
     
-    void WAVWriteFMTChunk(PCMFile *PCM, BitBuffer *BitB) {
+    static void WAVWriteFMTChunk(PCMFile *PCM, BitBuffer *BitB) {
         WriteBits(BitIOLSByte, BitIOLSBit, BitB, 32, 40); // ChunkSize
         WriteBits(BitIOLSByte, BitIOLSBit, BitB, 16, 0xFFFE); // WaveFormatExtensible
         WriteBits(BitIOLSByte, BitIOLSBit, BitB, 16, PCM->NumChannels);
@@ -23,7 +25,7 @@ extern "C" {
         WriteGUUID(BitIOBinaryGUUID, BitIOLSByte, BitB, WAVNULLBinaryGUID);
     }
     
-    void WAVWriteLISTChunk(PCMFile *PCM, BitBuffer *BitB) {
+    static void WAVWriteLISTChunk(PCMFile *PCM, BitBuffer *BitB) {
         if (PCM->AUD->Meta->NumTags > 0) {
             // Start checking for tags to write
         }

@@ -1,3 +1,5 @@
+#include "../../../Dependencies/BitIO/libBitIO/include/BitIO.h"
+
 #include "../../include/libPCM.h"
 #include "../../include/Private/libPCMTypes.h"
 #include "../../include/Private/Audio/W64Common.h"
@@ -7,7 +9,7 @@ extern "C" {
 #endif
     
     /* Format decoding */
-    void W64ParseFMTChunk(PCMFile *PCM, BitBuffer *BitB) {
+    static void W64ParseFMTChunk(PCMFile *PCM, BitBuffer *BitB) {
         PCM->AUD->FormatType       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
         PCM->NumChannels      = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
         PCM->AUD->SampleRate       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 32);
@@ -16,15 +18,15 @@ extern "C" {
         PCM->BitDepth         = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
     }
     
-    void W64ParseBEXTChunk(PCMFile *PCM, BitBuffer *BitB) {
+    static void W64ParseBEXTChunk(PCMFile *PCM, BitBuffer *BitB) {
         
     }
     
-    void W64ParseDATAChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
+    static void W64ParseDATAChunk(PCMFile *PCM, BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
         PCM->NumChannelAgnosticSamples = (((ChunkSize - 24 / PCM->AUD->BlockAlignment) / PCM->NumChannels) / PCM->BitDepth);
     }
     
-    void W64ParseLEVLChunk(PCMFile *PCM, BitBuffer *BitB) { // aka Peak Envelope Chunk
+    static void W64ParseLEVLChunk(PCMFile *PCM, BitBuffer *BitB) { // aka Peak Envelope Chunk
         
     }
     
