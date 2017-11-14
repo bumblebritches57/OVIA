@@ -72,7 +72,11 @@ extern "C" {
     
     void               PCMFile_ParseMetadata(PCMFile *PCM, BitBuffer *BitB);
     
-    uint32_t         **PCM_ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract);
+    uint8_t            PCMGetBitDepth(PCMFile *PCM);
+    
+    uint64_t           PCMGetNumChannels(PCMFile *PCM);
+    
+    uint64_t           PCMGetNumSamples(PCMFile *PCM);
     
     bool               IsThereMoreMetadata(PCMFile *PCM);
     
@@ -82,11 +86,13 @@ extern "C" {
     
     void               PCMSetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
     
-    uint8_t            PCMGetBitDepth(PCMFile *PCM);
+    uint32_t         **PCM_ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract);
     
-    uint64_t           PCMGetNumChannels(PCMFile *PCM);
+    uint16_t         **PCM_ExtractPixels(PCMFile *PCM, BitBuffer *PixelArray, uint64_t NumPixels2Extract);
     
-    uint64_t           PCMGetNumSamples(PCMFile *PCM);
+    void               PCM_InsertSamples(PCMFile *PCM, BitBuffer *OutputSamples, uint32_t NumSamples2Write, uint32_t **Samples2Write);
+    
+    void               PCM_InsertPixels(PCMFile *PCM, BitBuffer *OutputPixels, uint32_t NumPixels2Write, uint16_t **Pixels2Write);
     
     void               PCMFileDeinit(PCMFile *PCM);
     
