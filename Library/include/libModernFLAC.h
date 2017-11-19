@@ -35,6 +35,8 @@ extern "C" {
         FLACMaxCoeffs                                               =        882,
         FLACMaxRicePartitions                                       =         16,
     };
+    
+    static const char *ModernFLACLibraryName                        = ModernFLACLibraryName;
 
     enum FLACPictureTypes {
         Other                                                       =          0,

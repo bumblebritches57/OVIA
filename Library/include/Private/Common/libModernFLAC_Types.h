@@ -1,4 +1,4 @@
-#include "../../libModernFLAC.h"
+#include "../../ModernFLACLibraryName.h"
 
 #pragma once
 
@@ -184,7 +184,6 @@ extern "C" {
     DecodeFLAC *InitDecodeFLAC(void) {
         DecodeFLAC *Dec       = calloc(1, sizeof(DecodeFLAC));
         if (Dec == NULL) {
-            BitIOLog(LOG_ERROR, "libModernFLAC", "InitDecodeFLAC", "DecodeFLAC Pointer is NULL");
         } else {
             Dec->Meta             = calloc(1, sizeof(FLACMeta));
             Dec->Meta->StreamInfo = calloc(1, sizeof(FLACStreamInfo));
@@ -205,7 +204,7 @@ extern "C" {
     EncodeFLAC *InitEncodeFLAC(void) {
         EncodeFLAC *Enc        = calloc(1, sizeof(EncodeFLAC));
         if (Enc == NULL) {
-            BitIOLog(LOG_ERROR, "libModernFLAC", "InitEncodeFLAC", "EncodeFLAC Pointer is NULL");
+            BitIOLog(LOG_ERROR, ModernFLACLibraryName, __func__, "EncodeFLAC Pointer is NULL");
         } else {
             Enc->Meta              = calloc(1, sizeof(FLACMeta));
             Enc->Meta->StreamInfo  = calloc(1, sizeof(FLACStreamInfo));
