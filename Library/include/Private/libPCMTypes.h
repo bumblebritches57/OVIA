@@ -10,6 +10,14 @@ extern "C" {
 #endif
     
     typedef struct AUDMetadata {
+        const char      **AnnoChunks;
+        const char       *ArtistTag;
+        const char       *ReleaseDateTag;
+        const char       *GenreTag;
+        const char       *AlbumTag;
+        const char       *SongTitleTag;
+        const char       *EncoderTag;
+        uint32_t          NumANNOChunks;
         uint8_t           NumTags;
         uint8_t           ArtistTagSize;
         uint8_t           ReleaseDataSize;
@@ -17,26 +25,18 @@ extern "C" {
         uint8_t           AlbumSize;
         uint8_t           TitleSize;
         uint8_t           EncoderSize;
-        uint32_t          NumANNOChunks;
-        const char       *ArtistTag;
-        const char       *ReleaseDateTag;
-        const char       *GenreTag;
-        const char       *AlbumTag;
-        const char       *SongTitleTag;
-        const char       *EncoderTag;
-        const char      **AnnoChunks;
     } AUDMetadata;
     
     typedef struct AUDHeader {
+        AUDMetadata      *Meta;
         uint64_t          SampleRate;
         uint64_t          ChannelMask;
-        uint16_t          WAVCompressionFormat;
-        uint16_t          WAVAvgBytesPerSecond;
         uint32_t          AIFOffset;
         uint32_t          AIFBlockSize;
+        uint16_t          WAVCompressionFormat;
+        uint16_t          WAVAvgBytesPerSecond;
         uint8_t           BlockAlignment;
         uint8_t           FormatType;
-        AUDMetadata      *Meta;
     } AUDHeader;
     
     typedef struct PICHeader {
@@ -67,14 +67,14 @@ extern "C" {
     } PICHeader;
     
     struct PCMFile {
-        libPCMFileFormats InputFileType;
-        libPCMFileFormats OutputFileType;
         uint64_t          FileSize;
         uint64_t          BitDepth;
         uint64_t          NumChannels;
         uint64_t          NumChannelAgnosticSamples;
         AUDHeader        *AUD;
         PICHeader        *PIC;
+        libPCMFileFormats InputFileType;
+        libPCMFileFormats OutputFileType;
     };
     
 #ifdef __cplusplus
