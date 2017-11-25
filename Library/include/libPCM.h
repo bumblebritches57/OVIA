@@ -74,19 +74,19 @@ extern "C" {
     
     void               PCMFile_ParseMetadata(PCMFile *PCM, BitBuffer *BitB);
     
-    uint8_t            PCMGetBitDepth(PCMFile *PCM);
+    uint8_t            PCM_GetBitDepth(PCMFile *PCM);
     
-    uint64_t           PCMGetNumChannels(PCMFile *PCM);
+    uint64_t           PCM_GetNumChannels(PCMFile *PCM);
     
-    uint64_t           PCMGetNumSamples(PCMFile *PCM);
+    uint64_t           PCM_GetNumSamples(PCMFile *PCM);
     
-    bool               IsThereMoreMetadata(PCMFile *PCM);
+    bool               PCM_IsThereMoreMetadata(PCMFile *PCM);
     
-    void               PCMSetOutputFileType(PCMFile *PCM, libPCMFileFormats OutputFileType);
+    void               PCM_SetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
     
-    void               PCMSetOutputPXMType(PCMFile *PCM, PXMTypes PXMType);
+    void               PCM_SetOutputPXMType(PCMFile *PCM, PXMTypes PXMType);
     
-    void               PCMSetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
+    void               PCM_SetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
     
     void               PCM_ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract, uint32_t **ExtractedSamples);
     
@@ -96,11 +96,11 @@ extern "C" {
     
     void               PCM_InsertPixels(PCMFile *PCM, BitBuffer *OutputPixels, uint32_t NumPixels2Write, uint16_t **Pixels2Write);
     
-    void               PCM_SetOutputFormat(PCMFile *PCM, libPCMFileFormats *OutputFormat);
+    void               PCM_SetOutputFileType(PCMFile *PCM, libPCMFileFormats OutputFileType);
     
     void               PCM_WriteHeader(PCMFile *PCM, BitBuffer *BitB);
     
-    void               PCMFileDeinit(PCMFile *PCM);
+    void               PCM_FileDeinit(PCMFile *PCM);
     
 #ifdef __cplusplus
 }
