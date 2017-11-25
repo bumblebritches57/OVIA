@@ -167,6 +167,8 @@ extern "C" {
     
     void WAVInsertSamples(PCMFile *PCM, BitBuffer *OutputSamples, uint32_t NumSamples2Write, uint32_t **Samples2Write);
     
+    void WAVWriteHeader(PCMFile *PCM, BitBuffer *BitB);
+    
 #ifdef __cplusplus
 }
 #endif
