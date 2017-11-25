@@ -96,6 +96,10 @@ extern "C" {
     
     void               PCM_InsertPixels(PCMFile *PCM, BitBuffer *OutputPixels, uint32_t NumPixels2Write, uint16_t **Pixels2Write);
     
+    void               PCM_SetOutputFormat(PCMFile *PCM, libPCMFileFormats *OutputFormat);
+    
+    void               PCM_WriteHeader(PCMFile *PCM, BitBuffer *BitB);
+    
     void               PCMFileDeinit(PCMFile *PCM);
     
 #ifdef __cplusplus
