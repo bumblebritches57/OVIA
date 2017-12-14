@@ -62,9 +62,11 @@ extern "C" {
     
     static const char *libPCMLibraryName = "libPCM";
     
-    typedef struct     PCMFile PCMFile;
+    typedef struct     PCMFile   PCMFile;
     
     typedef struct     BitBuffer BitBuffer;
+    
+    typedef struct     Samples   Samples;
     
     void               IFFSkipPadding(BitBuffer *BitB, uint32_t SubChunkSize);
     
@@ -100,7 +102,7 @@ extern "C" {
     
     void               PCM_WriteHeader(PCMFile *PCM, BitBuffer *BitB);
     
-    void               PCM_FileDeinit(PCMFile *PCM);
+    void               PCMFile_Deinit(PCMFile *PCM);
     
 #ifdef __cplusplus
 }

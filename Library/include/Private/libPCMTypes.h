@@ -67,14 +67,14 @@ extern "C" {
     } PICHeader;
     
     struct PCMFile {
-        uint64_t          FileSize;
-        uint64_t          BitDepth;
-        uint64_t          NumChannels;
-        uint64_t          NumChannelAgnosticSamples;
         AUDHeader        *AUD;
         PICHeader        *PIC;
+        uint64_t          FileSize;
+        uint64_t          NumChannelAgnosticSamples;
         libPCMFileFormats InputFileType;
         libPCMFileFormats OutputFileType;
+        uint8_t           BitDepth;
+        uint8_t           NumChannels;
     };
     
 #ifdef __cplusplus
