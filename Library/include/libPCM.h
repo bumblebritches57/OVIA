@@ -1,6 +1,8 @@
 #include <stdbool.h>
 #include <stdint.h>
 
+#include "../../Dependencies/BitIO/libBitIO/include/StringIO.h"
+
 #pragma once
 
 #ifndef LIBPCM_libPCM_H
