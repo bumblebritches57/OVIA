@@ -60,49 +60,49 @@ extern "C" {
         PAMPXM                = 4,
     } PXMTypes;
     
-    static const char *libPCMLibraryName = "libPCM";
+    static UTF8Constant libPCMLibraryName = u8"libPCM";
     
-    typedef struct     PCMFile   PCMFile;
+    typedef struct       PCMFile              PCMFile;
     
-    typedef struct     BitBuffer BitBuffer;
+    typedef struct       BitBuffer BitBuffer;
     
-    typedef struct     Samples   Samples;
+    typedef struct       Samples   Samples;
     
-    void               IFFSkipPadding(BitBuffer *BitB, uint32_t SubChunkSize);
+    void                 IFFSkipPadding(BitBuffer *BitB, uint32_t SubChunkSize);
     
-    PCMFile           *PCMFile_Init(void);
+    PCMFile             *PCMFile_Init(void);
     
-    void               PCMFile_Identify(PCMFile *PCM, BitBuffer *BitB);
+    void                 PCMFile_Identify(PCMFile *PCM, BitBuffer *BitB);
     
-    void               PCMFile_ParseMetadata(PCMFile *PCM, BitBuffer *BitB);
+    void                 PCMFile_ParseMetadata(PCMFile *PCM, BitBuffer *BitB);
     
-    uint8_t            PCM_GetBitDepth(PCMFile *PCM);
+    uint8_t              PCM_GetBitDepth(PCMFile *PCM);
     
-    uint64_t           PCM_GetNumChannels(PCMFile *PCM);
+    uint64_t             PCM_GetNumChannels(PCMFile *PCM);
     
-    uint64_t           PCM_GetNumSamples(PCMFile *PCM);
+    uint64_t             PCM_GetNumSamples(PCMFile *PCM);
     
-    bool               PCM_IsThereMoreMetadata(PCMFile *PCM);
+    bool                 PCM_IsThereMoreMetadata(PCMFile *PCM);
     
-    void               PCM_SetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
+    void                 PCM_SetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
     
-    void               PCM_SetOutputPXMType(PCMFile *PCM, PXMTypes PXMType);
+    void                 PCM_SetOutputPXMType(PCMFile *PCM, PXMTypes PXMType);
     
-    void               PCM_SetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
+    void                 PCM_SetNumOutputSamples(PCMFile *PCM, uint64_t NumChannelIndependentSamples);
     
-    void               PCM_ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract, uint32_t **ExtractedSamples);
+    void                 PCM_ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract, uint32_t **ExtractedSamples);
     
-    void               PCM_ExtractPixels(PCMFile *PCM, BitBuffer *PixelArray, uint64_t NumPixels2Extract, uint16_t **ExtractedPixels);
+    void                 PCM_ExtractPixels(PCMFile *PCM, BitBuffer *PixelArray, uint64_t NumPixels2Extract, uint16_t **ExtractedPixels);
     
-    void               PCM_InsertSamples(PCMFile *PCM, BitBuffer *OutputSamples, uint32_t NumSamples2Write, uint32_t **Samples2Write);
+    void                 PCM_InsertSamples(PCMFile *PCM, BitBuffer *OutputSamples, uint32_t NumSamples2Write, uint32_t **Samples2Write);
     
-    void               PCM_InsertPixels(PCMFile *PCM, BitBuffer *OutputPixels, uint32_t NumPixels2Write, uint16_t **Pixels2Write);
+    void                 PCM_InsertPixels(PCMFile *PCM, BitBuffer *OutputPixels, uint32_t NumPixels2Write, uint16_t **Pixels2Write);
     
-    void               PCM_SetOutputFileType(PCMFile *PCM, libPCMFileFormats OutputFileType);
+    void                 PCM_SetOutputFileType(PCMFile *PCM, libPCMFileFormats OutputFileType);
     
-    void               PCM_WriteHeader(PCMFile *PCM, BitBuffer *BitB);
+    void                 PCM_WriteHeader(PCMFile *PCM, BitBuffer *BitB);
     
-    void               PCMFile_Deinit(PCMFile *PCM);
+    void                 PCMFile_Deinit(PCMFile *PCM);
     
 #ifdef __cplusplus
 }
