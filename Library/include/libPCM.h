@@ -1,8 +1,6 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "../../Dependencies/BitIO/libBitIO/include/StringIO.h"
-
 #pragma once
 
 #ifndef LIBPCM_libPCM_H
@@ -61,8 +59,6 @@ extern "C" {
         ASCIIPXM              = 3,
         PAMPXM                = 4,
     } PXMTypes;
-    
-    static UTF8Constant libPCMLibraryName = u8"libPCM";
     
     typedef struct       PCMFile              PCMFile;
     

@@ -9,6 +9,8 @@
 extern "C" {
 #endif
     
+    static UTF8Constant libPCMLibraryName = u8"libPCM";
+    
     typedef struct AUDMetadata {
         const char      **AnnoChunks;
         const char       *ArtistTag;
