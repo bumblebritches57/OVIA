@@ -9,8 +9,6 @@
 extern "C" {
 #endif
     
-    static UTF8Constant libPCMLibraryName = u8"libPCM";
-    
     typedef struct AUDMetadata {
         const char      **AnnoChunks;
         const char       *ArtistTag;
@@ -73,10 +71,10 @@ extern "C" {
         PICHeader        *PIC;
         uint64_t          FileSize;
         uint64_t          NumChannelAgnosticSamples;
-        libPCMFileFormats InputFileType;
-        libPCMFileFormats OutputFileType;
         uint8_t           BitDepth;
         uint8_t           NumChannels;
+        libPCMFileFormats InputFileType;
+        libPCMFileFormats OutputFileType;
     };
     
 #ifdef __cplusplus

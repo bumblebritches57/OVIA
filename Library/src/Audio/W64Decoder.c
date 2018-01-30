@@ -11,12 +11,12 @@ extern "C" {
     
     /* Format decoding */
     static void W64ParseFMTChunk(PCMFile *PCM, BitBuffer *BitB) {
-        PCM->AUD->FormatType       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
-        PCM->NumChannels      = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
-        PCM->AUD->SampleRate       = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 32);
+        PCM->AUD->FormatType       = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 16);
+        PCM->NumChannels      = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 16);
+        PCM->AUD->SampleRate       = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 32);
         BitBuffer_Skip(BitB, 32); // ByteRate
-        PCM->AUD->BlockAlignment   = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
-        PCM->BitDepth         = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 16);
+        PCM->AUD->BlockAlignment   = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 16);
+        PCM->BitDepth         = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 16);
     }
     
     static void W64ParseBEXTChunk(PCMFile *PCM, BitBuffer *BitB) {
@@ -32,29 +32,29 @@ extern "C" {
     }
     
     void W64ParseMetadata(PCMFile *PCM, BitBuffer *BitB) {
-        uint8_t *ChunkUUIDString = ReadGUUID(BitIOGUUIDString, BitIOLSByte, BitB);
-        uint64_t W64Size         = ReadBits(BitIOLSByte, BitIOLSBit, BitB, 64);
-        if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_RIFF_GUIDString) == Yes) {
+        uint8_t *ChunkUUIDString = ReadGUUID(GUIDString, BitB);
+        uint64_t W64Size         = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 64);
+        if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_RIFF_GUIDString) == Yes) {
             
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_WAVE_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_WAVE_GUIDString) == Yes) {
             
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_FMT_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_FMT_GUIDString) == Yes) {
             W64ParseFMTChunk(PCM, BitB);
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_DATA_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_DATA_GUIDString) == Yes) {
             
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_LEVL_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_LEVL_GUIDString) == Yes) {
             
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_BEXT_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_BEXT_GUIDString) == Yes) {
             W64ParseBEXTChunk(PCM, BitB);
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_FACT_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_FACT_GUIDString) == Yes) {
             
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_JUNK_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_JUNK_GUIDString) == Yes) {
             
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_MRKR_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_MRKR_GUIDString) == Yes) {
             
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_SUMM_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_SUMM_GUIDString) == Yes) {
             
-        } else if (GUUID_Compare(BitIOGUUIDString, ChunkUUIDString, W64_LIST_GUIDString) == Yes) {
+        } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_LIST_GUIDString) == Yes) {
             
         }
     }
@@ -62,7 +62,7 @@ extern "C" {
     void W64ExtractSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t NumSamples2Extract, uint32_t **ExtractedSamples) {
         for (uint64_t Sample = 0; Sample < NumSamples2Extract; Sample++) {
             for (uint64_t Channel = 0; Channel < PCM->NumChannels; Channel++) {
-                ExtractedSamples[Channel][Sample] = ReadBits(BitIOLSByte, BitIOLSBit, BitB, (uint64_t) Bits2Bytes(PCM->BitDepth, Yes));
+                ExtractedSamples[Channel][Sample] = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, (uint64_t) Bits2Bytes(PCM->BitDepth, Yes));
             }
         }
     }
