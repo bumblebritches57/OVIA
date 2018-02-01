@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <math.h>
 
 #include "../../Dependencies/libPCM/Dependencies/BitIO/libBitIO/include/BitIO.h"
@@ -36,9 +37,9 @@ extern "C" {
         FLACMaxRicePartitions                                       =         16,
     };
     
-    static const char *ModernFLACLibraryName                        = ModernFLACLibraryName;
+    static const char *libModernFLACLibraryName                     = u8"libModernFLAC";
 
-    enum FLACPictureTypes {
+    typedef enum FLACPicTypes {
         Other                                                       =          0,
         FileIcon                                                    =          1, // 32x32, PNG only
         OtherFileIcon                                               =          2,
@@ -60,7 +61,7 @@ extern "C" {
         Illustration                                                =         18,
         BandLogo                                                    =         19,
         PublisherLogo                                               =         20,
-    };
+    } FLACPicTypes;
 
     enum FLACSpeakerLayout {
         Mono                                                        =          0,
