@@ -1,5 +1,6 @@
-#include "../../../Dependencies/BitIO/libBitIO/include/BitIO.h"
-#include "../../../Dependencies/BitIO/libBitIO/include/BitIOMath.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
 
 #include "../../include/libPCM.h"
 #include "../../include/Private/libPCMTypes.h"
@@ -11,12 +12,12 @@ extern "C" {
     
     /* Format decoding */
     static void W64ParseFMTChunk(PCMFile *PCM, BitBuffer *BitB) {
-        PCM->AUD->FormatType       = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 16);
-        PCM->NumChannels      = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 16);
-        PCM->AUD->SampleRate       = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 32);
+        PCM->AUD->FormatType       = ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
+        PCM->NumChannels           = ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
+        PCM->AUD->SampleRate       = ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
         BitBuffer_Skip(BitB, 32); // ByteRate
-        PCM->AUD->BlockAlignment   = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 16);
-        PCM->BitDepth         = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 16);
+        PCM->AUD->BlockAlignment   = ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
+        PCM->BitDepth              = ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
     }
     
     static void W64ParseBEXTChunk(PCMFile *PCM, BitBuffer *BitB) {
@@ -33,7 +34,7 @@ extern "C" {
     
     void W64ParseMetadata(PCMFile *PCM, BitBuffer *BitB) {
         uint8_t *ChunkUUIDString = ReadGUUID(GUIDString, BitB);
-        uint64_t W64Size         = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, 64);
+        uint64_t W64Size         = ReadBits(LSByteFirst, LSBitFirst, BitB, 64);
         if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_RIFF_GUIDString) == Yes) {
             
         } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_WAVE_GUIDString) == Yes) {
@@ -60,10 +61,18 @@ extern "C" {
     }
     
     void W64ExtractSamples(PCMFile *PCM, BitBuffer *BitB, uint64_t NumSamples2Extract, uint32_t **ExtractedSamples) {
-        for (uint64_t Sample = 0; Sample < NumSamples2Extract; Sample++) {
-            for (uint64_t Channel = 0; Channel < PCM->NumChannels; Channel++) {
-                ExtractedSamples[Channel][Sample] = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, BitB, (uint64_t) Bits2Bytes(PCM->BitDepth, Yes));
+        if (PCM != NULL && BitB != NULL && ExtractedSamples != NULL) {
+            for (uint64_t Sample = 0; Sample < NumSamples2Extract; Sample++) {
+                for (uint64_t Channel = 0; Channel < PCM->NumChannels; Channel++) {
+                    ExtractedSamples[Channel][Sample] = ReadBits(LSByteFirst, LSBitFirst, BitB, (uint64_t) Bits2Bytes(PCM->BitDepth, Yes));
+                }
             }
+        } else if (PCM == NULL) {
+            Log(Log_ERROR, __func__, U8("PCM Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (ExtractedSamples == NULL) {
+            Log(Log_ERROR, __func__, U8("ExtractedSamples Pointer is NULL"));
         }
     }
     
