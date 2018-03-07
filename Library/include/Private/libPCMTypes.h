@@ -63,12 +63,13 @@ extern "C" {
         int32_t           BMPHeightPixelsPerMeter;
         uint16_t          BMPCompressionType;
         uint8_t           PXMTupleType;
+        bool              ImageIsTopDown;
         PXMTypes          PXMType;
     } PICHeader;
     
     struct PCMFile {
-        AUDHeader        *AUD;
-        PICHeader        *PIC;
+        AUDHeader        *Aud;
+        PICHeader        *Pic;
         uint64_t          FileSize;
         uint64_t          NumChannelAgnosticSamples;
         uint8_t           BitDepth;
