@@ -90,8 +90,6 @@ extern "C" {
     
     void                 PCM_ExtractSamples(PCMFile *PCM, BitBuffer *SampleArray, uint64_t NumSamples2Extract, uint32_t **ExtractedSamples);
     
-    void                 PCM_ExtractPixels(PCMFile *PCM, BitBuffer *PixelArray, uint64_t NumPixels2Extract, uint16_t **ExtractedPixels);
-    
     void                 PCM_InsertSamples(PCMFile *PCM, BitBuffer *OutputSamples, uint32_t NumSamples2Write, uint32_t **Samples2Write);
     
     void                 PCM_InsertPixels(PCMFile *PCM, BitBuffer *OutputPixels, uint32_t NumPixels2Write, uint16_t **Pixels2Write);
@@ -101,6 +99,11 @@ extern "C" {
     void                 PCM_WriteHeader(PCMFile *PCM, BitBuffer *BitB);
     
     void                 PCMFile_Deinit(PCMFile *PCM);
+    
+    
+    void PCM_InsertImage(PCMFile *PCM, BitBuffer *CreatedImage, uint16_t ***Image2Insert);
+    
+    uint16_t ***PCM_ExtractImage(PCMFile *PCM, BitBuffer *PixelArray);
     
 #ifdef __cplusplus
 }
