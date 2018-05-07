@@ -63,6 +63,7 @@ extern "C" {
         int32_t           BMPHeightPixelsPerMeter;
         uint16_t          BMPCompressionType;
         uint8_t           PXMTupleType;
+        uint8_t          *BMPPalette;
         bool              ImageIsTopDown;
         PXMTypes          PXMType;
     } PICHeader;
