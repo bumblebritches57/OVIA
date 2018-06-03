@@ -1,5 +1,7 @@
-#include <stdbool.h>
-#include <stdint.h>
+#include "../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
+#include "../../Dependencies/FoundationIO/libFoundationIO/include/CommandLineIO.h"
+#include "../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
+#include "../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
 
 #pragma once
 
