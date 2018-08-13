@@ -16,6 +16,14 @@
 extern "C" {
 #endif
     
+    typedef enum PNMTypes {
+        UnknownPNM            = 0,
+        BlackAndWhitePNM      = 1,
+        BinaryPNM             = 2,
+        ASCIIPNM              = 3,
+        PAMPNM                = 4,
+    } PNMTypes;
+    
     enum PNMCommon {
         PNMMagicSize          = 2,
         PNMCommentStart       = 0x23,
