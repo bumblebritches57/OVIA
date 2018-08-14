@@ -50,13 +50,13 @@ extern "C" {
         PNM_TUPLE_RGBAlpha  = 5,
     } PNMTupleTypes;
     
-    void        PNMIdentifyFileType(PCMFile *PCM, BitBuffer *BitB);
+    void        PNMIdentifyFileType(OVIA *Ovia, BitBuffer *BitB);
     
-    void        PNMParseMetadata(PCMFile *PCM, BitBuffer *BitB);
+    void        PNMParseMetadata(OVIA *Ovia, BitBuffer *BitB);
     
-    uint16_t ***PNMExtractImage(PCMFile *PCM, BitBuffer *BitB);
+    uint16_t ***PNMExtractImage(OVIA *Ovia, BitBuffer *BitB);
     
-    void        PNMInsertImage(PCMFile *PCM, BitBuffer *CreatedImage, uint16_t ***Image2Insert);
+    void        PNMInsertImage(OVIA *Ovia, BitBuffer *CreatedImage, uint16_t ***Image2Insert);
     
     void PNMWriteHeader(PNMTypes PNMType, BitBuffer *BitB);
     
