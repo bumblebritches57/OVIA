@@ -179,8 +179,8 @@
 			isa = PBXGroup;
 			children = (
 				2C1CD9762121ED680049D169 /* BMPEncoder.c */,
-				2C1CD9772121ED680049D169 /* PNGEncoder.c */,
 				2C1CD9752121ED680049D169 /* PNMEncoder.c */,
+				2C1CD9772121ED680049D169 /* PNGEncoder.c */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -200,8 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				2C1CD97D2121ED830049D169 /* BMPDecoder.c */,
-				2C1CD97E2121ED830049D169 /* PNGDecoder.c */,
 				2C1CD97F2121ED830049D169 /* PNMDecoder.c */,
+				2C1CD97E2121ED830049D169 /* PNGDecoder.c */,
 			);
 			name = Image;
 			sourceTree = "<group>";

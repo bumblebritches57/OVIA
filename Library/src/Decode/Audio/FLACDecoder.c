@@ -4,29 +4,10 @@
 extern "C" {
 #endif
     
-    void DeinitFLACDecoder(DecodeFLAC *Dec) {
-        if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
-        } else {
-            free(Dec->Meta->StreamInfo);
-            free(Dec->Meta->Seek);
-            free(Dec->Meta->Vorbis);
-            free(Dec->Meta->Cue);
-            free(Dec->Meta->Pic);
-            free(Dec->Meta);
-            free(Dec->Data->Frame);
-            free(Dec->Data->SubFrame);
-            free(Dec->Data->LPC);
-            free(Dec->Data->Rice);
-            free(Dec->Data);
-            free(Dec);
-        }
-    }
-    
     /*!
-     @abstract Reads and decodes MIME Base64
+     @abstract Reads and OVIAs MIME Base64
      */
-    void ReadBase64(BitBuffer *InputFLAC, uint8_t *Buffer, uint64_t BufferSize, uint64_t LineLength) {
+    void ReadBase64(BitBuffer *BitB, uint8_t *Buffer, uint64_t BufferSize, uint64_t LineLength) {
         
     }
     
@@ -34,33 +15,33 @@ extern "C" {
     /* Start User facing functions */
     
     /*!
-     @abstract          Copies frames from the stream pointed to by InputFLAC, to OutputFrameBuffer (which needs to be freed by you)
+     @abstract          Copies frames from the stream pointed to by BitB, to OutputFrameBuffer (which needs to be freed by you)
      @param     StartFrame IS NOT zero indexed.
      */
     /*
-     uint8_t *CopyFLACFrame(BitBuffer *InputFLAC, DecodeFLAC *Dec) { // for apps that don't care about metadata
+     uint8_t *CopyFLACFrame(OVIA *Ovia, BitBuffer *BitB) { // for apps that don't care about metadata
      
      // scan stream for FrameMagic, once found, start counting until you hit StartFrame
      
      // See if there's a seektable, if so use that to get as close as possible, otherwise scan byte by byte.
      // Which means we need metadata flags.
      //
-     for (size_t StreamByte = 0; StreamByte < InputFLAC->FileSize; StreamByte++) {
-     uint16_t Marker = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 14, true);
+     for (size_t StreamByte = 0; StreamByte < BitB->FileSize; StreamByte++) {
+     uint16_t Marker = ReadBits(MSByteFirst, LSBitFirst, BitB, 14, true);
      if (Marker == FLACFrameMagic) {
      // Get frame size by reading ahead until you find either the end of the stream, or another FLACFrameMagic
      // then skip back, and read it all.
      // OR could we somehow just read it until we got to the end of the frame, and
      size_t FrameSizeInBits = 0;
-     while (ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 14, true) != FLACFrameMagic || (InputFLAC->FilePosition + InputFLAC->BitsUnavailable) < InputFLAC->FileSize) {
+     while (ReadBits(MSByteFirst, LSBitFirst, BitB, 14, true) != FLACFrameMagic || (BitB->FilePosition + BitB->BitsUnavailable) < BitB->FileSize) {
      FrameSizeInBits += 14;
      }
-     SkipBits(InputFLAC, FrameSizeInBits);
+     SkipBits(BitB, FrameSizeInBits);
      // Create buffer that's FrameSizeInBits, and then start copying each byte into the buffer
      uint8_t FrameBuffer[1];
      realloc(FrameBuffer, Bits2Bytes(FrameSizeInBits, true));
      for (size_t FrameByte = 0; FrameByte < Bits2Bytes(FrameSizeInBits, true); FrameByte++) {
-     FrameByte[FrameByte] = InputFLAC->Buffer[FrameByte];
+     FrameByte[FrameByte] = BitB->Buffer[FrameByte];
      }
      }
      }
@@ -71,217 +52,258 @@ extern "C" {
     
     /* End User Facing Functions */
     
-    void FLACReadStream(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACReadStream(OVIA *Ovia, BitBuffer *BitB) {
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            uint16_t Marker = PeekBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 14);
+            uint16_t Marker = PeekBits(MSByteFirst, LSBitFirst, BitB, 14);
             if (Marker == FLACFrameMagic) {
-                SkipBits(InputFLAC, 14);
-                FLACReadFrame(InputFLAC, Dec);
+                SkipBits(BitB, 14);
+                FLACReadFrame(BitB, Ovia);
             } else {
-                FLACParseMetadata(InputFLAC, Dec);
+                FLACParseMetadata(BitB, Ovia);
             }
         }
     }
     
-    void FLACReadFrame(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACReadFrame(OVIA *Ovia, BitBuffer *BitB) {
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            SkipBits(InputFLAC, 1); // 0
-            Dec->Data->Frame->BlockType            = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 1); // 0 aka Fixed
-            ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 1);
-            Dec->Data->Frame->CodedSamplesInBlock  = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 4); // 12 aka 4096
-            if (((Dec->Data->Frame->CodedSamplesInBlock != 6) || (Dec->Data->Frame->CodedSamplesInBlock != 7))) {
-                Dec->Data->Frame->BlockSize        = GetBlockSizeInSamples(Dec->Data->Frame->CodedSamplesInBlock); // SamplesInBlock
+            SkipBits(BitB, 1); // 0
+            Ovia->Data->Frame->BlockType            = ReadBits(MSByteFirst, LSBitFirst, BitB, 1); // 0 aka Fixed
+            // Next byte, 0xEC
+            uint8_t CodedSampleBlockSize           = ReadBits(MSByteFirst, LSBitFirst, BitB, 4); // 14
+            if (CodedSampleBlockSize != 6 && CodedSampleBlockSize != 7) {
+                Ovia->Data->Frame->BlockSize        = GetBlockSizeInSamples(CodedSampleBlockSize); // 16384
             }
-            Dec->Data->Frame->CodedSampleRate      = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 4); // 9 aka 44100
-            if ((Dec->Data->Frame->CodedSampleRate >= 0) && (Dec->Data->Frame->CodedSampleRate <= 11)) {
-                FLACSampleRate(InputFLAC, Dec);
+            Ovia->Data->Frame->CodedSampleRate      = ReadBits(MSByteFirst, LSBitFirst, BitB, 4); // 12 aka 44100
+            if ((Ovia->Data->Frame->CodedSampleRate >= 0) && (Ovia->Data->Frame->CodedSampleRate <= 11)) {
+                FLACSampleRate(BitB, Ovia);
             }
-            Dec->Data->Frame->ChannelLayout        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 4) + 1; // 2
-            Dec->Data->Frame->CodedBitDepth        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 3); // 4 aka 16 bits per sample
-            if (Dec->Data->Frame->CodedBitDepth != 0) {
-                FLACBitDepth(Dec);
+            Ovia->Data->Frame->ChannelLayout        = ReadBits(MSByteFirst, LSBitFirst, BitB, 4) + 1; // Average_Diff
+            Ovia->Data->Frame->CodedBitDepth        = ReadBits(MSByteFirst, LSBitFirst, BitB, 3); // 6 aka 24 bits per sample
+            if (Ovia->Data->Frame->CodedBitDepth != 0) {
+                FLACBitDepth(Ovia);
             }
-            SkipBits(InputFLAC, 1); // 0
+            SkipBits(BitB, 1); // 0
             
-            if (Dec->Data->Frame->BlockType        == FixedBlockSize) { // variable blocktype
-                Dec->Data->Frame->FrameNumber      = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 31); // 6,356,992
-            } else if (Dec->Data->Frame->BlockType == VariableBlockSize) {
-                Dec->Data->Frame->SampleNumber     = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 36);
-            }
-            
-            if (Dec->Data->Frame->CodedSamplesInBlock == 6) {
-                Dec->Data->Frame->BlockSize        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8); // SamplesInBlock
-            } else if (Dec->Data->Frame->CodedSamplesInBlock == 7) {
-                Dec->Data->Frame->BlockSize        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 16); // SamplesInBlock
+            if (Ovia->Data->Frame->BlockType        == FixedBlockSize) { // Fixed
+                // The FrameNumber is 0, which means it's just NULL.
+                Ovia->Data->Frame->FrameNumber      = ReadBits(MSByteFirst, LSBitFirst, BitB, 31); // Encoded with/like? UTF-8
+            } else if (Ovia->Data->Frame->BlockType == VariableBlockSize) {
+                Ovia->Data->Frame->SampleNumber     = ReadBits(MSByteFirst, LSBitFirst, BitB, 36);
             }
             
-            
-            if (Dec->Data->Frame->CodedSampleRate == 12) {
-                Dec->Data->Frame->SampleRate       = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8) * 1000;
-            } else if (Dec->Data->Frame->CodedSampleRate == 13) {
-                Dec->Data->Frame->SampleRate       = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 16);
-            } else if (Dec->Data->Frame->CodedSampleRate == 14) {
-                Dec->Data->Frame->SampleRate       = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 16) * 10;
+            if (CodedSampleBlockSize == 6) {
+                Ovia->Data->Frame->BlockSize        = ReadBits(MSByteFirst, LSBitFirst, BitB, 8); // SamplesInBlock
+            } else if (CodedSampleBlockSize == 7) {
+                Ovia->Data->Frame->BlockSize        = ReadBits(MSByteFirst, LSBitFirst, BitB, 16); // SamplesInBlock
             }
             
-            Dec->Data->Frame->FLACFrameCRC         = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8); // CRC, 0x7
             
-            for (uint8_t Channel = 0; Channel < Dec->Meta->StreamInfo->Channels; Channel++) { // read SubFrame
-                FLACReadSubFrame(InputFLAC, Dec, Channel);
+            if (Ovia->Data->Frame->CodedSampleRate == 12) {
+                Ovia->Data->Frame->SampleRate       = ReadBits(MSByteFirst, LSBitFirst, BitB, 8) * 1000; // 0xC0 = 192000
+            } else if (Ovia->Data->Frame->CodedSampleRate == 13) {
+                Ovia->Data->Frame->SampleRate       = ReadBits(MSByteFirst, LSBitFirst, BitB, 16);
+            } else if (Ovia->Data->Frame->CodedSampleRate == 14) {
+                Ovia->Data->Frame->SampleRate       = ReadBits(MSByteFirst, LSBitFirst, BitB, 16) * 10;
+            }
+            
+            Ovia->Data->Frame->FLACFrameCRC         = ReadBits(MSByteFirst, LSBitFirst, BitB, 8); // CRC, 0xCF
+            
+            for (uint8_t Channel = 0; Channel < Ovia->Meta->StreamInfo->Channels; Channel++) { // read SubFrame
+                FLACReadSubFrame(BitB, Ovia, Channel);
             }
         }
     }
     
-    void FLACReadSubFrame(BitBuffer *InputFLAC, DecodeFLAC *Dec, uint8_t Channel) { // 2 channels
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACReadSubFrame(OVIA *Ovia, BitBuffer *BitB, uint8_t Channel) { // 2 channels
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            SkipBits(InputFLAC, 1); // Reserved
-            Dec->Data->SubFrame->SubFrameType      = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 6); // 6 or 0
-            if (Dec->Data->SubFrame->SubFrameType > 0) {
-                Dec->Data->LPC->LPCOrder = (Dec->Data->SubFrame->SubFrameType & 0x1F) - 1; // 5 or 6
+            SkipBits(BitB, 1); // Reserved
+            Ovia->Data->SubFrame->SubFrameType      = ReadBits(MSByteFirst, LSBitFirst, BitB, 6); // LPC
+            if (Ovia->Data->SubFrame->SubFrameType > 0) {
+                Ovia->Data->LPC->LPCOrder           = (Ovia->Data->SubFrame->SubFrameType & 0x1F) - 1; // 6
             }
-            Dec->Data->SubFrame->WastedBitsFlag    = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 1); // 1
-            if (Dec->Data->SubFrame->WastedBitsFlag == true) {
-                Dec->Data->SubFrame->WastedBits    = ReadRICE(InputFLAC, false, 0); // 11111 0 00000
+            Ovia->Data->SubFrame->WastedBitsFlag    = ReadBits(MSByteFirst, LSBitFirst, BitB, 1); // 0
+            if (Ovia->Data->SubFrame->WastedBitsFlag == true) {
+                Ovia->Data->SubFrame->WastedBits    = ReadRICE(BitB, false, 0); // 11111 0 00000
             }
             
-            if (Dec->Data->SubFrame->SubFrameType == Subframe_Verbatim) { // PCM
-                FLACDecodeSubFrameVerbatim(InputFLAC, Dec);
-            } else if (Dec->Data->SubFrame->SubFrameType == Subframe_Constant) {
-                FLACDecodeSubFrameConstant(InputFLAC, Dec);
-            } else if (Dec->Data->SubFrame->SubFrameType >= Subframe_Fixed && Dec->Data->SubFrame->SubFrameType <= Subframe_LPC) { // Fixed
-                FLACDecodeSubFrameFixed(InputFLAC, Dec);
-            } else if (Dec->Data->SubFrame->SubFrameType >= Subframe_LPC) { // LPC
-                FLACDecodeSubFrameLPC(InputFLAC, Dec, Channel);
+            if (Ovia->Data->SubFrame->SubFrameType == Subframe_Verbatim) { // PCM
+                FLACOVIASubFrameVerbatim(BitB, Ovia);
+            } else if (Ovia->Data->SubFrame->SubFrameType == Subframe_Constant) {
+                FLACOVIASubFrameConstant(BitB, Ovia);
+            } else if (Ovia->Data->SubFrame->SubFrameType >= Subframe_Fixed && Ovia->Data->SubFrame->SubFrameType <= Subframe_LPC) { // Fixed
+                FLACOVIASubFrameFixed(BitB, Ovia);
+            } else if (Ovia->Data->SubFrame->SubFrameType >= Subframe_LPC) { // LPC
+                FLACOVIASubFrameLPC(BitB, Ovia, Channel);
             } else {
-                BitIOLog(BitIOLog_ERROR, __func__, u8"Invalid Subframe type: %d", Dec->Data->SubFrame->SubFrameType);
+                Log(Log_ERROR, __func__, U8("Invalid Subframe type: %d"), Ovia->Data->SubFrame->SubFrameType);
             }
         }
     }
     
-    void FLACDecodeSubFrameVerbatim(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACOVIASubFrameVerbatim(OVIA *Ovia, BitBuffer *BitB) {
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            for (uint16_t Sample = 0; Sample < Dec->Data->Frame->BlockSize; Sample++) {
-                Dec->DecodedSamples[Sample] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, Dec->Data->Frame->BitDepth);
+            for (uint16_t Sample = 0; Sample < Ovia->Data->Frame->BlockSize; Sample++) {
+                Ovia->OVIAdSamples[Sample] = ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BitDepth);
             }
         }
     }
     
-    void FLACDecodeSubFrameConstant(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACOVIASubFrameConstant(OVIA *Ovia, BitBuffer *BitB) {
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            int64_t Constant = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, Dec->Data->Frame->BitDepth);
-            memset(Dec->DecodedSamples, Constant, Dec->Data->Frame->BlockSize);
+            int64_t Constant = ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BitDepth);
+            memset(Ovia->OVIAdSamples, Constant, Ovia->Data->Frame->BlockSize);
         }
     }
     
-    void FLACDecodeSubFrameFixed(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
-        } else {
-            for (uint16_t WarmupSample = 0; WarmupSample < Dec->Data->Frame->BitDepth * Dec->Data->LPC->LPCOrder; WarmupSample++) {
-                Dec->DecodedSamples[WarmupSample]  = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, Dec->Data->Frame->BitDepth);
-            }
-            DecodeFLACResidual(InputFLAC, Dec);
-        }
-    }
-    
-    void FLACDecodeSubFrameLPC(BitBuffer *InputFLAC, DecodeFLAC *Dec, uint8_t Channel) { // 4 0's
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
-        } else {
-            for (uint16_t WarmupSample = 0; WarmupSample < Dec->Data->Frame->BitDepth * Dec->Data->LPC->LPCOrder; WarmupSample++) {
-                Dec->DecodedSamples[WarmupSample]  = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, Dec->Data->Frame->BitDepth);
-            }
-            Dec->Data->LPC->LPCPrecision           = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 4) + 1; // 0x1F aka 31
-            Dec->Data->LPC->LPCShift               = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 5); // 0b01110 aka 14
-            Dec->Data->LPC->NumLPCCoeffs           = Dec->Data->LPC->LPCPrecision * Dec->Data->LPC->LPCOrder;
+    void FLACOVIASubFrameFixed(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
             
-            for (uint16_t LPCCoefficent = 0; LPCCoefficent < Dec->Data->LPC->NumLPCCoeffs; LPCCoefficent++) {
-                Dec->Data->LPC->LPCCoeff[LPCCoefficent] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, Dec->Data->LPC->NumLPCCoeffs) + 1;
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else {
+            for (uint16_t WarmupSample = 0; WarmupSample < Ovia->Data->Frame->BitDepth * Ovia->Data->LPC->LPCOrder; WarmupSample++) {
+                Ovia->OVIAdSamples[WarmupSample]  = ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BitDepth);
             }
-            DecodeFLACResidual(InputFLAC, Dec);
+            DecodeFLACResidual(BitB, Ovia);
         }
     }
     
-    void DecodeFLACResidual(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACOVIASubFrameLPC(OVIA *Ovia, BitBuffer *BitB, uint8_t Channel) { // 4 0's
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            Dec->Data->LPC->RicePartitionType      = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 2);
-            if (Dec->Data->LPC->RicePartitionType == RICE1) {
-                DecodeFLACRice1Partition(InputFLAC, Dec);
-            } else if (Dec->Data->LPC->RicePartitionType == RICE2) {
-                DecodeFLACRice2Partition(InputFLAC, Dec);
+            for (uint16_t WarmupSample = 0; WarmupSample < Ovia->Data->Frame->BitDepth * Ovia->Data->LPC->LPCOrder; WarmupSample++) {
+                Ovia->OVIAdSamples[WarmupSample]  = ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BitDepth); // 18 0's
+            }
+            Ovia->Data->LPC->LPCPrecision           = ReadBits(MSByteFirst, LSBitFirst, BitB, 4) + 1; // 1
+            Ovia->Data->LPC->LPCShift               = ReadBits(MSByteFirst, LSBitFirst, BitB, 5); // 0
+            Ovia->Data->LPC->NumLPCCoeffs           = Ovia->Data->LPC->LPCPrecision * Ovia->Data->LPC->LPCOrder;
+            
+            for (uint16_t LPCCoefficent = 0; LPCCoefficent < Ovia->Data->LPC->NumLPCCoeffs; LPCCoefficent++) {
+                Ovia->Data->LPC->LPCCoeff[LPCCoefficent] = ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->LPC->LPCPrecision) + 1;
+            }
+            DecodeFLACResidual(BitB, Ovia);
+        }
+    }
+    
+    void DecodeFLACResidual(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else {
+            Ovia->Data->LPC->RicePartitionType      = ReadBits(MSByteFirst, LSBitFirst, BitB, 2);
+            if (Ovia->Data->LPC->RicePartitionType == RICE1) {
+                DecodeRice1Partition(BitB, Ovia);
+            } else if (Ovia->Data->LPC->RicePartitionType == RICE2) {
+                DecodeFLACRice2Partition(BitB, Ovia);
             }
         }
     }
     
-    void DecodeFLACRice1Partition(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void DecodeRice1Partition(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            Dec->Data->LPC->PartitionOrder = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 4);
-            for (uint8_t Partition = 0; Partition < Dec->Data->LPC->PartitionOrder; Partition++) {
-                Dec->Data->Rice->RICEParameter[Partition] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 4) + 5;
-                if (Dec->Data->Rice->RICEParameter[Partition] == 20) {
+            Ovia->Data->LPC->PartitionOrder = ReadBits(MSByteFirst, LSBitFirst, BitB, 4); // byte 5, 3 bits read.
+            for (uint8_t Partition = 0; Partition < Ovia->Data->LPC->PartitionOrder; Partition++) {
+                Ovia->Data->Rice->RICEParameter[Partition] = ReadBits(MSByteFirst, LSBitFirst, BitB, 4) + 5;
+                if (Ovia->Data->Rice->RICEParameter[Partition] == 20) {
                     // Escape code, meaning the partition is in unencoded binary form using n bits per sample; n follows as a 5-bit number.
                 } else {
-                    if (Dec->Data->LPC->PartitionOrder == 0) {
-                        Dec->Data->Rice->RICEParameter[Partition] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, Dec->Data->Frame->BlockSize - Dec->Data->LPC->LPCOrder);
-                    } else if (Dec->Data->LPC->PartitionOrder > 0) {
-                        Dec->Data->Rice->RICEParameter[Partition] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, (Dec->Data->Frame->BlockSize / pow(2, Dec->Data->LPC->PartitionOrder)));
+                    if (Ovia->Data->LPC->PartitionOrder == 0) {
+                        Ovia->Data->Rice->RICEParameter[Partition] = ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BlockSize - Ovia->Data->LPC->LPCOrder);
+                    } else if (Ovia->Data->LPC->PartitionOrder > 0) {
+                        Ovia->Data->Rice->RICEParameter[Partition] = ReadBits(MSByteFirst, LSBitFirst, BitB, (Ovia->Data->Frame->BlockSize / pow(2, Ovia->Data->LPC->PartitionOrder)));
                     } else {
-                        Dec->Data->Rice->RICEParameter[Partition] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, (Dec->Data->Frame->BlockSize / pow(2, Dec->Data->LPC->PartitionOrder)) - Dec->Data->LPC->LPCOrder);
+                        Ovia->Data->Rice->RICEParameter[Partition] = ReadBits(MSByteFirst, LSBitFirst, BitB, (Ovia->Data->Frame->BlockSize / pow(2, Ovia->Data->LPC->PartitionOrder)) - Ovia->Data->LPC->LPCOrder);
                     }
                 }
             }
         }
     }
     
-    void DecodeFLACRice2Partition(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void DecodeFLACRice2Partition(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            for (uint8_t Partition = 0; Partition < Dec->Data->LPC->PartitionOrder; Partition++) {
-                Dec->Data->Rice->RICEParameter[Partition] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 5) + 5;
-                if (Dec->Data->Rice->RICEParameter[Partition] == 36) {
+            for (uint8_t Partition = 0; Partition < Ovia->Data->LPC->PartitionOrder; Partition++) {
+                Ovia->Data->Rice->RICEParameter[Partition] = ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 5;
+                if (Ovia->Data->Rice->RICEParameter[Partition] == 36) {
                     // Escape code, meaning the partition is in unencoded binary form using n bits per sample; n follows as a 5-bit number.
                 } else {
-                    if (Dec->Data->LPC->PartitionOrder == 0) {
-                        Dec->Data->Rice->RICEParameter[Partition] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, Dec->Data->Frame->BlockSize - Dec->Data->LPC->LPCOrder);
-                    } else if (Dec->Data->LPC->PartitionOrder > 0) {
-                        Dec->Data->Rice->RICEParameter[Partition] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, (Dec->Data->Frame->BlockSize / pow(2, Dec->Data->LPC->PartitionOrder)));
+                    if (Ovia->Data->LPC->PartitionOrder == 0) {
+                        Ovia->Data->Rice->RICEParameter[Partition] = ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BlockSize - Ovia->Data->LPC->LPCOrder);
+                    } else if (Ovia->Data->LPC->PartitionOrder > 0) {
+                        Ovia->Data->Rice->RICEParameter[Partition] = ReadBits(MSByteFirst, LSBitFirst, BitB, (Ovia->Data->Frame->BlockSize / pow(2, Ovia->Data->LPC->PartitionOrder)));
                     } else {
-                        Dec->Data->Rice->RICEParameter[Partition] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, (Dec->Data->Frame->BlockSize / pow(2, Dec->Data->LPC->PartitionOrder)) - Dec->Data->LPC->LPCOrder);
+                        Ovia->Data->Rice->RICEParameter[Partition] = ReadBits(MSByteFirst, LSBitFirst, BitB, (Ovia->Data->Frame->BlockSize / pow(2, Ovia->Data->LPC->PartitionOrder)) - Ovia->Data->LPC->LPCOrder);
                     }
                 }
             }
@@ -292,93 +314,110 @@ extern "C" {
         uint16_t SamplesInBlock = 0;
         if (BlockSize == 1) {
             SamplesInBlock = 192;
-        } else if ((BlockSize >= 2) && (BlockSize <= 5)) {
+        } else if (BlockSize >= 2 && BlockSize <= 5) {
             SamplesInBlock = (576 * pow(2, BlockSize - 2)); // 576/1152/2304/4608, pow(2, (BlockSize - 2))
         } else if (BlockSize == 6) {
             // get 8 bit block from the end of the header
         } else if (BlockSize == 7) {
             // get 16 bit block from the end of the header
-        } else if ((BlockSize >= 8) && (BlockSize <= 15)) {
+        } else if (BlockSize >= 8 && BlockSize <= 15) {
             SamplesInBlock = (256 * pow(2, (BlockSize - 8))); // 256/512/1024/2048/4096/8192/16384/32768
                                                               // 256 * pow(2, 4)
+            // 256 * pow(2, 6) 256 * 64 = 16384
         } else {
             // Reserved
         }
         return SamplesInBlock;
     }
     
-    void FLACBitDepth(DecodeFLAC *Dec) {
-        if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACBitDepth(OVIA *Ovia) {
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            switch (Dec->Meta->StreamInfo->CodedBitDepth) {
+            switch (Ovia->Meta->StreamInfo->CodedBitDepth) {
                 case 0:
-                    Dec->Data->Frame->BitDepth = Dec->Meta->StreamInfo->BitDepth;
+                    Ovia->Data->Frame->BitDepth = Ovia->Meta->StreamInfo->BitDepth;
                     break;
                 case 1:
-                    Dec->Data->Frame->BitDepth = 8;
+                    Ovia->Data->Frame->BitDepth = 8;
                     break;
                 case 2:
-                    Dec->Data->Frame->BitDepth = 12;
+                    Ovia->Data->Frame->BitDepth = 12;
                     break;
                 case 4:
-                    Dec->Data->Frame->BitDepth = 16;
+                    Ovia->Data->Frame->BitDepth = 16;
                     break;
                 case 5:
-                    Dec->Data->Frame->BitDepth = 20;
+                    Ovia->Data->Frame->BitDepth = 20;
                     break;
                 case 6:
-                    Dec->Data->Frame->BitDepth = 24;
+                    Ovia->Data->Frame->BitDepth = 24;
                     break;
                 default:
-                    Dec->Data->Frame->BitDepth = 0;
+                    Ovia->Data->Frame->BitDepth = 0;
                     break;
             }
         }
     }
     
-    void FLACSampleRate(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACSampleRate(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            switch (Dec->Meta->StreamInfo->CodedSampleRate) {
+            switch (Ovia->Meta->StreamInfo->CodedSampleRate) {
                 case 0:
-                    Dec->Data->Frame->SampleRate = Dec->Meta->StreamInfo->SampleRate;
+                    Ovia->Data->Frame->SampleRate = Ovia->Meta->StreamInfo->SampleRate;
                     break;
                 case 1:
-                    Dec->Data->Frame->SampleRate = 88200;
+                    Ovia->Data->Frame->SampleRate = 88200;
                     break;
                 case 2:
-                    Dec->Data->Frame->SampleRate = 176400;
+                    Ovia->Data->Frame->SampleRate = 176400;
                     break;
                 case 3:
-                    Dec->Data->Frame->SampleRate = 192000;
+                    Ovia->Data->Frame->SampleRate = 192000;
                     break;
                 case 4:
-                    Dec->Data->Frame->SampleRate = 8000;
+                    Ovia->Data->Frame->SampleRate = 8000;
                     break;
                 case 5:
-                    Dec->Data->Frame->SampleRate = 16000;
+                    Ovia->Data->Frame->SampleRate = 16000;
                     break;
                 case 6:
-                    Dec->Data->Frame->SampleRate = 22050;
+                    Ovia->Data->Frame->SampleRate = 22050;
                     break;
                 case 7:
-                    Dec->Data->Frame->SampleRate = 24000;
+                    Ovia->Data->Frame->SampleRate = 24000;
                     break;
                 case 8:
-                    Dec->Data->Frame->SampleRate = 32000;
+                    Ovia->Data->Frame->SampleRate = 32000;
                     break;
                 case 9:
-                    Dec->Data->Frame->SampleRate = 44100;
+                    Ovia->Data->Frame->SampleRate = 44100;
                     break;
                 case 10:
-                    Dec->Data->Frame->SampleRate = 48000;
+                    Ovia->Data->Frame->SampleRate = 48000;
                     break;
                 case 11:
-                    Dec->Data->Frame->SampleRate = 96000;
+                    Ovia->Data->Frame->SampleRate = 96000;
                     break;
                 default:
                     break;
@@ -386,8 +425,16 @@ extern "C" {
         }
     }
     
-    void FLACDecodeLPC(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        // Basically you use the warmup samples in Dec->DecodedSamples, along with the info in Dec->LPC to deocde the file by using summation.
+    void FLACOVIALPC(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        // Basically you use the warmup samples in Ovia->OVIAdSamples, along with the info in Ovia->LPC to deocde the file by using summation.
         // LPC is lossy, which is why you use filters to reduce the size of the residual.
         
         // I need 2 loops, one for the warmup samples, and one for the LPC encoded samples.
@@ -396,186 +443,263 @@ extern "C" {
         // Original algorithm: X^
     }
     
-    void FLACParseMetadata(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACParseMetadata(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            Dec->LastMetadataBlock          = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 1);  // true
-            uint8_t  MetadataBlockType      = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 7);  // 1 aka Padding
-            Dec->Meta->MetadataSize         = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 24); // 8192 Does NOT count the 2 fields above.
+            Ovia->LastMetadataBlock          = ReadBits(MSByteFirst, LSBitFirst, BitB, 1);  // true
+            uint8_t  MetadataBlockType      = ReadBits(MSByteFirst, LSBitFirst, BitB, 7);  // 4
+            Ovia->Meta->MetadataSize         = ReadBits(MSByteFirst, LSBitFirst, BitB, 24); // 385 Does NOT count the 2 fields above.
             
             switch (MetadataBlockType) {
                 case StreamInfo:
-                    FLACParseStreamInfo(InputFLAC, Dec);
+                    FLACParseStreamInfo(BitB, Ovia);
                     break;
                 case Padding:
-                    FLACSkipPadding(InputFLAC, Dec);
+                    FLACSkipPadding(BitB, Ovia);
                     break;
                 case Custom:
-                    FLACSkipCustom(InputFLAC, Dec);
+                    FLACSkipCustom(BitB, Ovia);
                     break;
                 case SeekTable:
-                    FLACParseSeekTable(InputFLAC, Dec);
+                    FLACParseSeekTable(BitB, Ovia);
                     break;
                 case VorbisComment:
-                    FLACParseVorbisComment(InputFLAC, Dec);
+                    FLACParseVorbisComment(BitB, Ovia);
                     break;
                 case Cuesheet:
-                    FLACParseCuesheet(InputFLAC, Dec);
+                    FLACParseCuesheet(BitB, Ovia);
                     break;
                 case Picture:
-                    FLACParsePicture(InputFLAC, Dec);
+                    FLACParsePicture(BitB, Ovia);
                     break;
                 default:
-                    BitIOLog(BitIOLog_DEBUG, __func__, u8"Invalid Metadata Type: %d\n", MetadataBlockType);
+                    Log(Log_DEBUG, __func__, U8("Invalid Metadata Type: %d\n", MetadataBlockType);
                     break;
             }
         }
     }
     
-    void FLACParseStreamInfo(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
-        } else {
-            Dec->Meta->StreamInfo->MinimumBlockSize        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 16);    // 4096
-            Dec->Meta->StreamInfo->MaximumBlockSize        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 16);    // 4096
-            Dec->Meta->StreamInfo->MinimumFrameSize        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 24);    // 14
-            Dec->Meta->StreamInfo->MaximumFrameSize        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 24);    // 16
-            Dec->Meta->StreamInfo->SampleRate              = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 20);    // 44,100
-            Dec->Meta->StreamInfo->Channels                = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 3) + 1; // stereo
-            Dec->Meta->StreamInfo->BitDepth                = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 5) + 1; // 15 + 1
-            Dec->Meta->StreamInfo->SamplesInStream         = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 36);    // 4607
-            for (uint8_t MD5Byte = 0; MD5Byte < 16; MD5Byte++) {
-                Dec->Meta->StreamInfo->MD5[MD5Byte] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8); // MD5 = 0x162605FCCEAE5EFB19C37DCB8AED7804
-            }
-        }
-    }
-    
-    void FLACSkipPadding(BitBuffer *InputFLAC, DecodeFLAC *Dec) { // 8192
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
-        } else {
-            SkipBits(InputFLAC, Bytes2Bits(Dec->Meta->MetadataSize));
-        }
-    }
-    
-    void FLACSkipCustom(BitBuffer *InputFLAC, DecodeFLAC *Dec) { // 134,775
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
-        } else {
-            SkipBits(InputFLAC, Bytes2Bits(Dec->Meta->MetadataSize + 1));
-        }
-    }
-    
-    void FLACParseSeekTable(BitBuffer *InputFLAC, DecodeFLAC *Dec) { // 18
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
-        } else {
-            Dec->Meta->Seek->NumSeekPoints = Dec->Meta->MetadataSize / 18; // 21
-            
-            for (uint16_t SeekPoint = 0; SeekPoint < Dec->Meta->Seek->NumSeekPoints; SeekPoint++) {
-                Dec->Meta->Seek->SampleInTargetFrame[SeekPoint]        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 64); // 0
-                Dec->Meta->Seek->OffsetFrom1stSample[SeekPoint]        = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 64); // 0
-                Dec->Meta->Seek->TargetFrameSize[SeekPoint]            = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 16); // 16384
-            }
-        }
-    }
-    
-    void FLACParseVorbisComment(BitBuffer *InputFLAC, DecodeFLAC *Dec) { // LITTLE ENDIAN
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
-        } else {
-            Dec->Meta->Vorbis->VendorTagSize              = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 32
-            Dec->Meta->Vorbis->VendorTag                  = calloc(1, Dec->Meta->Vorbis->VendorTagSize * sizeof(char));
-            for (uint32_t TagByte = 0; TagByte < Dec->Meta->Vorbis->VendorTagSize; TagByte++) {
-                Dec->Meta->Vorbis->VendorTag[TagByte]     = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, InputFLAC, 8); // reference libFLAC 1.3.1 20141125
-            }
-            Dec->Meta->Vorbis->NumUserTags                = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 13
-            Dec->Meta->Vorbis->UserTagSize                = calloc(Dec->Meta->Vorbis->NumUserTags, sizeof(uint8_t));
-            Dec->Meta->Vorbis->UserTagString              = calloc(Dec->Meta->Vorbis->NumUserTags, sizeof(char));
-            for (uint32_t Comment = 0; Comment < Dec->Meta->Vorbis->NumUserTags; Comment++) {
-                Dec->Meta->Vorbis->UserTagSize[Comment]   = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, InputFLAC, 32);
-                Dec->Meta->Vorbis->UserTagString[Comment] = calloc(1, Dec->Meta->Vorbis->UserTagSize[Comment] * sizeof(char));
-                
-                char UserTagString[Dec->Meta->Vorbis->UserTagSize[Comment]];
-                for (uint32_t CommentByte = 0; CommentByte < Dec->Meta->Vorbis->UserTagSize[Comment]; CommentByte++) {
-                    UserTagString[CommentByte] = ReadBits(BitIOLSByteFirst, BitIOLSBitFirst, InputFLAC, 8);
+    void FLACParseStreamInfo(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            OVIA_FLAC_SetMinBlockSize(Ovia, ReadBits(MSByteFirst, LSBitFirst, BitB, 16));
+            OVIA_FLAC_SetMaxBlockSize(Ovia, ReadBits(MSByteFirst, LSBitFirst, BitB, 16));
+            OVIA_FLAC_SetMinFrameSize(Ovia, ReadBits(MSByteFirst, LSBitFirst, BitB, 24));
+            OVIA_FLAC_SetMaxFrameSize(Ovia, ReadBits(MSByteFirst, LSBitFirst, BitB, 24));
+            OVIA_SetSampleRate(Ovia,        ReadBits(MSByteFirst, LSBitFirst, BitB, 20));
+            OVIA_SetNumChannels(Ovia,       ReadBits(MSByteFirst, LSBitFirst, BitB, 3) + 1);
+            OVIA_SetBitDepth(Ovia,          ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 1);
+            OVIA_SetNumSamples(Ovia,        ReadBits(MSByteFirst, LSBitFirst, BitB, 36));
+            uint8_t *MD5 = calloc(16, sizeof(uint8_t));
+            if (MD5 != NULL) {
+                for (uint8_t MD5Byte = 0; MD5Byte < 16; MD5Byte++) {
+                    MD5[MD5Byte] = ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
                 }
-                Dec->Meta->Vorbis->UserTagString[Comment] = UserTagString;
+                OVIA_FLAC_SetMD5(Ovia, MD5);
+            } else {
+                BitBuffer_Skip(BitB, 128);
             }
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+    }
+    
+    void FLACSkipPadding(OVIA *Ovia, BitBuffer *BitB) { // 8192
+        if (Ovia != NULL && BitB != NULL) {
+            SkipBits(BitB, Bytes2Bits(Ovia->Meta->MetadataSize));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
             
-            for (uint32_t UserTag = 0; UserTag < Dec->Meta->Vorbis->NumUserTags; UserTag++) {
-                BitIOLog(BitIOLog_DEBUG, __func__, u8"User Tag %d of %d: %c\n", UserTag, Dec->Meta->Vorbis->NumUserTags, Dec->Meta->Vorbis->UserTagString[UserTag]);
+        } else if (Ovia == NULL) {
+            
+        } else {
+            
+        }
+    }
+    
+    void FLACSkipCustom(OVIA *Ovia, BitBuffer *BitB) { // 134,775
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else {
+            SkipBits(BitB, Bytes2Bits(Ovia->Meta->MetadataSize + 1));
+        }
+    }
+    
+    void FLACParseSeekTable(OVIA *Ovia, BitBuffer *BitB) { // 18
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else {
+            Ovia->Meta->Seek->NumSeekPoints = Ovia->Meta->MetadataSize / 18; // 21
+            
+            for (uint16_t SeekPoint = 0; SeekPoint < Ovia->Meta->Seek->NumSeekPoints; SeekPoint++) {
+                Ovia->Meta->Seek->SampleInTargetFrame[SeekPoint]        = ReadBits(MSByteFirst, LSBitFirst, BitB, 64); // 0
+                Ovia->Meta->Seek->OffsetFrom1stSample[SeekPoint]        = ReadBits(MSByteFirst, LSBitFirst, BitB, 64); // 0
+                Ovia->Meta->Seek->TargetFrameSize[SeekPoint]            = ReadBits(MSByteFirst, LSBitFirst, BitB, 16); // 16384
             }
         }
     }
     
-    void FLACParseCuesheet(BitBuffer *InputFLAC, DecodeFLAC *Dec) {
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACParseVorbisComment(OVIA *Ovia, BitBuffer *BitB) { // LITTLE ENDIAN
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else {
+            Ovia->Meta->Vorbis->VendorTagSize              = ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 32); // 13
+            Ovia->Meta->Vorbis->VendorTag                  = calloc(1, Ovia->Meta->Vorbis->VendorTagSize * sizeof(char));
+            for (uint32_t TagByte = 0; TagByte < Ovia->Meta->Vorbis->VendorTagSize; TagByte++) {
+                Ovia->Meta->Vorbis->VendorTag[TagByte]     = ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 8); // Lavf58.17.101
+            }
+            Ovia->Meta->Vorbis->NumUserTags                = ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 32); // 14
+            Ovia->Meta->Vorbis->UserTagSize                = calloc(Ovia->Meta->Vorbis->NumUserTags, sizeof(uint8_t)); // 28
+            Ovia->Meta->Vorbis->UserTagString              = calloc(Ovia->Meta->Vorbis->NumUserTags, sizeof(char));
+            // 28,  ALBUM=What A Wonderful World
+            // 27?, ALBUMARTIST=Louis Armstrong
+            // 22,  ARTIST=Louis Armstrong
+            // 12,  DISCNUMBER=1
+            // 10,  genre=Jazz
+            // 15,  itunesgapless=0
+            // 98,  iTunNORM=000001F8 00000142 00001CE3 000014F5 000092A4 000092B4 000041CC 000051C5 00012C9F 000145EF
+            // 7,   BPM=283
+            // 13,  BPM=00000 BPM
+            // 28,  TITLE=What A Wonderful World
+            // 12,  totaldiscs=1
+            // 14,  totaltracks=11
+            // 9,   DATE=1988
+            // 13,  TRACKNUMBER=1
+            for (uint32_t Comment = 0; Comment < Ovia->Meta->Vorbis->NumUserTags; Comment++) {
+                Ovia->Meta->Vorbis->UserTagSize[Comment]   = ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 32);
+                Ovia->Meta->Vorbis->UserTagString[Comment] = calloc(1, Ovia->Meta->Vorbis->UserTagSize[Comment] * sizeof(char));
+                
+                char UserTagString[Ovia->Meta->Vorbis->UserTagSize[Comment]];
+                for (uint32_t CommentByte = 0; CommentByte < Ovia->Meta->Vorbis->UserTagSize[Comment]; CommentByte++) {
+                    UserTagString[CommentByte] = ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 8);
+                }
+                Ovia->Meta->Vorbis->UserTagString[Comment] = UserTagString;
+            }
+            
+            for (uint32_t UserTag = 0; UserTag < Ovia->Meta->Vorbis->NumUserTags; UserTag++) {
+                Log(Log_DEBUG, __func__, U8("User Tag %d of %d: %c\n", UserTag, Ovia->Meta->Vorbis->NumUserTags, Ovia->Meta->Vorbis->UserTagString[UserTag]);
+            }
+        }
+    }
+    
+    void FLACParseCuesheet(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
             for (uint8_t CatalogChar = 0; CatalogChar < FLACMedizCatalogNumberSize; CatalogChar++) {
-                Dec->Meta->Cue->CatalogID[CatalogChar] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8);
+                Ovia->Meta->Cue->CatalogID[CatalogChar] = ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
             }
-            Dec->Meta->Cue->LeadIn = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 64);
-            Dec->Meta->Cue->IsCD   = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 1);
-            SkipBits(InputFLAC, 2071); // Reserved
-            Dec->Meta->Cue->NumTracks = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8);
+            Ovia->Meta->Cue->LeadIn = ReadBits(MSByteFirst, LSBitFirst, BitB, 64);
+            Ovia->Meta->Cue->IsCD   = ReadBits(MSByteFirst, LSBitFirst, BitB, 1);
+            SkipBits(BitB, 2071); // Reserved
+            Ovia->Meta->Cue->NumTracks = ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
             
-            for (uint8_t Track = 0; Track < Dec->Meta->Cue->NumTracks; Track++) {
-                Dec->Meta->Cue->TrackOffset[Track]  = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 64);
-                Dec->Meta->Cue->TrackNum[Track]     = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 64);
+            for (uint8_t Track = 0; Track < Ovia->Meta->Cue->NumTracks; Track++) {
+                Ovia->Meta->Cue->TrackOffset[Track]  = ReadBits(MSByteFirst, LSBitFirst, BitB, 64);
+                Ovia->Meta->Cue->TrackNum[Track]     = ReadBits(MSByteFirst, LSBitFirst, BitB, 64);
                 
                 for (uint8_t ISRCByte = 0; ISRCByte < FLACISRCSize; ISRCByte++) {
-                    Dec->Meta->Cue->ISRC[Track][ISRCByte]  = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8);
+                    Ovia->Meta->Cue->ISRC[Track][ISRCByte]  = ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
                 }
-                Dec->Meta->Cue->IsAudio[Track] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 1);
-                Dec->Meta->Cue->PreEmphasis[Track] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 1);
-                SkipBits(InputFLAC, 152); // Reserved, all 0
-                Dec->Meta->Cue->NumTrackIndexPoints[Track] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8);
+                Ovia->Meta->Cue->IsAudio[Track] = ReadBits(MSByteFirst, LSBitFirst, BitB, 1);
+                Ovia->Meta->Cue->PreEmphasis[Track] = ReadBits(MSByteFirst, LSBitFirst, BitB, 1);
+                SkipBits(BitB, 152); // Reserved, all 0
+                Ovia->Meta->Cue->NumTrackIndexPoints[Track] = ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
             }
             
-            Dec->Meta->Cue->IndexOffset    = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 64);
-            Dec->Meta->Cue->IndexPointNum  = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8);
-            SkipBits(InputFLAC, 24); // Reserved
+            Ovia->Meta->Cue->IndexOffset    = ReadBits(MSByteFirst, LSBitFirst, BitB, 64);
+            Ovia->Meta->Cue->IndexPointNum  = ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
+            SkipBits(BitB, 24); // Reserved
         }
     }
     
-    void FLACParsePicture(BitBuffer *InputFLAC, DecodeFLAC *Dec) { // 17,151
-        if (InputFLAC == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to BitBuffer is NULL");
-        } else if (Dec == NULL) {
-            BitIOLog(BitIOLog_ERROR, __func__, u8"Pointer to DecodeFLAC is NULL");
+    void FLACParsePicture(OVIA *Ovia, BitBuffer *BitB) { // 865,236
+        if (Ovia != NULL && BitB != NULL) {
+            
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+        
+        if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else {
-            Dec->Meta->Pic->PicType  = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 3
-            Dec->Meta->Pic->MIMESize = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 10
-            for (uint32_t MIMEByte = 0; MIMEByte < Dec->Meta->Pic->MIMESize; MIMEByte++) {
-                Dec->Meta->Pic->MIMEString[MIMEByte] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8); // image/jpeg
+            Ovia->Meta->Pic->PicType  = ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 3
+            Ovia->Meta->Pic->MIMESize = ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 10
+            for (uint32_t MIMEByte = 0; MIMEByte < Ovia->Meta->Pic->MIMESize; MIMEByte++) {
+                Ovia->Meta->Pic->MIMEString[MIMEByte] = ReadBits(MSByteFirst, LSBitFirst, BitB, 8); // image/jpeg
             }
-            Dec->Meta->Pic->PicDescriptionSize = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 0
-            for (uint32_t Char = 0; Char < Dec->Meta->Pic->PicDescriptionSize; Char++) {
-                Dec->Meta->Pic->PicDescriptionString[Char] = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 8);
+            Ovia->Meta->Pic->PicDescriptionSize = ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 0
+            for (uint32_t Char = 0; Char < Ovia->Meta->Pic->PicDescriptionSize; Char++) {
+                Ovia->Meta->Pic->PicDescriptionString[Char] = ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
             }
-            Dec->Meta->Pic->Width       = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 1144
-            Dec->Meta->Pic->Height      = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 1144
-            Dec->Meta->Pic->BitDepth    = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 24, PER PIXEL, NOT SUBPIXEL
-            Dec->Meta->Pic->ColorsUsed  = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 0
-            Dec->Meta->Pic->PictureSize = ReadBits(BitIOMSByteFirst, BitIOLSBitFirst, InputFLAC, 32); // 17,109
+            Ovia->Meta->Pic->Width       = ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 1000
+            Ovia->Meta->Pic->Height      = ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 1000
+            Ovia->Meta->Pic->BitDepth    = ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 24, PER PIXEL, NOT SUBPIXEL
+            Ovia->Meta->Pic->ColorsUsed  = ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 0
+            Ovia->Meta->Pic->PictureSize = ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 865,194
             // Pop in the address of the start of the data, and skip over the data instead of buffering it.
+            
         }
     }
     

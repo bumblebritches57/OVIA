@@ -66,7 +66,7 @@ extern "C" {
     
     static const UTF8 ModernPNGNumber2Month[12][4] = {
         U8("Jan"), U8("Feb"), U8("Mar"), U8("Apr"), U8("May"), U8("Jun"),
-        U8("Jul"), U8("Aug"), U8("Sep"), U8("Oct"), U8("Nov"), U8("Dec"),
+        U8("Jul"), U8("Aug"), U8("Sep"), U8("Oct"), U8("Nov"), U8("Ovia"),
     };
     
     static const uint8_t ModernPNGChannelsPerColorType[7] = {
@@ -75,159 +75,8 @@ extern "C" {
     
     uint32_t    CalculateSTERPadding(const uint32_t Width);
     
-    typedef struct iHDR {
-        uint32_t      Width;
-        uint32_t      Height;
-        uint8_t       BitDepth;
-        uint8_t       Compression;
-        uint8_t       FilterMethod;
-        PNGColorTypes ColorType;
-        bool          IsInterlaced:1;
-        bool          CRCIsValid:1;
-    } iHDR;
-    
-    typedef struct acTL {
-        uint32_t   NumFrames;
-        uint32_t   TimesToLoop;
-        bool       CRCIsValid:1;
-    } acTL;
-    
-    typedef struct fcTL {
-        uint32_t   FrameNum;
-        uint32_t   Width;
-        uint32_t   Height;
-        uint32_t   XOffset;
-        uint32_t   YOffset;
-        uint16_t   FrameDelayNumerator;
-        uint16_t   FrameDelayDenominator;
-        uint8_t    DisposeMethod;
-        bool       BlendMethod:1;
-        bool       CRCIsValid:1;
-    } fcTL;
-    
-    typedef struct PLTE {
-        uint8_t  **Palette;
-        uint8_t    NumEntries;
-        bool       CRCIsValid:1;
-    } PLTE;
-    
-    typedef struct tRNS {
-        uint8_t  **Palette;
-        uint8_t    NumEntries;
-        bool       CRCIsValid:1;
-    } tRNS;
-    
-    typedef struct bkGD {
-        uint8_t   *BackgroundPaletteEntry;
-        bool       CRCIsValid:1;
-    } bkGD;
-    
-    typedef struct sTER {
-        bool       StereoType:1;
-        bool       CRCIsValid:1;
-    } sTER;
-    
-    typedef struct fdAT {
-        uint32_t   FrameNum;
-        bool       CRCIsValid:1;
-    } fdAT;
-    
-    typedef struct cHRM { // sRGB or iCCP overrides cHRM
-        uint32_t   WhitePointX; // X = 0, Y = 1
-        uint32_t   WhitePointY;
-        uint32_t   RedX;
-        uint32_t   RedY;
-        uint32_t   GreenX;
-        uint32_t   GreenY;
-        uint32_t   BlueX;
-        uint32_t   BlueY;
-        bool       CRCIsValid:1;
-    } cHRM;
-    
-    typedef struct gAMA { // sRGB or iCCP overrides gAMA
-        uint32_t   Gamma;
-        bool       CRCIsValid:1;
-    } gAMA;
-    
-    typedef struct oFFs {
-        int32_t    XOffset;
-        int32_t    YOffset;
-        bool       UnitSpecifier:1;
-        bool       CRCIsValid:1;
-    } oFFs;
-    
-    typedef struct iCCP {
-        UTF8      *ProfileName;
-        uint8_t   *CompressedICCPProfile;
-        uint8_t    CompressionType;
-        bool       CRCIsValid:1;
-    } iCCP;
-    
-    typedef struct sBIT {
-        uint8_t    Grayscale;
-        uint8_t    Red;
-        uint8_t    Green;
-        uint8_t    Blue;
-        uint8_t    Alpha;
-        bool       CRCIsValid:1;
-    } sBIT;
-    
-    typedef struct sRGB {
-        uint8_t    RenderingIntent;
-        bool       CRCIsValid:1;
-    } sRGB;
-    
-    typedef struct pHYs {
-        uint32_t   PixelsPerUnitXAxis;
-        uint32_t   PixelsPerUnitYAxis;
-        uint8_t    UnitSpecifier;
-        bool       CRCIsValid:1;
-    } pHYs;
-    
-    typedef struct pCAL {
-        UTF8      *CalibrationName;
-        uint8_t   *UnitName;
-        int32_t    OriginalZero;
-        int32_t    OriginalMax;
-        uint8_t    CalibrationNameSize;
-        uint8_t    UnitNameSize;
-        uint8_t    EquationType;
-        uint8_t    NumParams;
-        bool       CRCIsValid:1;
-    } pCAL;
-    
-    typedef struct sCAL {
-        float      PixelWidth; // ASCII float
-        float      PixelHeight; // ASCII float
-        uint8_t    UnitSpecifier;
-        bool       CRCIsValid:1;
-    } sCAL;
-    
-    typedef struct hIST {
-        uint32_t   NumColors;
-        uint16_t  *Histogram; // For each PLTE entry, there needs to be 1 array element
-        bool       CRCIsValid:1;
-    } hIST;
-    
-    typedef struct Text { // Replaces:  tEXt, iTXt, zTXt
-        UTF8      *Keyword;
-        UTF8      *Comment;
-        uint8_t    TextType;
-        bool       CRCIsValid:1;
-    } Text;
-    
-    typedef struct tIMe {
-        uint16_t   Year;
-        uint8_t    Month;
-        uint8_t    Day;
-        uint8_t    Hour;
-        uint8_t    Minute;
-        uint8_t    Second;
-        bool       CRCIsValid:1;
-    } tIMe;
-    
-    struct PNGDecoder {
-        uint16_t    ***DecodedImage;
+    struct PNGOVIAr {
+        uint16_t    ***OVIAdImage;
         struct acTL   *acTL;
         struct bkGD   *bkGD;
         struct cHRM   *cHRM;
@@ -323,34 +172,6 @@ extern "C" {
         bool           tRNSExists:1;
     };
     
-    typedef struct PNGDecoder DecodePNG;
-    
-    typedef struct PNGEncoder EncodePNG;
-    
-    /*!
-     @abstract                  "Initializes the DecodePNG structure to start decoding this specific PNG file"
-     @return                    "It takes no parameters, and returns a pointer to the PNGDecoder (typedef'd as DecodePNG) structure"
-     */
-    DecodePNG  *DecodePNG_Init(void);
-    
-    /*!
-     @abstract                  "Initializes the EncodePNG structure to start encoding this specific PNG file"
-     @return                    "It takes no parameters, and returns a pointer to the PNGEncoder (typedef'd as EncodePNG) structure"
-     */
-    EncodePNG  *EncodePNG_Init(void);
-    
-    /*!
-     @abstract                  "Uninitializes the PNGDecoder (typedef'd as DecodePNG) structure after you're done decoding this specific PNG file"
-     @param     Dec             "Pointer to the DecodePNG instance to deinitalize".
-     */
-    void        DecodePNG_Deinit(DecodePNG *Dec);
-    
-    /*!
-     @abstract                  "Uninitializes the PNGEncoder (typedef'd as EncodePNG) structure after you're done decoding this specific PNG file"
-     @param     Enc             "Pointer to the EncodePNG instance to deinitalize".
-     */
-    void        EncodePNG_Deinit(EncodePNG *Enc);
-    
     /*!
      @abstract                  "Encodes a PNG from RawImage2Encode to a BitBuffer"
      @param     Enc             "Pointer to EncodePNG struct containing all the metadata about the image to be encoded"
@@ -361,52 +182,54 @@ extern "C" {
     BitBuffer  *EncodePNGImage(EncodePNG *Enc, void ****RawImage2Encode, bool InterlacePNG, bool OptimizePNG);
     
     /*!
-     @abstract                  "Decodes a PNG from a bitbuffer to an array"
-     @param     Dec             "Pointer to DecodePNG struct containing all the metadata about the image to be decoded"
+     @abstract                  "OVIAs a PNG from a bitbuffer to an array"
+     @param     Ovia             "Pointer to OVIA struct containing all the metadata about the image to be OVIAd"
      @param     PNGFile         "Pointer to raw array containing the image, supports 2D array containing stereoscopic frames"
      */
-    uint16_t ***DecodePNGImage(DecodePNG *Dec, BitBuffer *PNGFile);
+    uint16_t ***OVIAImage(OVIA *Ovia, BitBuffer *PNGFile);
     
-    void        PNGSetTextChunk(EncodePNG *Enc, UTF8 *KeywordString, UTF8 *CommentString);
+    void        OVIA_PNG_SetTextChunk(EncodePNG *Enc, UTF8 *KeywordString, UTF8 *CommentString);
     
-    uint32_t    PNGGetNumTextChunks(DecodePNG *Dec);
+    uint32_t    OVIA_PNG_GetNumTextChunks(OVIA *Ovia);
     
     /*!
      @abstract                  "Extracts the Keyword and Comment strings from the Instance of the text chunk".
-     @remark                    "If the Keyword or Comment is DEFLATE encoded, we decode it to a regular string".
-     @param     Dec             "DecodePNG Pointer to extract the text chunk from".
+     @remark                    "If the Keyword or Comment is DEFLATE encoded, we OVIA it to a regular string".
+     @param     Ovia             "OVIA Pointer to extract the text chunk from".
      @param     Instance        "Which instance of the text chunk should we extract"?
      @param     Keyword         "Pointer the Keyword string is returned through".
      @return                    "Returns the actual Comment string".
      */
-    UTF8       *PNGGetTextChunk(DecodePNG *Dec, uint32_t Instance, UTF8 *Keyword);
+    UTF8       *OVIA_PNG_GetTextChunk(OVIA *Ovia, uint32_t Instance, UTF8 *Keyword);
     
-    uint32_t    PNGGetWidth(DecodePNG *Dec);
+    uint32_t    OVIA_PNG_GetWidth(OVIA *Ovia);
     
-    uint32_t    PNGGetHeight(DecodePNG *Dec);
+    uint32_t    OVIA_PNG_GetHeight(OVIA *Ovia);
     
-    uint8_t     PNGGetBitDepth(DecodePNG *Dec);
+    uint8_t     OVIA_PNG_GetBitDepth(OVIA *Ovia);
     
-    uint8_t     PNGGetColorType(DecodePNG *Dec);
+    uint8_t     OVIA_PNG_GetColorType(OVIA *Ovia);
     
-    bool        PNGGetInterlaceStatus(DecodePNG *Dec);
+    bool        OVIA_PNG_GetInterlaceStatus(OVIA *Ovia);
     
-    bool        PNGGetStereoscopicStatus(DecodePNG *Dec);
+    bool        OVIA_PNG_GetStereoscopicStatus(OVIA *Ovia);
     
-    uint32_t    PNGGetWhitepointX(DecodePNG *Dec);
+    uint32_t    OVIA_PNG_GetWhitepointX(OVIA *Ovia);
     
-    uint32_t    PNGGetWhitepointY(DecodePNG *Dec);
+    uint32_t    OVIA_PNG_GetWhitepointY(OVIA *Ovia);
     
-    uint32_t    PNGGetGamma(DecodePNG *Dec);
+    uint32_t    OVIA_PNG_GetGamma(OVIA *Ovia);
     
-    UTF8       *PNGGetColorProfileName(DecodePNG *Dec);
+    UTF8       *OVIA_PNG_GetColorProfileName(OVIA *Ovia);
     
-    uint8_t    *PNGGetColorProfile(DecodePNG *Dec);
+    uint8_t    *OVIA_PNG_GetColorProfile(OVIA *Ovia);
     
     /*
      @param     GammaCorrect only does anything if there is a GAMA chunk present.
      */
-    Container  *PNGDecodeImage2(DecodePNG *Dec, BitBuffer *PNG2Decode, uint16_t GammaCorrect);
+    ImageContainer *PNGExtractImage(OVIA *Ovia, BitBuffer *BitB);
+    
+    void PNGInsertImage(OVIA *Ovia, BitBuffer *BitB, ImageContainer *Image);
     
     typedef struct LZ77Tuple LZ77Tuple;
     
@@ -459,49 +282,49 @@ extern "C" {
     
     uint8_t    PaethPredictor(int64_t Left, int64_t Above, int64_t UpperLeft);
     
-    uint8_t    ParsePNGMetadata(DecodePNG *Dec, BitBuffer *BitB);
+    uint8_t    ParsePNGMetadata(OVIA *Ovia, BitBuffer *BitB);
     
-    void       PNGDecodeSubFilter(DecodePNG *Dec, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       PNGOVIASubFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
-    void       PNGDecodeNonFilter(DecodePNG *Dec, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       PNGOVIANonFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
-    void       PNGDecodeUpFilter(DecodePNG *Dec, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       PNGOVIAUpFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
-    void       PNGDecodeAverageFilter(DecodePNG *Dec, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       PNGOVIAAverageFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
-    void       PNGDecodePaethFilter(DecodePNG *Dec, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       PNGOVIAPaethFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
-    void       PNGDecodeFilter(DecodePNG *Dec, void ***InflatedData);
+    void       PNGOVIAFilter(OVIA *Ovia, void ***InflatedData);
     
-    void WriteIHDRChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteIHDRChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteACTLChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteACTLChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteFCTLChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteFCTLChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteFDATChunk(EncodePNG *Enc, BitBuffer *OutputPNG, uint8_t *DeflatedFrameData, uint32_t DeflatedFrameDataSize);
+    void WriteFDATChunk(EncodePNG *Enc, BitBuffer *BitB, uint8_t *DeflatedFrameData, uint32_t DeflatedFrameDataSize);
     
-    void WriteSTERChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteSTERChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteBKGDChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteBKGDChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteCHRMChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteCHRMChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteGAMAChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteGAMAChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteOFFSChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteOFFSChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteICCPChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteICCPChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteSBITChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteSBITChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteSRGBChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteSRGBChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WritePHYSChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WritePHYSChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WritePCALChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WritePCALChunk(EncodePNG *Enc, BitBuffer *BitB);
     
-    void WriteSCALChunk(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void WriteSCALChunk(EncodePNG *Enc, BitBuffer *BitB);
     
     void PNGEncodeFilterPaeth(EncodePNG *Enc, uint8_t *Line, size_t LineSize);
     
@@ -516,7 +339,7 @@ extern "C" {
      */
     void OptimizePNG(EncodePNG *Enc, uint8_t ****Image);
     
-    void PNGEncodeImage(EncodePNG *Enc, BitBuffer *OutputPNG);
+    void PNGEncodeImage(EncodePNG *Enc, BitBuffer *BitB);
     
     static const uint8_t Adam7Level1[1] = {
         0

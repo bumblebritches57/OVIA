@@ -54,9 +54,9 @@ extern "C" {
     
     void        PNMParseMetadata(OVIA *Ovia, BitBuffer *BitB);
     
-    uint16_t ***PNMExtractImage(OVIA *Ovia, BitBuffer *BitB);
+    ImageContainer *PNMExtractImage(OVIA *Ovia, BitBuffer *BitB);
     
-    void        PNMInsertImage(OVIA *Ovia, BitBuffer *CreatedImage, uint16_t ***Image2Insert);
+    void PNMInsertFrame(OVIA *Ovia, BitBuffer *BitB, ImageContainer *Image);
     
     void PNMWriteHeader(PNMTypes PNMType, BitBuffer *BitB);
     

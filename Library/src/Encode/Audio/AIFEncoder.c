@@ -102,18 +102,24 @@ extern "C" {
     }
     
     static void AIFWriteTitle(OVIA *Ovia, BitBuffer *BitB) {
-        uint64_t TitleTagIndex = OVIA_GetTagsIndex(Ovia, TitleTag);
-        uint32_t TitleTagSize  = 0ULL;
-        if (TitleTagIndex != 0xFFFFFFFFFFFFFFFF) {
-            UTF8 *TitleTag = OVIA_GetTag(Ovia, TitleTagIndex);
-            uint32_t TagByte = 0ULL;
-            do {
-                WriteBits(MSByteFirst, LSBitFirst, BitB, 8, TitleTag[TagByte]);
-                TagByte += 1;
-            } while (TitleTag[TagByte] != NULLTerminator);
-            TitleTagSize = TagByte;
+        if (Ovia != NULL && BitB != NULL) {
+            uint64_t TitleTagIndex = OVIA_GetTagsIndex(Ovia, TitleTag);
+            uint32_t TitleTagSize  = 0ULL;
+            if (TitleTagIndex != 0xFFFFFFFFFFFFFFFF) {
+                UTF8 *TitleTag = OVIA_GetTag(Ovia, TitleTagIndex);
+                uint32_t TagByte = 0ULL;
+                do {
+                    WriteBits(MSByteFirst, LSBitFirst, BitB, 8, TitleTag[TagByte]);
+                    TagByte += 1;
+                } while (TitleTag[TagByte] != NULLTerminator);
+                TitleTagSize = TagByte;
+            }
+            AIFSkipPadding(BitB, TitleTagSize);
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         }
-        AIFSkipPadding(BitB, TitleTagSize);
     }
     
     static void AIFWriteArtist(OVIA *Ovia, BitBuffer *BitB) {
@@ -172,7 +178,7 @@ extern "C" {
         }
     }
     
-    void AIFInsertSamples(OVIA *Ovia, AudioContainer *Audio, BitBuffer *BitB) {
+    void AIFAppendSamples(OVIA *Ovia, AudioContainer *Audio, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL && Audio != NULL) {
             uint64_t NumSamples  = OVIA_GetNumSamples(Ovia);
             uint64_t NumChannels = OVIA_GetNumChannels(Ovia);
