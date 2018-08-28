@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0A703C213550FD00FA265D /* libFoundationIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C39707D211CEA5A0067D447 /* libFoundationIO.a */; };
 		2C1CD9552121ECF60049D169 /* libOVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C1CD9542121ECF50049D169 /* libOVIA.h */; };
 		2C1CD95C2121ED190049D169 /* PNMCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C1CD9592121ED190049D169 /* PNMCommon.h */; };
 		2C1CD95D2121ED190049D169 /* BMPCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C1CD95A2121ED190049D169 /* BMPCommon.h */; };
@@ -75,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C0A703C213550FD00FA265D /* libFoundationIO.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
