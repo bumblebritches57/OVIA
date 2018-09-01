@@ -179,7 +179,7 @@ extern "C" {
      @param     InterlacePNG    "Should this PNG file be interlaced using the Adam7 algorithm for progressive download?"
      @param     OptimizePNG     "Should this PNG file be optimized by trying all filters? (Huffman optimization is enabled by default)"
      */
-    BitBuffer  *EncodePNGImage(EncodePNG *Enc, void ****RawImage2Encode, bool InterlacePNG, bool OptimizePNG);
+    BitBuffer  *EncodePNGImage(OVIA *Ovia, void ****RawImage2Encode, bool InterlacePNG, bool OptimizePNG);
     
     /*!
      @abstract                  "OVIAs a PNG from a bitbuffer to an array"
@@ -188,7 +188,7 @@ extern "C" {
      */
     uint16_t ***OVIAImage(OVIA *Ovia, BitBuffer *PNGFile);
     
-    void        OVIA_PNG_SetTextChunk(EncodePNG *Enc, UTF8 *KeywordString, UTF8 *CommentString);
+    void        OVIA_PNG_SetTextChunk(OVIA *Ovia, UTF8 *KeywordString, UTF8 *CommentString);
     
     uint32_t    OVIA_PNG_GetNumTextChunks(OVIA *Ovia);
     
@@ -296,50 +296,50 @@ extern "C" {
     
     void       PNGOVIAFilter(OVIA *Ovia, void ***InflatedData);
     
-    void WriteIHDRChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteIHDRChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteACTLChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteACTLChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteFCTLChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteFCTLChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteFDATChunk(EncodePNG *Enc, BitBuffer *BitB, uint8_t *DeflatedFrameData, uint32_t DeflatedFrameDataSize);
+    void WriteFDATChunk(OVIA *Ovia, BitBuffer *BitB, uint8_t *DeflatedFrameData, uint32_t DeflatedFrameDataSize);
     
-    void WriteSTERChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteSTERChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteBKGDChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteBKGDChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteCHRMChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteCHRMChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteGAMAChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteGAMAChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteOFFSChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteOFFSChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteICCPChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteICCPChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteSBITChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteSBITChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteSRGBChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteSRGBChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WritePHYSChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WritePHYSChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WritePCALChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WritePCALChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteSCALChunk(EncodePNG *Enc, BitBuffer *BitB);
+    void WriteSCALChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void PNGEncodeFilterPaeth(EncodePNG *Enc, uint8_t *Line, size_t LineSize);
+    void PNGEncodeFilterPaeth(OVIA *Ovia, uint8_t *Line, size_t LineSize);
     
-    void PNGEncodeFilterSub(EncodePNG *Enc, uint8_t *Line, size_t NumPixels);
+    void PNGEncodeFilterSub(OVIA *Ovia, uint8_t *Line, size_t NumPixels);
     
-    void PNGEncodeAdam7(EncodePNG *Enc, BitBuffer *ProgressiveImage, BitBuffer *InterlacedImage);
+    void PNGEncodeAdam7(OVIA *Ovia, BitBuffer *ProgressiveImage, BitBuffer *InterlacedImage);
     
-    void OptimizeAdam7(EncodePNG *Enc, uint8_t ****Image);
+    void OptimizeAdam7(OVIA *Ovia, uint8_t ****Image);
     
     /*!
      @abstract       "Optimizes the image, by trying the 5 filters on each line, and keeping the best."
      */
-    void OptimizePNG(EncodePNG *Enc, uint8_t ****Image);
+    void OptimizePNG(OVIA *Ovia, uint8_t ****Image);
     
-    void PNGEncodeImage(EncodePNG *Enc, BitBuffer *BitB);
+    void PNGEncodeImage(OVIA *Ovia, BitBuffer *BitB);
     
     static const uint8_t Adam7Level1[1] = {
         0
