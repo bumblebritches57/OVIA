@@ -8,12 +8,12 @@ extern "C" {
     /* Format Oviaoding */
     static void W64ParseFMTChunk(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            Ovia->Aud->FormatType       = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
-            OVIA_GetNumChannels(Ovia)           = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
-            Ovia->Aud->SampleRate       = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
-            BitBuffer_Skip(BitB, 32); // ByteRate
-            Ovia->Aud->BlockAlignment   = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
-            Ovia->BitDepth              = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
+            OVIA_W64_SetCompressionType(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
+            OVIA_SetNumChannels(Ovia,         BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
+            OVIA_SetSampleRate(Ovia,          BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
+            OVIA_SetBlockSize(Ovia,           BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
+            OVIA_W64_SetBlockAlignment(Ovia,  BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
+            OVIA_SetBitDepth(Ovia,            BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {
@@ -33,7 +33,7 @@ extern "C" {
     
     static void W64ParseDATAChunk(OVIA *Ovia, BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
         if (Ovia != NULL && BitB != NULL) {
-            Ovia->NumChannelAgnosticSamples = (((ChunkSize - 24 / Ovia->Aud->BlockAlignment) / OVIA_GetNumChannels(Ovia)) / Ovia->BitDepth);
+            OVIA_SetNumSamples(Ovia, (((ChunkSize - 24 / OVIA_W64_GetBlockAlignment(Ovia)) / OVIA_GetNumChannels(Ovia)) / OVIA_GetBitDepth(Ovia)));
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {

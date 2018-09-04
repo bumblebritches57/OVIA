@@ -1,9 +1,5 @@
 #include "../../libOVIA.h"
-
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/ContainerIO.h"
+#include "../InternalOVIA.h"
 
 // PGM, PBM, PPM, along with PAM.
 
@@ -15,14 +11,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
-    typedef enum PNMTypes {
-        UnknownPNM            = 0,
-        BlackAndWhitePNM      = 1,
-        BinaryPNM             = 2,
-        ASCIIPNM              = 3,
-        PAMPNM                = 4,
-    } PNMTypes;
     
     enum PNMCommon {
         PNMMagicSize          = 2,
@@ -56,9 +44,9 @@ extern "C" {
     
     ImageContainer *PNMExtractImage(OVIA *Ovia, BitBuffer *BitB);
     
-    void PNMInsertFrame(OVIA *Ovia, BitBuffer *BitB, ImageContainer *Image);
+    void PNMInsertFrame(OVIA *Ovia, ImageContainer *Image, BitBuffer *BitB);
     
-    void PNMWriteHeader(PNMTypes PNMType, BitBuffer *BitB);
+    void PNMWriteHeader(OVIA *Ovia, BitBuffer *BitB);
     
 #ifdef __cplusplus
 }

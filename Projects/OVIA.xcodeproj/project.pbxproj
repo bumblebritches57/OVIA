@@ -31,6 +31,7 @@
 		2C1CD9882121ED8B0049D169 /* W64Decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C1CD9842121ED8B0049D169 /* W64Decoder.c */; };
 		2C1CD9892121ED8B0049D169 /* FLACDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C1CD9852121ED8B0049D169 /* FLACDecoder.c */; };
 		2C1CD98A2121ED8B0049D169 /* WAVDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C1CD9862121ED8B0049D169 /* WAVDecoder.c */; };
+		2C6BA119213BE99900135972 /* InternalOVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6BA118213BE99900135972 /* InternalOVIA.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		2C1CD9852121ED8B0049D169 /* FLACDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FLACDecoder.c; path = src/Decode/Audio/FLACDecoder.c; sourceTree = "<group>"; };
 		2C1CD9862121ED8B0049D169 /* WAVDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVDecoder.c; path = src/Decode/Audio/WAVDecoder.c; sourceTree = "<group>"; };
 		2C397078211CEA5A0067D447 /* FoundationIO.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FoundationIO.xcodeproj; path = ../Dependencies/FoundationIO/Projects/FoundationIO.xcodeproj; sourceTree = "<group>"; };
+		2C6BA118213BE99900135972 /* InternalOVIA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InternalOVIA.h; path = include/Private/InternalOVIA.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 		2C1CD9562121ECFC0049D169 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				2C6BA118213BE99900135972 /* InternalOVIA.h */,
 				2C1CD9582121ED0D0049D169 /* Audio */,
 				2C1CD9572121ED080049D169 /* Image */,
 			);
@@ -246,6 +249,7 @@
 				2C1CD95C2121ED190049D169 /* PNMCommon.h in Headers */,
 				2C1CD9662121ED220049D169 /* AIFCommon.h in Headers */,
 				2C1CD95D2121ED190049D169 /* BMPCommon.h in Headers */,
+				2C6BA119213BE99900135972 /* InternalOVIA.h in Headers */,
 				2C1CD9642121ED220049D169 /* FLACCommon.h in Headers */,
 				2C1CD95E2121ED190049D169 /* PNGCommon.h in Headers */,
 				2C1CD9652121ED220049D169 /* W64Common.h in Headers */,

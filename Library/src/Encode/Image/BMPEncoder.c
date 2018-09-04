@@ -37,12 +37,12 @@ extern "C" {
         }
     }
     
-    void BMPInsertImage(OVIA *Ovia, BitBuffer *BitB, ImageContainer *Image) {
-        if (Ovia != NULL && BitB != NULL) {
+    void BMPInsertImage(ImageContainer *Image, BitBuffer *BitB) {
+        if (Image != NULL && BitB != NULL) {
             uint64_t Width       = ImageContainer_GetWidth(Image);
             uint64_t Height      = ImageContainer_GetHeight(Image);
             uint64_t NumChannels = ImageContainer_GetNumChannels(Image);
-            uint64_t BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), Yes);
+            uint64_t BitDepth    = Bits2Bytes(ImageContainer_GetBitDepth(Image), Yes);
             Image_Types Type     = ImageContainer_GetType(Image);
             
             if (Type == ImageContainer_2DUInteger8) {
@@ -82,8 +82,8 @@ extern "C" {
                     }
                 }
             }
-        } else if (Ovia == NULL) {
-            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (Image == NULL) {
+            Log(Log_ERROR, __func__, U8("ImageContainer Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         }

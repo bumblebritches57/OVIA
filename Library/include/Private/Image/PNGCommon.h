@@ -1,9 +1,5 @@
 #include "../../libOVIA.h"
-
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/ContainerIO.h"
+#include "../InternalOVIA.h"
 
 #pragma once
 
@@ -174,12 +170,12 @@ extern "C" {
     
     /*!
      @abstract                  "Encodes a PNG from RawImage2Encode to a BitBuffer"
-     @param     Enc             "Pointer to EncodePNG struct containing all the metadata about the image to be encoded"
-     @param     RawImage2Encode "Pointer to raw array containing the image, supports 2D array containing stereoscopic frames"
+     @param     Image           "ImageContainer with the image to encode".
+     @param     BitB            "The BitBuffer to contain the encoded png".
      @param     InterlacePNG    "Should this PNG file be interlaced using the Adam7 algorithm for progressive download?"
      @param     OptimizePNG     "Should this PNG file be optimized by trying all filters? (Huffman optimization is enabled by default)"
      */
-    BitBuffer  *EncodePNGImage(OVIA *Ovia, void ****RawImage2Encode, bool InterlacePNG, bool OptimizePNG);
+    void        EncodePNGImage(ImageContainer *Image, BitBuffer *BitB, bool InterlacePNG, bool OptimizePNG);
     
     /*!
      @abstract                  "OVIAs a PNG from a bitbuffer to an array"
@@ -229,7 +225,7 @@ extern "C" {
      */
     ImageContainer *PNGExtractImage(OVIA *Ovia, BitBuffer *BitB);
     
-    void PNGInsertImage(OVIA *Ovia, BitBuffer *BitB, ImageContainer *Image);
+    void PNGInsertImage(ImageContainer *Image, BitBuffer *BitB);
     
     typedef struct LZ77Tuple LZ77Tuple;
     
@@ -326,7 +322,7 @@ extern "C" {
     
     void WriteSCALChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void PNGEncodeFilterPaeth(OVIA *Ovia, uint8_t *Line, size_t LineSize);
+    void PNGEncodeFilterPaeth(OVIA *Ovia, ImageContainer *Image);
     
     void PNGEncodeFilterSub(OVIA *Ovia, uint8_t *Line, size_t NumPixels);
     
