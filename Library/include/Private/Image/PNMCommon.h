@@ -29,15 +29,6 @@ extern "C" {
         PNM_PAMB = 0x5037, // PortableAnyMap
     };
     
-    typedef enum PNMTupleTypes {
-        PNM_TUPLE_Unknown   = 0,
-        PNM_TUPLE_BnW       = 1,
-        PNM_TUPLE_Gray      = 2,
-        PNM_TUPLE_GrayAlpha = 3,
-        PNM_TUPLE_RGB       = 4,
-        PNM_TUPLE_RGBAlpha  = 5,
-    } PNMTupleTypes;
-    
     void        PNMIdentifyFileType(OVIA *Ovia, BitBuffer *BitB);
     
     void        PNMParseMetadata(OVIA *Ovia, BitBuffer *BitB);

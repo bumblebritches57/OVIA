@@ -107,7 +107,7 @@ extern "C" {
             
             if (OVIA_GetHeight(Ovia) < 0) {
                 // Read from the bottom to the top.
-                if (BMPCompressionType == BMP_RGB) {
+                if (OVIA_BMP_GetCompressionType(Ovia) == BMP_RGB) {
                     if (BitDepth <= 8) {
                         uint8_t ****Array  = (uint8_t****) ImageContainer_GetArray(Image);
                         for (uint64_t View = 0ULL; View < ImageContainer_GetNumViews(Image); View++) {
@@ -131,22 +131,22 @@ extern "C" {
                             }
                         }
                     }
-                } else if (BMPCompressionType == BMP_RLE_8Bit || BMPCompressionType == BMP_RLE_4Bit) {
+                } else if (OVIA_BMP_GetCompressionType(Ovia) == BMP_RLE_8Bit || OVIA_BMP_GetCompressionType(Ovia) == BMP_RLE_4Bit) {
                     Log(Log_ERROR, __func__, U8("We don't support BMP's encoded with RLE"));
-                } else if (BMPCompressionType == BMP_BitFields || BMPCompressionType == BMP_RGBABitFields) {
+                } else if (OVIA_BMP_GetCompressionType(Ovia) == BMP_BitFields || OVIA_BMP_GetCompressionType(Ovia) == BMP_RGBABitFields) {
                     Log(Log_ERROR, __func__, U8("We don't support BMP's encoded with BitFields"));
-                } else if (BMPCompressionType == BMP_JPEG) {
+                } else if (OVIA_BMP_GetCompressionType(Ovia) == BMP_JPEG) {
                     Log(Log_ERROR, __func__, U8("BMP Compression Type is JPEG, there's nothing we can do since JPEG is a lossy format"));
-                } else if (BMPCompressionType == BMP_PNG) {
+                } else if (OVIA_BMP_GetCompressionType(Ovia) == BMP_PNG) {
                     Log(Log_ERROR, __func__, U8("BMP Compression Type is PNG, extract it as is or OVIA it to uncompressed BMP"));
-                } else if (BMPCompressionType == BMP_CMYK || BMPCompressionType == BMP_CMYK_RLE_8Bit || BMPCompressionType == BMP_CMYK_RLE_4Bit) {
+                } else if (OVIA_BMP_GetCompressionType(Ovia) == BMP_CMYK || OVIA_BMP_GetCompressionType(Ovia) == BMP_CMYK_RLE_8Bit || OVIA_BMP_GetCompressionType(Ovia) == BMP_CMYK_RLE_4Bit) {
                     Log(Log_ERROR, __func__, U8("CMYK Images are unsupported"));
                 }
                 if (Height < 0) { // The Image is upside down, so we need to flip it
                     ImageContainer_Flip(Image, Yes, No);
                 }
             }
-            if (BMPColorsIndexed > 0) {
+            if (OVIA_BMP_GetColorsIndexed(Ovia) > 0) {
                 // The image is palettized, so we need to go ahead and map the pixel bits to the actual colors.
             }
         } else if (Ovia == NULL) {

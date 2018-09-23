@@ -324,7 +324,7 @@ extern "C" {
     
     void PNGEncodeFilterPaeth(OVIA *Ovia, ImageContainer *Image);
     
-    void PNGEncodeFilterSub(OVIA *Ovia, uint8_t *Line, size_t NumPixels);
+    void PNGEncodeFilterSub(OVIA *Ovia, ImageContainer *Image);
     
     void PNGEncodeAdam7(OVIA *Ovia, BitBuffer *ProgressiveImage, BitBuffer *InterlacedImage);
     

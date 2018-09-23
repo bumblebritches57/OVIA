@@ -39,52 +39,56 @@ extern "C" {
         PAMPNM                = 4,
     } PNMTypes;
     
-    void                 OVIA_SetNumChannels(OVIA *Ovia, uint64_t NumChannels);
+    typedef enum PNMTupleTypes {
+        PNM_TUPLE_Unknown     = 0,
+        PNM_TUPLE_BnW         = 1,
+        PNM_TUPLE_Gray        = 2,
+        PNM_TUPLE_GrayAlpha   = 3,
+        PNM_TUPLE_RGB         = 4,
+        PNM_TUPLE_RGBAlpha    = 5,
+    } PNMTupleTypes;
     
-    void                 OVIA_SetNumSamples(OVIA *Ovia, uint64_t NumSamples);
-    
+    /* OVIA Generic Functions */
     void                 OVIA_SetBitDepth(OVIA *Ovia, uint64_t BitDepth);
     
-    void                 OVIA_SetSampleRate(OVIA *Ovia, uint64_t SampleRate);
-    
-    void                 OVIA_SetTag(OVIA *Ovia, OVIA_TagTypes TagType, UTF8 *Tag);
+    void                 OVIA_SetBlockSize(OVIA *Ovia, uint64_t BlockSize);
     
     void                 OVIA_SetFileSize(OVIA *Ovia, uint64_t FileSize);
-    
-    void                 OVIA_SetSampleOffset(OVIA *Ovia, uint64_t SampleOffset);
-    
-    void                 OVIA_SetBlockSize(OVIA *Ovia, uint64_t BlockSize);
     
     void                 OVIA_SetWidth(OVIA *Ovia, int64_t Width);
     
     void                 OVIA_SetHeight(OVIA *Ovia, int64_t Height);
     
-    uint32_t             OVIA_PNG_ACTL_GetNumFrames(OVIA *Ovia);
+    void                 OVIA_SetNumChannels(OVIA *Ovia, uint64_t NumChannels);
     
-    uint32_t             OVIA_PNG_ACTL_GetTimes2Loop(OVIA *Ovia);
+    void                 OVIA_SetNumSamples(OVIA *Ovia, uint64_t NumSamples);
     
-    uint32_t             OVIA_PNG_FCTL_GetFrameNum(OVIA *Ovia);
+    void                 OVIA_SetSampleOffset(OVIA *Ovia, uint64_t SampleOffset);
     
-    uint32_t             OVIA_PNG_FCTL_GetWidth(OVIA *Ovia);
+    void                 OVIA_SetSampleRate(OVIA *Ovia, uint64_t SampleRate);
     
-    uint32_t             OVIA_PNG_FCTL_GetHeight(OVIA *Ovia);
+    void                 OVIA_SetTag(OVIA *Ovia, OVIA_TagTypes TagType, UTF8 *Tag);
     
-    uint32_t             OVIA_PNG_FCTL_GetXOffset(OVIA *Ovia);
+    void OVIA_FLAC_Frame_SetBlockType(OVIA *Ovia, bool BlockTypeIsFixed);
     
-    uint32_t             OVIA_PNG_FCTL_GetYOffset(OVIA *Ovia);
+    void OVIA_FLAC_Frame_SetCodedBlockSize(OVIA *Ovia, uint8_t CodedBlockSize);
     
-    uint16_t             OVIA_PNG_FCTL_GetFrameDelayNumerator(OVIA *Ovia);
+    void OVIA_FLAC_Frame_SetCodedSampleRate(OVIA *Ovia, uint8_t CodedSampleRate);
     
-    uint16_t             OVIA_PNG_FCTL_GetFrameDelayDenominator(OVIA *Ovia);
+    void OVIA_FLAC_Frame_SetChannelLayout(OVIA *Ovia, uint8_t ChannelLayout);
     
-    uint8_t              OVIA_PNG_FCTL_GetDisposeMethod(OVIA *Ovia);
+    void OVIA_FLAC_Frame_SetCodedBitDepth(OVIA *Ovia, uint8_t CodedBitDepth);
     
-    uint8_t              OVIA_PNG_FCTL_GetBlendMethod(OVIA *Ovia);
+    void OVIA_FLAC_Frame_SetFrameNumber(OVIA *Ovia, uint64_t FrameNumber);
     
-    uint8_t              OVIA_PNG_STER_GetSterType(OVIA *Ovia);
+    void OVIA_FLAC_Frame_SetSampleNumber(OVIA *Ovia, uint64_t SampleNumber);
     
-    uint8_t              OVIA_PNG_BKGD_GetBackgroundPaletteEntry(OVIA *Ovia);
+    void OVIA_FLAC_Frame_SetCRC(OVIA *Ovia, uint8_t CRC);
+
+    /* OVIA Generic Functions */
     
+    /* OVIA Format Specific Functions */
+    /* Format Specific Setters */
     void                 OVIA_PNG_FCTL_SetFrameNum(OVIA *Ovia, uint32_t FrameNum);
     
     void                 OVIA_PNG_FCTL_SetWidth(OVIA *Ovia, uint32_t Width);
@@ -109,71 +113,35 @@ extern "C" {
     
     void                 OVIA_PNG_OFFS_SetSpecifier(OVIA *Ovia, bool Specifier);
     
-    int32_t              OVIA_PNG_OFFS_GetXOffset(OVIA *Ovia);
-    
-    int32_t              OVIA_PNG_OFFS_GetYOffset(OVIA *Ovia);
-    
-    bool                 OVIA_PNG_OFFS_GetSpecifier(OVIA *Ovia);
-    
     void                 OVIA_PNG_ICCP_SetProfileName(OVIA *Ovia, UTF8 *ProfileName);
     
     void                 OVIA_PNG_ICCP_SetCompressionType(OVIA *Ovia, uint8_t CompressionType);
     
     void                 OVIA_PNG_ICCP_SetProfileData(OVIA *Ovia, uint8_t *ProfileData);
     
-    UTF8                *OVIA_PNG_ICCP_GetProfileName(OVIA *Ovia);
-    
-    uint8_t              OVIA_PNG_ICCP_GetCompressionType(OVIA *Ovia);
-    
-    uint8_t              OVIA_PNG_ICCP_GetProfileData(OVIA *Ovia);
-    
-    uint64_t             OVIA_PNG_ICCP_GetProfileDataSize(OVIA *Ovia);
-    
     void                 OVIA_PNG_ICCP_SetProfileDataSize(OVIA *Ovia, uint64_t ProfileSize);
     
-    void OVIA_PNG_SBIT_SetGray(OVIA *Ovia, uint8_t GrayBitDepth);
+    void                 OVIA_PNG_SBIT_SetGray(OVIA *Ovia, uint8_t GrayBitDepth);
     
-    void OVIA_PNG_SBIT_SetRed(OVIA *Ovia, uint8_t RedBitDepth);
+    void                 OVIA_PNG_SBIT_SetRed(OVIA *Ovia, uint8_t RedBitDepth);
     
-    void OVIA_PNG_SBIT_SetGreen(OVIA *Ovia, uint8_t GreenBitDepth);
+    void                 OVIA_PNG_SBIT_SetGreen(OVIA *Ovia, uint8_t GreenBitDepth);
     
-    void OVIA_PNG_SBIT_SetBlue(OVIA *Ovia, uint8_t BlueBitDepth);
+    void                 OVIA_PNG_SBIT_SetBlue(OVIA *Ovia, uint8_t BlueBitDepth);
     
-    void OVIA_PNG_SBIT_SetAlpha(OVIA *Ovia, uint8_t AlphaBitDepth);
+    void                 OVIA_PNG_SBIT_SetAlpha(OVIA *Ovia, uint8_t AlphaBitDepth);
     
-    uint8_t OVIA_PNG_SBIT_GetGray(OVIA *Ovia);
+    void                 OVIA_PNG_SRGB_SetRenderingIntent(OVIA *Ovia, uint8_t RenderingIntent);
     
-    uint8_t OVIA_PNG_SBIT_GetRed(OVIA *Ovia);
+    void                 OVIA_PNG_PHYS_SetPixelsPerUnitX(OVIA *Ovia, int32_t PixelsPerUnitX);
     
-    uint8_t OVIA_PNG_SBIT_GetGreen(OVIA *Ovia);
+    void                 OVIA_PNG_PHYS_SetPixelsPerUnitY(OVIA *Ovia, int32_t PixelsPerUnitY);
     
-    uint8_t OVIA_PNG_SBIT_GetBlue(OVIA *Ovia);
+    void                 OVIA_PNG_PHYS_SetUnitSpecifier(OVIA *Ovia, bool UnitSpecifier);
     
-    uint8_t OVIA_PNG_SBIT_GetAlpha(OVIA *Ovia);
+    void                 OVIA_FLAC_CUE_SetCatalogID(OVIA *Ovia, char *CatalogID);
     
-    uint8_t OVIA_PNG_iHDR_GetColorType(OVIA *Ovia);
-    
-    void OVIA_PNG_SRGB_SetRenderingIntent(OVIA *Ovia, uint8_t RenderingIntent);
-    
-    uint8_t OVIA_PNG_SRGB_GetRenderingIntent(OVIA *Ovia);
-    
-    void OVIA_PNG_PHYS_SetPixelsPerUnitX(OVIA *Ovia, int32_t PixelsPerUnitX);
-    
-    void OVIA_PNG_PHYS_SetPixelsPerUnitY(OVIA *Ovia, int32_t PixelsPerUnitY);
-    
-    void OVIA_PNG_PHYS_SetUnitSpecifier(OVIA *Ovia, bool UnitSpecifier);
-    
-    int32_t OVIA_PNG_PHYS_GetPixelsPerUnitX(OVIA *Ovia);
-    
-    int32_t OVIA_PNG_PHYS_GetPixelsPerUnitX(OVIA *Ovia);
-    
-    bool OVIA_PNG_PHYS_GetUnitSpecifier(OVIA *Ovia);
-    
-    
-    
-    
-    
-    
+    void                 OVIA_FLAC_CUE_SetLeadIn(OVIA *Ovia, uint64_t LeadIn);
     
     void                 OVIA_WAV_SetCompressionType(OVIA *Ovia, uint16_t CompressionType);
     
@@ -182,10 +150,6 @@ extern "C" {
     void                 OVIA_WAV_SetBlockAlignment(OVIA *Ovia, uint16_t BlockAlignment);
     
     void                 OVIA_W64_SetBlockAlignment(OVIA *Ovia, uint16_t BlockAlignment);
-    
-    uint16_t             OVIA_WAV_GetBlockAlignment(OVIA *Ovia);
-    
-    uint16_t             OVIA_W64_GetBlockAlignment(OVIA *Ovia);
     
     void                 OVIA_FLAC_SetMinBlockSize(OVIA *Ovia, uint16_t MinBlockSize);
     
@@ -196,8 +160,6 @@ extern "C" {
     void                 OVIA_FLAC_SetMaxFrameSize(OVIA *Ovia, uint16_t MaxFrameSize);
     
     void                 OVIA_FLAC_SetMD5(OVIA *Ovia, uint8_t *MD5);
-    
-    PNMTypes             OVIA_PNM_GetPNMType(OVIA *Ovia);
     
     void                 OVIA_PNG_SetIHDR(OVIA *Ovia, uint32_t Height, uint32_t Width, uint8_t BitDepth, uint8_t ColorType, const bool Interlace);
     
@@ -251,76 +213,130 @@ extern "C" {
     
     void                 OVIA_BMP_SetAMask(OVIA *Ovia, uint32_t AlphaMask);
     
+    void                 OVIA_PNG_CHRM_SetWhitePoint(OVIA *Ovia, uint32_t WhitePointX, uint32_t WhitePointY);
+    
+    void                 OVIA_PNG_CHRM_SetRed(OVIA *Ovia, uint32_t RedX, uint32_t RedY);
+    
+    void                 OVIA_PNG_CHRM_SetGreen(OVIA *Ovia, uint32_t GreenX, uint32_t GreenY);
+    
+    void                 OVIA_PNG_CHRM_SetBlue(OVIA *Ovia, uint32_t BlueX, uint32_t BlueY);
+    
+    void                 OVIA_PNM_SetTupleType(OVIA *Ovia, PNMTupleTypes TupleType);
+    
+    void                 OVIA_PNM_SetPNMType(OVIA *Ovia, PNMTypes PNMType);
+    /* Format Specific Setters */
+    
+    /* Format Specific Getters */
+    bool                 OVIA_PNG_OFFS_GetSpecifier(OVIA *Ovia);
+    
+    bool                 OVIA_PNG_PHYS_GetUnitSpecifier(OVIA *Ovia);
+    
+    int32_t              OVIA_PNG_OFFS_GetXOffset(OVIA *Ovia);
+    
+    int32_t              OVIA_PNG_OFFS_GetYOffset(OVIA *Ovia);
+    
+    int32_t              OVIA_PNG_PHYS_GetPixelsPerUnitX(OVIA *Ovia);
+    
+    PNMTupleTypes        OVIA_PNM_GetTupleType(OVIA *Ovia);
+    
+    PNMTypes             OVIA_PNM_GetPNMType(OVIA *Ovia);
+    
+    uint8_t             *OVIA_BMP_GetICCPayload(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_BKGD_GetBackgroundPaletteEntry(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_FCTL_GetBlendMethod(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_FCTL_GetDisposeMethod(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_ICCP_GetCompressionType(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_ICCP_GetProfileData(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_iHDR_GetColorType(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_SBIT_GetAlpha(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_SBIT_GetBlue(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_SBIT_GetGray(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_SBIT_GetGreen(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_SBIT_GetRed(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_SRGB_GetRenderingIntent(OVIA *Ovia);
+    
+    uint8_t              OVIA_PNG_STER_GetSterType(OVIA *Ovia);
+    
+    uint16_t             OVIA_PNG_FCTL_GetFrameDelayDenominator(OVIA *Ovia);
+    
+    uint16_t             OVIA_PNG_FCTL_GetFrameDelayNumerator(OVIA *Ovia);
+    
+    uint16_t             OVIA_W64_GetBlockAlignment(OVIA *Ovia);
+    
+    uint16_t             OVIA_WAV_GetBlockAlignment(OVIA *Ovia);
+    
+    uint32_t             OVIA_BMP_GetAMask(OVIA *Ovia);
+    
+    uint32_t             OVIA_BMP_GetBGamma(OVIA *Ovia);
+    
+    uint32_t             OVIA_BMP_GetBMask(OVIA *Ovia);
+    
+    uint32_t             OVIA_BMP_GetColorsIndexed(OVIA *Ovia);
+    
+    uint32_t             OVIA_BMP_GetColorSpaceType(OVIA *Ovia);
+    
+    uint32_t             OVIA_BMP_GetCompressionType(OVIA *Ovia);
+    
     uint32_t             OVIA_BMP_GetDIBSize(OVIA *Ovia);
     
     uint32_t             OVIA_BMP_GetFileSize(OVIA *Ovia);
     
-    uint32_t             OVIA_BMP_GetOffset(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetCompressionType(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetNumBytesUsedBySamples(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetWidthInMeters(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetHeightInMeters(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetColorsIndexed(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetIndexColorsUsed(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetColorSpaceType(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetXCoordinate(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetYCoordinate(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetZCoordinate(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetRGamma(OVIA *Ovia);
-    
     uint32_t             OVIA_BMP_GetGGamma(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetBGamma(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetICCIntent(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetICCSize(OVIA *Ovia);
-    
-    uint8_t             *OVIA_BMP_GetICCPayload(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetRMask(OVIA *Ovia);
-    
     uint32_t             OVIA_BMP_GetGMask(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetBMask(OVIA *Ovia);
-    
-    uint32_t             OVIA_BMP_GetAMask(OVIA *Ovia);
-
-    void                 OVIA_PNG_CHRM_SetWhitePoint(OVIA *Ovia, uint32_t WhitePointX, uint32_t WhitePointY);
-
-    void                 OVIA_PNG_CHRM_SetRed(OVIA *Ovia, uint32_t RedX, uint32_t RedY);
-
-    void                 OVIA_PNG_CHRM_SetGreen(OVIA *Ovia, uint32_t GreenX, uint32_t GreenY);
-
-    void                 OVIA_PNG_CHRM_SetBlue(OVIA *Ovia, uint32_t BlueX, uint32_t BlueY);
-    
-    uint32_t             OVIA_PNG_CHRM_GetWhitePointX(OVIA *Ovia);
-    
-    uint32_t             OVIA_PNG_CHRM_GetWhitePointY(OVIA *Ovia);
-    
-    uint32_t             OVIA_PNG_CHRM_GetRedX(OVIA *Ovia);
-    
-    uint32_t             OVIA_PNG_CHRM_GetRedY(OVIA *Ovia);
-    
-    uint32_t             OVIA_PNG_CHRM_GetGreenX(OVIA *Ovia);
-    
-    uint32_t             OVIA_PNG_CHRM_GetGreenY(OVIA *Ovia);
-
+    uint32_t             OVIA_BMP_GetHeightInMeters(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetICCIntent(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetICCSize(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetIndexColorsUsed(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetNumBytesUsedBySamples(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetOffset(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetRGamma(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetRMask(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetWidthInMeters(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetXCoordinate(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetYCoordinate(OVIA *Ovia);
+    uint32_t             OVIA_BMP_GetZCoordinate(OVIA *Ovia);
+    uint32_t             OVIA_PNG_ACTL_GetNumFrames(OVIA *Ovia);
+    uint32_t             OVIA_PNG_ACTL_GetTimes2Loop(OVIA *Ovia);
     uint32_t             OVIA_PNG_CHRM_GetBlueX(OVIA *Ovia);
-
     uint32_t             OVIA_PNG_CHRM_GetBlueY(OVIA *Ovia);
+    uint32_t             OVIA_PNG_CHRM_GetGreenX(OVIA *Ovia);
+    uint32_t             OVIA_PNG_CHRM_GetGreenY(OVIA *Ovia);
+    uint32_t             OVIA_PNG_CHRM_GetRedX(OVIA *Ovia);
+    uint32_t             OVIA_PNG_CHRM_GetRedY(OVIA *Ovia);
+    uint32_t             OVIA_PNG_CHRM_GetWhitePointX(OVIA *Ovia);
+    uint32_t             OVIA_PNG_CHRM_GetWhitePointY(OVIA *Ovia);
+    uint32_t             OVIA_PNG_FCTL_GetFrameNum(OVIA *Ovia);
+    uint32_t             OVIA_PNG_FCTL_GetHeight(OVIA *Ovia);
+    uint32_t             OVIA_PNG_FCTL_GetWidth(OVIA *Ovia);
+    uint32_t             OVIA_PNG_FCTL_GetXOffset(OVIA *Ovia);
+    uint32_t             OVIA_PNG_FCTL_GetYOffset(OVIA *Ovia);
+    uint64_t             OVIA_PNG_ICCP_GetProfileDataSize(OVIA *Ovia);
+    UTF8                *OVIA_PNG_ICCP_GetProfileName(OVIA *Ovia);
+    
+     bool OVIA_FLAC_Frame_GetBlockType(OVIA *Ovia);
+    
+    uint8_t OVIA_FLAC_Frame_GetCodedBlockSize(OVIA *Ovia);
+    
+    void OVIA_FLAC_Frame_SetSampleRate(OVIA *Ovia, uint32_t SampleRate);
+    
+    void OVIA_FLAC_Frame_SetBlockSize(OVIA *Ovia, uint16_t BlockSize);
 
+    /* Format Specific Getters */
+    
+    /* OVIA Format Specific Functions */
+    
 #ifdef __cplusplus
 }
 #endif
