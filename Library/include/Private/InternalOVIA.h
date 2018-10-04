@@ -1,7 +1,8 @@
 #include "../../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/ContainerIO.h"
 #include "../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
 #include "../../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/ContainerIO.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/StringIO.h"
 
 #pragma once
 
@@ -84,6 +85,34 @@ extern "C" {
     void OVIA_FLAC_Frame_SetSampleNumber(OVIA *Ovia, uint64_t SampleNumber);
     
     void OVIA_FLAC_Frame_SetCRC(OVIA *Ovia, uint8_t CRC);
+    
+    bool OVIA_FLAC_Frame_GetBlockType(OVIA *Ovia);
+    
+    uint8_t OVIA_FLAC_Frame_GetCodedBlockSize(OVIA *Ovia);
+    
+    uint8_t OVIA_FLAC_Frame_GetCodedSampleRate(OVIA *Ovia);
+    
+    uint8_t OVIA_FLAC_Frame_GetChannelLayout(OVIA *Ovia);
+    
+    uint8_t OVIA_FLAC_Frame_GetCodedBitDepth(OVIA *Ovia);
+    
+    uint64_t OVIA_FLAC_Frame_GetFrameNumber(OVIA *Ovia);
+    
+    uint64_t OVIA_FLAC_Frame_GetSampleNumber(OVIA *Ovia);
+    
+    uint8_t OVIA_FLAC_Frame_GetCRC(OVIA *Ovia);
+    
+    void OVIA_FLAC_SubFrame_SetType(OVIA *Ovia, uint8_t SubframeType);
+    
+    void OVIA_FLAC_SubFrame_SetWastedBits(OVIA *Ovia, bool WastedBitsFlag, uint8_t NumWastedBits);
+    
+    AudioContainer *OVIA_GetAudioContainerPointer(OVIA *Ovia);
+    
+    void OVIA_SetAudioContainerPointer(OVIA *Ovia, AudioContainer *Audio);
+    
+    void OVIA_FLAC_LPC_SetLPCOrder(OVIA *Ovia, uint8_t LPCOrder);
+    
+    uint8_t OVIA_FLAC_LPC_GetLPCOrder(OVIA *Ovia);
 
     /* OVIA Generic Functions */
     
@@ -237,6 +266,8 @@ extern "C" {
     
     int32_t              OVIA_PNG_PHYS_GetPixelsPerUnitX(OVIA *Ovia);
     
+    int32_t              OVIA_PNG_PHYS_GetPixelsPerUnitY(OVIA *Ovia);
+    
     PNMTupleTypes        OVIA_PNM_GetTupleType(OVIA *Ovia);
     
     PNMTypes             OVIA_PNM_GetPNMType(OVIA *Ovia);
@@ -324,10 +355,6 @@ extern "C" {
     uint32_t             OVIA_PNG_FCTL_GetYOffset(OVIA *Ovia);
     uint64_t             OVIA_PNG_ICCP_GetProfileDataSize(OVIA *Ovia);
     UTF8                *OVIA_PNG_ICCP_GetProfileName(OVIA *Ovia);
-    
-     bool OVIA_FLAC_Frame_GetBlockType(OVIA *Ovia);
-    
-    uint8_t OVIA_FLAC_Frame_GetCodedBlockSize(OVIA *Ovia);
     
     void OVIA_FLAC_Frame_SetSampleRate(OVIA *Ovia, uint32_t SampleRate);
     

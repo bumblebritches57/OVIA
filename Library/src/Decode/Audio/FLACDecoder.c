@@ -122,27 +122,25 @@ extern "C" {
     void FLACReadSubFrame(OVIA *Ovia, BitBuffer *BitB, uint8_t Channel) { // 2 channels
         if (Ovia != NULL && BitB != NULL) {
             BitBuffer_Seek(BitB, 1); // Reserved
-            Ovia->Data->SubFrame->SubFrameType      = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 6); // LPC, 1?
-            if (Ovia->Data->SubFrame->SubFrameType > 0) {
-                Ovia->Data->LPC->LPCOrder           = (Ovia->Data->SubFrame->SubFrameType & 0x1F) - 1; // 0
-            }
-            Ovia->Data->SubFrame->WastedBitsFlag    = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 1); // 0
-            if (Ovia->Data->SubFrame->WastedBitsFlag == true) {
-                uint8_t WastedBits = BitBuffer_ReadUnary(MSByteFirst, LSBitFirst, BitB, TruncatedCountUnary, 0); // 1?
-                Ovia->Data->SubFrame->WastedBits    = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, WastedBits); // 0?
-                
+            uint8_t SubFrameType = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 6);
+            OVIA_FLAC_SubFrame_SetType(Ovia, SubFrameType);
+            
+            bool WastedBitsFlag = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, 1);
+            if (WastedBitsFlag == Yes) {
+                uint8_t WastedBits = BitBuffer_ReadUnary(MSByteFirst, MSBitFirst, BitB, TruncatedCountUnary, 0);
+                OVIA_FLAC_SubFrame_SetWastedBits(Ovia, WastedBitsFlag, WastedBits);
             }
             
-            if (Ovia->Data->SubFrame->SubFrameType == Subframe_Verbatim) { // PCM
-                FLACOVIASubFrameVerbatim(BitB, Ovia);
-            } else if (Ovia->Data->SubFrame->SubFrameType == Subframe_Constant) {
-                FLACOVIASubFrameConstant(BitB, Ovia);
-            } else if (Ovia->Data->SubFrame->SubFrameType >= Subframe_Fixed && Ovia->Data->SubFrame->SubFrameType <= Subframe_LPC) { // Fixed
-                FLACOVIASubFrameFixed(BitB, Ovia);
-            } else if (Ovia->Data->SubFrame->SubFrameType >= Subframe_LPC) { // LPC
-                FLACOVIASubFrameLPC(BitB, Ovia, Channel);
+            if (SubFrameType == Subframe_Verbatim) { // PCM
+                OVIA_FLAC_SubFrame_Verbatim(BitB, Ovia);
+            } else if (SubFrameType == Subframe_Constant) {
+                OVIA_FLAC_SubFrame_Constant(BitB, Ovia);
+            } else if (SubFrameType >= Subframe_Fixed && SubFrameType <= Subframe_LPC) { // Fixed
+                OVIA_FLAC_SubFrame_Fixed(BitB, Ovia);
+            } else if (SubFrameType >= Subframe_LPC) { // LPC
+                OVIA_FLAC_SubFrame_LPC(BitB, Ovia, Channel);
             } else {
-                Log(Log_ERROR, __func__, U8("Invalid Subframe type: %d"), Ovia->Data->SubFrame->SubFrameType);
+                Log(Log_ERROR, __func__, U8("Invalid Subframe type: %d"), SubFrameType);
             }
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
@@ -151,13 +149,58 @@ extern "C" {
         }
     }
     
-    void FLACOVIASubFrameVerbatim(OVIA *Ovia, BitBuffer *BitB) {
+    void OVIA_FLAC_SubFrame_Verbatim(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             // First Raw  Sample L channel = 0x5E83
             // First Raw  Sample R channel = 0x7139
             // First FLAC Sample L channel = 0x5ED7, aka 87 more?
-            for (uint16_t Sample = 0; Sample < Ovia->Data->Frame->BlockSize; Sample++) {
-                Ovia->OVIAdSamples[Sample] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BitDepth);
+            uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
+            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), Yes);
+            uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
+            AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
+            Audio_Types     Type        = AudioContainer_GetType(Audio);
+            if (Type == (AudioType_Unsigned | AudioType_Integer8)) {
+                uint8_t **Array         = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
+                    }
+                }
+            } else if (Type == (AudioType_Signed | AudioType_Integer8)) {
+                int8_t  **Array         = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
+                    }
+                }
+            } else if (Type == (AudioType_Unsigned | AudioType_Integer16)) {
+                uint16_t **Array        = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
+                    }
+                }
+            } else if (Type == (AudioType_Signed | AudioType_Integer16)) {
+                int16_t  **Array        = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
+                    }
+                }
+            } else if (Type == (AudioType_Unsigned | AudioType_Integer32)) {
+                uint32_t **Array        = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
+                    }
+                }
+            } else if (Type == (AudioType_Signed | AudioType_Integer32)) {
+                int32_t  **Array        = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
+                    }
+                }
             }
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
@@ -166,23 +209,58 @@ extern "C" {
         }
     }
     
-    void FLACOVIASubFrameConstant(OVIA *Ovia, BitBuffer *BitB) {
+    void OVIA_FLAC_SubFrame_Constant(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            int64_t Constant = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BitDepth);
-            memset(Ovia->OVIAdSamples, Constant, Ovia->Data->Frame->BlockSize);
-        } else if (Ovia == NULL) {
-            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
-        } else if (BitB == NULL) {
-            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
-        }
-    }
-    
-    void FLACOVIASubFrameFixed(OVIA *Ovia, BitBuffer *BitB) {
-        if (Ovia != NULL && BitB != NULL) {
-            for (uint16_t WarmupSample = 0; WarmupSample < Ovia->Data->Frame->BitDepth * Ovia->Data->LPC->LPCOrder; WarmupSample++) {
-                Ovia->OVIAdSamples[WarmupSample]  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BitDepth);
+            uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
+            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), Yes);
+            uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
+            AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
+            Audio_Types     Type        = AudioContainer_GetType(Audio);
+            int64_t         Constant    = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, OVIA_GetBitDepth(Ovia));
+            
+            if (Type == (AudioType_Unsigned | AudioType_Integer8)) {
+                uint8_t **Array         = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = Constant;
+                    }
+                }
+            } else if (Type == (AudioType_Signed | AudioType_Integer8)) {
+                int8_t  **Array         = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = Constant;
+                    }
+                }
+            } else if (Type == (AudioType_Unsigned | AudioType_Integer16)) {
+                uint16_t **Array        = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = Constant;
+                    }
+                }
+            } else if (Type == (AudioType_Signed | AudioType_Integer16)) {
+                int16_t  **Array        = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = Constant;
+                    }
+                }
+            } else if (Type == (AudioType_Unsigned | AudioType_Integer32)) {
+                uint32_t **Array        = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = Constant;
+                    }
+                }
+            } else if (Type == (AudioType_Signed | AudioType_Integer32)) {
+                int32_t  **Array        = AudioContainer_GetArray(Audio);
+                for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
+                    for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
+                        Array[Channel][Sample] = Constant;
+                    }
+                }
             }
-            DecodeFLACResidual(BitB, Ovia);
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {
@@ -190,10 +268,23 @@ extern "C" {
         }
     }
     
-    void FLACOVIASubFrameLPC(OVIA *Ovia, BitBuffer *BitB, uint8_t Channel) { // 4 0's
+    void OVIA_FLAC_SubFrame_Fixed(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            for (uint16_t WarmupSample = 0; WarmupSample < Ovia->Data->Frame->BitDepth * Ovia->Data->LPC->LPCOrder; WarmupSample++) {
-                Ovia->OVIAdSamples[WarmupSample]  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->Frame->BitDepth); // 18 0's
+            for (uint16_t WarmupSample = 0; WarmupSample < OVIA_GetBitDepth(Ovia) * OVIA_FLAC_Get; WarmupSample++) {
+                Ovia->OVIAdSamples[WarmupSample]  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, OVIA_GetBitDepth(Ovia));
+            }
+            OVIA_FLAC_Decode_Residual(BitB, Ovia);
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+    }
+    
+    void OVIA_FLAC_SubFrame_LPC(OVIA *Ovia, BitBuffer *BitB, uint8_t Channel) { // 4 0's
+        if (Ovia != NULL && BitB != NULL) {
+            for (uint16_t WarmupSample = 0; WarmupSample < OVIA_GetBitDepth(Ovia) * Ovia->Data->LPC->LPCOrder; WarmupSample++) {
+                Ovia->OVIAdSamples[WarmupSample]  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, OVIA_GetBitDepth(Ovia)); // 18 0's
             }
             Ovia->Data->LPC->LPCPrecision           = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 4) + 1; // 1
             Ovia->Data->LPC->LPCShift               = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5); // 0
@@ -202,7 +293,7 @@ extern "C" {
             for (uint16_t LPCCoefficent = 0; LPCCoefficent < Ovia->Data->LPC->NumLPCCoeffs; LPCCoefficent++) {
                 Ovia->Data->LPC->LPCCoeff[LPCCoefficent] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Ovia->Data->LPC->LPCPrecision) + 1;
             }
-            DecodeFLACResidual(BitB, Ovia);
+            OVIA_FLAC_Decode_Residual(BitB, Ovia);
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {
@@ -210,13 +301,13 @@ extern "C" {
         }
     }
     
-    void DecodeFLACResidual(OVIA *Ovia, BitBuffer *BitB) {
+    void OVIA_FLAC_Decode_Residual(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             Ovia->Data->LPC->RicePartitionType      = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2);
             if (Ovia->Data->LPC->RicePartitionType == RICE1) {
-                DecodeRice1Partition(BitB, Ovia);
+                OVIA_FLAC_Decode_RICE1(BitB, Ovia);
             } else if (Ovia->Data->LPC->RicePartitionType == RICE2) {
-                DecodeFLACRice2Partition(BitB, Ovia);
+                OVIA_FLAC_Decode_RICE2(BitB, Ovia);
             }
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
@@ -225,7 +316,7 @@ extern "C" {
         }
     }
     
-    void DecodeRice1Partition(OVIA *Ovia, BitBuffer *BitB) {
+    void OVIA_FLAC_Decode_RICE1(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             Ovia->Data->LPC->PartitionOrder = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 4); // byte 5, 3 bits read.
             for (uint8_t Partition = 0; Partition < Ovia->Data->LPC->PartitionOrder; Partition++) {
@@ -249,7 +340,7 @@ extern "C" {
         }
     }
     
-    void DecodeFLACRice2Partition(OVIA *Ovia, BitBuffer *BitB) {
+    void OVIA_FLAC_Decode_RICE2(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             for (uint8_t Partition = 0; Partition < Ovia->Data->LPC->PartitionOrder; Partition++) {
                 Ovia->Data->Rice->RICEParameter[Partition] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 5;
@@ -293,40 +384,38 @@ extern "C" {
     }
     
     void FLACBitDepth(OVIA *Ovia) {
-        if (Ovia != NULL && BitB != NULL) {
-            switch (Ovia->Meta->StreamInfo->CodedBitDepth) {
+        if (Ovia != NULL) {
+            switch (OVIA_FLAC_Frame_GetCodedBitDepth(Ovia)) {
                 case 0:
-                    Ovia->Data->Frame->BitDepth = Ovia->Meta->StreamInfo->BitDepth;
+                    OVIA_GetBitDepth(Ovia) = Ovia->Meta->StreamInfo->BitDepth;
                     break;
                 case 1:
-                    Ovia->Data->Frame->BitDepth = 8;
+                    OVIA_GetBitDepth(Ovia) = 8;
                     break;
                 case 2:
-                    Ovia->Data->Frame->BitDepth = 12;
+                    OVIA_GetBitDepth(Ovia) = 12;
                     break;
                 case 4:
-                    Ovia->Data->Frame->BitDepth = 16;
+                    OVIA_GetBitDepth(Ovia) = 16;
                     break;
                 case 5:
-                    Ovia->Data->Frame->BitDepth = 20;
+                    OVIA_GetBitDepth(Ovia) = 20;
                     break;
                 case 6:
-                    Ovia->Data->Frame->BitDepth = 24;
+                    OVIA_GetBitDepth(Ovia) = 24;
                     break;
                 default:
-                    Ovia->Data->Frame->BitDepth = 0;
+                    OVIA_GetBitDepth(Ovia) = 0;
                     break;
             }
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
-        } else if (BitB == NULL) {
-            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
     
     void FLACSampleRate(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            switch (Ovia->Meta->StreamInfo->CodedSampleRate) {
+            switch (OVIA_FLAC_Frame_GetCodedSampleRate(OVIA)) {
                 case 0:
                     Ovia->Data->Frame->SampleRate = Ovia->Meta->StreamInfo->SampleRate;
                     break;
@@ -505,12 +594,12 @@ extern "C" {
     
     void FLACParseVorbisComment(OVIA *Ovia, BitBuffer *BitB) { // LITTLE ENDIAN, size = 438
         if (Ovia != NULL && BitB != NULL) {
-            Ovia->Meta->Vorbis->VendorTagSize              = BitBuffer_ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 32); // 13
+            Ovia->Meta->Vorbis->VendorTagSize              = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32); // 13
             Ovia->Meta->Vorbis->VendorTag                  = calloc(1, Ovia->Meta->Vorbis->VendorTagSize * sizeof(char));
             for (uint32_t TagByte = 0; TagByte < Ovia->Meta->Vorbis->VendorTagSize; TagByte++) {
-                Ovia->Meta->Vorbis->VendorTag[TagByte]     = BitBuffer_ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 8); // Lavf58.17.101
+                Ovia->Meta->Vorbis->VendorTag[TagByte]     = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 8); // Lavf58.17.101
             }
-            Ovia->Meta->Vorbis->NumUserTags                = BitBuffer_ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 32); // 14
+            Ovia->Meta->Vorbis->NumUserTags                = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32); // 14
             Ovia->Meta->Vorbis->UserTagSize                = calloc(Ovia->Meta->Vorbis->NumUserTags, sizeof(uint8_t)); // 28
             Ovia->Meta->Vorbis->UserTagString              = calloc(Ovia->Meta->Vorbis->NumUserTags, sizeof(char));
             // 28,  ALBUM=What A Wonderful World
@@ -528,12 +617,12 @@ extern "C" {
             // 9,   DATE=1988
             // 13,  TRACKNUMBER=1
             for (uint32_t Comment = 0; Comment < Ovia->Meta->Vorbis->NumUserTags; Comment++) {
-                Ovia->Meta->Vorbis->UserTagSize[Comment]   = BitBuffer_ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 32);
+                Ovia->Meta->Vorbis->UserTagSize[Comment]   = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
                 Ovia->Meta->Vorbis->UserTagString[Comment] = calloc(1, Ovia->Meta->Vorbis->UserTagSize[Comment] * sizeof(char));
                 
                 char UserTagString[Ovia->Meta->Vorbis->UserTagSize[Comment]];
                 for (uint32_t CommentByte = 0; CommentByte < Ovia->Meta->Vorbis->UserTagSize[Comment]; CommentByte++) {
-                    UserTagString[CommentByte] = BitBuffer_ReadBits(BitIOLSByteFirst, LSBitFirst, BitB, 8);
+                    UserTagString[CommentByte] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 8);
                 }
                 Ovia->Meta->Vorbis->UserTagString[Comment] = UserTagString;
             }
@@ -600,7 +689,6 @@ extern "C" {
             Ovia->Meta->Pic->ColorsUsed  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 0
             Ovia->Meta->Pic->PictureSize = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // 80970
             // Pop in the address of the start of the data, and skip over the data instead of buffering it.
-            
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {

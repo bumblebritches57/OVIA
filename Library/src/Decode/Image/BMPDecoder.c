@@ -21,7 +21,7 @@ extern "C" {
             uint64_t FileSize                                    = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
             OVIA_SetFileSize(Ovia, FileSize);
             BitBuffer_Skip(BitB, 32);                           // 2 16 bit Reserved fields
-            uint64_t Offset      = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
+            uint64_t Offset                                      = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
             OVIA_SetSampleOffset(Ovia, Offset);
             if (Offset > 14) { // DIB Header
                 DIBSize                                         = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32); // 40
@@ -39,7 +39,7 @@ extern "C" {
                 BitBuffer_Skip(BitB, 16);                       // NumPlanes, always 1
                 uint64_t BitDepth                                = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
                 OVIA_SetBitDepth(Ovia, BitDepth);
-                BMPCompressionType = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
+                BMPCompressionType                               = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
                 OVIA_BMP_SetCompressionType(Ovia, BMPCompressionType);
                 OVIA_BMP_SetNumBytesUsedBySamples(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
                 OVIA_BMP_SetWidthInMeters(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
@@ -100,9 +100,9 @@ extern "C" {
             int64_t  Height         = OVIA_GetHeight(Ovia);
             uint32_t BMPCompresType = OVIA_BMP_GetCompressionType(Ovia);
             if (BitDepth <= 8) {
-                Image = ImageContainer_Init(ImageContainer_2DUInteger8, BitDepth, NumChannels, Width, Height);
+                Image = ImageContainer_Init(ImageType_UInteger8, BitDepth, 1, NumChannels, Width, Height);
             } else if (BitDepth > 8 && BitDepth <= 16) {
-                Image = ImageContainer_Init(ImageContainer_2DUInteger16, BitDepth, NumChannels, Width, Height);
+                Image = ImageContainer_Init(ImageType_UInteger16, BitDepth, 1, NumChannels, Width, Height);
             }
             
             if (OVIA_GetHeight(Ovia) < 0) {

@@ -47,15 +47,15 @@ extern "C" {
         PNG_RGBA           = 6,
     } PNGColorTypes;
     
-    typedef enum libModernPNGFilterTypes {
+    typedef enum OVIA_PNG_Filter_Types {
         NotFiltered   = 0,
         SubFilter     = 1,
         UpFilter      = 2,
         AverageFilter = 3,
         PaethFilter   = 4,
-    } libModernPNGFilterTypes;
+    } OVIA_PNG_Filter_Types;
     
-    enum libModernPNGInterlaceType {
+    enum OVIA_PNG_Interlace_Types {
         PNGNotInterlaced   = 0,
         PNGInterlacedAdam7 = 1,
     };
@@ -280,15 +280,15 @@ extern "C" {
     
     uint8_t    ParsePNGMetadata(OVIA *Ovia, BitBuffer *BitB);
     
-    void       PNGOVIASubFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       OVIA_PNG_Filter_Sub(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
-    void       PNGOVIANonFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       OVIA_PNG_Filter_Non(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
-    void       PNGOVIAUpFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       OVIA_PNG_Filter_Up(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
-    void       PNGOVIAAverageFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       OVIA_PNG_Filter_Average(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
-    void       PNGOVIAPaethFilter(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void       OVIA_PNG_Filter_Paeth(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
     
     void       PNGOVIAFilter(OVIA *Ovia, void ***InflatedData);
     

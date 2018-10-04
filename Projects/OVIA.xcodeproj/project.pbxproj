@@ -31,6 +31,9 @@
 		2C1CD9882121ED8B0049D169 /* W64Decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C1CD9842121ED8B0049D169 /* W64Decoder.c */; };
 		2C1CD9892121ED8B0049D169 /* FLACDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C1CD9852121ED8B0049D169 /* FLACDecoder.c */; };
 		2C1CD98A2121ED8B0049D169 /* WAVDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C1CD9862121ED8B0049D169 /* WAVDecoder.c */; };
+		2C50B66D215B5F8B00D4D8B5 /* PNGInflate.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C50B66C215B5F8B00D4D8B5 /* PNGInflate.c */; };
+		2C50B670215B5FB300D4D8B5 /* PNGDeflate.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C50B66F215B5FB300D4D8B5 /* PNGDeflate.c */; };
+		2C50B672215B65A500D4D8B5 /* Flate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C50B671215B65A500D4D8B5 /* Flate.h */; };
 		2C6BA119213BE99900135972 /* InternalOVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6BA118213BE99900135972 /* InternalOVIA.h */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +73,9 @@
 		2C1CD9852121ED8B0049D169 /* FLACDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FLACDecoder.c; path = src/Decode/Audio/FLACDecoder.c; sourceTree = "<group>"; };
 		2C1CD9862121ED8B0049D169 /* WAVDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVDecoder.c; path = src/Decode/Audio/WAVDecoder.c; sourceTree = "<group>"; };
 		2C397078211CEA5A0067D447 /* FoundationIO.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FoundationIO.xcodeproj; path = ../Dependencies/FoundationIO/Projects/FoundationIO.xcodeproj; sourceTree = "<group>"; };
+		2C50B66C215B5F8B00D4D8B5 /* PNGInflate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = PNGInflate.c; path = src/Decode/Image/PNGInflate.c; sourceTree = "<group>"; };
+		2C50B66F215B5FB300D4D8B5 /* PNGDeflate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = PNGDeflate.c; path = src/Encode/Image/PNGDeflate.c; sourceTree = "<group>"; };
+		2C50B671215B65A500D4D8B5 /* Flate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Flate.h; path = include/Private/Image/Flate.h; sourceTree = "<group>"; };
 		2C6BA118213BE99900135972 /* InternalOVIA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InternalOVIA.h; path = include/Private/InternalOVIA.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,6 +153,7 @@
 				2C1CD95A2121ED190049D169 /* BMPCommon.h */,
 				2C1CD95B2121ED190049D169 /* PNGCommon.h */,
 				2C1CD9592121ED190049D169 /* PNMCommon.h */,
+				2C50B671215B65A500D4D8B5 /* Flate.h */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -186,6 +193,7 @@
 				2C1CD9762121ED680049D169 /* BMPEncoder.c */,
 				2C1CD9752121ED680049D169 /* PNMEncoder.c */,
 				2C1CD9772121ED680049D169 /* PNGEncoder.c */,
+				2C50B66F215B5FB300D4D8B5 /* PNGDeflate.c */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -207,6 +215,7 @@
 				2C1CD97D2121ED830049D169 /* BMPDecoder.c */,
 				2C1CD97F2121ED830049D169 /* PNMDecoder.c */,
 				2C1CD97E2121ED830049D169 /* PNGDecoder.c */,
+				2C50B66C215B5F8B00D4D8B5 /* PNGInflate.c */,
 			);
 			name = Image;
 			sourceTree = "<group>";
@@ -254,6 +263,7 @@
 				2C1CD95E2121ED190049D169 /* PNGCommon.h in Headers */,
 				2C1CD9652121ED220049D169 /* W64Common.h in Headers */,
 				2C1CD9632121ED220049D169 /* WAVCommon.h in Headers */,
+				2C50B672215B65A500D4D8B5 /* Flate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,9 +343,11 @@
 			files = (
 				2C1CD9802121ED830049D169 /* BMPDecoder.c in Sources */,
 				2C1CD9822121ED830049D169 /* PNMDecoder.c in Sources */,
+				2C50B670215B5FB300D4D8B5 /* PNGDeflate.c in Sources */,
 				2C1CD9882121ED8B0049D169 /* W64Decoder.c in Sources */,
 				2C1CD96A2121ED460049D169 /* libOVIA.c in Sources */,
 				2C1CD9872121ED8B0049D169 /* AIFDecoder.c in Sources */,
+				2C50B66D215B5F8B00D4D8B5 /* PNGInflate.c in Sources */,
 				2C1CD98A2121ED8B0049D169 /* WAVDecoder.c in Sources */,
 				2C1CD9722121ED600049D169 /* FLACEncoder.c in Sources */,
 				2C1CD97A2121ED680049D169 /* PNGEncoder.c in Sources */,

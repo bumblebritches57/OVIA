@@ -200,7 +200,7 @@ extern "C" {
             uint64_t BlockSize   = OVIA_GetBlockSize(Ovia);
             
             Audio_Types AudioType = AudioContainer_GetType(Audio);
-            if (AudioType == AudioContainer_SInteger8) {
+            if (AudioType == AudioType_SInteger8) {
                 int8_t **Samples  = (int8_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
@@ -208,7 +208,7 @@ extern "C" {
                         BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioContainer_UInteger8) {
+            } else if (AudioType == AudioType_UInteger8) {
                 uint8_t **Samples  = (uint8_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
@@ -216,7 +216,7 @@ extern "C" {
                         BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioContainer_SInteger16) {
+            } else if (AudioType == AudioType_SInteger16) {
                 int16_t **Samples  = (int16_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
@@ -224,7 +224,7 @@ extern "C" {
                         BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioContainer_UInteger16) {
+            } else if (AudioType == AudioType_UInteger16) {
                 uint16_t **Samples  = (uint16_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
@@ -232,7 +232,7 @@ extern "C" {
                         BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioContainer_SInteger32) {
+            } else if (AudioType == AudioType_SInteger32) {
                 int32_t **Samples  = (int32_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
@@ -240,7 +240,7 @@ extern "C" {
                         BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioContainer_UInteger32) {
+            } else if (AudioType == AudioType_UInteger32) {
                 uint32_t **Samples  = (uint32_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
