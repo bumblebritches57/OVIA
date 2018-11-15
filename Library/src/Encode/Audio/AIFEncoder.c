@@ -5,6 +5,8 @@
 extern "C" {
 #endif
     
+#define AIFFEncoderNULLTerminator 0
+    
     typedef union Integer2Double {
         double   Double;
         uint64_t Integer;
@@ -118,7 +120,7 @@ extern "C" {
                 do {
                     BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 8, TitleTag[TagByte]);
                     TagByte += 1;
-                } while (TitleTag[TagByte] != NULLTerminator);
+                } while (TitleTag[TagByte] != AIFFEncoderNULLTerminator);
                 TitleTagSize = TagByte;
             }
             AIFSkipPadding(BitB, TitleTagSize);
@@ -139,7 +141,7 @@ extern "C" {
                 do {
                     BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 8, ArtistTag[TagByte]);
                     TagByte += 1;
-                } while (ArtistTag[TagByte] != NULLTerminator);
+                } while (ArtistTag[TagByte] != AIFFEncoderNULLTerminator);
                 ArtistTagSize = TagByte;
             }
             AIFSkipPadding(BitB, ArtistTagSize);
@@ -200,52 +202,52 @@ extern "C" {
             uint64_t BlockSize   = OVIA_GetBlockSize(Ovia);
             
             Audio_Types AudioType = AudioContainer_GetType(Audio);
-            if (AudioType == AudioType_SInteger8) {
+            if (AudioType == (AudioType_Signed | AudioType_Integer8)) {
                 int8_t **Samples  = (int8_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
                         BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
-                        BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
+                        BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioType_UInteger8) {
+            } else if (AudioType == (AudioType_Unsigned | AudioType_Integer8)) {
                 uint8_t **Samples  = (uint8_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
                         BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
-                        BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
+                        BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioType_SInteger16) {
+            } else if (AudioType == (AudioType_Signed | AudioType_Integer16)) {
                 int16_t **Samples  = (int16_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
                         BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
-                        BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
+                        BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioType_UInteger16) {
+            } else if (AudioType == (AudioType_Unsigned | AudioType_Integer16)) {
                 uint16_t **Samples  = (uint16_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
                         BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
-                        BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
+                        BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioType_SInteger32) {
+            } else if (AudioType == (AudioType_Signed | AudioType_Integer32)) {
                 int32_t **Samples  = (int32_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
                         BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
-                        BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
+                        BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
-            } else if (AudioType == AudioType_UInteger32) {
+            } else if (AudioType == (AudioType_Unsigned | AudioType_Integer32)) {
                 uint32_t **Samples  = (uint32_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
                         BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
-                        BitBuffer_Skip(BitB, 8 - (BitDepth % 8));
+                        BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
             }

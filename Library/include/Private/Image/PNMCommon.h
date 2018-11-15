@@ -29,15 +29,15 @@ extern "C" {
         PNM_PAMB = 0x5037, // PortableAnyMap
     };
     
-    void        PNMIdentifyFileType(OVIA *Ovia, BitBuffer *BitB);
+    void            PNMIdentifyFileType(OVIA *Ovia, BitBuffer *BitB);
     
-    void        PNMParseMetadata(OVIA *Ovia, BitBuffer *BitB);
+    void            PNMParseMetadata(OVIA *Ovia, BitBuffer *BitB);
     
     ImageContainer *PNMExtractImage(OVIA *Ovia, BitBuffer *BitB);
     
-    void PNMInsertFrame(OVIA *Ovia, ImageContainer *Image, BitBuffer *BitB);
+    void            PNMInsertFrame(OVIA *Ovia, ImageContainer *Image, BitBuffer *BitB);
     
-    void PNMWriteHeader(OVIA *Ovia, BitBuffer *BitB);
+    void            PNMWriteHeader(OVIA *Ovia, BitBuffer *BitB);
     
 #ifdef __cplusplus
 }

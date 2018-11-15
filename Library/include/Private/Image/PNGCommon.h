@@ -177,13 +177,6 @@ extern "C" {
      */
     void        EncodePNGImage(ImageContainer *Image, BitBuffer *BitB, bool InterlacePNG, bool OptimizePNG);
     
-    /*!
-     @abstract                  "OVIAs a PNG from a bitbuffer to an array"
-     @param     Ovia             "Pointer to OVIA struct containing all the metadata about the image to be OVIAd"
-     @param     PNGFile         "Pointer to raw array containing the image, supports 2D array containing stereoscopic frames"
-     */
-    uint16_t ***OVIAImage(OVIA *Ovia, BitBuffer *PNGFile);
-    
     void        OVIA_PNG_SetTextChunk(OVIA *Ovia, UTF8 *KeywordString, UTF8 *CommentString);
     
     uint32_t    OVIA_PNG_GetNumTextChunks(OVIA *Ovia);
@@ -276,66 +269,62 @@ extern "C" {
      */
     bool                VerifyAdler32(const uint8_t *Data, const uint64_t DataSize, const uint32_t EmbeddedAdler32);
     
-    uint8_t    PaethPredictor(int64_t Left, int64_t Above, int64_t UpperLeft);
+    uint8_t             PaethPredictor(int64_t Left, int64_t Above, int64_t UpperLeft);
     
-    uint8_t    ParsePNGMetadata(OVIA *Ovia, BitBuffer *BitB);
+    uint8_t             OVIA_PNG_ParseChunks(OVIA *Ovia, BitBuffer *BitB);
     
-    void       OVIA_PNG_Filter_Sub(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void                OVIA_PNG_Filter_Sub(OVIA *Ovia, ImageContainer *Image);
     
-    void       OVIA_PNG_Filter_Non(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void                OVIA_PNG_Filter_Up(OVIA *Ovia, ImageContainer *Image);
     
-    void       OVIA_PNG_Filter_Up(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void                OVIA_PNG_Filter_Average(OVIA *Ovia, ImageContainer *Image);
     
-    void       OVIA_PNG_Filter_Average(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void                OVIA_PNG_Filter_Paeth(OVIA *Ovia, ImageContainer *Image);
     
-    void       OVIA_PNG_Filter_Paeth(OVIA *Ovia, uint8_t ***InflatedData, uint8_t ***DeFilteredData, size_t Line);
+    void                WriteIHDRChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void       PNGOVIAFilter(OVIA *Ovia, void ***InflatedData);
+    void                WriteACTLChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteIHDRChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteFCTLChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteACTLChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteFDATChunk(OVIA *Ovia, BitBuffer *BitB, uint8_t *DeflatedFrameData, uint32_t DeflatedFrameDataSize);
     
-    void WriteFCTLChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteSTERChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteFDATChunk(OVIA *Ovia, BitBuffer *BitB, uint8_t *DeflatedFrameData, uint32_t DeflatedFrameDataSize);
+    void                WriteBKGDChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteSTERChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteCHRMChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteBKGDChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteGAMAChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteCHRMChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteOFFSChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteGAMAChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteICCPChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteOFFSChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteSBITChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteICCPChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteSRGBChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteSBITChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WritePHYSChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WriteSRGBChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WritePCALChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WritePHYSChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                WriteSCALChunk(OVIA *Ovia, BitBuffer *BitB);
     
-    void WritePCALChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                PNGEncodeFilterPaeth(OVIA *Ovia, ImageContainer *Image);
     
-    void WriteSCALChunk(OVIA *Ovia, BitBuffer *BitB);
+    void                PNGEncodeFilterSub(OVIA *Ovia, ImageContainer *Image);
     
-    void PNGEncodeFilterPaeth(OVIA *Ovia, ImageContainer *Image);
+    void                PNGEncodeAdam7(OVIA *Ovia, BitBuffer *ProgressiveImage, BitBuffer *InterlacedImage);
     
-    void PNGEncodeFilterSub(OVIA *Ovia, ImageContainer *Image);
-    
-    void PNGEncodeAdam7(OVIA *Ovia, BitBuffer *ProgressiveImage, BitBuffer *InterlacedImage);
-    
-    void OptimizeAdam7(OVIA *Ovia, uint8_t ****Image);
+    void                OptimizeAdam7(OVIA *Ovia, uint8_t ****Image);
     
     /*!
      @abstract       "Optimizes the image, by trying the 5 filters on each line, and keeping the best."
      */
-    void OptimizePNG(OVIA *Ovia, uint8_t ****Image);
+    void                OptimizePNG(OVIA *Ovia, uint8_t ****Image);
     
-    void PNGEncodeImage(OVIA *Ovia, BitBuffer *BitB);
+    void                PNGEncodeImage(OVIA *Ovia, BitBuffer *BitB);
     
     static const uint8_t Adam7Level1[1] = {
         0
@@ -368,75 +357,6 @@ extern "C" {
         41, 42, 43, 44, 45, 46, 47, 48,
         57, 58, 59, 60, 61, 62, 63, 64
     };
-    
-    /*
-     enum Adam7Positions {
-     Adam7Level1    =  0,
-     Adam7Level2    =  5,
-     Adam7Level3_1  = 32,
-     Adam7Level3_2  = 36,
-     Adam7Level4_1  =  3,
-     Adam7Level4_2  =  7,
-     Adam7Level4_3  = 35,
-     Adam7Level4_4  = 39,
-     Adam7Level5_1  = 17,
-     Adam7Level5_2  = 19,
-     Adam7Level5_3  = 21,
-     Adam7Level5_4  = 23,
-     Adam7Level5_5  = 49,
-     Adam7Level5_6  = 51,
-     Adam7Level5_7  = 53,
-     Adam7Level5_8  = 55,
-     Adam7Level6_1  =  2,
-     Adam7Level6_2  =  4,
-     Adam7Level6_3  =  6,
-     Adam7Level6_4  =  8,
-     Adam7Level6_5  = 18,
-     Adam7Level6_6  = 20,
-     Adam7Level6_7  = 22,
-     Adam7Level6_8  = 24,
-     Adam7Level6_9  = 34,
-     Adam7Level6_10 = 36,
-     Adam7Level6_11 = 38,
-     Adam7Level6_12 = 40,
-     Adam7Level6_13 = 50,
-     Adam7Level6_14 = 52,
-     Adam7Level6_15 = 54,
-     Adam7Level6_16 = 56,
-     Adam7Level7_1  = 9,
-     Adam7Level7_2  = 10,
-     Adam7Level7_3  = 11,
-     Adam7Level7_4  = 12,
-     Adam7Level7_5  = 13,
-     Adam7Level7_6  = 14,
-     Adam7Level7_7  = 15,
-     Adam7Level7_8  = 16,
-     Adam7Level7_9  = 25,
-     Adam7Level7_10 = 26,
-     Adam7Level7_11 = 27,
-     Adam7Level7_12 = 28,
-     Adam7Level7_13 = 29,
-     Adam7Level7_14 = 30,
-     Adam7Level7_15 = 31,
-     Adam7Level7_16 = 32,
-     Adam7Level7_17 = 41,
-     Adam7Level7_18 = 42,
-     Adam7Level7_19 = 43,
-     Adam7Level7_20 = 44,
-     Adam7Level7_21 = 45,
-     Adam7Level7_22 = 46,
-     Adam7Level7_23 = 47,
-     Adam7Level7_24 = 48,
-     Adam7Level7_25 = 57,
-     Adam7Level7_26 = 58,
-     Adam7Level7_27 = 59,
-     Adam7Level7_28 = 60,
-     Adam7Level7_29 = 61,
-     Adam7Level7_30 = 62,
-     Adam7Level7_31 = 63,
-     Adam7Level7_32 = 64,
-     };
-     */
     
 #ifdef __cplusplus
 }

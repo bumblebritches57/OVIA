@@ -15,12 +15,12 @@ extern "C" {
     
     void BMPParseMetadata(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            BitBuffer_Skip(BitB, 16);                           // Skip BM
+            BitBuffer_Seek(BitB, 16);                           // Skip BM
             uint64_t DIBSize                                     = 0UL;
             uint32_t BMPCompressionType                          = 0;
             uint64_t FileSize                                    = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
             OVIA_SetFileSize(Ovia, FileSize);
-            BitBuffer_Skip(BitB, 32);                           // 2 16 bit Reserved fields
+            BitBuffer_Seek(BitB, 32);                           // 2 16 bit Reserved fields
             uint64_t Offset                                      = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
             OVIA_SetSampleOffset(Ovia, Offset);
             if (Offset > 14) { // DIB Header
@@ -36,7 +36,7 @@ extern "C" {
                     int64_t Height                              = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
                     OVIA_SetHeight(Ovia, Height);
                 }
-                BitBuffer_Skip(BitB, 16);                       // NumPlanes, always 1
+                BitBuffer_Seek(BitB, 16);                       // NumPlanes, always 1
                 uint64_t BitDepth                                = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
                 OVIA_SetBitDepth(Ovia, BitDepth);
                 BMPCompressionType                               = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
@@ -67,21 +67,21 @@ extern "C" {
                                 Log(Log_ERROR, __func__, U8("Couldn't allocate %d bytes for the ICC payload"), ICCSize);
                             }
                             OVIA_BMP_SetICC(Ovia, ICCIntent, ICCSize, ICCData);
-                            BitBuffer_Skip(BitB, 32); // More Reserved data.
+                            BitBuffer_Seek(BitB, 32); // More Reserved data.
                             // Ok so when the Height is positive, the image is upside down, the bottom of the image is at the top of the file.
                         }
                     }
                 }
-                BitBuffer_Skip(BitB, DIBSize - BitBuffer_GetPosition(BitB)); // Skip the remaining bits.
+                BitBuffer_Seek(BitB, DIBSize - BitBuffer_GetPosition(BitB)); // Skip the remaining bits.
             } else if (DIBSize == 40 && (BMPCompressionType == BMP_BitFields || BMPCompressionType == BMP_RGBABitFields)) {
-                OVIA_BMP_SetRMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, OVIA_GetBitDepth(Ovia)));
-                OVIA_BMP_SetGMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, OVIA_GetBitDepth(Ovia)));
-                OVIA_BMP_SetBMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, OVIA_GetBitDepth(Ovia)));
+                OVIA_BMP_SetRMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, BitB_GetBitDepth(Ovia)));
+                OVIA_BMP_SetGMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, BitB_GetBitDepth(Ovia)));
+                OVIA_BMP_SetBMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, BitB_GetBitDepth(Ovia)));
                 if (BMPCompressionType == BMP_RGBABitFields) {
-                    OVIA_BMP_SetAMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, OVIA_GetBitDepth(Ovia)));
+                    OVIA_BMP_SetAMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, BitB_GetBitDepth(Ovia)));
                 }
             } else {
-                BitBuffer_Skip(BitB, Bits2Bytes((OVIA_GetSampleOffset(Ovia) - 14) - DIBSize, false));
+                BitBuffer_Seek(BitB, Bits2Bytes((OVIA_GetSampleOffset(Ovia) - 14) - DIBSize, false));
             }
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
@@ -100,9 +100,9 @@ extern "C" {
             int64_t  Height         = OVIA_GetHeight(Ovia);
             uint32_t BMPCompresType = OVIA_BMP_GetCompressionType(Ovia);
             if (BitDepth <= 8) {
-                Image = ImageContainer_Init(ImageType_UInteger8, BitDepth, 1, NumChannels, Width, Height);
+                Image = ImageContainer_Init(ImageType_Integer8, BitDepth, 1, NumChannels, Width, Height);
             } else if (BitDepth > 8 && BitDepth <= 16) {
-                Image = ImageContainer_Init(ImageType_UInteger16, BitDepth, 1, NumChannels, Width, Height);
+                Image = ImageContainer_Init(ImageType_Integer16, BitDepth, 1, NumChannels, Width, Height);
             }
             
             if (OVIA_GetHeight(Ovia) < 0) {

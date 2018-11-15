@@ -45,7 +45,7 @@ extern "C" {
             uint64_t BitDepth    = Bits2Bytes(ImageContainer_GetBitDepth(Image), Yes);
             Image_Types Type     = ImageContainer_GetType(Image);
             
-            if (Type == ImageType_UInteger8) {
+            if (Type == ImageType_Integer8) {
                 uint8_t ****Array = (uint8_t****) ImageContainer_GetArray(Image);
                 for (uint64_t W = 0; W < Width; W++) {
                     for (uint64_t H = 0; H < Height; H++) {
@@ -54,26 +54,8 @@ extern "C" {
                         }
                     }
                 }
-            } else if (Type == ImageType_SInteger8) {
-                int8_t ****Array = (int8_t****) ImageContainer_GetArray(Image);
-                for (uint64_t W = 0; W < Width; W++) {
-                    for (uint64_t H = 0; H < Height; H++) {
-                        for (uint16_t C = 0; C < NumChannels; C++) {
-                            BitBuffer_WriteBits(MSByteFirst, MSBitFirst, BitB, BitDepth, Array[0][W][H][C]);
-                        }
-                    }
-                }
-            } else if (Type == ImageType_UInteger16) {
+            } else if (Type == AudioType_Integer16) {
                 uint16_t ****Array = (uint16_t****) ImageContainer_GetArray(Image);
-                for (uint64_t W = 0; W < Width; W++) {
-                    for (uint64_t H = 0; H < Height; H++) {
-                        for (uint16_t C = 0; C < NumChannels; C++) {
-                            BitBuffer_WriteBits(MSByteFirst, MSBitFirst, BitB, BitDepth, Array[0][W][H][C]);
-                        }
-                    }
-                }
-            } else if (Type == ImageType_SInteger16) {
-                int16_t ****Array = (int16_t****) ImageContainer_GetArray(Image);
                 for (uint64_t W = 0; W < Width; W++) {
                     for (uint64_t H = 0; H < Height; H++) {
                         for (uint16_t C = 0; C < NumChannels; C++) {
