@@ -226,52 +226,9 @@ extern "C" {
     
     typedef struct HuffmanTree HuffmanTree;
     
-    uint32_t GenerateCRC32(BitBuffer *BitB, const uint64_t ChunkSize);
-    bool     VerifyCRC32(BitBuffer *BitB, uint64_t ChunkSize);
-    
-    /*!
-     @abstract                                    "Generates CRC from data".
-     @param             Data2CRC                  "Pointer to a BitBuffer containing data to CRC".
-     @param             BitOffset                 "Which bit should we start CRCing?".
-     @param             BitLength                 "How many bits should we CRC?"
-     @param             Polynomial                "The Polynomial in Normal representation".
-     @param             PolySize                  "The size of the polynomial in bits".
-     @param             PolyInit                  "Initialization value".
-     */
-    uint64_t            GenerateCRC(BitBuffer *Data2CRC, const uint64_t BitOffset, const uint64_t BitLength, const uint64_t Polynomial, const uint8_t PolySize, const uint64_t PolyInit);
-    
-    /*!
-     @abstract                                    "Computes the CRC of DataBuffer, and compares it to the submitted CRC".
-     @param             Data2CRC                  "Pointer to a BitBuffer containing data to CRC".
-     @param             BitOffset                 "Which bit should we start CRCing?".
-     @param             BitLength                 "How many bits should we CRC?"
-     @param             Polynomial                "The Polynomial in Normal representation".
-     @param             PolySize                  "The size of the polynomial in bits".
-     @param             PolyInit                  "Initialization value".
-     @param             PrecomputedCRC            "The precomputed resulting CRC of Data2CRC, to compare the generated CRC with".
-     */
-    bool                VerifyCRC(BitBuffer *Data2CRC, const uint64_t BitOffset, const uint64_t BitLength, const uint64_t Polynomial, const uint8_t PolySize, const uint64_t PolyInit, const uint64_t PrecomputedCRC);
-    
-    /*!
-     @abstract                                    "Creates Adler32 checksum from input data".
-     @return                                      "Returns the Adler32 data from the data input".
-     @param             Data                      "Pointer to the data to generate the Adler hash from".
-     @param             DataSize                  "Size of data".
-     */
-    uint32_t            GenerateAdler32(const uint8_t *Data, const uint64_t DataSize);
-    
-    /*!
-     @abstract                                    "Generates Adler32 from the input data, and compares it to the submitted checksum".
-     @return                                      "Returns whether the input data matched the provided checksum or not".
-     @param             Data                      "Pointer to the data to generate the Adler hash from".
-     @param             DataSize                  "Size of data".
-     @param             EmbeddedAdler32           "Embedded Adler32 to compare the generated one to".
-     */
-    bool                VerifyAdler32(const uint8_t *Data, const uint64_t DataSize, const uint32_t EmbeddedAdler32);
-    
     uint8_t             PaethPredictor(int64_t Left, int64_t Above, int64_t UpperLeft);
     
-    uint8_t             OVIA_PNG_ParseChunks(OVIA *Ovia, BitBuffer *BitB);
+    void                OVIA_PNG_ParseChunks(OVIA *Ovia, BitBuffer *BitB);
     
     void                OVIA_PNG_Filter_Sub(OVIA *Ovia, ImageContainer *Image);
     
