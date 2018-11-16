@@ -35,6 +35,7 @@
 		2C58C8C121988D6700C56D01 /* WAVEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B19D621901EFE009659A3 /* WAVEncoder.c */; };
 		2C58C8C221988D6700C56D01 /* AIFEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B19D721901EFE009659A3 /* AIFEncoder.c */; };
 		2C58C8C321988D6B00C56D01 /* libOVIA.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B19D821901EFE009659A3 /* libOVIA.c */; };
+		2C71A53E219DB34F00771539 /* Flate.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C71A53D219DB34F00771539 /* Flate.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,13 +44,6 @@
 			containerPortal = 2C0B19C221901ABC009659A3 /* FoundationIO.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 2CFC15C82091F1AE0070BCFC;
-			remoteInfo = FoundationIO;
-		};
-		2C58C8C421988D8900C56D01 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2C0B19C221901ABC009659A3 /* FoundationIO.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 2CFC15C72091F1AE0070BCFC;
 			remoteInfo = FoundationIO;
 		};
 /* End PBXContainerItemProxy section */
@@ -84,6 +78,7 @@
 		2C0B19FF21901F09009659A3 /* WAVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAVCommon.h; sourceTree = "<group>"; };
 		2C0B1A0021901F09009659A3 /* InternalOVIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InternalOVIA.h; sourceTree = "<group>"; };
 		2C0B1A0121901F09009659A3 /* libOVIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libOVIA.h; path = ../libOVIA/include/libOVIA.h; sourceTree = "<group>"; };
+		2C71A53D219DB34F00771539 /* Flate.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = Flate.c; path = ../libOVIA/src/Flate.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +141,7 @@
 				2C0B19D921901EFE009659A3 /* Decode */,
 				2C0B19CD21901EFE009659A3 /* Encode */,
 				2C0B19D821901EFE009659A3 /* libOVIA.c */,
+				2C71A53D219DB34F00771539 /* Flate.c */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -226,9 +222,9 @@
 		2C0B19F521901F09009659A3 /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				2C0B1A0021901F09009659A3 /* InternalOVIA.h */,
 				2C0B19F621901F09009659A3 /* Image */,
 				2C0B19FB21901F09009659A3 /* Audio */,
-				2C0B1A0021901F09009659A3 /* InternalOVIA.h */,
 			);
 			name = Private;
 			path = ../libOVIA/include/Private;
@@ -290,7 +286,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				2C58C8C521988D8900C56D01 /* PBXTargetDependency */,
 			);
 			name = OVIA;
 			productName = OVIA;
@@ -361,6 +356,7 @@
 				2C58C8BB21988D5C00C56D01 /* BMPEncoder.c in Sources */,
 				2C58C8BC21988D5C00C56D01 /* PNGEncoder.c in Sources */,
 				2C58C8BD21988D5C00C56D01 /* PNGDeflate.c in Sources */,
+				2C71A53E219DB34F00771539 /* Flate.c in Sources */,
 				2C58C8BE21988D5C00C56D01 /* PNMEncoder.c in Sources */,
 				2C58C8BF21988D6700C56D01 /* FLACEncoder.c in Sources */,
 				2C58C8C021988D6700C56D01 /* W64Encoder.c in Sources */,
@@ -370,14 +366,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		2C58C8C521988D8900C56D01 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = FoundationIO;
-			targetProxy = 2C58C8C421988D8900C56D01 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2C0B19B521901A68009659A3 /* Debug */ = {
@@ -460,6 +448,7 @@
 					"-funroll-loops",
 					"-fvectorize",
 					"-Wpadded",
+					"-Wno-pointer-sign",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				SDKROOT = macosx;
@@ -540,6 +529,7 @@
 					"-Wno-c99-compat",
 					"-fvectorize",
 					"-funroll-loops",
+					"-Wno-pointer-sign",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				SDKROOT = macosx;
