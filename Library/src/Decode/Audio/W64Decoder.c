@@ -53,7 +53,7 @@ extern "C" {
     
     void W64ParseMetadata(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            uint8_t *ChunkUUIDString = BitBuffer_ReadGUUID(GUIDString, BitB);
+            uint8_t *ChunkUUIDString = BitBuffer_ReadGUUID(BitB, GUIDString);
             uint64_t W64Size         = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 64);
             if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_RIFF_GUIDString) == Yes) {
                 
