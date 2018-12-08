@@ -274,12 +274,12 @@ extern "C" {
     
     void                PNGEncodeAdam7(OVIA *Ovia, BitBuffer *ProgressiveImage, BitBuffer *InterlacedImage);
     
-    void                OptimizeAdam7(OVIA *Ovia, uint8_t ****Image);
+    void                OptimizeAdam7(OVIA *Ovia, uint8_t *Image);
     
     /*!
      @abstract       "Optimizes the image, by trying the 5 filters on each line, and keeping the best."
      */
-    void                OptimizePNG(OVIA *Ovia, uint8_t ****Image);
+    void                OptimizePNG(OVIA *Ovia, uint8_t *Image);
     
     void                PNGEncodeImage(OVIA *Ovia, BitBuffer *BitB);
     

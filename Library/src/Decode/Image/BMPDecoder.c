@@ -109,23 +109,23 @@ extern "C" {
                 // Read from the bottom to the top.
                 if (OVIA_BMP_GetCompressionType(Ovia) == BMP_RGB) {
                     if (BitDepth <= 8) {
-                        uint8_t ****Array  = (uint8_t****) ImageContainer_GetArray(Image);
+                        uint8_t *Array  = (uint8_t*) ImageContainer_GetArray(Image);
                         for (uint64_t View = 0ULL; View < ImageContainer_GetNumViews(Image); View++) {
                             for (uint64_t W = 0ULL; W < Width; W++) {
                                 for (uint64_t H = 0ULL; H < Height; H++) {
                                     for (uint64_t Channel = 0ULL; Channel < NumChannels; Channel++) {
-                                        Array[View][W][H][Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, Yes));
+                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, Yes));
                                     }
                                 }
                             }
                         }
                     } else if (BitDepth > 8 && BitDepth <= 16) {
-                        uint16_t ****Array = (uint16_t****) ImageContainer_GetArray(Image);
+                        uint16_t *Array = (uint16_t*) ImageContainer_GetArray(Image);
                         for (uint64_t View = 0ULL; View < ImageContainer_GetNumViews(Image); View++) {
                             for (uint64_t W = 0ULL; W < Width; W++) {
                                 for (uint64_t H = 0ULL; H < Height; H++) {
                                     for (uint64_t Channel = 0ULL; Channel < NumChannels; Channel++) {
-                                        Array[View][W][H][Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, Yes));
+                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, Yes));
                                     }
                                 }
                             }
