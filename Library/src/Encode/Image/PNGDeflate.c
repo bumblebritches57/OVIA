@@ -1,3 +1,5 @@
+#include "../../../include/libOVIA.h"
+#include "../../../include/Private/InternalOVIA.h"
 #include "../../../include/Private/Image/Flate.h"
 
 #include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Macros.h"
@@ -8,32 +10,46 @@
 extern "C" {
 #endif
     
-    void OVIA_PNG_DAT_WriteFlateHeader(FlateHeader *Header, BitBuffer *BitB) {
-        if (Header != NULL && BitB != NULL) {
-            uint16_t HeaderWithoutFCHECK = Header->CINFO << 12;
-            HeaderWithoutFCHECK         |= Header->CM << 8;
-            HeaderWithoutFCHECK         |= Header->FLEVEL << 6;
-            HeaderWithoutFCHECK         |= Header->FDICT << 5;
-            Header->FCHECK               = 31 - (HeaderWithoutFCHECK % 31);
+    void OVIA_PNG_DAT_WriteZlibHeader(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            uint16_t HeaderWithoutFCHECK = OVIA_PNG_DAT_GetCompressionInfo(Ovia) << 12;
+            HeaderWithoutFCHECK         |= OVIA_PNG_DAT_GetCompressionMethod(Ovia) << 8;
+            HeaderWithoutFCHECK         |= OVIA_PNG_DAT_GetFLEVEL(Ovia) << 6;
+            HeaderWithoutFCHECK         |= OVIA_PNG_DAT_GetFDICT(Ovia) << 5;
+            OVIA_PNG_DAT_SetFCHECK(Ovia, 31 - (HeaderWithoutFCHECK % 31));
             
-            BitBuffer_WriteBits(MSByteFirst, MSBitFirst, BitB, 4, Header->CINFO);
-            BitBuffer_WriteBits(MSByteFirst, MSBitFirst, BitB, 4, Header->CM);
-            BitBuffer_WriteBits(MSByteFirst, MSBitFirst, BitB, 4, Header->FLEVEL);
-            BitBuffer_WriteBits(MSByteFirst, MSBitFirst, BitB, 4, Header->FDICT);
-            BitBuffer_WriteBits(MSByteFirst, MSBitFirst, BitB, 4, Header->FCHECK);
+            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 4, OVIA_PNG_DAT_GetCompressionMethod(Ovia));
+            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 4, OVIA_PNG_DAT_GetCompressionInfo(Ovia));
             
-            if (Header->FDICT == Yes) {
-                // Get the Dictionary ID somehow.
-                BitBuffer_WriteBits(MSByteFirst, MSBitFirst, BitB, 32, Header->DictID);
+            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 5, OVIA_PNG_DAT_GetFCHECK(Ovia));
+            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 1, OVIA_PNG_DAT_GetFDICT(Ovia));
+            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 2, OVIA_PNG_DAT_GetFLEVEL(Ovia));
+            
+            if (OVIA_PNG_DAT_GetFDICT(Ovia) == Yes) {
+                BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, OVIA_PNG_DAT_GetDictID(Ovia));
             }
-        } else if (Header == NULL) {
-            Log(Log_ERROR, __func__, U8("FlateHeader Pointer is NULL"));
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
     
-    // Next, write the 2 Huffman encoded trees.
+    void OVIA_PNG_Flate_WriteLiteralBlock(OVIA *Ovia, BitBuffer *BitB) {
+        if (Ovia != NULL && BitB != NULL) {
+            BitBuffer_Align(BitB, 1);
+            // How do we know how many bytes to copy?
+            uint16_t Bytes2Copy  = 0;
+            uint16_t Bytes2Copy2 = Bytes2Copy ^ 0xFFFF;
+            
+            BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 16, Bytes2Copy);
+            BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 16, Bytes2Copy2);
+        } else if (Ovia == NULL) {
+            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+        } else if (BitB == NULL) {
+            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        }
+    }
     
 #ifdef __cplusplus
 }

@@ -1,8 +1,6 @@
 #include "../../libOVIA.h"
 #include "../InternalOVIA.h"
 
-// PGM, PBM, PPM, along with PAM.
-
 #pragma once
 
 #ifndef OVIA_PNMCommon_H

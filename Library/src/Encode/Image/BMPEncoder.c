@@ -26,8 +26,8 @@ extern "C" {
             BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 16, OVIA_GetBitDepth(Ovia));
             BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 32, OVIA_BMP_GetCompressionType(Ovia));
             BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 32, ImageSize);
-            BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 32, OVIA_BMP_GetWidthPixelsPerMeter(Ovia));
-            BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 32, OVIA_BMP_GetWidthPixelsPerMeter(Ovia));
+            BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 32, OVIA_BMP_GetWidthInMeters(Ovia));
+            BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 32, OVIA_BMP_GetHeightInMeters(Ovia));
             BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 32, OVIA_BMP_GetColorsIndexed(Ovia));
             BitBuffer_WriteBits(LSByteFirst, LSBitFirst, BitB, 32, OVIA_BMP_GetIndexColorsUsed(Ovia));
         } else if (Ovia == NULL) {

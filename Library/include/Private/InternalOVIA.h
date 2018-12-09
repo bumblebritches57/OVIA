@@ -125,12 +125,17 @@ extern "C" {
     void                 OVIA_PNG_SRGB_SetRenderingIntent(OVIA *Ovia, uint8_t RenderingIntent);
     void                 OVIA_PNG_STER_SetSterType(OVIA *Ovia, uint8_t sTERType);
     void                 OVIA_PNG_DAT_SetFCHECK(OVIA *Ovia, uint8_t FCHECK);
-    void                 OVIA_PNG_DAT_SetArray(OVIA *Ovia, uint8_t ****Array);
+    void                 OVIA_PNG_DAT_SetArray(OVIA *Ovia, uint8_t *Array);
     void                 OVIA_PNG_DAT_SetArraySize(OVIA *Ovia, uint64_t ArraySize);
     void                 OVIA_PNG_DAT_SetArrayOffset(OVIA *Ovia, uint64_t ArrayOffset);
-    void                 OVIA_PNG_DAT_SetLengthLiteralHuffmanTree(OVIA *Ovia, HuffmanTree *LengthLiteralTree);
-    void                 OVIA_PNG_DAT_SetDistanceHuffmanTree(OVIA *Ovia, HuffmanTree *DistanceTree);
+    void                 OVIA_PNG_DAT_SetLengthLiteralHuffmanTable(OVIA *Ovia, HuffmanTable *LengthLiteralTree);
+    void                 OVIA_PNG_DAT_SetDistanceHuffmanTable(OVIA *Ovia, HuffmanTable *DistanceTree);
     /* PNG */
+    
+    /* PNM */
+    void                 OVIA_PNM_SetPNMType(OVIA *Ovia, PNMTypes PNMType);
+    void                 OVIA_PNM_SetTupleType(OVIA *Ovia, PNMTupleTypes TupleType);
+    /* PNM */
     /* Format Specific Setters */
     
     /* Format Specific Getters */
@@ -192,11 +197,11 @@ extern "C" {
     uint8_t              OVIA_PNG_SRGB_GetRenderingIntent(OVIA *Ovia);
     uint8_t              OVIA_PNG_STER_GetSterType(OVIA *Ovia);
     UTF8                *OVIA_PNG_ICCP_GetProfileName(OVIA *Ovia);
-    uint8_t          ****OVIA_PNG_DAT_GetArray(OVIA *Ovia);
+    uint8_t             *OVIA_PNG_DAT_GetArray(OVIA *Ovia);
     uint64_t             OVIA_PNG_DAT_GetArraySize(OVIA *Ovia);
     uint64_t             OVIA_PNG_DAT_GetArrayOffset(OVIA *Ovia);
-    HuffmanTree         *OVIA_PNG_DAT_GetLengthLiteralHuffmanTree(OVIA *Ovia);
-    HuffmanTree         *OVIA_PNG_DAT_GetDistanceHuffmanTree(OVIA *Ovia);
+    HuffmanTable         *OVIA_PNG_DAT_GetLengthLiteralHuffmanTable(OVIA *Ovia);
+    HuffmanTable         *OVIA_PNG_DAT_GetDistanceHuffmanTable(OVIA *Ovia);
     /* PNG */
     
     /* BMP */

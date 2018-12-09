@@ -224,7 +224,7 @@ extern "C" {
     
     typedef struct HuffmanNode HuffmanNode;
     
-    typedef struct HuffmanTree HuffmanTree;
+    typedef struct HuffmanTable HuffmanTable;
     
     uint8_t             PaethPredictor(int64_t Left, int64_t Above, int64_t UpperLeft);
     
