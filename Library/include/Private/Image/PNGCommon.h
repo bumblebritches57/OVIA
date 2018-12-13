@@ -10,164 +10,6 @@
 extern "C" {
 #endif
     
-#define PNGMagic 0x89504E470D0A1A0A
-    
-    enum libModernPNGChunkMarkers {
-        acTLMarker         = 0x6163544C,
-        bKGDMarker         = 0x626B4744,
-        cHRMMarker         = 0x6348524D,
-        fcTLMarker         = 0x6663544C,
-        fDATMarker         = 0x66444154,
-        gAMAMarker         = 0x67414D41,
-        hISTMarker         = 0x68495354,
-        iCCPMarker         = 0x69434350,
-        IDATMarker         = 0x49444154,
-        iHDRMarker         = 0x49484452,
-        iTXtMarker         = 0x69545874,
-        oFFsMarker         = 0x6F464673,
-        pCALMarker         = 0x7043414C,
-        pHYsMarker         = 0x70485973,
-        PLTEMarker         = 0x504C5445,
-        sBITMarker         = 0x73424954,
-        sCALMarker         = 0x7343414c,
-        sRGBMarker         = 0x73524742,
-        sTERMarker         = 0x73544552,
-        tEXtMarker         = 0x74455874,
-        zTXtMarker         = 0x7A545874,
-        tIMEMarker         = 0x74494d45,
-        tRNSMarker         = 0x74524e53,
-        sPLTMarker         = 0x73504c54,
-    };
-    
-    typedef enum PNGColorTypes {
-        PNG_Grayscale      = 0,
-        PNG_RGB            = 2,
-        PNG_PalettedRGB    = 3,
-        PNG_GrayAlpha      = 4,
-        PNG_RGBA           = 6,
-    } PNGColorTypes;
-    
-    typedef enum OVIA_PNG_Filter_Types {
-        NotFiltered   = 0,
-        SubFilter     = 1,
-        UpFilter      = 2,
-        AverageFilter = 3,
-        PaethFilter   = 4,
-    } OVIA_PNG_Filter_Types;
-    
-    enum OVIA_PNG_Interlace_Types {
-        PNGNotInterlaced   = 0,
-        PNGInterlacedAdam7 = 1,
-    };
-    
-    static const UTF8 ModernPNGNumber2Month[12][4] = {
-        U8("Jan"), U8("Feb"), U8("Mar"), U8("Apr"), U8("May"), U8("Jun"),
-        U8("Jul"), U8("Aug"), U8("Sep"), U8("Oct"), U8("Nov"), U8("Ovia"),
-    };
-    
-    static const uint8_t ModernPNGChannelsPerColorType[7] = {
-        1, 0, 3, 3, 4, 0, 4
-    };
-    
-    uint32_t    CalculateSTERPadding(const uint32_t Width);
-    
-    struct PNGOVIAr {
-        uint16_t    ***OVIAdImage;
-        struct acTL   *acTL;
-        struct bkGD   *bkGD;
-        struct cHRM   *cHRM;
-        struct fcTL   *fcTL;
-        struct fdAT   *fdAT;
-        struct gAMA   *gAMA;
-        struct hIST   *hIST;
-        struct iCCP   *iCCP;
-        struct iHDR   *iHDR;
-        struct oFFs   *oFFs;
-        struct pCAL   *pCAL;
-        struct pHYs   *pHYs;
-        struct PLTE   *PLTE;
-        struct sBIT   *sBIT;
-        struct sCAL   *sCAL;
-        struct sRGB   *sRGB;
-        struct sTER   *sTER;
-        struct Text   *Text;
-        struct tIMe   *tIMe;
-        struct tRNS   *tRNS;
-        uint32_t       NumTextChunks;
-        uint32_t       CurrentFrame;
-        uint32_t       LineWidth;
-        uint32_t       LinePadding;
-        bool           PNGIsAnimated:1;
-        bool           PNGIs3D:1;
-        bool           acTLExists:1;
-        bool           bkGDExists:1;
-        bool           cHRMExists:1;
-        bool           fcTLExists:1;
-        bool           gAMAExists:1;
-        bool           hISTExists:1;
-        bool           iCCPExists:1;
-        bool           oFFsExists:1;
-        bool           pCALExists:1;
-        bool           pHYsExists:1;
-        bool           PLTEExists:1;
-        bool           sBITExists:1;
-        bool           sCALExists:1;
-        bool           sPLTExists:1;
-        bool           sRGBExists:1;
-        bool           sTERExists:1;
-        bool           TextExists:1;
-        bool           tIMEExists:1;
-        bool           tRNSExists:1;
-    };
-    
-    struct PNGEncoder {
-        struct acTL   *acTL;
-        struct bkGD   *bkGD;
-        struct cHRM   *cHRM;
-        struct fcTL   *fcTL;
-        struct fdAT   *fdAT;
-        struct gAMA   *gAMA;
-        struct hIST   *hIST;
-        struct iCCP   *iCCP;
-        struct iHDR   *iHDR;
-        struct oFFs   *oFFs;
-        struct pCAL   *pCAL;
-        struct pHYs   *pHYs;
-        struct PLTE   *PLTE;
-        struct sBIT   *sBIT;
-        struct sCAL   *sCAL;
-        struct sRGB   *sRGB;
-        struct sTER   *sTER;
-        struct Text   *Text;
-        struct tIMe   *tIMe;
-        struct tRNS   *tRNS;
-        uint32_t       NumTextChunks;
-        uint32_t       CurrentFrame;
-        uint32_t       LineWidth;
-        uint32_t       LinePadding;
-        bool           PNGIsAnimated:1;
-        bool           PNGIs3D:1;
-        bool           acTLExists:1;
-        bool           bkGDExists:1;
-        bool           cHRMExists:1;
-        bool           fcTLExists:1;
-        bool           gAMAExists:1;
-        bool           hISTExists:1;
-        bool           iCCPExists:1;
-        bool           oFFsExists:1;
-        bool           pCALExists:1;
-        bool           pHYsExists:1;
-        bool           PLTEExists:1;
-        bool           sBITExists:1;
-        bool           sCALExists:1;
-        bool           sPLTExists:1;
-        bool           sRGBExists:1;
-        bool           sTERExists:1;
-        bool           TextExists:1;
-        bool           tIMEExists:1;
-        bool           tRNSExists:1;
-    };
-    
     /*!
      @abstract                  "Encodes a PNG from RawImage2Encode to a BitBuffer"
      @param     Image           "ImageContainer with the image to encode".
@@ -175,7 +17,7 @@ extern "C" {
      @param     InterlacePNG    "Should this PNG file be interlaced using the Adam7 algorithm for progressive download?"
      @param     OptimizePNG     "Should this PNG file be optimized by trying all filters? (Huffman optimization is enabled by default)"
      */
-    void        EncodePNGImage(ImageContainer *Image, BitBuffer *BitB, bool InterlacePNG, bool OptimizePNG);
+    void        OVIA_PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB, bool InterlacePNG, bool OptimizePNG);
     
     void        OVIA_PNG_SetTextChunk(OVIA *Ovia, UTF8 *KeywordString, UTF8 *CommentString);
     
@@ -218,11 +60,7 @@ extern "C" {
      */
     ImageContainer *PNGExtractImage(OVIA *Ovia, BitBuffer *BitB);
     
-    void PNGInsertImage(ImageContainer *Image, BitBuffer *BitB);
-    
-    typedef struct LZ77Tuple LZ77Tuple;
-    
-    typedef struct HuffmanNode HuffmanNode;
+    void OVIA_PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB);
     
     typedef struct HuffmanTable HuffmanTable;
     

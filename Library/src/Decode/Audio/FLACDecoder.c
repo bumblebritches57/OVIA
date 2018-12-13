@@ -189,43 +189,43 @@ extern "C" {
             uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
             AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
             Audio_Types     Type        = AudioContainer_GetType(Audio);
-            if (Type == (AudioType_Unsigned | AudioType_Integer8)) {
-                uint8_t **Array         = AudioContainer_GetArray(Audio);
+            if (Type == AudioType_Integer8) {
+                uint8_t **Array         = (uint8_t**) AudioContainer_GetArray(Audio);
                 for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
                     for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
                         Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
                     }
                 }
             } else if (Type == (AudioType_Signed | AudioType_Integer8)) {
-                int8_t  **Array         = AudioContainer_GetArray(Audio);
+                int8_t  **Array         = (int8_t**) AudioContainer_GetArray(Audio);
                 for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
                     for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
                         Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
                     }
                 }
             } else if (Type == (AudioType_Unsigned | AudioType_Integer16)) {
-                uint16_t **Array        = AudioContainer_GetArray(Audio);
+                uint16_t **Array        = (uint16_t**) AudioContainer_GetArray(Audio);
                 for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
                     for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
                         Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
                     }
                 }
             } else if (Type == (AudioType_Signed | AudioType_Integer16)) {
-                int16_t  **Array        = AudioContainer_GetArray(Audio);
+                int16_t  **Array        = (int16_t**) AudioContainer_GetArray(Audio);
                 for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
                     for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
                         Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
                     }
                 }
             } else if (Type == (AudioType_Unsigned | AudioType_Integer32)) {
-                uint32_t **Array        = AudioContainer_GetArray(Audio);
+                uint32_t **Array        = (uint32_t**) AudioContainer_GetArray(Audio);
                 for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
                     for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
                         Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
                     }
                 }
             } else if (Type == (AudioType_Signed | AudioType_Integer32)) {
-                int32_t  **Array        = AudioContainer_GetArray(Audio);
+                int32_t  **Array        = (int32_t**) AudioContainer_GetArray(Audio);
                 for (uint8_t Channel = 0; Channel < NumChannels; Channel++) {
                     for (uint16_t Sample = 0; Sample < NumSamples; Sample++) {
                         Array[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, BitDepth);
