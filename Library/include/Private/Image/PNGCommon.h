@@ -60,7 +60,7 @@ extern "C" {
      */
     ImageContainer *PNGExtractImage(OVIA *Ovia, BitBuffer *BitB);
     
-    void OVIA_PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB);
+    void        OVIA_PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB, bool InterlacePNG, bool OptimizePNG);
     
     typedef struct HuffmanTable HuffmanTable;
     
