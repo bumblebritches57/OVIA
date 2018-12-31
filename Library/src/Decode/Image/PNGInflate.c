@@ -24,9 +24,6 @@ extern "C" {
                 OVIA_PNG_DAT_SetDictID(Ovia, DictID);
             }
             
-            OVIA_PNG_DAT_SetCMF(Ovia, CMF);
-            OVIA_PNG_DAT_SetFLG(Ovia, FLAG);
-            
             uint8_t CompressionInfo   = OVIA_PNG_DAT_GetCompressionInfo(Ovia);
             uint8_t CompressionMethod = OVIA_PNG_DAT_GetCompressionMethod(Ovia);
             
@@ -112,10 +109,9 @@ extern "C" {
         if (BitB != NULL) {
             Table                           = calloc(MaxCodes, sizeof(uint16_t));
             if (Table != NULL) {
-                uint16_t NumLengthSymbols   = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 257; // 29 + 257 = 286
-                uint8_t  NumDistanceSymbols = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 1;   // 0 + 1 = 1
-                uint8_t  NumMetaCodeLengths = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 4) + 4;   // 6 | 1 << 3 = 14 + 4 = 18
-                                                                                                          // Placeholder: 0x01 1 bits read
+                uint16_t NumLengthSymbols   = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 257;
+                uint8_t  NumDistanceSymbols = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 1;
+                uint8_t  NumMetaCodeLengths = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 4) + 4;
                 
                 uint16_t MetaTable[NumMetaCodes];
                 for (uint8_t MetaCode = 0; MetaCode < NumMetaCodeLengths; MetaCode++) {
@@ -168,8 +164,8 @@ extern "C" {
             bool     IsFinalBlock                  = No;
             
             do {
-                IsFinalBlock                       = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 1);
-                uint8_t BlockType                  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2);
+                IsFinalBlock                       = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 1); // 0
+                uint8_t BlockType                  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2); // 0b10 = 2
                 if (BlockType == Flate_LiteralBlock) {
                     OVIA_PNG_Flate_ReadLiteralBlock(Ovia, BitB);
                 } else if (BlockType == Flate_FixedBlock) {
