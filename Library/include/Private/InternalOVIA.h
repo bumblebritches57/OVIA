@@ -23,17 +23,6 @@ extern "C" {
         ImageType             = 2,
     } OVIA_Types;
     
-    typedef enum OVIA_FileFormats {
-        UnknownFormat         = 0,
-        AIFFormat             = 1,
-        WAVFormat             = 2,
-        W64Format             = 3,
-        FLACFormat            = 4,
-        BMPFormat             = 5,
-        PNMFormat             = 6,
-        PNGFormat             = 7,
-    } OVIA_FileFormats;
-    
     typedef enum PNMTypes {
         UnknownPNM            = 0,
         BlackAndWhitePNM      = 1,
