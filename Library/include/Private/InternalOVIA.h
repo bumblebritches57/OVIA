@@ -6,6 +6,8 @@
 
 #include "../../include/Private/Image/Flate.h"
 
+#include <stdlib.h>
+
 #pragma once
 
 #ifndef OVIA_InternalOVIA_H
@@ -39,6 +41,43 @@ extern "C" {
         PNM_TUPLE_RGB         = 4,
         PNM_TUPLE_RGBAlpha    = 5,
     } PNMTupleTypes;
+    
+    typedef enum OVIA_PNG_ColorTypes {
+        PNG_Grayscale      = 0,
+        PNG_RGB            = 2,
+        PNG_PalettedRGB    = 3,
+        PNG_GrayAlpha      = 4,
+        PNG_RGBA           = 6,
+    } OVIA_PNG_ColorTypes;
+    
+    typedef enum OVIA_PNG_ChunkMarkers {
+        acTLMarker         = 0x6163544C,
+        bKGDMarker         = 0x626B4744,
+        cHRMMarker         = 0x6348524D,
+        fcTLMarker         = 0x6663544C,
+        fDATMarker         = 0x66444154,
+        gAMAMarker         = 0x67414D41,
+        hISTMarker         = 0x68495354,
+        iCCPMarker         = 0x69434350,
+        IDATMarker         = 0x49444154,
+        iHDRMarker         = 0x49484452,
+        iTXtMarker         = 0x69545874,
+        oFFsMarker         = 0x6F464673,
+        pCALMarker         = 0x7043414C,
+        pHYsMarker         = 0x70485973,
+        PLTEMarker         = 0x504C5445,
+        sBITMarker         = 0x73424954,
+        sCALMarker         = 0x7343414c,
+        sRGBMarker         = 0x73524742,
+        sTERMarker         = 0x73544552,
+        tEXtMarker         = 0x74455874,
+        zTXtMarker         = 0x7A545874,
+        tIMEMarker         = 0x74494d45,
+        tRNSMarker         = 0x74524e53,
+        sPLTMarker         = 0x73504c54,
+    } OVIA_PNG_ChunkMarkers;
+    
+    #define PNGMagic 0x89504E470D0A1A0A
     
     /* Format Specific Setters */
     /* FLAC */
@@ -163,12 +202,14 @@ extern "C" {
     uint16_t             OVIA_WAV_GetBlockAlignment(OVIA *Ovia);
     void                 OVIA_WAV_SetBlockAlignment(OVIA *Ovia, uint16_t BlockAlignment);
     void                 OVIA_WAV_SetCompressionType(OVIA *Ovia, uint16_t CompressionType);
+    void                 OVIA_WAV_SetSpeakerMask(OVIA *Ovia, uint32_t SpeakerMask);
     /* WAV */
     
     /* W64 */
     uint16_t             OVIA_W64_GetBlockAlignment(OVIA *Ovia);
     void                 OVIA_W64_SetBlockAlignment(OVIA *Ovia, uint16_t BlockAlignment);
     void                 OVIA_W64_SetCompressionType(OVIA *Ovia, uint16_t CompressionType);
+    void                 OVIA_W64_SetSpeakerMask(OVIA *Ovia, uint64_t SpeakerMask);
     /* W64 */
     
     /* PNM */
@@ -202,8 +243,8 @@ extern "C" {
     /* PNG */
     bool                 OVIA_PNG_OFFS_GetSpecifier(OVIA *Ovia);
     bool                 OVIA_PNG_PHYS_GetUnitSpecifier(OVIA *Ovia);
-    HuffmanTable         *OVIA_PNG_DAT_GetDistanceHuffmanTable(OVIA *Ovia);
-    HuffmanTable         *OVIA_PNG_DAT_GetLengthLiteralHuffmanTable(OVIA *Ovia);
+    HuffmanTable        *OVIA_PNG_DAT_GetDistanceHuffmanTable(OVIA *Ovia);
+    HuffmanTable        *OVIA_PNG_DAT_GetLengthLiteralHuffmanTable(OVIA *Ovia);
     int32_t              OVIA_PNG_OFFS_GetXOffset(OVIA *Ovia);
     int32_t              OVIA_PNG_OFFS_GetYOffset(OVIA *Ovia);
     int32_t              OVIA_PNG_PHYS_GetPixelsPerUnitX(OVIA *Ovia);
@@ -289,7 +330,7 @@ extern "C" {
     PNMTupleTypes        OVIA_PNM_GetTupleType(OVIA *Ovia);
     PNMTypes             OVIA_PNM_GetPNMType(OVIA *Ovia);
     
-    void OVIA_SetAudioContainerPointer(OVIA *Ovia, AudioContainer *Audio);
+    void                 OVIA_SetAudioContainerPointer(OVIA *Ovia, AudioContainer *Audio);
     /* Format Specific Getters */
     
 #ifdef __cplusplus

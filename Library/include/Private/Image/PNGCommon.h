@@ -153,6 +153,19 @@ extern "C" {
         57, 58, 59, 60, 61, 62, 63, 64
     };
     
+    typedef enum OVIA_PNG_Interlace_Types {
+        PNGNotInterlaced   = 0,
+        PNGInterlacedAdam7 = 1,
+    } OVIA_PNG_Interlace_Types;
+    
+    typedef enum OVIA_PNG_Filter_Types {
+        NotFiltered   = 0,
+        SubFilter     = 1,
+        UpFilter      = 2,
+        AverageFilter = 3,
+        PaethFilter   = 4,
+    } OVIA_PNG_Filter_Types;
+    
 #ifdef __cplusplus
 }
 #endif
