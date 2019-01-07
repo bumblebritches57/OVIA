@@ -1,4 +1,3 @@
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Macros.h"
 #include "../../../include/Private/Image/BMPCommon.h"
 
 #ifdef __cplusplus
@@ -7,7 +6,7 @@ extern "C" {
     
     void BMPWriteHeader(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            uint32_t ImageSize     = Bits2Bytes(OVIA_GetWidth(Ovia) * OVIA_GetHeight(Ovia) * OVIA_GetBitDepth(Ovia), No);
+            uint32_t ImageSize     = Bits2Bytes(OVIA_GetWidth(Ovia) * OVIA_GetHeight(Ovia) * OVIA_GetBitDepth(Ovia), false);
             uint32_t DIBHeaderSize = 40;
             uint64_t FileSize      = DIBHeaderSize + 2 + ImageSize;
             uint16_t NumPlanes     = 1; // Constant
@@ -42,7 +41,7 @@ extern "C" {
             uint64_t Width       = ImageContainer_GetWidth(Image);
             uint64_t Height      = ImageContainer_GetHeight(Image);
             uint64_t NumChannels = ImageContainer_GetNumChannels(Image);
-            uint64_t BitDepth    = Bits2Bytes(ImageContainer_GetBitDepth(Image), Yes);
+            uint64_t BitDepth    = Bits2Bytes(ImageContainer_GetBitDepth(Image), true);
             Image_Types Type     = ImageContainer_GetType(Image);
             
             if (Type == ImageType_Integer8) {

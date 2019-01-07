@@ -2,7 +2,6 @@
 #include "../../../include/Private/InternalOVIA.h"
 #include "../../../include/Private/Image/Flate.h"
 
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Macros.h"
 #include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
 #include "../../../../Dependencies/FoundationIO/libFoundationIO/include/StringIO.h"
 
@@ -161,7 +160,7 @@ extern "C" {
         if (BitB != NULL && Image != NULL) {
             uint8_t *ImageArrayBytes               = (uint8_t*) ImageContainer_GetArray(Image);
             OVIA_PNG_DAT_SetArray(Ovia, ImageArrayBytes);
-            bool     IsFinalBlock                  = No;
+            bool     IsFinalBlock                  = false;
             
             do {
                 IsFinalBlock                       = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 1); // 0
@@ -175,7 +174,7 @@ extern "C" {
                 } else if (BlockType == Flate_InvalidBlock) {
                     Log(Log_ERROR, __func__, U8("Invalid Block"));
                 }
-            } while (IsFinalBlock == No);
+            } while (IsFinalBlock == false);
         } else if (BitB == NULL) {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         } else if (Image == NULL) {

@@ -2,7 +2,6 @@
 #include "../../../include/Private/InternalOVIA.h"
 #include "../../../include/Private/Image/Flate.h"
 
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Macros.h"
 #include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
 #include "../../../../Dependencies/FoundationIO/libFoundationIO/include/StringIO.h"
 
@@ -25,7 +24,7 @@ extern "C" {
             BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 1, OVIA_PNG_DAT_GetFDICT(Ovia));
             BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 2, OVIA_PNG_DAT_GetFLEVEL(Ovia));
             
-            if (OVIA_PNG_DAT_GetFDICT(Ovia) == Yes) {
+            if (OVIA_PNG_DAT_GetFDICT(Ovia) == true) {
                 BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, OVIA_PNG_DAT_GetDictID(Ovia));
             }
         } else if (Ovia == NULL) {

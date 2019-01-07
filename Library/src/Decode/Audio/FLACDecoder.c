@@ -1,4 +1,3 @@
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Macros.h"
 #include "../../../include/Private/Audio/FLACCommon.h"
 
 #ifdef __cplusplus
@@ -156,7 +155,7 @@ extern "C" {
             OVIA_FLAC_SubFrame_SetType(Ovia, SubFrameType);
             
             bool WastedBitsFlag = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, 1);
-            if (WastedBitsFlag == Yes) {
+            if (WastedBitsFlag == true) {
                 uint8_t WastedBits = BitBuffer_ReadUnary(MSByteFirst, MSBitFirst, BitB, TruncatedCountUnary, 0);
                 OVIA_FLAC_SubFrame_SetWastedBits(Ovia, WastedBitsFlag, WastedBits);
             }
@@ -185,7 +184,7 @@ extern "C" {
             // First Raw  Sample R channel = 0x7139
             // First FLAC Sample L channel = 0x5ED7, aka 87 more?
             uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
-            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), Yes);
+            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), true);
             uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
             AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
             Audio_Types     Type        = AudioContainer_GetType(Audio);
@@ -242,7 +241,7 @@ extern "C" {
     void OVIA_FLAC_SubFrame_Constant(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
-            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), Yes);
+            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), true);
             uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
             AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
             Audio_Types     Type        = AudioContainer_GetType(Audio);
@@ -301,7 +300,7 @@ extern "C" {
     void OVIA_FLAC_SubFrame_Fixed(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
-            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), Yes);
+            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), true);
             uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
             AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
             Audio_Types     Type        = AudioContainer_GetType(Audio);
@@ -360,7 +359,7 @@ extern "C" {
     void OVIA_FLAC_SubFrame_LPC(OVIA *Ovia, BitBuffer *BitB, uint8_t Channel) { // 4 0's
         if (Ovia != NULL && BitB != NULL) {
             uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
-            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), Yes);
+            uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), true);
             uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
             AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
             Audio_Types     Type        = AudioContainer_GetType(Audio);
@@ -541,12 +540,12 @@ extern "C" {
     }
     
     bool OVIA_FLAC_Parse_Blocks(OVIA *Ovia, BitBuffer *BitB) {
-        bool IsLastBlock                     = No;
+        bool IsLastBlock                     = false;
         if (Ovia != NULL && BitB != NULL) {
             IsLastBlock                      = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 1);  // 1
             uint8_t *PictureArray            = NULL;
             // Actual audio data starts at: 1056166
-            if (IsLastBlock == No) {
+            if (IsLastBlock == false) {
                 uint8_t  BlockType           = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 7);  // 1
                 uint32_t BlockSize           = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 24); // 562
                 switch (BlockType) {

@@ -1,4 +1,3 @@
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Macros.h"
 #include "../../../include/Private/Image/BMPCommon.h"
 
 #ifdef __cplusplus
@@ -100,9 +99,9 @@ extern "C" {
             int64_t  Height         = OVIA_GetHeight(Ovia);
             uint32_t BMPCompresType = OVIA_BMP_GetCompressionType(Ovia);
             if (BitDepth <= 8) {
-                Image = ImageContainer_Init(ImageType_Integer8, BitDepth, 1, NumChannels, Width, Height);
+                Image = ImageContainer_Init(ImageType_Integer8, ImageMask_Red | ImageMask_Green | ImageMask_Blue, Width, Height);
             } else if (BitDepth > 8 && BitDepth <= 16) {
-                Image = ImageContainer_Init(ImageType_Integer16, BitDepth, 1, NumChannels, Width, Height);
+                Image = ImageContainer_Init(ImageType_Integer16, ImageMask_Red | ImageMask_Green | ImageMask_Blue, Width, Height);
             }
             
             if (OVIA_GetHeight(Ovia) < 0) {
@@ -114,7 +113,7 @@ extern "C" {
                             for (uint64_t W = 0ULL; W < Width; W++) {
                                 for (uint64_t H = 0ULL; H < Height; H++) {
                                     for (uint64_t Channel = 0ULL; Channel < NumChannels; Channel++) {
-                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, Yes));
+                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
                                     }
                                 }
                             }
@@ -125,7 +124,7 @@ extern "C" {
                             for (uint64_t W = 0ULL; W < Width; W++) {
                                 for (uint64_t H = 0ULL; H < Height; H++) {
                                     for (uint64_t Channel = 0ULL; Channel < NumChannels; Channel++) {
-                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, Yes));
+                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
                                     }
                                 }
                             }
@@ -143,7 +142,7 @@ extern "C" {
                     Log(Log_ERROR, __func__, U8("CMYK Images are unsupported"));
                 }
                 if (Height < 0) { // The Image is upside down, so we need to flip it
-                    ImageContainer_Flip(Image, Yes, No);
+                    ImageContainer_Flip(Image, true, false);
                 }
             }
             if (OVIA_BMP_GetColorsIndexed(Ovia) > 0) {
