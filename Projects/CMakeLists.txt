@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
-project(libOVIA)
+project(OVIA)
 
 if   (${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
     set(libMATH -lm)
@@ -17,8 +17,8 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
 
 set(OVIA_Dir "${CMAKE_CURRENT_SOURCE_DIR}/../libOVIA")
 
-set(OVIA_Headers
-	"${OVIA_Dir}/include/libOVIA.h"
+set(OVIA_PublicHeaders
+    "${OVIA_Dir}/include/libOVIA.h"
 )
 
 set(OVIA_Sources
@@ -39,7 +39,9 @@ set(OVIA_Sources
     "${OVIA_Dir}/src/Encode/Image/PNMEncoder.c"
 )
 
-add_library(${project} [static|shared] ${OVIA_Sources} ${OVIA_Headers})
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../Dependencies/FoundationIO/Projects" "${CMAKE_CURRENT_SOURCE_DIR}/../Dependencies/FoundationIO/BUILD" EXCLUDE_FROM_ALL)
+
+add_library(OVIA ${OVIA_Sources} ${OVIA_PublicHeaders})
 
 if (CMAKE_C_COMPILER_ID MATCHES "AppleClang" OR CMAKE_C_COMPILER_ID MATCHES "Clang" OR CMAKE_C_COMPILER_ID MATCHES "GNU")
     set(LINK_FLAGS " \
