@@ -57,6 +57,7 @@ extern "C" {
             OVIA_SetBlockSize(Ovia,           BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
             OVIA_W64_SetBlockAlignment(Ovia,  BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
             OVIA_SetBitDepth(Ovia,            BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
+            // Read the SpeakerMask
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {

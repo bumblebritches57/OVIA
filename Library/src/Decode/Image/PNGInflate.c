@@ -11,34 +11,34 @@ extern "C" {
     
     void OVIA_PNG_Flate_ReadZlibHeader(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            uint8_t CMF    = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
-            uint8_t FLAG   = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
+            uint8_t CMF    = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 8); // 0x78
+            uint8_t FLAG   = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 8); // 0x01
             
             OVIA_PNG_DAT_SetCMF(Ovia, CMF);
             OVIA_PNG_DAT_SetFLG(Ovia, FLAG);
             
-            bool FDICTPresent = OVIA_PNG_DAT_GetFDICT(Ovia);
-            if (FDICTPresent) {
+            bool FDICTPresent = OVIA_PNG_DAT_GetFDICT(Ovia); // No
+            if (FDICTPresent == Yes) {
                 uint32_t DictID = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
                 OVIA_PNG_DAT_SetDictID(Ovia, DictID);
             }
             
-            uint8_t CompressionInfo   = OVIA_PNG_DAT_GetCompressionInfo(Ovia);
-            uint8_t CompressionMethod = OVIA_PNG_DAT_GetCompressionMethod(Ovia);
+            uint8_t CompressionInfo   = OVIA_PNG_DAT_GetCompressionInfo(Ovia); // 7
+            uint8_t CompressionMethod = OVIA_PNG_DAT_GetCompressionMethod(Ovia); // 8
             
-            if (CompressionInfo != 7) {
+            if (CompressionInfo == 7 && CompressionMethod == 8) {
+                uint16_t Check = CompressionInfo << 12;
+                Check         |= CompressionMethod << 8;
+                Check         |= OVIA_PNG_DAT_GetFLEVEL(Ovia) << 6;
+                Check         |= FDICTPresent << 5;
+                Check         |= OVIA_PNG_DAT_GetFCHECK(Ovia);
+                if (Check % 31 != 0) {
+                    Log(Log_ERROR, __func__, U8("Invalid Flate Header %d"), Check);
+                }
+            } else if (CompressionInfo != 7) {
                 Log(Log_ERROR, __func__, U8("Compresion Info %d is invalid"), CompressionInfo);
             } else if (CompressionMethod != 8) {
                 Log(Log_ERROR, __func__, U8("Compression Method %d is invalid"), CompressionMethod);
-            }
-            
-            uint16_t Check = CompressionInfo << 12;
-            Check         |= CompressionMethod << 8;
-            Check         |= OVIA_PNG_DAT_GetFLEVEL(Ovia) << 6;
-            Check         |= FDICTPresent << 5;
-            Check         |= OVIA_PNG_DAT_GetFCHECK(Ovia);
-            if (Check % 31 != 0) {
-                Log(Log_ERROR, __func__, U8("Invalid Flate Header %d"), Check);
             }
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
@@ -49,14 +49,18 @@ extern "C" {
     
     void OVIA_PNG_Flate_ReadLiteralBlock(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            uint8_t *Array     = (uint8_t*) OVIA_PNG_DAT_GetArray(Ovia);
+            uint8_t *Array         = (uint8_t*) OVIA_PNG_DAT_GetArray(Ovia);
             
-            BitBuffer_Align(BitB, 1);
-            uint16_t Bytes2Copy    = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
-            uint16_t Bytes2CopyXOR = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16) ^ 0xFFFF;
+            BitBuffer_Align(BitB, 1); // Skip the remaining 5 bits
+            uint16_t Bytes2Copy    = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16); // 0x4F42 = 20,290
+            uint16_t Bytes2CopyXOR = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16) ^ 0xFFFF; // 0xB0BD = 0x4F42
             
-            for (uint16_t Byte = 0ULL; Byte < Bytes2Copy; Byte++) {
-                Array[Byte] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 8);
+            if (Bytes2Copy == Bytes2CopyXOR) {
+                for (uint16_t Byte = 0ULL; Byte < Bytes2Copy; Byte++) {
+                    Array[Byte]    = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 8);
+                }
+            } else {
+                Log(Log_ERROR, __func__, U8("Data Error: Bytes2Copy does not match Bytes2CopyXOR in literal block"));
             }
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
@@ -65,7 +69,8 @@ extern "C" {
         }
     }
     
-    void OVIA_PNG_Flate_ReadFixedBlock(OVIA *Ovia, BitBuffer *BitB) {
+    HuffmanTree *OVIA_PNG_Flate_BuildFixedTree(OVIA *Ovia, BitBuffer *BitB) {
+        HuffmanTree *Tree = NULL;
         if (Ovia != NULL && BitB != NULL) {
             // Build 2 trees, one for lengths, one for distances.
             HuffmanTable *LengthTree    = OVIA_PNG_Huffman_BuildTree(288, FixedLiteralTable);
@@ -101,9 +106,11 @@ extern "C" {
         } else if (BitB == NULL) {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         }
+        return Tree;
     }
     
-    void OVIA_PNG_Flate_ReadTreeDynamic(OVIA *Ovia, BitBuffer *BitB) {
+    HuffmanTree *OVIA_PNG_Flate_BuildDynamicTree(OVIA *Ovia, BitBuffer *BitB) {
+        HuffmanTree *Tree = NULL;
         uint16_t *Table                     = NULL;
         if (BitB != NULL) {
             Table                           = calloc(MaxCodes, sizeof(uint16_t));
@@ -116,21 +123,21 @@ extern "C" {
                 for (uint8_t MetaCode = 0; MetaCode < NumMetaCodeLengths; MetaCode++) {
                     MetaTable[MetaCodeLengthOrder[MetaCode]] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 3);
                 }
-                HuffmanTable *MetaTree = OVIA_PNG_Huffman_BuildTree(19, MetaTable);
-                uint16_t RealLengths[316] = {0};
+                HuffmanTable *MetaTree         = OVIA_PNG_Huffman_BuildTree(19, MetaTable);
+                uint16_t RealLengths[318]      = {0};
                 for (uint64_t Index = 0ULL; Index < NumLengthSymbols + NumDistanceSymbols; Index++) {
-                    uint64_t Value        = ReadHuffman(RealLengths, BitB);
+                    uint64_t Value             = ReadHuffman(MetaTree, BitB);
                     if (Value >= 0 && Value <= 15) {
                         RealLengths[Index + 1] = Value;
                     } else {
-                        uint16_t Times2Repeat = 0;
+                        uint16_t Times2Repeat  = 0;
                         if (Value == 16) {
-                            Times2Repeat   = RealLengths[Index - 1];
-                            Value          = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2) + 3;
+                            Times2Repeat       = RealLengths[Index - 1];
+                            Value              = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2) + 3;
                         } else if (Value == 17) {
-                            Value          = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 3) + 3;
+                            Value              = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 3) + 3;
                         } else {
-                            Value          = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 7) + 11;
+                            Value              = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 7) + 11;
                         }
                         for (uint16_t Index2 = Value; Index2 > 0; Index2--) {
                             RealLengths[Index2 + 1] = Times2Repeat;
@@ -154,6 +161,7 @@ extern "C" {
         } else {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         }
+        return Tree;
     }
     
     void OVIA_PNG_DAT_Decode(OVIA *Ovia, BitBuffer *BitB, ImageContainer *Image) {
@@ -164,13 +172,15 @@ extern "C" {
             
             do {
                 IsFinalBlock                       = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 1); // 0
-                uint8_t BlockType                  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2); // 0b10 = 2
+                uint8_t BlockType                  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2); // 0b00 = 0
                 if (BlockType == Flate_LiteralBlock) {
                     OVIA_PNG_Flate_ReadLiteralBlock(Ovia, BitB);
                 } else if (BlockType == Flate_FixedBlock) {
-                    OVIA_PNG_Flate_ReadFixedBlock(Ovia, BitB);
+                    OVIA_PNG_Flate_BuildFixedTree(Ovia, BitB);
+                    OVIA_PNG_Flate_Decode(Ovia, BitB); // Actually read the data
                 } else if (BlockType == Flate_DynamicBlock) {
-                    OVIA_PNG_Flate_ReadTreeDynamic(Ovia, BitB);
+                    OVIA_PNG_Flate_BuildDynamicTree(Ovia, BitB);
+                    OVIA_PNG_Flate_Decode(Ovia, BitB); // Actually read the data
                 } else if (BlockType == Flate_InvalidBlock) {
                     Log(Log_ERROR, __func__, U8("Invalid Block"));
                 }
@@ -182,7 +192,7 @@ extern "C" {
         }
     }
     
-    uint64_t ReadHuffman(HuffmanTable *Tree, BitBuffer *BitB) {
+    uint64_t ReadHuffman(HuffmanTable *Tree, BitBuffer *BitB) { // EQUILIVENT OF DECODE IN PUFF
         uint64_t Symbol = 0ULL;
         if (Tree != NULL && BitB != NULL) {
             uint32_t FirstSymbolOfLength = 0;

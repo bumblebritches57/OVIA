@@ -11,13 +11,12 @@ extern "C" {
 #endif
     
     /*!
-     @abstract                  "Encodes a PNG from RawImage2Encode to a BitBuffer"
+     @abstract                  "Encodes a PNG from ImageContainer to a BitBuffer"
      @param     Image           "ImageContainer with the image to encode".
      @param     BitB            "The BitBuffer to contain the encoded png".
-     @param     InterlacePNG    "Should this PNG file be interlaced using the Adam7 algorithm for progressive download?"
      @param     OptimizePNG     "Should this PNG file be optimized by trying all filters? (Huffman optimization is enabled by default)"
      */
-    void        OVIA_PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB, bool InterlacePNG, bool OptimizePNG);
+    void        OVIA_PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB, bool OptimizePNG);
     
     void        OVIA_PNG_SetTextChunk(OVIA *Ovia, UTF8 *KeywordString, UTF8 *CommentString);
     
@@ -59,8 +58,6 @@ extern "C" {
      @param     GammaCorrect only does anything if there is a GAMA chunk present.
      */
     ImageContainer *PNGExtractImage(OVIA *Ovia, BitBuffer *BitB);
-    
-    void        OVIA_PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB, bool InterlacePNG, bool OptimizePNG);
     
     typedef struct HuffmanTable HuffmanTable;
     

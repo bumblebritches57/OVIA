@@ -1,3 +1,5 @@
+#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
+
 #include "../../../include/Private/Audio/AIFCommon.h"
 
 #ifdef __cplusplus
@@ -5,17 +7,6 @@ extern "C" {
 #endif
     
 #define AIFFEncoderNULLTerminator 0
-    
-    typedef union Integer2Double {
-        double   Double;
-        uint64_t Integer;
-    } Integer2Double;
-    
-    static double ConvertInteger2Double(uint64_t Number) {
-        Integer2Double Cast;
-        Cast.Integer = Number;
-        return Cast.Double;
-    }
     
     static void AIFWriteCOMM(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {

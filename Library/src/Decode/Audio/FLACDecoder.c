@@ -63,7 +63,7 @@ extern "C" {
                     uint16_t FrameMarker = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, 14);
                     if (FrameMarker == FLACFrameMagic) {
                         // Start reading the frames.
-                        OVIA_FLAC_Frame_(Ovia, BitB);
+                        OVIA_FLAC_Stream_Read(Ovia, BitB);
                     }
                 }
             } else {
