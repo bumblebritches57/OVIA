@@ -10,3 +10,4 @@
 
 *.sh  linguist-language=sh
 *.sh  linguist-detectable=true
+*.sh  linguist-detectable=true
