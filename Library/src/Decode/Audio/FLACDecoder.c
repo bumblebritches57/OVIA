@@ -413,7 +413,7 @@ extern "C" {
             OVIA_FLAC_LPC_SetNumLPCCoeffs(Ovia, OVIA_FLAC_LPC_GetLPCPrecision(Ovia) * OVIA_FLAC_LPC_GetLPCOrder(Ovia));
             
             for (uint16_t LPCCoefficent = 0; LPCCoefficent < OVIA_FLAC_LPC_GetNumLPCCoeffs(Ovia); LPCCoefficent++) {
-                OVIA_FLAC_LPC_SetLPCCoeff(Ovia, LPCCoefficent, BitBuffer_ReadBits(MSByteFirst, MSBitFirst, Ovia, BitB_FLAC_LPC_GetLPCPrecision(Ovia) + 1));
+                OVIA_FLAC_LPC_SetLPCCoeff(Ovia, LPCCoefficent, BitBuffer_ReadBits(MSByteFirst, MSBitFirst, Ovia, OVIA_FLAC_LPC_GetLPCPrecision(Ovia) + 1));
             }
             OVIA_FLAC_Decode_Residual(Ovia, BitB);
         } else if (Ovia == NULL) {
@@ -453,7 +453,7 @@ extern "C" {
                     // Escape code, meaning the partition is in unencoded binary form using n bits per sample; n follows as a 5-bit number.
                 } else {
                     if (OVIA_FLAC_LPC_GetRICEPartitionOrder(Ovia) == 0) {
-                        Parameter = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, Ovia, BitB_GetBlockSize(Ovia) - OVIA_FLAC_LPC_GetLPCOrder(Ovia));
+                        Parameter = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, Ovia, OVIA_GetBlockSize(Ovia) - OVIA_FLAC_LPC_GetLPCOrder(Ovia));
                         OVIA_FLAC_LPC_SetRICEParameter(Ovia, Partition, Parameter);
                     } else if (OVIA_FLAC_LPC_GetRICEPartitionOrder(Ovia) > 0) {
                         Parameter = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, (OVIA_GetBlockSize(Ovia) / pow(2, OVIA_FLAC_LPC_GetRICEPartitionOrder(Ovia))));

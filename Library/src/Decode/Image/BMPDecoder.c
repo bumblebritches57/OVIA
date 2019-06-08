@@ -73,11 +73,11 @@ extern "C" {
                 }
                 BitBuffer_Seek(BitB, DIBSize - BitBuffer_GetPosition(BitB)); // Skip the remaining bits.
             } else if (DIBSize == 40 && (BMPCompressionType == BMP_BitFields || BMPCompressionType == BMP_RGBABitFields)) {
-                OVIA_BMP_SetRMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, BitB_GetBitDepth(Ovia)));
-                OVIA_BMP_SetGMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, BitB_GetBitDepth(Ovia)));
-                OVIA_BMP_SetBMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, BitB_GetBitDepth(Ovia)));
+                OVIA_BMP_SetRMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, OVIA_GetBitDepth(Ovia)));
+                OVIA_BMP_SetGMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, OVIA_GetBitDepth(Ovia)));
+                OVIA_BMP_SetBMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, OVIA_GetBitDepth(Ovia)));
                 if (BMPCompressionType == BMP_RGBABitFields) {
-                    OVIA_BMP_SetAMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, BitB_GetBitDepth(Ovia)));
+                    OVIA_BMP_SetAMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, OVIA_GetBitDepth(Ovia)));
                 }
             } else {
                 BitBuffer_Seek(BitB, Bits2Bytes((OVIA_GetSampleOffset(Ovia) - 14) - DIBSize, false));

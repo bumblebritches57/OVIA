@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
 project(OVIA)
 
-if   (${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
+if   (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR ${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
     set(libMATH -lm)
     add_definitions(-D_LARGEFILE_SOURCE)
     add_definitions(-D_LARGEFILE64_SOURCE)
@@ -13,16 +13,20 @@ else (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     add_definitions(-D_UNICODE)
     add_definitions(-D_ATL_ALLOW_CHAR_UNSIGNED)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-endif(${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR ${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
 
 set(OVIA_Dir "${CMAKE_CURRENT_SOURCE_DIR}/../libOVIA")
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
+set(RUNTIME_OUTPUT_DIRECTORY       "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
+
 set(OVIA_PublicHeaders
-    "${OVIA_Dir}/include/libOVIA.h"
+    "${OVIA_Dir}/include/OVIA.h"
 )
 
 set(OVIA_Sources
-    "${OVIA_Dir}/src/libOVIA.c"
+    "${OVIA_Dir}/src/OVIA.c"
     "${OVIA_Dir}/src/Decode/Audio/AIFDecoder.c"
     "${OVIA_Dir}/src/Decode/Audio/FLACDecoder.c"
     "${OVIA_Dir}/src/Decode/Audio/W64Decoder.c"
@@ -39,14 +43,20 @@ set(OVIA_Sources
     "${OVIA_Dir}/src/Encode/Image/PNMEncoder.c"
 )
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../Dependencies/FoundationIO/Projects" "${CMAKE_CURRENT_SOURCE_DIR}/../Dependencies/FoundationIO/BUILD" EXCLUDE_FROM_ALL)
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  set(CMAKE_BUILD_TYPE "${MinSizeRel}")
+endif()
+
+add_subdirectory(../Dependencies/FoundationIO/Projects "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../Dependencies/FoundationIO/BUILD")
 
 add_library(OVIA ${OVIA_Sources} ${OVIA_PublicHeaders})
+set_target_properties(OVIA PROPERTIES PREFIX "")
+TARGET_LINK_LIBRARIES(OVIA FoundationIO)
 
 if (CMAKE_C_COMPILER_ID MATCHES "AppleClang" OR CMAKE_C_COMPILER_ID MATCHES "Clang" OR CMAKE_C_COMPILER_ID MATCHES "GNU")
     set(LINK_FLAGS " \
     ${LINK_FLAGS} \
-    /flto \
+    -flto=full \
     ")
 
     set(CMAKE_C_FLAGS " \
@@ -60,12 +70,14 @@ if (CMAKE_C_COMPILER_ID MATCHES "AppleClang" OR CMAKE_C_COMPILER_ID MATCHES "Cla
     -std=c11 \
     -Weverything \
     -Wno-c99-compat \
-    -Wno-pointer-sign \
+    -Wno-incompatible-pointer-types-discards-qualifiers \
     -Wno-padded \
+    -Wno-pointer-sign \
     ")
 
     set(CMAKE_C_FLAGS_DEBUG " \
     ${CMAKE_C_FLAGS} \
+    -fsanitize=address,undefined \
     -DDEBUG=1 \
     -g \
     -O1 \
@@ -74,6 +86,7 @@ if (CMAKE_C_COMPILER_ID MATCHES "AppleClang" OR CMAKE_C_COMPILER_ID MATCHES "Cla
     set(CMAKE_C_FLAGS_RELEASE " \
     ${CMAKE_C_FLAGS} \
     -Ofast \
+    -s \
     ")
 
     set(CMAKE_C_FLAGS_RELWITHDEBINFO " \
@@ -86,12 +99,31 @@ if (CMAKE_C_COMPILER_ID MATCHES "AppleClang" OR CMAKE_C_COMPILER_ID MATCHES "Cla
     set(CMAKE_C_FLAGS_MINSIZEREL " \
     ${CMAKE_C_FLAGS} \
     -Os \
+    -s \
+    ")
+
+    set(LINK_FLAGS_DEBUG " \
+    ${LINK_FLAGS} \
+    ")
+
+    set(LINK_FLAGS_RELWITHDEBINFO " \
+    ${LINK_FLAGS} \
+    ")
+
+    set(LINK_FLAGS_RELEASE " \
+    ${LINK_FLAGS} \
+    ")
+
+    set(LINK_FLAGS_MINSIZEREL " \
+    ${LINK_FLAGS} \
     ")
 
 elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
     set(LINK_FLAGS " \
     ${LINK_FLAGS} \
     /GL \
+    /LTCG:INCREMENTAL
+    /OPT:REF
     ")
 
     set(CMAKE_C_FLAGS " \
@@ -149,5 +181,26 @@ elseif (CMAKE_C_COMPILER_ID MATCHES "MSVC")
     ${CMAKE_C_FLAGS} \
     /p:UseDebugLibraries=false \
     -Os \
+    ")
+
+    set(LINK_FLAGS_DEBUG " \
+    ${LINK_FLAGS} \
+    /DEBUG \
+    ")
+
+    set(LINK_FLAGS_RELWITHDEBINFO " \
+    ${LINK_FLAGS} \
+    /DEBUG \
+    /RELEASE \
+    ")
+
+    set(LINK_FLAGS_RELEASE " \
+    ${LINK_FLAGS} \
+    /RELEASE \
+    ")
+
+    set(LINK_FLAGS_MINSIZEREL " \
+    ${LINK_FLAGS} \
+    /RELEASE \
     ")
 endif(CMAKE_C_COMPILER_ID MATCHES "AppleClang" OR CMAKE_C_COMPILER_ID MATCHES "Clang" OR CMAKE_C_COMPILER_ID MATCHES "GNU")

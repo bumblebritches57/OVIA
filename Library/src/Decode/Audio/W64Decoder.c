@@ -1,3 +1,4 @@
+#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
 #include "../../../../Dependencies/FoundationIO/libFoundationIO/include/ContainerIO.h"
 
 #include "../../../include/Private/Audio/W64Common.h"
