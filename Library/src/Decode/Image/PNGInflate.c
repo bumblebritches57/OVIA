@@ -1,13 +1,21 @@
-#include "../../../include/OVIA.h"
 #include "../../../include/Private/InternalOVIA.h"
 #include "../../../include/Private/Image/Flate.h"
-
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/StringIO.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+    
+    /*
+     PNG Decode Control Flow:
+     
+     Get the magic, discover the file is a PNG (or PNG embedded in BMP, whatever)
+     Parse the chunks in the PNG file
+     get to a i/fDAT chunk,
+     read the Zlib header
+     Build the Huffman trees for each "block"
+     take a ImageContainer as a parameter
+     decode the block into the imagecontainer
+     */
     
     void OVIA_PNG_Flate_ReadZlibHeader(OVIA *Ovia, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
@@ -69,97 +77,77 @@ extern "C" {
         }
     }
     
-    HuffmanTree *OVIA_PNG_Flate_BuildFixedTree(OVIA *Ovia, BitBuffer *BitB) {
+    HuffmanTree *OVIA_PNG_Flate_BuildTree(BitBuffer *BitB, HuffmanTreeTypes TreeType) {
         HuffmanTree *Tree = NULL;
-        if (Ovia != NULL && BitB != NULL) {
-            // Build 2 trees, one for lengths, one for distances.
-            HuffmanTable *LengthTree    = OVIA_PNG_Huffman_BuildTree(288, FixedLiteralTable);
-            HuffmanTable *DistanceTree  = OVIA_PNG_Huffman_BuildTree(29, FixedDistanceTable);
-            
-            OVIA_PNG_DAT_SetLengthLiteralHuffmanTable(Ovia, LengthTree);
-            OVIA_PNG_DAT_SetDistanceHuffmanTable(Ovia, DistanceTree);
-            
-            for (uint64_t Index = 0ULL; Index < 288; Index++) {
-                uint32_t Length        = 0;
-                uint32_t Value         = ReadHuffman(LengthTree, BitB);
-                if (Value < 16) {
-                    FixedLiteralTable[Index + 1] = Value;
-                } else {
-                    if (Value == 16) {
-                        Length         = FixedLiteralTable[Index - 1];
-                        Value          = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2) + 3;
-                    } else if (Value == 17) {
-                        Value          = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 3) + 3;
-                    } else {
-                        Value          = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 7) + 11;
+        if (BitB != NULL && TreeType != TreeType_Unknown) {
+            Tree          = calloc(1, sizeof(HuffmanTree));
+            if (Tree != NULL) {
+                if (TreeType == TreeType_Fixed) {
+                    Tree->LengthTable          = OVIA_PNG_Huffman_BuildTree(288, FixedLiteralTable);
+                    Tree->DistanceTable        = OVIA_PNG_Huffman_BuildTree(32, FixedDistanceTable);
+                    
+                    for (uint64_t Index = 0ULL; Index < 288; Index++) {
+                        uint32_t Length        = 0;
+                        uint32_t Value         = ReadHuffman(Tree->LengthTable, BitB);
+                        if (Value < 16) {
+                            FixedLiteralTable[Index + 1] = Value;
+                        } else {
+                            if (Value == 16) {
+                                Length         = FixedLiteralTable[Index - 1];
+                                Value          = 3  + BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2);
+                            } else if (Value == 17) {
+                                Value          = 3  + BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 3);
+                            } else {
+                                Value          = 11 + BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 7);
+                            }
+                            for (uint32_t Times2Copy = 0ULL; Times2Copy < Length; Times2Copy++) {
+                                // What is this?
+                            }
+                            for (uint32_t Index = Value; Index > 0; Index--) {
+                                FixedLiteralTable[Index + 1] = Length;
+                            }
+                        }
                     }
-                    for (uint32_t Times2Copy = 0ULL; Times2Copy < Length; Times2Copy++) {
-                        
+                } else if (TreeType == TreeType_Dynamic) {
+                    uint16_t NumLengthSymbols   = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 257;
+                    uint8_t  NumDistanceSymbols = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 1;
+                    uint8_t  NumMetaCodeLengths = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 4) + 4;
+                    
+                    uint16_t MetaTable[NumMetaCodes];
+                    for (uint8_t MetaCode = 0; MetaCode < NumMetaCodeLengths; MetaCode++) {
+                        MetaTable[MetaCodeLengthOrder[MetaCode]] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 3);
                     }
-                    for (uint32_t Index = Value; Index > 0; Index--) {
-                        FixedLiteralTable[Index + 1] = Length;
+                    HuffmanTable *MetaTree         = OVIA_PNG_Huffman_BuildTree(19, MetaTable);
+                    uint16_t RealLengths[318]      = {0};
+                    for (uint64_t Index = 0ULL; Index < NumLengthSymbols + NumDistanceSymbols; Index++) {
+                        uint64_t Value             = ReadHuffman(MetaTree, BitB);
+                        if (Value <= 15) {
+                            RealLengths[Index + 1] = Value;
+                        } else {
+                            uint16_t Times2Repeat  = 0;
+                            if (Value == 16) {
+                                Times2Repeat       = RealLengths[Index - 1];
+                                Value              = 3  + BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2);
+                            } else if (Value == 17) {
+                                Value              = 3  + BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 3);
+                            } else {
+                                Value              = 11 + BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 7);
+                            }
+                            for (uint16_t Index2 = Value; Index2 > 0; Index2--) {
+                                RealLengths[Index2 + 1] = Times2Repeat;
+                            }
+                        }
                     }
+                    Tree->LengthTable   = OVIA_PNG_Huffman_BuildTree(NumLengthSymbols, RealLengths);
+                    Tree->DistanceTable = OVIA_PNG_Huffman_BuildTree(NumLengthSymbols + NumDistanceSymbols, RealLengths); // Change to Distance table
                 }
+            } else {
+                Log(Log_ERROR, __func__, U8("Couldn't allocate HuffmanTree"));
             }
-        } else if (Ovia == NULL) {
-            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
-        }
-        return Tree;
-    }
-    
-    HuffmanTree *OVIA_PNG_Flate_BuildDynamicTree(OVIA *Ovia, BitBuffer *BitB) {
-        HuffmanTree *Tree = NULL;
-        uint16_t *Table                     = NULL;
-        if (BitB != NULL) {
-            Table                           = calloc(MaxCodes, sizeof(uint16_t));
-            if (Table != NULL) {
-                uint16_t NumLengthSymbols   = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 257;
-                uint8_t  NumDistanceSymbols = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 5) + 1;
-                uint8_t  NumMetaCodeLengths = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 4) + 4;
-                
-                uint16_t MetaTable[NumMetaCodes];
-                for (uint8_t MetaCode = 0; MetaCode < NumMetaCodeLengths; MetaCode++) {
-                    MetaTable[MetaCodeLengthOrder[MetaCode]] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 3);
-                }
-                HuffmanTable *MetaTree         = OVIA_PNG_Huffman_BuildTree(19, MetaTable);
-                uint16_t RealLengths[318]      = {0};
-                for (uint64_t Index = 0ULL; Index < NumLengthSymbols + NumDistanceSymbols; Index++) {
-                    uint64_t Value             = ReadHuffman(MetaTree, BitB);
-                    if (Value >= 0 && Value <= 15) {
-                        RealLengths[Index + 1] = Value;
-                    } else {
-                        uint16_t Times2Repeat  = 0;
-                        if (Value == 16) {
-                            Times2Repeat       = RealLengths[Index - 1];
-                            Value              = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2) + 3;
-                        } else if (Value == 17) {
-                            Value              = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 3) + 3;
-                        } else {
-                            Value              = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 7) + 11;
-                        }
-                        for (uint16_t Index2 = Value; Index2 > 0; Index2--) {
-                            RealLengths[Index2 + 1] = Times2Repeat;
-                        }
-                    }
-                }
-                
-                HuffmanTable *LengthTree   = NULL;
-                HuffmanTable *DistanceTree = NULL;
-                
-                LengthTree = OVIA_PNG_Huffman_BuildTree(NumLengthSymbols, RealLengths);
-                OVIA_PNG_DAT_SetLengthLiteralHuffmanTable(Ovia, LengthTree);
-                
-                DistanceTree = OVIA_PNG_Huffman_BuildTree(NumLengthSymbols + NumDistanceSymbols, RealLengths); // Change to Distance table
-                OVIA_PNG_DAT_SetDistanceHuffmanTable(Ovia, DistanceTree);
-                
-                OVIA_PNG_Flate_ReadSymbol(Ovia, BitB);
-            } else {
-                Log(Log_ERROR, __func__, U8("Couldn't allocate Table"));
-            }
-        } else {
-            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (TreeType == TreeType_Unknown) {
+            Log(Log_ERROR, __func__, U8("TreeType Unknown is invalid"));
         }
         return Tree;
     }
@@ -171,19 +159,19 @@ extern "C" {
             bool     IsFinalBlock                  = false;
             
             do {
+                HuffmanTree *Tree                  = NULL;
                 IsFinalBlock                       = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 1); // 0
                 uint8_t BlockType                  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 2); // 0b00 = 0
                 if (BlockType == Flate_LiteralBlock) {
                     OVIA_PNG_Flate_ReadLiteralBlock(Ovia, BitB);
                 } else if (BlockType == Flate_FixedBlock) {
-                    OVIA_PNG_Flate_BuildFixedTree(Ovia, BitB);
-                    OVIA_PNG_Flate_Decode(Ovia, BitB); // Actually read the data
+                    Tree = OVIA_PNG_Flate_BuildTree(BitB, TreeType_Fixed);
                 } else if (BlockType == Flate_DynamicBlock) {
-                    OVIA_PNG_Flate_BuildDynamicTree(Ovia, BitB);
-                    OVIA_PNG_Flate_Decode(Ovia, BitB); // Actually read the data
+                    Tree = OVIA_PNG_Flate_BuildTree(BitB, TreeType_Dynamic);
                 } else if (BlockType == Flate_InvalidBlock) {
                     Log(Log_ERROR, __func__, U8("Invalid Block"));
                 }
+                OVIA_PNG_Flate_Decode(Ovia, BitB); // Actually read the data
             } while (IsFinalBlock == false);
         } else if (BitB == NULL) {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
@@ -211,16 +199,12 @@ extern "C" {
         return Symbol;
     }
     
-    void OVIA_PNG_Flate_ReadSymbol(OVIA *Ovia, BitBuffer *BitB) {
-        if (Ovia != NULL && BitB != NULL) {
-            uint16_t Symbol                    = 0;
-            uint8_t *Array                     = OVIA_PNG_DAT_GetArray(Ovia);
-            uint64_t Offset                    = OVIA_PNG_DAT_GetArrayOffset(Ovia);
-            
-            HuffmanTable *LengthLiterals       = OVIA_PNG_DAT_GetLengthLiteralHuffmanTable(Ovia);
-            HuffmanTable *Distances            = OVIA_PNG_DAT_GetDistanceHuffmanTable(Ovia);
+    uint16_t OVIA_PNG_Flate_ReadSymbol(HuffmanTree *Tree, BitBuffer *BitB) {
+        uint16_t Symbol                        = 0;
+        if (Tree != NULL && BitB != NULL) {
+            Symbol                             = ReadHuffman(Tree, BitB);
+            /*
             do {
-                Symbol                         = ReadHuffman(LengthLiterals, BitB);
                 if (Symbol < 256) {
                     Array[Offset]              = Symbol;
                     Offset                    += 1;
@@ -229,7 +213,7 @@ extern "C" {
                     uint16_t ExtensionLength   = LengthAdditionalBits[Symbol - 257];
                     uint16_t LengthCode        = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, ExtensionLength) + BaseLength;
                     
-                    uint16_t DistanceSymbol    = ReadHuffman(Distances, BitB);
+                    uint16_t DistanceSymbol    = ReadHuffman(Tree->DistanceTable, BitB);
                     uint16_t BaseDistance      = DistanceBase[DistanceSymbol];
                     uint16_t ExtensionDistance = DistanceAdditionalBits[DistanceSymbol];
                     
@@ -241,11 +225,13 @@ extern "C" {
                     Offset += LengthCode;
                 }
             } while (Symbol != 256);
-        } else if (Ovia == NULL) {
-            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+             */
+        } else if (Tree == NULL) {
+            Log(Log_ERROR, __func__, U8("HuffmanTree Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         }
+        return Symbol;
     }
     
 #ifdef __cplusplus

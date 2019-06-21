@@ -1,9 +1,5 @@
-#include "../../../include/OVIA.h"
 #include "../../../include/Private/InternalOVIA.h"
 #include "../../../include/Private/Image/Flate.h"
-
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/StringIO.h"
 
 #ifdef __cplusplus
 extern "C" {

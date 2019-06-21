@@ -9,7 +9,7 @@ extern "C" {
     }
     
     static uint64_t BMPGetPixelArraySize(const uint64_t RowSize, const int32_t ImageHeight) { // 5568, 3712, there's 54 extra bytes in the PixelArray...
-        return RowSize * ImageHeight;
+        return RowSize * AbsoluteI(ImageHeight);
     }
     
     void BMPParseMetadata(OVIA *Ovia, BitBuffer *BitB) {

@@ -1,5 +1,3 @@
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
-
 #include "../../../include/Private/Audio/AIFCommon.h"
 
 #ifdef __cplusplus
@@ -183,7 +181,7 @@ extern "C" {
         }
     }
     
-    void AIFAppendSamples(OVIA *Ovia, AudioContainer *Audio, BitBuffer *BitB) {
+    void AIFAppendSamples(OVIA *Ovia, Audio2DContainer *Audio, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL && Audio != NULL) {
             uint64_t NumSamples  = OVIA_GetNumSamples(Ovia);
             uint64_t NumChannels = OVIA_GetNumChannels(Ovia);
@@ -246,7 +244,7 @@ extern "C" {
         } else if (BitB == NULL) {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         } else if (Audio == NULL) {
-            Log(Log_ERROR, __func__, U8("AudioContainer Pointer is NULL"));
+            Log(Log_ERROR, __func__, U8("Audio2DContainer Pointer is NULL"));
         }
     }
     

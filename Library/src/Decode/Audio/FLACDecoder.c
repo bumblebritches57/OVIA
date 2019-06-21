@@ -186,7 +186,7 @@ extern "C" {
             uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
             uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), true);
             uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
-            AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
+            Audio2DContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
             Audio_Types     Type        = AudioContainer_GetType(Audio);
             if (Type == AudioType_Integer8) {
                 uint8_t **Array         = (uint8_t**) AudioContainer_GetArray(Audio);
@@ -243,7 +243,7 @@ extern "C" {
             uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
             uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), true);
             uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
-            AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
+            Audio2DContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
             Audio_Types     Type        = AudioContainer_GetType(Audio);
             int64_t         Constant    = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, Ovia, BitB_GetBitDepth(Ovia));
             
@@ -302,7 +302,7 @@ extern "C" {
             uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
             uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), true);
             uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
-            AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
+            Audio2DContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
             Audio_Types     Type        = AudioContainer_GetType(Audio);
             
             if (Type == (AudioType_Unsigned | AudioType_Integer8)) {
@@ -361,7 +361,7 @@ extern "C" {
             uint64_t        NumSamples  = OVIA_FLAC_Frame_GetCodedBlockSize(Ovia);
             uint8_t         BitDepth    = Bits2Bytes(OVIA_GetBitDepth(Ovia), true);
             uint8_t         NumChannels = OVIA_GetNumChannels(Ovia);
-            AudioContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
+            Audio2DContainer *Audio       = OVIA_GetAudioContainerPointer(Ovia);
             Audio_Types     Type        = AudioContainer_GetType(Audio);
             
             if (Type == (AudioType_Unsigned | AudioType_Integer8)) {

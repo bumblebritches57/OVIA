@@ -1,6 +1,3 @@
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
-#include "../../../../Dependencies/FoundationIO/libFoundationIO/include/ContainerIO.h"
-
 #include "../../../include/Private/Audio/W64Common.h"
 
 #ifdef __cplusplus
@@ -130,8 +127,8 @@ extern "C" {
         }
     }
     
-    AudioContainer *W64ExtractSamples(OVIA *Ovia, BitBuffer *BitB) {
-        AudioContainer *Audio = NULL;
+    Audio2DContainer *W64ExtractSamples(OVIA *Ovia, BitBuffer *BitB) {
+        Audio2DContainer *Audio = NULL;
         if (Ovia != NULL && BitB != NULL) {
             uint64_t BitDepth     = OVIA_GetBitDepth(Ovia);
             uint64_t NumChannels  = OVIA_GetNumChannels(Ovia);
