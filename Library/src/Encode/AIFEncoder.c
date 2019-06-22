@@ -1,4 +1,4 @@
-#include "../../../include/Private/Audio/AIFCommon.h"
+#include "../../include/Private/AIFCommon.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -6,15 +6,15 @@ extern "C" {
     
 #define AIFFEncoderNULLTerminator 0
     
-    static void AIFWriteCOMM(OVIA *Ovia, BitBuffer *BitB) {
-        if (Ovia != NULL && BitB != NULL) {
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, AIF_COMM);
+    static void AIFWriteCOMM(Audio2DContainer *Audio, BitBuffer *BitB) {
+        if (Audio != NULL && BitB != NULL) {
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_COMM);
             uint16_t COMMSize = 18;
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, COMMSize);
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 16, OVIA_GetNumChannels(Ovia)); // 2
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, OVIA_GetNumSamples(Ovia)); // 7979748
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 16, OVIA_GetBitDepth(Ovia)); // 16
-            uint64_t SampleRate = ConvertInteger2Double(OVIA_GetSampleRate(Ovia));
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, COMMSize);
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, Audio2DContainer_GetNumChannels(Audio)); // 2
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, Audio2DContainer_GetNumSamples(Audio)); // 7979748
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, Audio2DContainer_GetBitDepth(Audio)); // 16
+            uint64_t SampleRate = ConvertInteger2Double(Audio2DContainer_GetSampleRate(Audio));
             // 44100  = 0x400E 0xAC44000000000000
             // 48000  = 0x400E 0xBB80000000000000
             // 88200  = 0x400F 0xAC44000000000000
@@ -89,16 +89,16 @@ extern "C" {
             // 2 * 250 = 500
             
             
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 16, (SampleRate >> 52) + 15360);
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 64, 0x8000000000000000LLU | SampleRate << 11); // SampleRate Mantissa
-        } else if (Ovia == NULL) {
-            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, (SampleRate >> 52) + 15360);
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 64, 0x8000000000000000LLU | SampleRate << 11); // SampleRate Mantissa
+        } else if (Audio == NULL) {
+            Log(Log_ERROR, __func__, U8("Audio2DContainer Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
     
-    static void AIFWriteTitle(OVIA *Ovia, BitBuffer *BitB) {
+    static void AIFWriteTitle(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             uint64_t TitleTagIndex = OVIA_GetTagsIndex(Ovia, TitleTag);
             uint32_t TitleTagSize  = 0ULL;
@@ -106,7 +106,7 @@ extern "C" {
                 UTF8 *TitleTag = OVIA_GetTag(Ovia, TitleTagIndex);
                 uint32_t TagByte = 0ULL;
                 do {
-                    BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 8, TitleTag[TagByte]);
+                    BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 8, TitleTag[TagByte]);
                     TagByte += 1;
                 } while (TitleTag[TagByte] != AIFFEncoderNULLTerminator);
                 TitleTagSize = TagByte;
@@ -119,7 +119,7 @@ extern "C" {
         }
     }
     
-    static void AIFWriteArtist(OVIA *Ovia, BitBuffer *BitB) {
+    static void AIFWriteArtist(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             uint64_t ArtistTagIndex = OVIA_GetTagsIndex(Ovia, ArtistTag);
             uint32_t ArtistTagSize  = 0ULL;
@@ -127,7 +127,7 @@ extern "C" {
                 UTF8 *ArtistTag = OVIA_GetTag(Ovia, ArtistTagIndex);
                 uint32_t TagByte = 0ULL;
                 do {
-                    BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 8, ArtistTag[TagByte]);
+                    BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 8, ArtistTag[TagByte]);
                     TagByte += 1;
                 } while (ArtistTag[TagByte] != AIFFEncoderNULLTerminator);
                 ArtistTagSize = TagByte;
@@ -140,19 +140,19 @@ extern "C" {
         }
     }
     
-    static void AIFWriteSSND(OVIA *Ovia, BitBuffer *BitB) {
+    static void AIFWriteSSND(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, AIF_SSND);
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_SSND);
             uint64_t NumSamples  = OVIA_GetNumSamples(Ovia);
             uint64_t NumChannels = OVIA_GetNumChannels(Ovia);
             uint64_t BitDepth    = OVIA_GetBitDepth(Ovia);
             uint64_t Offset      = OVIA_GetSampleOffset(Ovia);
             uint64_t BlockSize   = OVIA_GetBlockSize(Ovia);
             
-            uint32_t ChunkSize   = 8 + ((NumSamples * NumChannels) * Bits2Bytes(BitDepth, true));
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, ChunkSize);
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, Offset);
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, BlockSize);
+            uint32_t ChunkSize   = 8 + ((NumSamples * NumChannels) * Bits2Bytes(BitDepth, RoundingType_Up));
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, ChunkSize);
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, Offset);
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, BlockSize);
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {
@@ -160,16 +160,16 @@ extern "C" {
         }
     }
     
-    void AIFWriteHeader(OVIA *Ovia, BitBuffer *BitB) {
+    void AIFWriteHeader(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, AIF_SSND);
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_SSND);
             uint64_t NumSamples  = OVIA_GetNumSamples(Ovia);
             uint64_t NumChannels = OVIA_GetNumChannels(Ovia);
             uint64_t BitDepth    = OVIA_GetBitDepth(Ovia);
             
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, AIF_FORM);
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, ((NumSamples * NumChannels) * Bits2Bytes(BitDepth, true))); // FIXME: AIF Size calculation is wrong
-            BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, 32, AIF_AIFF);
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_FORM);
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, ((NumSamples * NumChannels) * Bits2Bytes(BitDepth, RoundingType_Up))); // FIXME: AIF Size calculation is wrong
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_AIFF);
             AIFWriteCOMM(Ovia, BitB);
             AIFWriteTitle(Ovia, BitB);
             AIFWriteArtist(Ovia, BitB);
@@ -181,7 +181,7 @@ extern "C" {
         }
     }
     
-    void AIFAppendSamples(OVIA *Ovia, Audio2DContainer *Audio, BitBuffer *BitB) {
+    void AIFAppendSamples(Audio2DContainer *Audio, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL && Audio != NULL) {
             uint64_t NumSamples  = OVIA_GetNumSamples(Ovia);
             uint64_t NumChannels = OVIA_GetNumChannels(Ovia);
@@ -194,7 +194,7 @@ extern "C" {
                 int8_t **Samples  = (int8_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepth, Samples[Channel][Sample]);
                         BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
@@ -202,7 +202,7 @@ extern "C" {
                 uint8_t **Samples  = (uint8_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepth, Samples[Channel][Sample]);
                         BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
@@ -210,7 +210,7 @@ extern "C" {
                 int16_t **Samples  = (int16_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepth, Samples[Channel][Sample]);
                         BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
@@ -218,7 +218,7 @@ extern "C" {
                 uint16_t **Samples  = (uint16_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepth, Samples[Channel][Sample]);
                         BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
@@ -226,7 +226,7 @@ extern "C" {
                 int32_t **Samples  = (int32_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepth, Samples[Channel][Sample]);
                         BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }
@@ -234,7 +234,7 @@ extern "C" {
                 uint32_t **Samples  = (uint32_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(MSByteFirst, LSBitFirst, BitB, BitDepth, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepth, Samples[Channel][Sample]);
                         BitBuffer_Seek(BitB, 8 - (BitDepth % 8));
                     }
                 }

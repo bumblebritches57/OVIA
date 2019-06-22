@@ -1,4 +1,4 @@
-#include "../../../include/Private/Audio/W64Common.h"
+#include "../../include/Private/W64Common.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -47,14 +47,14 @@ extern "C" {
     }
     
     /* Format Decoding */
-    static void W64ParseFMTChunk(OVIA *Ovia, BitBuffer *BitB) {
+    static void W64ParseFMTChunk(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            OVIA_W64_SetCompressionType(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
-            OVIA_SetNumChannels(Ovia,         BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
-            OVIA_SetSampleRate(Ovia,          BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-            OVIA_SetBlockSize(Ovia,           BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-            OVIA_W64_SetBlockAlignment(Ovia,  BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
-            OVIA_SetBitDepth(Ovia,            BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16));
+            OVIA_W64_SetCompressionType(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 16));
+            OVIA_SetNumChannels(Ovia,         BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 16));
+            OVIA_SetSampleRate(Ovia,          BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+            OVIA_SetBlockSize(Ovia,           BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+            OVIA_W64_SetBlockAlignment(Ovia,  BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 16));
+            OVIA_SetBitDepth(Ovia,            BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 16));
             // Read the SpeakerMask
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
@@ -63,7 +63,7 @@ extern "C" {
         }
     }
     
-    static void W64ParseBEXTChunk(OVIA *Ovia, BitBuffer *BitB) {
+    static void W64ParseBEXTChunk(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             
         } else if (Ovia == NULL) {
@@ -73,7 +73,7 @@ extern "C" {
         }
     }
     
-    static void W64ParseDATAChunk(OVIA *Ovia, BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
+    static void W64ParseDATAChunk(BitBuffer *BitB, uint32_t ChunkSize) { // return the number of samples read
         if (Ovia != NULL && BitB != NULL) {
             OVIA_SetNumSamples(Ovia, (((ChunkSize - 24 / OVIA_W64_GetBlockAlignment(Ovia)) / OVIA_GetNumChannels(Ovia)) / OVIA_GetBitDepth(Ovia)));
         } else if (Ovia == NULL) {
@@ -83,7 +83,7 @@ extern "C" {
         }
     }
     
-    static void W64ParseLEVLChunk(OVIA *Ovia, BitBuffer *BitB) { // aka Peak Envelope Chunk
+    static void W64ParseLEVLChunk(BitBuffer *BitB) { // aka Peak Envelope Chunk
         if (Ovia != NULL && BitB != NULL) {
             
         } else if (Ovia == NULL) {
@@ -93,10 +93,10 @@ extern "C" {
         }
     }
     
-    void W64ParseMetadata(OVIA *Ovia, BitBuffer *BitB) {
+    void W64ParseMetadata(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             uint8_t *ChunkUUIDString = BitBuffer_ReadGUUID(BitB, GUIDString);
-            uint64_t W64Size         = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 64);
+            uint64_t W64Size         = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 64);
             if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_RIFF_GUIDString) == true) {
                 
             } else if (CompareGUUIDs(GUIDString, ChunkUUIDString, W64_WAVE_GUIDString) == true) {
@@ -127,7 +127,7 @@ extern "C" {
         }
     }
     
-    Audio2DContainer *W64ExtractSamples(OVIA *Ovia, BitBuffer *BitB) {
+    Audio2DContainer *W64ExtractSamples(BitBuffer *BitB) {
         Audio2DContainer *Audio = NULL;
         if (Ovia != NULL && BitB != NULL) {
             uint64_t BitDepth     = OVIA_GetBitDepth(Ovia);
@@ -139,7 +139,7 @@ extern "C" {
                 uint8_t **Samples = (uint8_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        Samples[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
+                        Samples[Channel][Sample] = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, Bits2Bytes(BitDepth, RoundingType_Up));
                     }
                 }
             } else if (BitDepth > 8 && BitDepth <= 16) {
@@ -147,7 +147,7 @@ extern "C" {
                 uint16_t **Samples = (uint16_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        Samples[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
+                        Samples[Channel][Sample] = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, Bits2Bytes(BitDepth, RoundingType_Up));
                     }
                 }
             } else if (BitDepth > 16 && BitDepth <= 32) {
@@ -155,7 +155,7 @@ extern "C" {
                 uint32_t **Samples = (uint32_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        Samples[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
+                        Samples[Channel][Sample] = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, Bits2Bytes(BitDepth, RoundingType_Up));
                     }
                 }
             }

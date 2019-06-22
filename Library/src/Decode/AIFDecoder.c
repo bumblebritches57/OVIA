@@ -1,4 +1,4 @@
-#include "../../../include/Private/Audio/AIFCommon.h"
+#include "../../include/Private/AIFCommon.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,16 +15,16 @@ extern "C" {
         }
     }
     
-    static void AIFParseCOMMChunk(OVIA *Ovia, BitBuffer *BitB) {
+    static void AIFParseCOMMChunk(Audio2DContainer *Audio, BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            uint16_t NumChannels               = BitBuffer_ReadBits(MSByteFirst, MSBitFirst, BitB, 16);
+            uint16_t NumChannels               = BitBuffer_ReadBits(BitB, MSByteFirst, MSBitFirst, 16);
             OVIA_SetNumChannels(Ovia, NumChannels);
-            uint32_t NumSamples                = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32); // A SampleFrame is simply a single sample from all channels.
+            uint32_t NumSamples                = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32); // A SampleFrame is simply a single sample from all channels.
             OVIA_SetNumSamples(Ovia, NumSamples);
-            uint16_t BitDepth                  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 16);
+            uint16_t BitDepth                  = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 16);
             OVIA_SetBitDepth(Ovia, BitDepth);
-            uint16_t SampleRateExponent        = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 16) - 16446;
-            uint64_t SampleRateMantissa        = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 64);
+            uint16_t SampleRateExponent        = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 16) - 16446;
+            uint64_t SampleRateMantissa        = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 64);
             if (SampleRateExponent >= 0) {
                 OVIA_SetSampleRate(Ovia, SampleRateMantissa << SampleRateExponent);
             } else {
@@ -37,12 +37,12 @@ extern "C" {
         }
     }
     
-    static void AIFParseNameChunk(OVIA *Ovia, BitBuffer *BitB) {
+    static void AIFParseNameChunk(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            uint32_t TitleSize                 = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
+            uint32_t TitleSize                 = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
             UTF8    *Title                     = calloc(TitleSize, sizeof(UTF8));
             for (uint32_t TitleByte = 0; TitleByte < TitleSize; TitleByte++) {
-                Title[TitleByte]               = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
+                Title[TitleByte]               = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 8);
             }
             OVIA_SetTag(Ovia, TitleTag, Title);
         } else if (Ovia == NULL) {
@@ -52,12 +52,12 @@ extern "C" {
         }
     }
     
-    static void AIFParseAuthorChunk(OVIA *Ovia, BitBuffer *BitB) {
+    static void AIFParseAuthorChunk(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            uint32_t AuthorSize                = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
+            uint32_t AuthorSize                = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
             UTF8    *Author                    = calloc(AuthorSize, sizeof(UTF8));
             for (uint32_t AuthorByte = 0; AuthorByte < AuthorSize; AuthorByte++) {
-                Author[AuthorByte]             = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
+                Author[AuthorByte]             = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 8);
             }
             OVIA_SetTag(Ovia, AuthorTag, Author);
         } else if (Ovia == NULL) {
@@ -67,12 +67,12 @@ extern "C" {
         }
     }
     
-    static void AIFParseAnnotationChunk(OVIA *Ovia, BitBuffer *BitB) {
+    static void AIFParseAnnotationChunk(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
-            uint32_t AnnotationSize            = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
+            uint32_t AnnotationSize            = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
             UTF8    *Annotation                = calloc(AnnotationSize, sizeof(UTF8));
             for (uint32_t AnnotationByte = 0; AnnotationByte < AnnotationSize; AnnotationByte++) {
-                Annotation[AnnotationByte]     = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 8);
+                Annotation[AnnotationByte]     = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 8);
             }
             OVIA_SetTag(Ovia, AnnotationTag, Annotation);
         } else if (Ovia == NULL) {
@@ -82,14 +82,14 @@ extern "C" {
         }
     }
     
-    void AIFParseMetadata(OVIA *Ovia, BitBuffer *BitB) { // void (*AIFParseMetadata)(OVIA*,BitBuffer*)
+    void AIFParseMetadata(BitBuffer *BitB) { // void (*AIFParseMetadata)(OVIA*,BitBuffer*)
         if (Ovia != NULL && BitB != NULL) {
-            uint32_t FileSize                  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
+            uint32_t FileSize                  = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
             OVIA_SetFileSize(Ovia, FileSize);
-            AIFChunkIDs AIFFChunkID            = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
+            AIFChunkIDs AIFFChunkID            = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
             if (AIFFChunkID == AIF_AIFF || AIFFChunkID == AIF_AIFC) {
-                AIFSubChunkIDs AIFFSubChunkID  = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
-                uint32_t AIFFSubChunkSize      = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
+                AIFSubChunkIDs AIFFSubChunkID  = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
+                uint32_t AIFFSubChunkSize      = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
                 uint32_t SampleOffset          = 0;
                 uint32_t BlockSize             = 0;
                 switch (AIFFSubChunkID) {
@@ -138,9 +138,9 @@ extern "C" {
                         AIFSkipPadding(BitB, AIFFSubChunkSize);
                         break;
                     case AIF_SSND:
-                        SampleOffset = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
+                        SampleOffset = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
                         OVIA_SetSampleRate(Ovia, SampleOffset);
-                        BlockSize    = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, 32);
+                        BlockSize    = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
                         OVIA_SetBlockSize(Ovia, BlockSize);
                         break;
                 }
@@ -154,7 +154,7 @@ extern "C" {
         }
     }
     
-    Audio2DContainer *AIFExtractSamples(OVIA *Ovia, BitBuffer *BitB) { // I should change this so that the user manages their own buffer
+    Audio2DContainer *AIFExtractSamples(BitBuffer *BitB) { // I should change this so that the user manages their own buffer
         Audio2DContainer *Audio = NULL;
         if (Ovia != NULL && BitB != NULL) {
             uint64_t BitDepth     = OVIA_GetBitDepth(Ovia);
@@ -166,7 +166,7 @@ extern "C" {
                 uint8_t **Samples = (uint8_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        Samples[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
+                        Samples[Channel][Sample] = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, Bits2Bytes(BitDepth, RoundingType_Up));
                     }
                 }
             } else if (BitDepth > 8 && BitDepth <= 16) {
@@ -174,7 +174,7 @@ extern "C" {
                 uint16_t **Samples = (uint16_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        Samples[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
+                        Samples[Channel][Sample] = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, Bits2Bytes(BitDepth, RoundingType_Up));
                     }
                 }
             } else if (BitDepth > 16 && BitDepth <= 32) {
@@ -182,7 +182,7 @@ extern "C" {
                 uint32_t **Samples = (uint32_t**) AudioContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        Samples[Channel][Sample] = BitBuffer_ReadBits(MSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
+                        Samples[Channel][Sample] = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, Bits2Bytes(BitDepth, RoundingType_Up));
                     }
                 }
             }

@@ -1,4 +1,4 @@
-#include "../../../include/Private/Image/BMPCommon.h"
+#include "../../include/Private/BMPCommon.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,55 +12,55 @@ extern "C" {
         return RowSize * AbsoluteI(ImageHeight);
     }
     
-    void BMPParseMetadata(OVIA *Ovia, BitBuffer *BitB) {
+    void BMPParseMetadata(BitBuffer *BitB) {
         if (Ovia != NULL && BitB != NULL) {
             BitBuffer_Seek(BitB, 16);                           // Skip BM
             uint64_t DIBSize                                     = 0UL;
             uint32_t BMPCompressionType                          = 0;
-            uint64_t FileSize                                    = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
+            uint64_t FileSize                                    = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32);
             OVIA_SetFileSize(Ovia, FileSize);
             BitBuffer_Seek(BitB, 32);                           // 2 16 bit Reserved fields
-            uint64_t Offset                                      = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
+            uint64_t Offset                                      = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32);
             OVIA_SetSampleOffset(Ovia, Offset);
             if (Offset > 14) { // DIB Header
-                DIBSize                                         = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32); // 40
+                DIBSize                                         = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32); // 40
                 if (DIBSize >= 40) {
-                    uint64_t Width                              = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
+                    uint64_t Width                              = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32);
                     OVIA_SetWidth(Ovia, Width);
-                    int64_t Height                              = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
+                    int64_t Height                              = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32);
                     OVIA_SetHeight(Ovia, Height);
                 } else if (DIBSize == 12) {
-                    uint64_t Width                              = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
+                    uint64_t Width                              = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 16);
                     OVIA_SetWidth(Ovia, Width);
-                    int64_t Height                              = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
+                    int64_t Height                              = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 16);
                     OVIA_SetHeight(Ovia, Height);
                 }
                 BitBuffer_Seek(BitB, 16);                       // NumPlanes, always 1
-                uint64_t BitDepth                                = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 16);
+                uint64_t BitDepth                                = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 16);
                 OVIA_SetBitDepth(Ovia, BitDepth);
-                BMPCompressionType                               = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
+                BMPCompressionType                               = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32);
                 OVIA_BMP_SetCompressionType(Ovia, BMPCompressionType);
-                OVIA_BMP_SetNumBytesUsedBySamples(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-                OVIA_BMP_SetWidthInMeters(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-                OVIA_BMP_SetHeightInMeters(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-                OVIA_BMP_SetColorsIndexed(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-                OVIA_BMP_SetIndexColorsUsed(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
+                OVIA_BMP_SetNumBytesUsedBySamples(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+                OVIA_BMP_SetWidthInMeters(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+                OVIA_BMP_SetHeightInMeters(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+                OVIA_BMP_SetColorsIndexed(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+                OVIA_BMP_SetIndexColorsUsed(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
                 if (DIBSize >= 56) {
-                    OVIA_BMP_SetColorSpaceType(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
+                    OVIA_BMP_SetColorSpaceType(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
                     if (DIBSize >= 108) {
-                        OVIA_BMP_SetXCoordinate(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-                        OVIA_BMP_SetYCoordinate(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-                        OVIA_BMP_SetZCoordinate(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-                        OVIA_BMP_SetRGamma(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-                        OVIA_BMP_SetGGamma(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
-                        OVIA_BMP_SetBGamma(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32));
+                        OVIA_BMP_SetXCoordinate(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+                        OVIA_BMP_SetYCoordinate(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+                        OVIA_BMP_SetZCoordinate(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+                        OVIA_BMP_SetRGamma(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+                        OVIA_BMP_SetGGamma(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
+                        OVIA_BMP_SetBGamma(Ovia, BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32));
                         if (DIBSize >= 124) {
-                            uint32_t ICCIntent = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
-                            uint32_t ICCSize   = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 32);
+                            uint32_t ICCIntent = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32);
+                            uint32_t ICCSize   = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 32);
                             uint8_t *ICCData   = calloc(ICCSize, sizeof(uint8_t));
                             if (ICCData != NULL) {
                                 for (uint32_t ICCByte = 0; ICCByte < ICCSize; ICCByte++) {
-                                    ICCData[ICCByte] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, 8);
+                                    ICCData[ICCByte] = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, 8);
                                 }
                             } else {
                                 Log(Log_ERROR, __func__, U8("Couldn't allocate %d bytes for the ICC payload"), ICCSize);
@@ -80,7 +80,7 @@ extern "C" {
                     OVIA_BMP_SetAMask(Ovia, BitBuffer_ReadBits(LSByteFirst, LSBitFirst, Ovia, OVIA_GetBitDepth(Ovia)));
                 }
             } else {
-                BitBuffer_Seek(BitB, Bits2Bytes((OVIA_GetSampleOffset(Ovia) - 14) - DIBSize, false));
+                BitBuffer_Seek(BitB, Bits2Bytes((OVIA_GetSampleOffset(Ovia) - 14) - DIBSize, RoundingType_Down));
             }
         } else if (Ovia == NULL) {
             Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
@@ -89,7 +89,7 @@ extern "C" {
         }
     }
     
-    ImageContainer *BMPExtractImage(OVIA *Ovia, BitBuffer *BitB) {
+    ImageContainer *BMPExtractImage(BitBuffer *BitB) {
         ImageContainer *Image = NULL;
         if (Ovia != NULL && BitB != NULL) {
             // We need to create a ImageContainer, based on the bit depth of the image.
@@ -113,7 +113,7 @@ extern "C" {
                             for (uint64_t W = 0ULL; W < Width; W++) {
                                 for (uint64_t H = 0ULL; H < Height; H++) {
                                     for (uint64_t Channel = 0ULL; Channel < NumChannels; Channel++) {
-                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
+                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, Bits2Bytes(BitDepth, RoundingType_Up));
                                     }
                                 }
                             }
@@ -124,7 +124,7 @@ extern "C" {
                             for (uint64_t W = 0ULL; W < Width; W++) {
                                 for (uint64_t H = 0ULL; H < Height; H++) {
                                     for (uint64_t Channel = 0ULL; Channel < NumChannels; Channel++) {
-                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(LSByteFirst, LSBitFirst, BitB, Bits2Bytes(BitDepth, true));
+                                        Array[View * W * H * Channel] = BitBuffer_ReadBits(BitB, LSByteFirst, LSBitFirst, Bits2Bytes(BitDepth, RoundingType_Up));
                                     }
                                 }
                             }

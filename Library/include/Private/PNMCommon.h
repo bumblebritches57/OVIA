@@ -1,4 +1,8 @@
-#include "../InternalOVIA.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/ContainerIO.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/CryptographyIO.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
+#include "../../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
 
 #pragma once
 
@@ -48,18 +52,18 @@ extern "C" {
         PNMTypes      Type;
     } PNMOptions;
     
-    void            PNMIdentifyFileType(OVIA *Ovia, BitBuffer *BitB);
+    void            PNMIdentifyFileType(BitBuffer *BitB);
     
-    void            PNMParseMetadata(OVIA *Ovia, BitBuffer *BitB);
+    void            PNMParseMetadata(BitBuffer *BitB);
     
-    ImageContainer *PNMExtractImage(OVIA *Ovia, BitBuffer *BitB);
+    ImageContainer *PNMExtractImage(BitBuffer *BitB);
     
-    void            PNMInsertFrame(OVIA *Ovia, ImageContainer *Image, BitBuffer *BitB);
+    void            PNMInsertFrame(ImageContainer *Image, BitBuffer *BitB);
     
-    void            PNMWriteHeader(OVIA *Ovia, BitBuffer *BitB);
+    void            PNMWriteHeader(BitBuffer *BitB);
     
-    void                 OVIA_PNM_SetPNMType(OVIA *Ovia, PNMTypes PNMType);
-    void                 OVIA_PNM_SetTupleType(OVIA *Ovia, PNMTupleTypes TupleType);
+    void                 OVIA_PNM_SetPNMType(PNMTypes PNMType);
+    void                 OVIA_PNM_SetTupleType(PNMTupleTypes TupleType);
     PNMTupleTypes        OVIA_PNM_GetTupleType(OVIA *Ovia);
     PNMTypes             OVIA_PNM_GetPNMType(OVIA *Ovia);
     
