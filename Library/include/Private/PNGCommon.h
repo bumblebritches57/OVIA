@@ -1,8 +1,4 @@
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/ContainerIO.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/CryptographyIO.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
+#include "OVIACommon.h"
 
 #pragma once
 
@@ -44,7 +40,7 @@ extern "C" {
          */
     } HuffmanTree;
     
-    HuffmanTree *HuffmanTree_Init() {
+    HuffmanTree *HuffmanTree_Init(void) {
         HuffmanTree *Tree = calloc(1, sizeof(HuffmanTree));
         return Tree;
     }

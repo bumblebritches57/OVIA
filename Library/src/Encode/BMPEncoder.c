@@ -70,14 +70,14 @@ extern "C" {
         }
     }
     
-    OVIACodecs OVIACodecList = {
-        .MagicID[CodecID_BMP        - CodecType_Encode] = (uint8_t[]) {0x42, 0x4D},
-        .MagicIDSize[CodecID_BMP    - CodecType_Encode] = 2,
-        .MagicIDOffset[CodecID_BMP  - CodecType_Encode] = 0,
-        .MediaTypes[CodecID_BMP     - CodecType_Encode] = MediaType_Image,
-        .CodecTypes[CodecID_BMP     - CodecType_Encode] = CodecType_Encode,
-        .ParseFunction[CodecID_BMP  - CodecType_Encode] = BMPParseMetadata,
-        .EncodeImage[CodecID_BMP    - CodecType_Encode] = BMPInsertImage,
+    OVIAEncoder BMPEncoder = {
+        .EncoderID             = CodecID_BMP,
+        .MediaType             = MediaType_Image,
+        .Function_Initialize   = BMPOptions_Init,
+        .Function_WriteHeader  = BMPWriteHeader,
+        .Function_Encode       = BMPInsertImage,
+        .Function_WriteFooter  = NULL,
+        .Function_Deinitialize = BMPOptions_Deinit,
     };
     
 #ifdef __cplusplus

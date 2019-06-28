@@ -9,11 +9,13 @@
 /* Begin PBXBuildFile section */
 		2C502EBC228127BA00EB4956 /* OVIA.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C502EBB228127B900EB4956 /* OVIA.c */; };
 		2C502EBE228127CB00EB4956 /* OVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C502EBD228127CB00EB4956 /* OVIA.h */; };
-		2CE43F6022BCAB1700E8DF3C /* BMPCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F5A22BCAB1700E8DF3C /* BMPCommon.c */; };
-		2CE43F6122BCAB1700E8DF3C /* FLACCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F5B22BCAB1700E8DF3C /* FLACCommon.c */; };
-		2CE43F6322BCAB1700E8DF3C /* WAVCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F5D22BCAB1700E8DF3C /* WAVCommon.c */; };
-		2CE43F6422BCAB1700E8DF3C /* W64Common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F5E22BCAB1700E8DF3C /* W64Common.c */; };
-		2CE43F6522BCAB1700E8DF3C /* PNGCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F5F22BCAB1700E8DF3C /* PNGCommon.c */; };
+		2CAE214D22C607A9005D24CB /* FLACCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE214722C607A8005D24CB /* FLACCommon.c */; };
+		2CAE214E22C607A9005D24CB /* BMPCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE214822C607A8005D24CB /* BMPCommon.c */; };
+		2CAE214F22C607A9005D24CB /* AIFCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE214922C607A8005D24CB /* AIFCommon.c */; };
+		2CAE215022C607A9005D24CB /* WAVCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE214A22C607A8005D24CB /* WAVCommon.c */; };
+		2CAE215122C607A9005D24CB /* PNGCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE214B22C607A9005D24CB /* PNGCommon.c */; };
+		2CAE215222C607A9005D24CB /* W64Common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE214C22C607A9005D24CB /* W64Common.c */; };
+		2CAE215422C60837005D24CB /* PNMCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE215322C60837005D24CB /* PNMCommon.c */; };
 		2CE43F6E22BCAB2A00E8DF3C /* WAVDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F6622BCAB2A00E8DF3C /* WAVDecoder.c */; };
 		2CE43F6F22BCAB2A00E8DF3C /* AIFDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F6722BCAB2A00E8DF3C /* AIFDecoder.c */; };
 		2CE43F7022BCAB2A00E8DF3C /* PNGDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F6822BCAB2A00E8DF3C /* PNGDecoder.c */; };
@@ -35,9 +37,24 @@
 		2CE43F9522BCAB6E00E8DF3C /* WAVCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CE43F8C22BCAB6D00E8DF3C /* WAVCommon.h */; };
 		2CE43F9722BCAB6E00E8DF3C /* FLACCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CE43F8E22BCAB6E00E8DF3C /* FLACCommon.h */; };
 		2CE43F9822BCAB6E00E8DF3C /* BMPCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CE43F8F22BCAB6E00E8DF3C /* BMPCommon.h */; };
+		2CEA1E3A22C4660700107B55 /* OVIACommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CEA1E3922C4660700107B55 /* OVIACommon.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2CAE214122C606AC005D24CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2CCC439222B7E05100798CAB;
+			remoteInfo = Test_CryptographyIO;
+		};
+		2CAE214322C606AC005D24CB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2CCC438622B7E01C00798CAB;
+			remoteInfo = Test_Math;
+		};
 		2CE43FB322BCAC1C00E8DF3C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
@@ -79,11 +96,13 @@
 		2C0B19B321901A68009659A3 /* libOVIA.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOVIA.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C502EBB228127B900EB4956 /* OVIA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = OVIA.c; path = ../libOVIA/src/OVIA.c; sourceTree = "<group>"; };
 		2C502EBD228127CB00EB4956 /* OVIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OVIA.h; path = ../libOVIA/include/OVIA.h; sourceTree = "<group>"; };
-		2CE43F5A22BCAB1700E8DF3C /* BMPCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BMPCommon.c; path = ../libOVIA/src/Common/BMPCommon.c; sourceTree = "<group>"; };
-		2CE43F5B22BCAB1700E8DF3C /* FLACCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FLACCommon.c; path = ../libOVIA/src/Common/FLACCommon.c; sourceTree = "<group>"; };
-		2CE43F5D22BCAB1700E8DF3C /* WAVCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVCommon.c; path = ../libOVIA/src/Common/WAVCommon.c; sourceTree = "<group>"; };
-		2CE43F5E22BCAB1700E8DF3C /* W64Common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Common.c; path = ../libOVIA/src/Common/W64Common.c; sourceTree = "<group>"; };
-		2CE43F5F22BCAB1700E8DF3C /* PNGCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PNGCommon.c; path = ../libOVIA/src/Common/PNGCommon.c; sourceTree = "<group>"; };
+		2CAE214722C607A8005D24CB /* FLACCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FLACCommon.c; path = ../libOVIA/src/Common/FLACCommon.c; sourceTree = "<group>"; };
+		2CAE214822C607A8005D24CB /* BMPCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BMPCommon.c; path = ../libOVIA/src/Common/BMPCommon.c; sourceTree = "<group>"; };
+		2CAE214922C607A8005D24CB /* AIFCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFCommon.c; path = ../libOVIA/src/Common/AIFCommon.c; sourceTree = "<group>"; };
+		2CAE214A22C607A8005D24CB /* WAVCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = WAVCommon.c; path = ../libOVIA/src/Common/WAVCommon.c; sourceTree = "<group>"; };
+		2CAE214B22C607A9005D24CB /* PNGCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PNGCommon.c; path = ../libOVIA/src/Common/PNGCommon.c; sourceTree = "<group>"; };
+		2CAE214C22C607A9005D24CB /* W64Common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Common.c; path = ../libOVIA/src/Common/W64Common.c; sourceTree = "<group>"; };
+		2CAE215322C60837005D24CB /* PNMCommon.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = PNMCommon.c; path = ../libOVIA/src/Common/PNMCommon.c; sourceTree = "<group>"; };
 		2CE43F6622BCAB2A00E8DF3C /* WAVDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = WAVDecoder.c; sourceTree = "<group>"; };
 		2CE43F6722BCAB2A00E8DF3C /* AIFDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = AIFDecoder.c; sourceTree = "<group>"; };
 		2CE43F6822BCAB2A00E8DF3C /* PNGDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PNGDecoder.c; sourceTree = "<group>"; };
@@ -106,6 +125,7 @@
 		2CE43F8E22BCAB6E00E8DF3C /* FLACCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLACCommon.h; path = ../libOVIA/include/Private/FLACCommon.h; sourceTree = "<group>"; };
 		2CE43F8F22BCAB6E00E8DF3C /* BMPCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMPCommon.h; path = ../libOVIA/include/Private/BMPCommon.h; sourceTree = "<group>"; };
 		2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FoundationIO.xcodeproj; path = ../Dependencies/FoundationIO/Projects/FoundationIO.xcodeproj; sourceTree = "<group>"; };
+		2CEA1E3922C4660700107B55 /* OVIACommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OVIACommon.h; path = ../libOVIA/include/Private/OVIACommon.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,11 +226,13 @@
 		2C33595121A2199F00141800 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				2CE43F5A22BCAB1700E8DF3C /* BMPCommon.c */,
-				2CE43F5B22BCAB1700E8DF3C /* FLACCommon.c */,
-				2CE43F5F22BCAB1700E8DF3C /* PNGCommon.c */,
-				2CE43F5E22BCAB1700E8DF3C /* W64Common.c */,
-				2CE43F5D22BCAB1700E8DF3C /* WAVCommon.c */,
+				2CAE214922C607A8005D24CB /* AIFCommon.c */,
+				2CAE214822C607A8005D24CB /* BMPCommon.c */,
+				2CAE214722C607A8005D24CB /* FLACCommon.c */,
+				2CAE214B22C607A9005D24CB /* PNGCommon.c */,
+				2CAE214C22C607A9005D24CB /* W64Common.c */,
+				2CAE214A22C607A8005D24CB /* WAVCommon.c */,
+				2CAE215322C60837005D24CB /* PNMCommon.c */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -218,6 +240,7 @@
 		2CE43F8622BCAB5D00E8DF3C /* Private */ = {
 			isa = PBXGroup;
 			children = (
+				2CEA1E3922C4660700107B55 /* OVIACommon.h */,
 				2CE43F8822BCAB6D00E8DF3C /* AIFCommon.h */,
 				2CE43F8F22BCAB6E00E8DF3C /* BMPCommon.h */,
 				2CE43F8E22BCAB6E00E8DF3C /* FLACCommon.h */,
@@ -236,6 +259,8 @@
 				2CE43FB622BCAC1C00E8DF3C /* Test_BitIO */,
 				2CE43FB822BCAC1C00E8DF3C /* Test_CommandLineIO */,
 				2CE43FBA22BCAC1C00E8DF3C /* Test_ContainerIO */,
+				2CAE214222C606AC005D24CB /* Test_CryptographyIO */,
+				2CAE214422C606AC005D24CB /* Test_Math */,
 				2CE43FBC22BCAC1C00E8DF3C /* Test_StringIO */,
 			);
 			name = Products;
@@ -250,6 +275,7 @@
 			files = (
 				2CE43F9722BCAB6E00E8DF3C /* FLACCommon.h in Headers */,
 				2CE43F9822BCAB6E00E8DF3C /* BMPCommon.h in Headers */,
+				2CEA1E3A22C4660700107B55 /* OVIACommon.h in Headers */,
 				2CE43F9122BCAB6E00E8DF3C /* AIFCommon.h in Headers */,
 				2C502EBE228127CB00EB4956 /* OVIA.h in Headers */,
 				2CE43F9322BCAB6E00E8DF3C /* W64Common.h in Headers */,
@@ -318,6 +344,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		2CAE214222C606AC005D24CB /* Test_CryptographyIO */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_CryptographyIO;
+			remoteRef = 2CAE214122C606AC005D24CB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2CAE214422C606AC005D24CB /* Test_Math */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_Math;
+			remoteRef = 2CAE214322C606AC005D24CB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		2CE43FB422BCAC1C00E8DF3C /* FoundationIO.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
@@ -360,25 +400,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CAE214D22C607A9005D24CB /* FLACCommon.c in Sources */,
 				2CE43F6F22BCAB2A00E8DF3C /* AIFDecoder.c in Sources */,
 				2CE43F8322BCAB3B00E8DF3C /* FLACEncoder.c in Sources */,
 				2CE43F7322BCAB2A00E8DF3C /* W64Decoder.c in Sources */,
-				2CE43F6022BCAB1700E8DF3C /* BMPCommon.c in Sources */,
+				2CAE215122C607A9005D24CB /* PNGCommon.c in Sources */,
 				2CE43F8122BCAB3B00E8DF3C /* PNGEncoder.c in Sources */,
 				2CE43F6E22BCAB2A00E8DF3C /* WAVDecoder.c in Sources */,
 				2C502EBC228127BA00EB4956 /* OVIA.c in Sources */,
-				2CE43F6422BCAB1700E8DF3C /* W64Common.c in Sources */,
-				2CE43F6522BCAB1700E8DF3C /* PNGCommon.c in Sources */,
 				2CE43F8522BCAB3B00E8DF3C /* PNMEncoder.c in Sources */,
-				2CE43F6122BCAB1700E8DF3C /* FLACCommon.c in Sources */,
 				2CE43F8422BCAB3B00E8DF3C /* W64Encoder.c in Sources */,
+				2CAE214F22C607A9005D24CB /* AIFCommon.c in Sources */,
+				2CAE215222C607A9005D24CB /* W64Common.c in Sources */,
 				2CE43F8222BCAB3B00E8DF3C /* BMPEncoder.c in Sources */,
 				2CE43F7122BCAB2A00E8DF3C /* BMPDecoder.c in Sources */,
 				2CE43F7022BCAB2A00E8DF3C /* PNGDecoder.c in Sources */,
 				2CE43F7422BCAB2A00E8DF3C /* FLACDecoder.c in Sources */,
+				2CAE215022C607A9005D24CB /* WAVCommon.c in Sources */,
+				2CAE214E22C607A9005D24CB /* BMPCommon.c in Sources */,
 				2CE43F7522BCAB2A00E8DF3C /* PNMDecoder.c in Sources */,
 				2CE43F8022BCAB3B00E8DF3C /* AIFEncoder.c in Sources */,
-				2CE43F6322BCAB1700E8DF3C /* WAVCommon.c in Sources */,
+				2CAE215422C60837005D24CB /* PNMCommon.c in Sources */,
 				2CE43F7F22BCAB3B00E8DF3C /* WAVEncoder.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -469,6 +511,7 @@
 					"-Wno-pointer-sign",
 					"-Wno-ignored-attributes",
 					"-funsigned-char",
+					"-Wno-incompatible-pointer-types-discards-qualifiers",
 				);
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				SDKROOT = macosx;

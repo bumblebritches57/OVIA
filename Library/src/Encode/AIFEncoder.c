@@ -248,6 +248,16 @@ extern "C" {
         }
     }
     
+    OVIAEncoder AIFEncoder = {
+        .EncoderID             = CodecID_AIF,
+        .MediaType             = MediaType_Audio2D,
+        .Function_Initialize   = AIFOptions_Init,
+        .Function_WriteHeader  = AIFWriteHeader,
+        .Function_Encode       = AIFAppendSamples,
+        .Function_WriteFooter  = NULL,
+        .Function_Deinitialize = AIFOptions_Deinit,
+    };
+    
 #ifdef __cplusplus
 }
 #endif
