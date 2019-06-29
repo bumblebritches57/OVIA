@@ -7,120 +7,114 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{05add13e-8113-412d-8d79-8e78e2479822}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Decode">
-      <UniqueIdentifier>{8581d71a-9777-488f-ba7c-60768385435b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Encode">
-      <UniqueIdentifier>{bc8f83ec-d85e-42e2-8083-29239fde19e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Encode\Audio">
-      <UniqueIdentifier>{25419540-b8a6-4c96-b161-bacf051b7edf}</UniqueIdentifier>
-    </Filter>
-	<Filter Include="Source Files\Encode\Image">
-      <UniqueIdentifier>{24465354-31d9-4198-8cc2-0c1e0c6c12cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Decode\Image">
-      <UniqueIdentifier>{51b92a73-fddc-4599-9b1c-bda01ff8945f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Decode\Audio">
-      <UniqueIdentifier>{a277d348-2609-49fb-ab71-7e20de8e2c68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Private">
       <UniqueIdentifier>{6e215331-9d01-4148-be10-821e20088c13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Private\Audio">
-      <UniqueIdentifier>{9dd19344-f8a7-4b64-bf90-4f6ff3d005dc}</UniqueIdentifier>
+    <Filter Include="Source Files\Common">
+      <UniqueIdentifier>{925222c9-e511-410b-819e-665e32c8f717}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Private\Image">
-      <UniqueIdentifier>{507f6392-4c31-4b65-b185-fdc0c369ff70}</UniqueIdentifier>
+    <Filter Include="Source Files\Decode">
+      <UniqueIdentifier>{f0abaea9-0565-4428-a152-ceb33ed17f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Encode">
+      <UniqueIdentifier>{89fcdd47-bfbf-42d5-9f87-164d976c80ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\libOVIA\src\Flate.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\libOVIA.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Encode\Audio\AIFEncoder.c">
-      <Filter>Source Files\Encode\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Encode\Audio\FLACEncoder.c">
-      <Filter>Source Files\Encode\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Encode\Audio\W64Encoder.c">
-      <Filter>Source Files\Encode\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Encode\Audio\WAVEncoder.c">
-      <Filter>Source Files\Encode\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Decode\Audio\AIFDecoder.c">
-      <Filter>Source Files\Decode\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Decode\Audio\FLACDecoder.c">
-      <Filter>Source Files\Decode\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Decode\Audio\W64Decoder.c">
-      <Filter>Source Files\Decode\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Decode\Audio\WAVDecoder.c">
-      <Filter>Source Files\Decode\Audio</Filter>
-    </ClCompile>
-	<ClCompile Include="..\libOVIA\src\Encode\Image\BMPEncoder.c">
-      <Filter>Source Files\Encode\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Encode\Image\PNGDeflate.c">
-      <Filter>Source Files\Encode\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Encode\Image\PNGEncoder.c">
-      <Filter>Source Files\Encode\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Encode\Image\PNMEncoder.c">
-      <Filter>Source Files\Encode\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Decode\Image\BMPDecoder.c">
-      <Filter>Source Files\Decode\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Decode\Image\PNGDecoder.c">
-      <Filter>Source Files\Decode\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Decode\Image\PNGInflate.c">
-      <Filter>Source Files\Decode\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\libOVIA\src\Decode\Image\PNMDecoder.c">
-      <Filter>Source Files\Decode\Image</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\libOVIA\include\Private\InternalOVIA.h">
-      <Filter>Header Files\Private</Filter>
-    </ClInclude>
-	<ClInclude Include="..\libOVIA\include\Private\Audio\AIFCommon.h">
-      <Filter>Header Files\Private\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libOVIA\include\Private\Audio\FLACCommon.h">
-      <Filter>Header Files\Private\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libOVIA\include\Private\Audio\W64Common.h">
-      <Filter>Header Files\Private\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libOVIA\include\Private\Audio\WAVCommon.h">
-      <Filter>Header Files\Private\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libOVIA\include\Private\Image\BMPCommon.h">
-      <Filter>Header Files\Private\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libOVIA\include\Private\Image\Flate.h">
-      <Filter>Header Files\Private\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libOVIA\include\Private\Image\PNGCommon.h">
-      <Filter>Header Files\Private\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libOVIA\include\Private\Image\PNMCommon.h">
-      <Filter>Header Files\Private\Image</Filter>
-    </ClInclude>
-    <ClInclude Include="..\libOVIA\include\libOVIA.h">
+    <ClInclude Include="..\libOVIA\include\OVIA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\libOVIA\include\Private\FLACCommon.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libOVIA\include\Private\OVIACommon.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libOVIA\include\Private\PNGCommon.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libOVIA\include\Private\PNMCommon.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libOVIA\include\Private\W64Common.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libOVIA\include\Private\WAVCommon.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libOVIA\include\Private\AIFCommon.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libOVIA\include\Private\BMPCommon.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\libOVIA\src\OVIA.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Encode\BMPEncoder.c">
+      <Filter>Source Files\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Encode\FLACEncoder.c">
+      <Filter>Source Files\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Encode\PNGEncoder.c">
+      <Filter>Source Files\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Encode\PNMEncoder.c">
+      <Filter>Source Files\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Encode\W64Encoder.c">
+      <Filter>Source Files\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Encode\WAVEncoder.c">
+      <Filter>Source Files\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Encode\AIFEncoder.c">
+      <Filter>Source Files\Encode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Decode\FLACDecoder.c">
+      <Filter>Source Files\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Decode\PNGDecoder.c">
+      <Filter>Source Files\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Decode\PNMDecoder.c">
+      <Filter>Source Files\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Decode\W64Decoder.c">
+      <Filter>Source Files\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Decode\WAVDecoder.c">
+      <Filter>Source Files\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Decode\AIFDecoder.c">
+      <Filter>Source Files\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Decode\BMPDecoder.c">
+      <Filter>Source Files\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Common\FLACCommon.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Common\PNGCommon.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Common\PNMCommon.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Common\W64Common.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Common\WAVCommon.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Common\AIFCommon.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\libOVIA\src\Common\BMPCommon.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
