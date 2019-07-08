@@ -17,27 +17,17 @@ extern "C" {
         MaxBitsPerSymbol           = 15,
     } FlateConstants;
     
-    typedef enum OVIA_Flate_BlockTypes {
-        Flate_LiteralBlock = 0,
-        Flate_FixedBlock   = 1,
-        Flate_DynamicBlock = 2,
-        Flate_InvalidBlock = 3
-    } OVIA_Flate_BlockTypes;
-    
-    typedef struct HuffmanTable {
-        uint16_t *Frequency; // Count
-        uint16_t *Symbols;   // HuffmanCode
-        uint16_t  NumSymbols;
-    } HuffmanTable;
+    typedef enum Flate_BlockTypes {
+        BlockType_Literal = 0,
+        BlockType_Fixed   = 1,
+        BlockType_Dynamic = 2,
+        BlockType_Invalid = 3,
+    } Flate_BlockTypes;
     
     typedef struct HuffmanTree {
-        uint32_t  NumSymbols;
-        uint32_t *HuffmanSymbol;
-        uint8_t   Value;
-        /*
-        HuffmanTable *LengthTable;
-        HuffmanTable *DistanceTable;
-         */
+        uint64_t NumSymbols;
+        uint64_t Symbol; // The binary encoded value read/written from/to the stream
+        uint64_t Value; // the meaning of the ymbol
     } HuffmanTree;
     
     HuffmanTree *HuffmanTree_Init(void) {
@@ -45,13 +35,13 @@ extern "C" {
         return Tree;
     }
     
-    void HuffmanTree_AddLengthTable(HuffmanTree *Tree, HuffmanTable *LengthTable) {
+    void HuffmanTree_AddLengthTable(HuffmanTree *Tree, HuffmanTree *LengthTable) {
         if (Tree != NULL) {
             Tree->LengthTable = LengthTable;
         }
     }
     
-    void HuffmanTree_AddDistanceTable(HuffmanTree *Tree, HuffmanTable *DistanceTable) {
+    void HuffmanTree_AddDistanceTable(HuffmanTree *Tree, HuffmanTree *DistanceTable) {
         if (Tree != NULL) {
             Tree->DistanceTable = DistanceTable;
         }
@@ -69,9 +59,9 @@ extern "C" {
         }
     }
     
-    void OVIA_PNG_DAT_Decode(BitBuffer *BitB, ImageContainer *Image);
+    void PNG_DAT_Decode(BitBuffer *BitB, ImageContainer *Image);
     
-    HuffmanTable *OVIA_PNG_Huffman_BuildTree(uint64_t NumSymbols, const uint16_t *Lengths);
+    HuffmanTree *HuffmanBuildTree(uint64_t NumSymbols, const uint16_t *Lengths);
     
     static const uint16_t LengthBase[29] = {
         3,   4,   5,   6,   7,  8,  9,  10,
@@ -159,38 +149,34 @@ extern "C" {
         TreeType_Dynamic = 2,
     } HuffmanTreeTypes;
     
-    void OVIA_PNG_Flate_ReadZlibHeader(BitBuffer *BitB);
+    HuffmanTree *PNG_Flate_BuildTree(BitBuffer *BitB, HuffmanTreeTypes TreeType);
     
-    void OVIA_PNG_Flate_ReadLiteralBlock(BitBuffer *BitB);
+    uint64_t ReadHuffman(HuffmanTree *Tree, BitBuffer *BitB);
     
-    HuffmanTree *OVIA_PNG_Flate_BuildTree(BitBuffer *BitB, HuffmanTreeTypes TreeType);
+    uint16_t PNG_Flate_ReadSymbol(HuffmanTree *Tree, BitBuffer *BitB);
     
-    uint64_t ReadHuffman(HuffmanTable *Tree, BitBuffer *BitB);
-    
-    uint16_t OVIA_PNG_Flate_ReadSymbol(HuffmanTable *Tree, BitBuffer *BitB);
-    
-    typedef enum OVIA_PNG_Interlace_Types {
+    typedef enum PNG_Interlace_Types {
         PNGNotInterlaced   = 0,
         PNGInterlacedAdam7 = 1,
-    } OVIA_PNG_Interlace_Types;
+    } PNG_Interlace_Types;
     
-    typedef enum OVIA_PNG_Filter_Types {
+    typedef enum PNG_Filter_Types {
         NotFiltered        = 0,
         SubFilter          = 1,
         UpFilter           = 2,
         AverageFilter      = 3,
         PaethFilter        = 4,
-    } OVIA_PNG_Filter_Types;
+    } PNG_Filter_Types;
     
-    typedef enum OVIA_PNG_ColorTypes {
+    typedef enum PNG_ColorTypes {
         PNG_Grayscale      = 0,
         PNG_RGB            = 2,
         PNG_PalettedRGB    = 3,
         PNG_GrayAlpha      = 4,
         PNG_RGBA           = 6,
-    } OVIA_PNG_ColorTypes;
+    } PNG_ColorTypes;
     
-    typedef enum OVIA_PNG_ChunkMarkers {
+    typedef enum PNG_ChunkMarkers {
         acTLMarker         = 0x6163544C,
         bKGDMarker         = 0x626B4744,
         cHRMMarker         = 0x6348524D,
@@ -215,9 +201,7 @@ extern "C" {
         tIMEMarker         = 0x74494d45,
         tRNSMarker         = 0x74524e53,
         sPLTMarker         = 0x73504c54,
-    } OVIA_PNG_ChunkMarkers;
-    
-#define PNGMagic 0x89504E470D0A1A0A
+    } PNG_ChunkMarkers;
     
     typedef enum PNGTextTypes {
         UnknownTextType = 0,
@@ -232,7 +216,7 @@ extern "C" {
         uint8_t             BitDepth;
         uint8_t             Compression;
         uint8_t             FilterMethod;
-        OVIA_PNG_ColorTypes ColorType;
+        PNG_ColorTypes ColorType;
         bool                Progressive;
         bool                Interlaced;
     } iHDRChunk;
@@ -416,17 +400,23 @@ extern "C" {
         bool          IsAnimated;
     } PNGOptions;
     
+    PNGOptions *PNGOptions_Init(void);
+    
+    void PNG_Flate_ReadZlibHeader(PNGOptions *PNG, BitBuffer *BitB);
+    
+    void PNG_Flate_ReadLiteralBlock(PNGOptions *PNG, BitBuffer *BitB);
+    
     /*!
      @abstract                  "Encodes a PNG from ImageContainer to a BitBuffer"
      @param     Image           "ImageContainer with the image to encode".
      @param     BitB            "The BitBuffer to contain the encoded png".
      @param     OptimizePNG     "Should this PNG file be optimized by trying all filters? (Huffman optimization is enabled by default)"
      */
-    void        OVIA_PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB, bool OptimizePNG);
+    void        PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB, bool OptimizePNG);
     
-    void        OVIA_PNG_SetTextChunk(UTF8 *KeywordString, UTF8 *CommentString);
+    void        PNG_SetTextChunk(UTF8 *KeywordString, UTF8 *CommentString);
     
-    uint32_t    OVIA_PNG_GetNumTextChunks(OVIA *Ovia);
+    uint32_t    PNG_GetNumTextChunks(PNGOptions *PNG);
     
     /*!
      @abstract                  "Extracts the Keyword and Comment strings from the Instance of the text chunk".
@@ -436,78 +426,78 @@ extern "C" {
      @param     Keyword         "Pointer the Keyword string is returned through".
      @return                    "Returns the actual Comment string".
      */
-    UTF8       *OVIA_PNG_GetTextChunk(uint32_t Instance, UTF8 *Keyword);
+    UTF8       *PNG_GetTextChunk(uint32_t Instance, UTF8 *Keyword);
     
-    uint32_t    OVIA_PNG_GetWidth(OVIA *Ovia);
+    uint32_t    PNG_GetWidth(PNGOptions *PNG);
     
-    uint32_t    OVIA_PNG_GetHeight(OVIA *Ovia);
+    uint32_t    PNG_GetHeight(PNGOptions *PNG);
     
-    uint8_t     OVIA_PNG_GetBitDepth(OVIA *Ovia);
+    uint8_t     PNG_GetBitDepth(PNGOptions *PNG);
     
-    uint8_t     OVIA_PNG_GetColorType(OVIA *Ovia);
+    uint8_t     PNG_GetColorType(PNGOptions *PNG);
     
-    bool        OVIA_PNG_GetInterlaceStatus(OVIA *Ovia);
+    bool        PNG_GetInterlaceStatus(PNGOptions *PNG);
     
-    bool        OVIA_PNG_GetStereoscopicStatus(OVIA *Ovia);
+    bool        PNG_GetStereoscopicStatus(PNGOptions *PNG);
     
-    uint32_t    OVIA_PNG_GetWhitepointX(OVIA *Ovia);
+    uint32_t    PNG_GetWhitepointX(PNGOptions *PNG);
     
-    uint32_t    OVIA_PNG_GetWhitepointY(OVIA *Ovia);
+    uint32_t    PNG_GetWhitepointY(PNGOptions *PNG);
     
-    uint32_t    OVIA_PNG_GetGamma(OVIA *Ovia);
+    uint32_t    PNG_GetGamma(PNGOptions *PNG);
     
-    UTF8       *OVIA_PNG_GetColorProfileName(OVIA *Ovia);
+    UTF8       *PNG_GetColorProfileName(PNGOptions *PNG);
     
-    uint8_t    *OVIA_PNG_GetColorProfile(OVIA *Ovia);
+    uint8_t    *PNG_GetColorProfile(PNGOptions *PNG);
     
     /*
      @param     GammaCorrect only does anything if there is a GAMA chunk present.
      */
-    ImageContainer *PNGExtractImage(BitBuffer *BitB);
+    ImageContainer *PNGExtractImage(PNGOptions *PNG, BitBuffer *BitB);
     
-    typedef struct HuffmanTable HuffmanTable;
+    typedef struct HuffmanTree HuffmanTree;
     
     uint8_t             PaethPredictor(int64_t Left, int64_t Above, int64_t UpperLeft);
     
-    void                OVIA_PNG_ParseChunks(BitBuffer *BitB);
+    void                PNG_ParseChunks(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                OVIA_PNG_Filter_Sub(ImageContainer *Image);
+    void                PNG_Filter_Sub(ImageContainer *Image);
     
-    void                OVIA_PNG_Filter_Up(ImageContainer *Image);
+    void                PNG_Filter_Up(ImageContainer *Image);
     
-    void                OVIA_PNG_Filter_Average(ImageContainer *Image);
+    void                PNG_Filter_Average(ImageContainer *Image);
     
-    void                OVIA_PNG_Filter_Paeth(ImageContainer *Image);
+    void                PNG_Filter_Paeth(ImageContainer *Image);
     
-    void                WriteIHDRChunk(BitBuffer *BitB);
+    void                WriteIHDRChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteACTLChunk(BitBuffer *BitB);
+    void                WriteACTLChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteFCTLChunk(BitBuffer *BitB);
+    void                WriteFCTLChunk(PNGOptions *PNG, BitBuffer *BitB);
     
     void                WriteFDATChunk(BitBuffer *BitB, uint8_t *DeflatedFrameData, uint32_t DeflatedFrameDataSize);
     
-    void                WriteSTERChunk(BitBuffer *BitB);
+    void                WriteSTERChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteBKGDChunk(BitBuffer *BitB);
+    void                WriteBKGDChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteCHRMChunk(BitBuffer *BitB);
+    void                WriteCHRMChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteGAMAChunk(BitBuffer *BitB);
+    void                WriteGAMAChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteOFFSChunk(BitBuffer *BitB);
+    void                WriteOFFSChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteICCPChunk(BitBuffer *BitB);
+    void                WriteICCPChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteSBITChunk(BitBuffer *BitB);
+    void                WriteSBITChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteSRGBChunk(BitBuffer *BitB);
+    void                WriteSRGBChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WritePHYSChunk(BitBuffer *BitB);
+    void                WritePHYSChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WritePCALChunk(BitBuffer *BitB);
+    void                WritePCALChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteSCALChunk(BitBuffer *BitB);
+    void                WriteSCALChunk(PNGOptions *PNG, BitBuffer *BitB);
     
     void                PNGEncodeFilterPaeth(ImageContainer *Image);
     
@@ -522,120 +512,7 @@ extern "C" {
      */
     void                OptimizePNG(uint8_t *Image);
     
-    void                PNGEncodeImage(BitBuffer *BitB);
-    
-    void                 OVIA_PNG_ACTL_SetACTL(uint32_t NumFrames, uint32_t Times2Loop);
-    void                 OVIA_PNG_BKGD_SetBackgroundPaletteEntry(uint8_t PaletteEntry);
-    void                 OVIA_PNG_CHRM_SetBlue(uint32_t BlueX, uint32_t BlueY);
-    void                 OVIA_PNG_CHRM_SetGreen(uint32_t GreenX, uint32_t GreenY);
-    void                 OVIA_PNG_CHRM_SetRed(uint32_t RedX, uint32_t RedY);
-    void                 OVIA_PNG_CHRM_SetWhitePoint(uint32_t WhitePointX, uint32_t WhitePointY);
-    void                 OVIA_PNG_DAT_SetArray(uint8_t *Array);
-    void                 OVIA_PNG_DAT_SetArrayOffset(uint64_t ArrayOffset);
-    void                 OVIA_PNG_DAT_SetArraySize(uint64_t ArraySize);
-    void                 OVIA_PNG_DAT_SetCMF(uint8_t CMF);
-    void                 OVIA_PNG_DAT_SetDictID(uint32_t DictID);
-    void                 OVIA_PNG_DAT_SetDistanceHuffmanTable(HuffmanTable *DistanceTree);
-    void                 OVIA_PNG_DAT_SetFCHECK(uint8_t FCHECK);
-    void                 OVIA_PNG_DAT_SetFLG(uint8_t FLG);
-    void                 OVIA_PNG_DAT_SetLengthLiteralHuffmanTable(HuffmanTable *LengthLiteralTree);
-    void                 OVIA_PNG_FCTL_SetBlendMethod(uint8_t BlendMethod);
-    void                 OVIA_PNG_FCTL_SetDisposeMethod(uint8_t DisposeMethod);
-    void                 OVIA_PNG_FCTL_SetFCTL(const uint32_t FrameNum, const uint32_t Width, const uint32_t Height, uint32_t XOffset, uint32_t YOffset, uint16_t DelayNumerator, uint16_t DelayDenominator, uint8_t DisposalType, uint8_t BlendType);
-    void                 OVIA_PNG_FCTL_SetFrameDelayDenominator(uint16_t FrameDelayDenominator);
-    void                 OVIA_PNG_FCTL_SetFrameDelayNumerator(uint16_t FrameDelayNumerator);
-    void                 OVIA_PNG_FCTL_SetFrameNum(uint32_t FrameNum);
-    void                 OVIA_PNG_FCTL_SetHeight(uint32_t Height);
-    void                 OVIA_PNG_FCTL_SetWidth(uint32_t Width);
-    void                 OVIA_PNG_FCTL_SetXOffset(uint32_t XOffset);
-    void                 OVIA_PNG_FCTL_SetYOffset(uint32_t YOffset);
-    void                 OVIA_PNG_GAMA_SetGamma(uint32_t Gamma);
-    void                 OVIA_PNG_HIST_SetNumEntries(uint32_t NumEntries);
-    void                 OVIA_PNG_ICCP_SetCompressionType(uint8_t CompressionType);
-    void                 OVIA_PNG_ICCP_SetProfileData(uint8_t *ProfileData);
-    void                 OVIA_PNG_ICCP_SetProfileDataSize(uint64_t ProfileSize);
-    void                 OVIA_PNG_ICCP_SetProfileName(UTF8 *ProfileName);
-    void                 OVIA_PNG_IHDR_SetColorType(uint8_t ColorType);
-    void                 OVIA_PNG_IHDR_SetIHDR(uint32_t Height, uint32_t Width, uint8_t BitDepth, uint8_t ColorType, const bool Interlace);
-    void                 OVIA_PNG_OFFS_SetSpecifier(bool Specifier);
-    void                 OVIA_PNG_OFFS_SetXOffset(int32_t XOffset);
-    void                 OVIA_PNG_OFFS_SetYOffset(int32_t YOffset);
-    void                 OVIA_PNG_PCAL_SetCalibrationName(UTF8 *CalibrationName);
-    void                 OVIA_PNG_PHYS_SetPixelsPerUnitX(int32_t PixelsPerUnitX);
-    void                 OVIA_PNG_PHYS_SetPixelsPerUnitY(int32_t PixelsPerUnitY);
-    void                 OVIA_PNG_PHYS_SetUnitSpecifier(bool UnitSpecifier);
-    void                 OVIA_PNG_PLTE_Init(uint64_t NumEntries);
-    void                 OVIA_PNG_PLTE_SetPalette(uint64_t Entry, uint16_t Red, uint16_t Green, uint16_t Blue);
-    void                 OVIA_PNG_SBIT_SetAlpha(uint8_t AlphaBitDepth);
-    void                 OVIA_PNG_SBIT_SetBlue(uint8_t BlueBitDepth);
-    void                 OVIA_PNG_SBIT_SetGray(uint8_t GrayBitDepth);
-    void                 OVIA_PNG_SBIT_SetGreen(uint8_t GreenBitDepth);
-    void                 OVIA_PNG_SBIT_SetRed(uint8_t RedBitDepth);
-    void                 OVIA_PNG_SCAL_SetSCAL(uint8_t UnitSpecifier, double Width, double Height);
-    void                 OVIA_PNG_SetAnimated(const bool PNGIsAnimated);
-    void                 OVIA_PNG_SRGB_SetRenderingIntent(uint8_t RenderingIntent);
-    void                 OVIA_PNG_STER_SetSterType(uint8_t sTERType);
-    void                 OVIA_PNG_TIME_SetTime(uint16_t Year, uint8_t Month, uint8_t Day, uint8_t Hour, uint8_t Minute, uint8_t Second);
-    void                 OVIA_PNG_TRNS_Init(uint64_t NumEntries);
-    void                 OVIA_PNG_TRNS_SetPalette(uint64_t Entry, uint8_t Alpha);
-    bool                 OVIA_PNG_OFFS_GetSpecifier(OVIA *Ovia);
-    bool                 OVIA_PNG_PHYS_GetUnitSpecifier(OVIA *Ovia);
-    HuffmanTable        *OVIA_PNG_DAT_GetDistanceHuffmanTable(OVIA *Ovia);
-    HuffmanTable        *OVIA_PNG_DAT_GetLengthLiteralHuffmanTable(OVIA *Ovia);
-    int32_t              OVIA_PNG_OFFS_GetXOffset(OVIA *Ovia);
-    int32_t              OVIA_PNG_OFFS_GetYOffset(OVIA *Ovia);
-    int32_t              OVIA_PNG_PHYS_GetPixelsPerUnitX(OVIA *Ovia);
-    int32_t              OVIA_PNG_PHYS_GetPixelsPerUnitY(OVIA *Ovia);
-    uint8_t             *OVIA_PNG_DAT_GetArray(OVIA *Ovia);
-    uint8_t             *OVIA_PNG_ICCP_GetProfileData(OVIA *Ovia);
-    uint8_t              OVIA_PNG_BKGD_GetBackgroundPaletteEntry(OVIA *Ovia);
-    uint8_t              OVIA_PNG_DAT_GetCompressionInfo(OVIA *Ovia);
-    uint8_t              OVIA_PNG_DAT_GetCompressionMethod(OVIA *Ovia);
-    uint8_t              OVIA_PNG_DAT_GetFCHECK(OVIA *Ovia);
-    uint8_t              OVIA_PNG_DAT_GetFDICT(OVIA *Ovia);
-    uint8_t              OVIA_PNG_DAT_GetFLEVEL(OVIA *Ovia);
-    uint8_t              OVIA_PNG_FCTL_GetBlendMethod(OVIA *Ovia);
-    uint8_t              OVIA_PNG_FCTL_GetDisposeMethod(OVIA *Ovia);
-    uint8_t              OVIA_PNG_ICCP_GetCompressionType(OVIA *Ovia);
-    uint8_t              OVIA_PNG_iHDR_GetColorType(OVIA *Ovia);
-    uint8_t              OVIA_PNG_PLTE_GetPaletteEntryBlue(uint64_t Entry);
-    uint8_t              OVIA_PNG_PLTE_GetPaletteEntryGreen(uint64_t Entry);
-    uint8_t              OVIA_PNG_PLTE_GetPaletteEntryRed(uint64_t Entry);
-    uint8_t              OVIA_PNG_SBIT_GetAlpha(OVIA *Ovia);
-    uint8_t              OVIA_PNG_SBIT_GetBlue(OVIA *Ovia);
-    uint8_t              OVIA_PNG_SBIT_GetGray(OVIA *Ovia);
-    uint8_t              OVIA_PNG_SBIT_GetGreen(OVIA *Ovia);
-    uint8_t              OVIA_PNG_SBIT_GetRed(OVIA *Ovia);
-    uint8_t              OVIA_PNG_SRGB_GetRenderingIntent(OVIA *Ovia);
-    uint8_t              OVIA_PNG_STER_GetSterType(OVIA *Ovia);
-    uint8_t              OVIA_PNG_TIME_GetDay(OVIA *Ovia);
-    uint8_t              OVIA_PNG_TIME_GetHour(OVIA *Ovia);
-    uint8_t              OVIA_PNG_TIME_GetMinute(OVIA *Ovia);
-    uint8_t              OVIA_PNG_TIME_GetMonth(OVIA *Ovia);
-    uint8_t              OVIA_PNG_TIME_GetSecond(OVIA *Ovia);
-    uint16_t             OVIA_PNG_FCTL_GetFrameDelayDenominator(OVIA *Ovia);
-    uint16_t             OVIA_PNG_FCTL_GetFrameDelayNumerator(OVIA *Ovia);
-    uint16_t             OVIA_PNG_TIME_GetYear(OVIA *Ovia);
-    uint32_t             OVIA_PNG_ACTL_GetNumFrames(OVIA *Ovia);
-    uint32_t             OVIA_PNG_ACTL_GetTimes2Loop(OVIA *Ovia);
-    uint32_t             OVIA_PNG_CHRM_GetBlueX(OVIA *Ovia);
-    uint32_t             OVIA_PNG_CHRM_GetBlueY(OVIA *Ovia);
-    uint32_t             OVIA_PNG_CHRM_GetGreenX(OVIA *Ovia);
-    uint32_t             OVIA_PNG_CHRM_GetGreenY(OVIA *Ovia);
-    uint32_t             OVIA_PNG_CHRM_GetRedX(OVIA *Ovia);
-    uint32_t             OVIA_PNG_CHRM_GetRedY(OVIA *Ovia);
-    uint32_t             OVIA_PNG_CHRM_GetWhitePointX(OVIA *Ovia);
-    uint32_t             OVIA_PNG_CHRM_GetWhitePointY(OVIA *Ovia);
-    uint32_t             OVIA_PNG_DAT_GetDictID(OVIA *Ovia);
-    uint32_t             OVIA_PNG_FCTL_GetFrameNum(OVIA *Ovia);
-    uint32_t             OVIA_PNG_FCTL_GetHeight(OVIA *Ovia);
-    uint32_t             OVIA_PNG_FCTL_GetWidth(OVIA *Ovia);
-    uint32_t             OVIA_PNG_FCTL_GetXOffset(OVIA *Ovia);
-    uint32_t             OVIA_PNG_FCTL_GetYOffset(OVIA *Ovia);
-    uint64_t             OVIA_PNG_DAT_GetArrayOffset(OVIA *Ovia);
-    uint64_t             OVIA_PNG_DAT_GetArraySize(OVIA *Ovia);
-    uint64_t             OVIA_PNG_ICCP_GetProfileDataSize(OVIA *Ovia);
-    UTF8                *OVIA_PNG_ICCP_GetProfileName(OVIA *Ovia);
+    void                PNGEncodeImage(PNGOptions *PNG, BitBuffer *BitB);
     
     static const uint8_t Adam7Level1[1] = {
         0
@@ -668,6 +545,8 @@ extern "C" {
         41, 42, 43, 44, 45, 46, 47, 48,
         57, 58, 59, 60, 61, 62, 63, 64
     };
+    
+    void PNGOptions_Deinit(PNGOptions *PNG);
     
 #ifdef __cplusplus
 }

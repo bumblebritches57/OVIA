@@ -24,9 +24,9 @@ extern "C" {
             }
              */
         } else if (AIF == NULL) {
-            Log(Log_ERROR, __func__, U8("AIFOptions Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -38,9 +38,9 @@ extern "C" {
             AIF->Tags[AIF->NumTags - 1]        = Title;
             AIF->TagTypes[AIF->NumTags - 1]    = TitleTag;
         } else if (AIF == NULL) {
-            Log(Log_ERROR, __func__, U8("AIFOptions Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -52,9 +52,9 @@ extern "C" {
             AIF->Tags[AIF->NumTags - 1]        = Author;
             AIF->TagTypes[AIF->NumTags - 1]    = AuthorTag;
         } else if (AIF == NULL) {
-            Log(Log_ERROR, __func__, U8("AIFOptions Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -66,9 +66,9 @@ extern "C" {
             AIF->Tags[AIF->NumTags - 1]        = Annotation;
             AIF->TagTypes[AIF->NumTags - 1]    = AnnotationTag;
         } else if (AIF == NULL) {
-            Log(Log_ERROR, __func__, U8("OVIA Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -132,17 +132,17 @@ extern "C" {
                         break;
                 }
             } else {
-                Log(Log_ERROR, __func__, U8("Invalid ChunkID 0x%X"), AIFFChunkID);
+                Log(Log_DEBUG, __func__, U8("Invalid ChunkID 0x%X"), AIFFChunkID);
             }
         } else if (AIF == NULL) {
-            Log(Log_ERROR, __func__, U8("AIFOptions Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
     
-    void AIFExtractSamples(Audio2DContainer *Audio, BitBuffer *BitB) { // I should change this so that the user manages their own buffer
-        if (Audio != NULL && BitB != NULL) {
+    void AIFExtractSamples(AIFOptions *AIF, BitBuffer *BitB, Audio2DContainer *Audio) { // I should change this so that the user manages their own buffer
+        if (AIF != NULL && BitB != NULL && Audio) {
             uint64_t BitDepth     = Bits2Bytes(Audio2DContainer_GetBitDepth(Audio), RoundingType_Up);
             uint64_t NumChannels  = Audio2DContainer_GetNumChannels(Audio);
             uint64_t NumSamples   = Audio2DContainer_GetNumSamples(Audio);
@@ -168,24 +168,18 @@ extern "C" {
                     }
                 }
             }
-        } else if (Audio == NULL) {
-            Log(Log_ERROR, __func__, U8("Audio2DContainer Pointer is NULL"));
+        } else if (AIF == NULL) {
+            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_ERROR, __func__, U8("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
+        } else if (Audio == NULL) {
+            Log(Log_DEBUG, __func__, U8("Audio2DContainer Pointer is NULL"));
         }
     }
-    
-    
     
     OVIADecoder AIFDecoder = {
         .DecoderID             = CodecID_AIF,
         .MediaType             = MediaType_Audio2D,
-        /*
-        .NumMagicIDs           = 1,
-        .MagicIDOffsets[0]     = 0,
-        .MagicIDSizes[0]       = 4,
-        .MagicIDs[0]           = (uint8_t[]) {0x46, 0x4F, 0x52, 0x4D},
-         */
         .MagicIDOffset         = 0,
         .MagicIDSize           = 4,
         .MagicID               = {0x46, 0x4F, 0x52, 0x4D},
@@ -193,11 +187,12 @@ extern "C" {
         .Function_Parse        = AIFParseMetadata,
         .Function_Decode       = AIFExtractSamples,
         .Function_Deinitialize = AIFOptions_Deinit,
+        // Can we call a function here in this static struct initalizer
+        /*
+         What I need to do is take this instance of OVIADecoder, AIFDecoder, and somehow be able to link it into the global decoders...
+         Something like OVIADecoder_Register which
+         */
     };
-    
-    OVIA_RegisterDecoder
-    
-    void OVIA_RegisterDecoder(AIFDecoder);
     
 #ifdef __cplusplus
 }

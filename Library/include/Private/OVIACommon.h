@@ -15,24 +15,6 @@
 extern "C" {
 #endif
     
-    typedef enum OVIA_CodecIDs {
-        CodecID_Unknown       = 0,
-        CodecID_AIF           = 1,
-        CodecID_WAV           = 2,
-        CodecID_W64           = 3,
-        CodecID_FLAC          = 4,
-        CodecID_BMP           = 5,
-        CodecID_PBM_A         = 6,
-        CodecID_PBM_B         = 7,
-        CodecID_PGM_A         = 8,
-        CodecID_PGM_B         = 9,
-        CodecID_PPM_A         = 10,
-        CodecID_PPM_B         = 11,
-        CodecID_PAM           = 12,
-        CodecID_PNG           = 13,
-        OVIA_NumCodecs        = CodecID_PAM,
-    } OVIA_CodecIDs;
-    
     typedef enum OVIA_MediaTypes {
         MediaType_Unknown     = 0,
         MediaType_Audio2D     = 1,
@@ -49,20 +31,28 @@ extern "C" {
     
     typedef struct AIFOptions AIFOptions;
     
+    typedef struct OVIADemuxer {
+        void            (*Function_ParseChunks)(void*, BitBuffer*); // Void* = PNGOptions*
+    } OVIADemuxer;
+    
     typedef struct OVIADecoder {
-        void            *(*Function_Initialize)(void);
-        void             (*Function_Parse)(AIFOptions*, BitBuffer*); // Takes the Init type as a parameter
-        void            *(*Function_Decode)(BitBuffer*); // Returns a Container pointer
-        void             (*Function_Deinitialize)(void*);
-        uint8_t            MagicIDSize;
-        uint8_t            MagicIDOffset;
-        OVIA_MediaTypes    MediaType;
-        OVIA_CodecIDs      DecoderID;
-        uint8_t            MagicID[];
+        void *              (*Function_Initialize)(void);
+        void                (*Function_Parse)(void*, BitBuffer*); // Takes the Init type as a parameter
+        void *              (*Function_Decode)(void*, BitBuffer*); // Returns a Container pointer
+        void                (*Function_Deinitialize)(void*);
+        uint8_t               MagicIDSize;
+        uint8_t               MagicIDOffset;
+        OVIA_MediaTypes       MediaType;
+        OVIA_CodecIDs         DecoderID;
+        const uint8_t        *MagicID;
     } OVIADecoder;
     
+    typedef struct OVIAMuxer {
+        void            (*Function_WriteChunks)(void*, BitBuffer*);
+    } OVIAMuxer;
+    
     typedef struct OVIAEncoder {
-        void            *(*Function_Initialize)(void);
+        void *           (*Function_Initialize)(void);
         void             (*Function_WriteHeader)(void*,BitBuffer*);
         void             (*Function_Encode)(void*,BitBuffer*);
         void             (*Function_WriteFooter)(BitBuffer*);
@@ -75,23 +65,11 @@ extern "C" {
     typedef struct OVIACodecs {
         OVIAEncoder  Encoders[OVIA_NumCodecs];
         OVIADecoder  Decoders[OVIA_NumCodecs];
+        OVIADemuxer  Demuxers[OVIA_NumCodecs];
+        OVIAMuxer    Muxers[OVIA_NumCodecs];
     } OVIACodecs;
     
     extern OVIACodecs GlobalCodecs;
-    
-    void OVIA_RegisterDecoder(OVIADecoder Decoder);
-    
-    void OVIA_RegisterEncoder(OVIAEncoder Encoder);
-    
-    /*
-    typedef struct OVIADecoder OVIADecoder;
-    
-    typedef struct OVIAEncoder OVIAEncoder;
-    
-    //typedef struct OVIACodecs OVIACodecs;
-    
-    
-     */
     
 #ifdef __cplusplus
 }
