@@ -95,21 +95,10 @@ extern "C" {
             Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
-    /*
+    
     static void AIFWriteTitle(AIFOptions *AIF, BitBuffer *BitB) {
         if (AIF != NULL && BitB != NULL) {
-            uint64_t TitleTagIndex = OVIA_GetTagsIndex(Ovia, TitleTag);
-            uint32_t TitleTagSize  = 0ULL;
-            if (TitleTagIndex != 0xFFFFFFFFFFFFFFFF) {
-                UTF8 *TitleTag = OVIA_GetTag(Ovia, TitleTagIndex);
-                uint32_t TagByte = 0ULL;
-                do {
-                    BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 8, TitleTag[TagByte]);
-                    TagByte += 1;
-                } while (TitleTag[TagByte] != FoundationIONULLTerminator);
-                TitleTagSize = TagByte;
-            }
-            AIFSkipPadding(BitB, TitleTagSize);
+            AIFSkipPadding(BitB, 0);
         } else if (AIF == NULL) {
             Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
@@ -117,27 +106,16 @@ extern "C" {
         }
     }
     
-    static void AIFWriteArtist(BitBuffer *BitB) {
-        if (Ovia != NULL && BitB != NULL) {
-            uint64_t ArtistTagIndex = OVIA_GetTagsIndex(Ovia, ArtistTag);
-            uint32_t ArtistTagSize  = 0ULL;
-            if (ArtistTagIndex != 0xFFFFFFFFFFFFFFFF) {
-                UTF8 *ArtistTag = OVIA_GetTag(Ovia, ArtistTagIndex);
-                uint32_t TagByte = 0ULL;
-                do {
-                    BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 8, ArtistTag[TagByte]);
-                    TagByte += 1;
-                } while (ArtistTag[TagByte] != FoundationIONULLTerminator);
-                ArtistTagSize = TagByte;
-            }
-            AIFSkipPadding(BitB, ArtistTagSize);
-        } else if (Ovia == NULL) {
+    static void AIFWriteArtist(AIFOptions *AIF, BitBuffer *BitB) {
+        if (AIF != NULL && BitB != NULL) {
+            AIFSkipPadding(BitB, 0);
+        } else if (AIF == NULL) {
             Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
-    */
+    
     static void AIFWriteSSND(AIFOptions *AIF, BitBuffer *BitB) {
         if (AIF != NULL && BitB != NULL) {
             BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_SSND);

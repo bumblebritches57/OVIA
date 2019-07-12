@@ -16,13 +16,12 @@ extern "C" {
             AIF->BitDepth                      = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 16);
             AIF->SampleRate_Exponent           = 16446 - BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 16);
             AIF->SampleRate_Mantissa           = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 64);
-            /*
             if (AIF->SampleRate_Exponent >= 0) {
-                OVIA_SetSampleRate(Ovia, SampleRateMantissa << SampleRateExponent);
+                AIF->SampleRate                = AIF->SampleRate_Mantissa << AIF->SampleRate_Exponent;
             } else {
-                OVIA_SetSampleRate(Ovia, SampleRateMantissa + ((1ULL << (-SampleRateExponent - 1)) >> (-SampleRateExponent)));
+                uint64_t NegatedExponent       = ~AIF->SampleRate_Exponent;
+                AIF->SampleRate                = AIF->SampleRate_Mantissa + ((1 << (NegatedExponent - 1)) >> NegatedExponent);
             }
-             */
         } else if (AIF == NULL) {
             Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
@@ -91,7 +90,7 @@ extern "C" {
                         AIFSkipPadding(BitB, AIFFSubChunkSize);
                         break;
                     case AIF_ANNO:
-                        BitBuffer_Seek(BitB, Bytes2Bits(AIFFSubChunkSize));
+                        AIFParseAnnotationChunk(AIF, BitB);
                         AIFSkipPadding(BitB, AIFFSubChunkSize);
                         break;
                     case AIF_AUTH:

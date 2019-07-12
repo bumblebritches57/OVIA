@@ -35,30 +35,6 @@ extern "C" {
         return Tree;
     }
     
-    void HuffmanTree_AddLengthTable(HuffmanTree *Tree, HuffmanTree *LengthTable) {
-        if (Tree != NULL) {
-            Tree->LengthTable = LengthTable;
-        }
-    }
-    
-    void HuffmanTree_AddDistanceTable(HuffmanTree *Tree, HuffmanTree *DistanceTable) {
-        if (Tree != NULL) {
-            Tree->DistanceTable = DistanceTable;
-        }
-    }
-    
-    void HuffmanTree_Deinit(HuffmanTree *Tree) {
-        if (Tree != NULL) {
-            free(Tree->LengthTable->Frequency);
-            free(Tree->LengthTable->Symbols);
-            free(Tree->LengthTable);
-            free(Tree->DistanceTable->Frequency);
-            free(Tree->DistanceTable->Symbols);
-            free(Tree->DistanceTable);
-            free(Tree);
-        }
-    }
-    
     void PNG_DAT_Decode(BitBuffer *BitB, ImageContainer *Image);
     
     HuffmanTree *HuffmanBuildTree(uint64_t NumSymbols, const uint16_t *Lengths);
@@ -400,7 +376,7 @@ extern "C" {
         bool          IsAnimated;
     } PNGOptions;
     
-    PNGOptions *PNGOptions_Init(void);
+    void *PNGOptions_Init(void);
     
     void PNG_Flate_ReadZlibHeader(PNGOptions *PNG, BitBuffer *BitB);
     
