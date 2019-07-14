@@ -176,21 +176,25 @@ extern "C" {
         }
     }
     
-    OVIADecoder AIFDecoder = {
-        .DecoderID             = CodecID_AIF,
-        .MediaType             = MediaType_Audio2D,
-        .MagicIDOffset         = 0,
-        .MagicIDSize           = 4,
-        .MagicID               = {0x46, 0x4F, 0x52, 0x4D},
-        .Function_Initialize   = AIFOptions_Init,
-        .Function_Parse        = AIFParseMetadata,
-        .Function_Decode       = AIFExtractSamples,
-        .Function_Deinitialize = AIFOptions_Deinit,
-        // Can we call a function here in this static struct initalizer
-        /*
-         What I need to do is take this instance of OVIADecoder, AIFDecoder, and somehow be able to link it into the global decoders...
-         Something like OVIADecoder_Register which
-         */
+    void RegisterDecoder_AIF(OVIA *Ovia, OVIADecoder *Decoder) {
+        Ovia->NumDecoders                                 += 1;
+        uint64_t DecoderIndex                              = Ovia->NumDecoders;
+        Ovia->Decoders                                     = realloc(Ovia->Decoders, sizeof(OVIADecoder) * Ovia->NumDecoders);
+        
+        Ovia->Decoders[DecoderIndex].DecoderID             = CodecID_AIF;
+        Ovia->Decoders[DecoderIndex].MediaType             = MediaType_Audio2D;
+        Ovia->Decoders[DecoderIndex].NumMagicIDs           = 1;
+        Ovia->Decoders[DecoderIndex].MagicIDOffset[0]      = 0;
+        Ovia->Decoders[DecoderIndex].MagicIDSize[0]        = 4;
+        Ovia->Decoders[DecoderIndex].MagicID[0]            = (uint8_t[4]) {0x46, 0x4F, 0x52, 0x4D};
+        Ovia->Decoders[DecoderIndex].Function_Initialize   = AIFOptions_Init;
+        Ovia->Decoders[DecoderIndex].Function_Parse        = AIFParseMetadata;
+        Ovia->Decoders[DecoderIndex].Function_Decode       = AIFExtractSamples;
+        Ovia->Decoders[DecoderIndex].Function_Deinitialize = AIFOptions_Deinit;
+    }
+    
+    static OVIACodecRegistry Register_AIFDecoder = {
+        .Function_RegisterDecoder[CodecID_AIF - CodecType_Decode] = RegisterDecoder_AIF,
     };
     
 #ifdef __cplusplus
