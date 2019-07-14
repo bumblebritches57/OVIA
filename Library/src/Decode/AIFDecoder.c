@@ -176,7 +176,7 @@ extern "C" {
         }
     }
     
-    void RegisterDecoder_AIF(OVIA *Ovia, OVIADecoder *Decoder) {
+    static void RegisterDecoder_AIF(OVIA *Ovia) {
         Ovia->NumDecoders                                 += 1;
         uint64_t DecoderIndex                              = Ovia->NumDecoders;
         Ovia->Decoders                                     = realloc(Ovia->Decoders, sizeof(OVIADecoder) * Ovia->NumDecoders);
@@ -192,6 +192,10 @@ extern "C" {
         Ovia->Decoders[DecoderIndex].Function_Decode       = AIFExtractSamples;
         Ovia->Decoders[DecoderIndex].Function_Deinitialize = AIFOptions_Deinit;
     }
+    
+    Registry AIFDecoder_Registry = {
+        .Function_RegisterDecoder[CodecID_AIF] = Register_AIFDecoder,
+    };
     
     static OVIACodecRegistry Register_AIFDecoder = {
         .Function_RegisterDecoder[CodecID_AIF - CodecType_Decode] = RegisterDecoder_AIF,

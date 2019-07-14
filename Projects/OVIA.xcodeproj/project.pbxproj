@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2C6B215F22D5959800E6D227 /* ID3.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C6B215E22D5959700E6D227 /* ID3.c */; };
 		2C6B216722D595E700E6D227 /* ID3Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6B216622D595E700E6D227 /* ID3Common.h */; };
-		2C9457F322D3DEFC00A7755E /* AIFCDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C9457F222D3DEFC00A7755E /* AIFCDecoder.c */; };
 		2CB4145622D1BE1D00C402EA /* FoundationIO.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE43FB422BCAC1C00E8DF3C /* FoundationIO.dylib */; };
 		2CB4145722D1BE8100C402EA /* OVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C502EBD228127CB00EB4956 /* OVIA.h */; };
 		2CB4145822D1BE8100C402EA /* OVIACommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CEA1E3922C4660700107B55 /* OVIACommon.h */; };
@@ -104,7 +103,6 @@
 		2C502EBD228127CB00EB4956 /* OVIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OVIA.h; path = ../libOVIA/include/OVIA.h; sourceTree = "<group>"; };
 		2C6B215E22D5959700E6D227 /* ID3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ID3.c; sourceTree = "<group>"; };
 		2C6B216622D595E700E6D227 /* ID3Common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ID3Common.h; path = ../libOVIA/include/Private/ID3Common.h; sourceTree = "<group>"; };
-		2C9457F222D3DEFC00A7755E /* AIFCDecoder.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = AIFCDecoder.c; sourceTree = "<group>"; };
 		2CAE214722C607A8005D24CB /* FLACCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = FLACCommon.c; path = ../libOVIA/src/Common/FLACCommon.c; sourceTree = "<group>"; };
 		2CAE214822C607A8005D24CB /* BMPCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BMPCommon.c; path = ../libOVIA/src/Common/BMPCommon.c; sourceTree = "<group>"; };
 		2CAE214922C607A8005D24CB /* AIFCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFCommon.c; path = ../libOVIA/src/Common/AIFCommon.c; sourceTree = "<group>"; };
@@ -223,7 +221,6 @@
 			isa = PBXGroup;
 			children = (
 				2CE43F6722BCAB2A00E8DF3C /* AIFDecoder.c */,
-				2C9457F222D3DEFC00A7755E /* AIFCDecoder.c */,
 				2CE43F6922BCAB2A00E8DF3C /* BMPDecoder.c */,
 				2CE43F6C22BCAB2A00E8DF3C /* FLACDecoder.c */,
 				2CE43F6822BCAB2A00E8DF3C /* PNGDecoder.c */,
@@ -431,7 +428,6 @@
 				2CB4147122D1BE8100C402EA /* FLACEncoder.c in Sources */,
 				2CB4146122D1BE8100C402EA /* AIFCommon.c in Sources */,
 				2CB4147022D1BE8100C402EA /* BMPEncoder.c in Sources */,
-				2C9457F322D3DEFC00A7755E /* AIFCDecoder.c in Sources */,
 				2CB4146922D1BE8100C402EA /* BMPDecoder.c in Sources */,
 				2CB4146222D1BE8100C402EA /* BMPCommon.c in Sources */,
 				2CB4146F22D1BE8100C402EA /* AIFEncoder.c in Sources */,

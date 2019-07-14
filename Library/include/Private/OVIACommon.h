@@ -80,8 +80,8 @@ extern "C" {
         // Contains a list of functions to register the decoders and encoders
         // aka An array of function pointers
         // The registration functions return nothing, and take in as parameters the OVIA pointer (which may or may not be global, as well as a void pointer to the OVIADecoder/Encoder)
-        void (*Function_RegisterDecoder[OVIA_NumCodecs])(OVIA *, OVIADecoder *);
-        void (*Function_RegisterEncoder[OVIA_NumCodecs])(OVIA *, OVIAEncoder *);
+        void (*Function_RegisterDecoder[OVIA_NumCodecs])(OVIA *);
+        void (*Function_RegisterEncoder[OVIA_NumCodecs])(OVIA *);
     } OVIACodecRegistry;
     
     extern OVIACodecRegistry Registry;
