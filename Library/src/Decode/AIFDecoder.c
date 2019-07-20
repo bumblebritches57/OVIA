@@ -193,12 +193,8 @@ extern "C" {
         Ovia->Decoders[DecoderIndex].Function_Deinitialize = AIFOptions_Deinit;
     }
     
-    Registry AIFDecoder_Registry = {
-        .Function_RegisterDecoder[CodecID_AIF] = Register_AIFDecoder,
-    };
-    
     static OVIACodecRegistry Register_AIFDecoder = {
-        .Function_RegisterDecoder[CodecID_AIF - CodecType_Decode] = RegisterDecoder_AIF,
+        .Function_RegisterDecoder[CodecID_AIF]   = RegisterDecoder_AIF,
     };
     
 #ifdef __cplusplus

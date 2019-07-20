@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C21EAE622DD583F00F0232C /* PNGCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE214B22C607A9005D24CB /* PNGCommon.c */; };
+		2C38256222DBF9F400F5E1DB /* PNGEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F7922BCAB3B00E8DF3C /* PNGEncoder.c */; };
+		2C38256922DBFEDE00F5E1DB /* PNGDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F6822BCAB2A00E8DF3C /* PNGDecoder.c */; };
 		2C6B215F22D5959800E6D227 /* ID3.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C6B215E22D5959700E6D227 /* ID3.c */; };
 		2C6B216722D595E700E6D227 /* ID3Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6B216622D595E700E6D227 /* ID3Common.h */; };
 		2CB4145622D1BE1D00C402EA /* FoundationIO.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE43FB422BCAC1C00E8DF3C /* FoundationIO.dylib */; };
@@ -412,26 +415,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CB4147322D1BE8100C402EA /* PNMEncoder.c in Sources */,
-				2CB4147422D1BE8100C402EA /* W64Encoder.c in Sources */,
-				2CB4146D22D1BE8100C402EA /* W64Decoder.c in Sources */,
-				2CB4146C22D1BE8100C402EA /* PNMDecoder.c in Sources */,
-				2CB4146822D1BE8100C402EA /* AIFDecoder.c in Sources */,
-				2CB4146722D1BE8100C402EA /* PNMCommon.c in Sources */,
-				2CB4146322D1BE8100C402EA /* FLACCommon.c in Sources */,
-				2CB4146E22D1BE8100C402EA /* WAVDecoder.c in Sources */,
 				2CB4146022D1BE8100C402EA /* OVIA.c in Sources */,
-				2CB4146522D1BE8100C402EA /* W64Common.c in Sources */,
-				2CB4146A22D1BE8100C402EA /* FLACDecoder.c in Sources */,
-				2CB4147522D1BE8100C402EA /* WAVEncoder.c in Sources */,
-				2C6B215F22D5959800E6D227 /* ID3.c in Sources */,
-				2CB4147122D1BE8100C402EA /* FLACEncoder.c in Sources */,
 				2CB4146122D1BE8100C402EA /* AIFCommon.c in Sources */,
+				2CB4146822D1BE8100C402EA /* AIFDecoder.c in Sources */,
+				2CB4146F22D1BE8100C402EA /* AIFEncoder.c in Sources */,
+				2CB4146722D1BE8100C402EA /* PNMCommon.c in Sources */,
+				2CB4146C22D1BE8100C402EA /* PNMDecoder.c in Sources */,
+				2CB4147322D1BE8100C402EA /* PNMEncoder.c in Sources */,
+				2CB4146522D1BE8100C402EA /* W64Common.c in Sources */,
+				2CB4146D22D1BE8100C402EA /* W64Decoder.c in Sources */,
+				2CB4147422D1BE8100C402EA /* W64Encoder.c in Sources */,
+				2CB4146622D1BE8100C402EA /* WAVCommon.c in Sources */,
+				2CB4146E22D1BE8100C402EA /* WAVDecoder.c in Sources */,
+				2CB4147522D1BE8100C402EA /* WAVEncoder.c in Sources */,
 				2CB4147022D1BE8100C402EA /* BMPEncoder.c in Sources */,
 				2CB4146922D1BE8100C402EA /* BMPDecoder.c in Sources */,
 				2CB4146222D1BE8100C402EA /* BMPCommon.c in Sources */,
-				2CB4146F22D1BE8100C402EA /* AIFEncoder.c in Sources */,
-				2CB4146622D1BE8100C402EA /* WAVCommon.c in Sources */,
+				2C21EAE622DD583F00F0232C /* PNGCommon.c in Sources */,
+				2C38256922DBFEDE00F5E1DB /* PNGDecoder.c in Sources */,
+				2C38256222DBF9F400F5E1DB /* PNGEncoder.c in Sources */,
+				2CB4146322D1BE8100C402EA /* FLACCommon.c in Sources */,
+				2CB4146A22D1BE8100C402EA /* FLACDecoder.c in Sources */,
+				2CB4147122D1BE8100C402EA /* FLACEncoder.c in Sources */,
+				2C6B215F22D5959800E6D227 /* ID3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

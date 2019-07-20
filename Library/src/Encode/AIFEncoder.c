@@ -219,14 +219,22 @@ extern "C" {
         }
     }
     
-    OVIAEncoder AIFEncoder = {
-        .EncoderID             = CodecID_AIF,
-        .MediaType             = MediaType_Audio2D,
-        .Function_Initialize   = AIFOptions_Init,
-        .Function_WriteHeader  = AIFWriteHeader,
-        .Function_Encode       = AIFAppendSamples,
-        .Function_WriteFooter  = NULL,
-        .Function_Deinitialize = AIFOptions_Deinit,
+    static void RegisterEncoder_AIF(OVIA *Ovia) {
+        Ovia->NumEncoders                                 += 1;
+        uint64_t EncoderIndex                              = Ovia->NumEncoders;
+        Ovia->Encoders                                     = realloc(Ovia->Encoders, sizeof(OVIAEncoder) * Ovia->NumEncoders);
+        
+        Ovia->Encoders[EncoderIndex].EncoderID             = CodecID_AIF;
+        Ovia->Encoders[EncoderIndex].MediaType             = MediaType_Audio2D;
+        Ovia->Encoders[EncoderIndex].Function_Initialize   = AIFOptions_Init;
+        Ovia->Encoders[EncoderIndex].Function_WriteHeader  = AIFWriteHeader;
+        Ovia->Encoders[EncoderIndex].Function_Encode       = AIFAppendSamples;
+        Ovia->Encoders[EncoderIndex].Function_WriteFooter  = NULL;
+        Ovia->Encoders[EncoderIndex].Function_Deinitialize = AIFOptions_Deinit;
+    }
+    
+    static OVIACodecRegistry Register_AIFEncoder = {
+        .Function_RegisterEncoder[CodecID_AIF]   = RegisterEncoder_AIF,
     };
     
 #ifdef __cplusplus

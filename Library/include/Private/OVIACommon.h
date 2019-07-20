@@ -84,7 +84,7 @@ extern "C" {
         void (*Function_RegisterEncoder[OVIA_NumCodecs])(OVIA *);
     } OVIACodecRegistry;
     
-    extern OVIACodecRegistry Registry;
+    extern OVIACodecRegistry *Registry;
     
 #ifdef __cplusplus
 }

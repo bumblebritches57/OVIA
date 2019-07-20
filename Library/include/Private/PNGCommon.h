@@ -12,55 +12,34 @@ extern "C" {
     typedef enum FlateConstants {
         MaxCodes                   = 288,
         MaxLiteralLengthCodes      = 286,
-        MaxDistanceCodes           = 30,
-        NumMetaCodes               = 19,
+        MaxDistanceCodes           = 29,
+        NumMetaCodes               = 18,
         MaxBitsPerSymbol           = 15,
+        EndOfBlock                 = 256,
     } FlateConstants;
     
-    typedef enum Flate_BlockTypes {
-        BlockType_Literal = 0,
-        BlockType_Fixed   = 1,
-        BlockType_Dynamic = 2,
-        BlockType_Invalid = 3,
-    } Flate_BlockTypes;
-    
-    typedef struct HuffmanTree {
-        uint64_t NumSymbols;
-        uint64_t Symbol; // The binary encoded value read/written from/to the stream
-        uint64_t Value; // the meaning of the ymbol
-    } HuffmanTree;
-    
-    HuffmanTree *HuffmanTree_Init(void) {
-        HuffmanTree *Tree = calloc(1, sizeof(HuffmanTree));
-        return Tree;
-    }
-    
-    void PNG_DAT_Decode(BitBuffer *BitB, ImageContainer *Image);
-    
-    HuffmanTree *HuffmanBuildTree(uint64_t NumSymbols, const uint16_t *Lengths);
-    
-    static const uint16_t LengthBase[29] = {
+    static const uint16_t LengthBase[29] = { // Lens in Puff
         3,   4,   5,   6,   7,  8,  9,  10,
         11,  13,  15,  17,  19, 23, 27,  31,
         35,  43,  51,  59,  67, 83, 99, 115,
         131, 163, 195, 227, 258
     };
     
-    static const uint8_t LengthAdditionalBits[29] = {
+    static const uint8_t LengthAdditionalBits[29] = { // Lext in Puff
         0, 0, 0, 0, 0, 0, 0, 0,
         1, 1, 1, 1, 2, 2, 2, 2,
         3, 3, 3, 3, 4, 4, 4, 4,
         5, 5, 5, 5, 0
     };
     
-    static const uint16_t DistanceBase[30] = {
+    static const uint16_t DistanceBase[30] = { // Dists in Puff
         1,    2,    3,     4,     5,     7,    9,   13,
         17,   25,   33,    49,    65,    97,  129,  193,
         257,  385,  513,   769,  1025,  1537, 2049, 3073,
         4097, 6145, 8193, 12289, 16385, 24577
     };
     
-    static const uint8_t DistanceAdditionalBits[30] = {
+    static const uint8_t DistanceAdditionalBits[30] = { // Dext in Puff
         0,   0,  0,  0,  1,  1,  2,  2,
         3,   3,  4,  4,  5,  5,  6,  6,
         7,   7,  8,  8,  9,  9, 10, 10,
@@ -119,17 +98,59 @@ extern "C" {
         5, 5, 5, 5, 5, 5, 5, 5
     };
     
+    static const uint8_t PNG_NumChannelsPerColorType[7] = {
+        1, 0, 3, 3, 4, 0, 4
+    };
+    
+    static const UTF8 PNG_MonthMap[12][4] = {
+        u8"Jan", u8"Feb", u8"Mar", u8"Apr", u8"May", u8"Jun",
+        u8"Jul", u8"Aug", u8"Sep", u8"Oct", u8"Nov", u8"Dec",
+    };
+    
+    static const uint8_t Adam7Level1[1] = {
+        0
+    };
+    
+    static const uint8_t Adam7Level2[1] = {
+        5
+    };
+    
+    static const uint8_t Adam7Level3[2] = {
+        32, 36
+    };
+    
+    static const uint8_t Adam7Level4[4] = {
+        3, 7, 35, 39
+    };
+    
+    static const uint8_t Adam7Level5[8] = {
+        17, 19, 21, 23, 49, 51, 53, 55
+    };
+    
+    static const uint8_t Adam7Level6[16] = {
+        2,  4,  6,  8, 18, 20, 22, 24,
+        34, 36, 38, 40, 50, 52, 54, 56,
+    };
+    
+    static const uint8_t Adam7Level7[32] = {
+        9, 10, 11, 12, 13, 14, 15, 16,
+        25, 26, 27, 28, 29, 30, 31, 32,
+        41, 42, 43, 44, 45, 46, 47, 48,
+        57, 58, 59, 60, 61, 62, 63, 64
+    };
+    
+    typedef enum Flate_BlockTypes {
+        BlockType_Literal = 0,
+        BlockType_Fixed   = 1,
+        BlockType_Dynamic = 2,
+        BlockType_Invalid = 3,
+    } Flate_BlockTypes;
+    
     typedef enum HuffmanTreeTypes {
         TreeType_Unknown = 0,
         TreeType_Fixed   = 1,
         TreeType_Dynamic = 2,
     } HuffmanTreeTypes;
-    
-    HuffmanTree *PNG_Flate_BuildTree(BitBuffer *BitB, HuffmanTreeTypes TreeType);
-    
-    uint64_t ReadHuffman(HuffmanTree *Tree, BitBuffer *BitB);
-    
-    uint16_t PNG_Flate_ReadSymbol(HuffmanTree *Tree, BitBuffer *BitB);
     
     typedef enum PNG_Interlace_Types {
         PNGNotInterlaced   = 0,
@@ -177,6 +198,7 @@ extern "C" {
         tIMEMarker         = 0x74494d45,
         tRNSMarker         = 0x74524e53,
         sPLTMarker         = 0x73504c54,
+        iENDMarker         = 0x49454E44,
     } PNG_ChunkMarkers;
     
     typedef enum PNGTextTypes {
@@ -185,6 +207,23 @@ extern "C" {
         iTXt            = 2,
         zTXt            = 3,
     } PNGTextTypes;
+    
+    typedef struct HuffmanNode {
+        struct HuffmanNode *Left;
+        struct HuffmanNode *Right;
+        int16_t             Symbol; // Code
+    } HuffmanNode;
+    
+    typedef struct HuffmanRange {
+        
+        uint8_t NumBits;
+    } HuffmanRange;
+    
+    typedef struct HuffmanTree {
+        uint16_t  NumSymbols;
+        uint16_t *Frequency; // Was Count
+        uint16_t *Symbol; // The binary encoded value read/written from/to the stream
+    } HuffmanTree;
     
     typedef struct iHDRChunk {
         uint32_t            Width;
@@ -208,7 +247,7 @@ extern "C" {
     } tRNSChunk;
     
     typedef struct bkGDChunk {
-        uint8_t    BackgroundPaletteEntry;
+        uint8_t   *BackgroundPaletteEntry;
         uint16_t   Gray;
         uint16_t   Red;
         uint16_t   Green;
@@ -271,11 +310,12 @@ extern "C" {
         uint16_t  *Blue;
         uint16_t  *Alpha;
         uint16_t  *RelativeFrequency;
-        char      *Name;
+        UTF8      *Name;
         uint8_t    SampleDepth;
     } sPLTChunk;
     
     typedef struct pCALChunk {
+        double    *Parameters;
         UTF8      *CalibrationName;
         UTF8      *UnitName;
         uint8_t    NumParams;
@@ -296,8 +336,20 @@ extern "C" {
     } hISTChunk;
     
     typedef struct TextChunk { // Replaces:  tEXt, iTXt, zTXt
+        /* tEXT/zTXt */
+        UTF8         *Author;
+        UTF8         *Title;
+        UTF8         *Description;
+        UTF8         *CreationTime;
+        /* tEXT/zTXt */
+        /* iTXt */
         UTF8         *Keyword;
-        UTF8         *Comment;
+        UTF8         *Language;
+        UTF8         *KeywordTranslated;
+        UTF8         *Text;
+        uint8_t       CompressionFlag;
+        uint8_t       CompressionMethod;
+        /* iTXt */
         PNGTextTypes  TextType;
     } TextChunk;
     
@@ -313,12 +365,10 @@ extern "C" {
     typedef struct DATChunk {
         uint64_t     ImageSize;
         uint64_t     ImageOffset;
-        uint32_t     DictID;
         uint32_t     Size;
         uint16_t     LengthLiteralTreeSize;
         uint8_t      DistanceTreeSize;
-        uint8_t      CMF;
-        uint8_t      FLG;
+        uint32_t     DictID;
     } DATChunk;
     
     typedef struct acTLChunk {
@@ -347,7 +397,9 @@ extern "C" {
     } iENDChunk;
     
     typedef struct PNGOptions {
+        uint8_t      *LZ77Buffer; // 32768 bytes
         sPLTChunk   **sPLT; // May be multiple
+        TextChunk   **Text; // Order doesn't matter
         iHDRChunk    *iHDR;
         cHRMChunk    *cHRM;
         gAMAChunk    *gAMA;
@@ -363,7 +415,6 @@ extern "C" {
         sCALChunk    *sCAL; // Extension, before first iDAT
         pCALChunk    *pCAL; // Extension, after PLTE, before iDAT
         tIMeChunk    *tIMe; // Order doesn't matter
-        TextChunk    *Text; // Order doesn't matter
         DATChunk     *DAT;
         /* 3D */
         sTERChunk    *sTER;
@@ -373,14 +424,24 @@ extern "C" {
         fcTLChunk    *fcTL;
         fdATChunk    *fdAT;
         /* APNG */
+        uint8_t       NumSPLTChunks;
+        uint8_t       NumTextChunks;
         bool          IsAnimated;
     } PNGOptions;
     
     void *PNGOptions_Init(void);
     
-    void PNG_Flate_ReadZlibHeader(PNGOptions *PNG, BitBuffer *BitB);
+    HuffmanTree *HuffmanTree_Init(uint16_t NumSymbols);
     
-    void PNG_Flate_ReadLiteralBlock(PNGOptions *PNG, BitBuffer *BitB);
+    void PNG_DAT_Decode(PNGOptions *PNG, BitBuffer *BitB, ImageContainer *Image);
+    
+    HuffmanTree *HuffmanBuildTree(uint64_t NumSymbols, const uint16_t *Lengths);
+    
+    uint64_t ReadHuffman(BitBuffer *BitB, HuffmanTree *Tree);
+    
+    uint16_t PNG_Flate_ReadSymbol(BitBuffer *BitB, HuffmanTree *Tree);
+    
+    void PNG_Flate_ReadZlibHeader(PNGOptions *PNG, BitBuffer *BitB);
     
     /*!
      @abstract                  "Encodes a PNG from ImageContainer to a BitBuffer"
@@ -397,7 +458,6 @@ extern "C" {
     /*!
      @abstract                  "Extracts the Keyword and Comment strings from the Instance of the text chunk".
      @remark                    "If the Keyword or Comment is DEFLATE encoded, we OVIA it to a regular string".
-     @param     Ovia             "OVIA Pointer to extract the text chunk from".
      @param     Instance        "Which instance of the text chunk should we extract"?
      @param     Keyword         "Pointer the Keyword string is returned through".
      @return                    "Returns the actual Comment string".
@@ -451,7 +511,7 @@ extern "C" {
     
     void                WriteFCTLChunk(PNGOptions *PNG, BitBuffer *BitB);
     
-    void                WriteFDATChunk(BitBuffer *BitB, uint8_t *DeflatedFrameData, uint32_t DeflatedFrameDataSize);
+    void                WriteFDATChunk(PNGOptions *PNG, BitBuffer *BitB);
     
     void                WriteSTERChunk(PNGOptions *PNG, BitBuffer *BitB);
     
@@ -490,39 +550,22 @@ extern "C" {
     
     void                PNGEncodeImage(PNGOptions *PNG, BitBuffer *BitB);
     
-    static const uint8_t Adam7Level1[1] = {
-        0
-    };
-    
-    static const uint8_t Adam7Level2[1] = {
-        5
-    };
-    
-    static const uint8_t Adam7Level3[2] = {
-        32, 36
-    };
-    
-    static const uint8_t Adam7Level4[4] = {
-        3, 7, 35, 39
-    };
-    
-    static const uint8_t Adam7Level5[8] = {
-        17, 19, 21, 23, 49, 51, 53, 55
-    };
-    
-    static const uint8_t Adam7Level6[16] = {
-        2,  4,  6,  8, 18, 20, 22, 24,
-        34, 36, 38, 40, 50, 52, 54, 56,
-    };
-    
-    static const uint8_t Adam7Level7[32] = {
-        9, 10, 11, 12, 13, 14, 15, 16,
-        25, 26, 27, 28, 29, 30, 31, 32,
-        41, 42, 43, 44, 45, 46, 47, 48,
-        57, 58, 59, 60, 61, 62, 63, 64
-    };
-    
     void PNGOptions_Deinit(PNGOptions *PNG);
+    
+    
+    
+    
+    
+    
+    
+    
+    uint64_t ReadSymbol(BitBuffer *BitB, HuffmanTree *Tree);
+    
+    void PNG_Flate_ReadHuffman(PNGOptions *PNG, BitBuffer *BitB, HuffmanTree *LengthTree, HuffmanTree *DistanceTree, ImageContainer *Image);
+    
+    void PNG_Flate_ReadDeflateBlock(PNGOptions *PNG, BitBuffer *BitB, ImageContainer *Image);
+    
+    HuffmanTree *PNG_Flate_BuildHuffmanTree(uint16_t *SymbolLengths, uint16_t NumSymbols);
     
 #ifdef __cplusplus
 }
