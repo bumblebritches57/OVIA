@@ -49,9 +49,9 @@ extern "C" {
     
     typedef struct OVIAEncoder {
         void *           (*Function_Initialize)(void);
-        void             (*Function_WriteHeader)(void*,BitBuffer*);
-        void             (*Function_Encode)(void*,BitBuffer*);
-        void             (*Function_WriteFooter)(BitBuffer*);
+        void             (*Function_WriteHeader)(void*, BitBuffer*);
+        void             (*Function_Encode)(void*, BitBuffer*);
+        void             (*Function_WriteFooter)(void*, BitBuffer*);
         void             (*Function_Deinitialize)(void*);
         OVIA_CodecIDs      EncoderID;
         OVIA_MediaTypes    MediaType;
