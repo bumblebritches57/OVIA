@@ -234,7 +234,7 @@ extern "C" {
     }
     
     static OVIACodecRegistry Register_AIFEncoder = {
-        .Function_RegisterEncoder[CodecID_AIF]   = RegisterEncoder_AIF,
+        .Function_RegisterEncoder[CodecID_AIF - 1]   = RegisterEncoder_AIF,
     };
     
 #ifdef __cplusplus

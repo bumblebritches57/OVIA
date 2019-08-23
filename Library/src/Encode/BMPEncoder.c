@@ -89,7 +89,7 @@ extern "C" {
     }
     
     static OVIACodecRegistry Register_BMPEncoder = {
-        .Function_RegisterEncoder[CodecID_BMP]   = RegisterEncoder_BMP,
+        .Function_RegisterEncoder[CodecID_BMP - 1]   = RegisterEncoder_BMP,
     };
     
 #ifdef __cplusplus
