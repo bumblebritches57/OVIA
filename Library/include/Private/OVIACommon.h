@@ -35,10 +35,10 @@ extern "C" {
     } OVIADemuxer;
     
     typedef struct OVIADecoder {
-        void *              (*Function_Initialize)(void);
-        void                (*Function_Parse)(void*, BitBuffer*); // Takes the Init type as a parameter
-        void *              (*Function_Decode)(void*, BitBuffer*); // Returns a Container pointer
-        void                (*Function_Deinitialize)(void*);
+        void *              (**Function_Initialize)(void);
+        void                (**Function_Parse)(void*, BitBuffer*); // Takes the Init type as a parameter
+        void *              (**Function_Decode)(void*, BitBuffer*); // Returns a Container pointer
+        void                (**Function_Deinitialize)(void*);
         uint8_t              *MagicID;
         uint64_t             *MagicIDSize;
         uint64_t             *MagicIDOffset;
@@ -48,11 +48,11 @@ extern "C" {
     } OVIADecoder;
     
     typedef struct OVIAEncoder {
-        void *           (*Function_Initialize)(void);
-        void             (*Function_WriteHeader)(void*, BitBuffer*);
-        void             (*Function_Encode)(void*, BitBuffer*);
-        void             (*Function_WriteFooter)(void*, BitBuffer*);
-        void             (*Function_Deinitialize)(void*);
+        void *           (**Function_Initialize)(void);
+        void             (**Function_WriteHeader)(void*, BitBuffer*);
+        void             (**Function_Encode)(void*, BitBuffer*);
+        void             (**Function_WriteFooter)(void*, BitBuffer*);
+        void             (**Function_Deinitialize)(void*);
         OVIA_CodecIDs      EncoderID;
         OVIA_MediaTypes    MediaType;
         // How do we identify the encoder to choose? Maybe this should be an enum with a mapping function that maps all known codec names for example JPG, JPEG, JPE, JLS, JPEG-LS, JPEG-Lossless, LosslessJPEG to the CodecID
@@ -80,11 +80,10 @@ extern "C" {
         // Contains a list of functions to register the decoders and encoders
         // aka An array of function pointers
         // The registration functions return nothing, and take in as parameters the OVIA pointer (which may or may not be global, as well as a void pointer to the OVIADecoder/Encoder)
+        
         void (*Function_RegisterDecoder[OVIA_NumCodecs])(OVIA *);
         void (*Function_RegisterEncoder[OVIA_NumCodecs])(OVIA *);
     } OVIACodecRegistry;
-    
-    extern OVIACodecRegistry *Registry;
     
 #ifdef __cplusplus
 }

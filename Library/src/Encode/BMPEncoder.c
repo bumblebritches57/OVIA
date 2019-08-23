@@ -4,8 +4,9 @@
 extern "C" {
 #endif
     
-    void BMPWriteHeader(BMPOptions *BMP, BitBuffer *BitB) {
-        if (BMP != NULL && BitB != NULL) {
+    void BMPWriteHeader(void *Options, BitBuffer *BitB) {
+        if (Options != NULL && BitB != NULL) {
+            BMPOptions *BMP        = Options;
             uint32_t ImageSize     = Bits2Bytes(BMP->Width * AbsoluteI(BMP->Height) * BMP->BitDepth, RoundingType_Up);
             uint32_t DIBHeaderSize = 40;
             uint64_t FileSize      = DIBHeaderSize + 2 + ImageSize;
@@ -29,15 +30,16 @@ extern "C" {
             BitBuffer_WriteBits(BitB, LSByteFirst, LSBitFirst, 32, BMP->HeightPixelsPerMeter);
             BitBuffer_WriteBits(BitB, LSByteFirst, LSBitFirst, 32, BMP->ColorsIndexed);
             BitBuffer_WriteBits(BitB, LSByteFirst, LSBitFirst, 32, BMP->IndexedColorsUsed);
-        } else if (BMP == NULL) {
-            Log(Log_DEBUG, __func__, U8("BMPOptions Pointer is NULL"));
+        } else if (Options == NULL) {
+            Log(Log_DEBUG, __func__, U8("Options Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
     }
     
-    void BMPInsertImage(BMPOptions *BMP, BitBuffer *BitB, ImageContainer *Image) {
-        if (BMP != NULL && BitB != NULL && Image != NULL) {
+    void BMPInsertImage(void *Options, BitBuffer *BitB, ImageContainer *Image) {
+        if (Options != NULL && BitB != NULL && Image != NULL) {
+            BMPOptions *BMP        = Options;
             uint64_t Width       = ImageContainer_GetWidth(Image);
             uint64_t Height      = ImageContainer_GetHeight(Image);
             uint64_t NumChannels = ImageContainer_GetNumChannels(Image);
@@ -63,8 +65,8 @@ extern "C" {
                     }
                 }
             }
-        } else if (BMP == NULL) {
-            Log(Log_DEBUG, __func__, U8("BMPOptions Pointer is NULL"));
+        } else if (Options == NULL) {
+            Log(Log_DEBUG, __func__, U8("Options Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         } else if (Image == NULL) {

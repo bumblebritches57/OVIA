@@ -23,7 +23,7 @@ extern "C" {
                 AIF->SampleRate                = AIF->SampleRate_Mantissa + ((1 << (NegatedExponent - 1)) >> NegatedExponent);
             }
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("Options Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
@@ -37,7 +37,7 @@ extern "C" {
             AIF->Tags[AIF->NumTags - 1]        = Title;
             AIF->TagTypes[AIF->NumTags - 1]    = TitleTag;
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("Options Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
@@ -51,7 +51,7 @@ extern "C" {
             AIF->Tags[AIF->NumTags - 1]        = Author;
             AIF->TagTypes[AIF->NumTags - 1]    = AuthorTag;
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("Options Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
@@ -134,7 +134,7 @@ extern "C" {
                 Log(Log_DEBUG, __func__, U8("Invalid ChunkID 0x%X"), AIFFChunkID);
             }
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("Options Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         }
@@ -168,7 +168,7 @@ extern "C" {
                 }
             }
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, __func__, U8("AIFOptions Pointer is NULL"));
+            Log(Log_DEBUG, __func__, U8("Options Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
         } else if (Audio == NULL) {

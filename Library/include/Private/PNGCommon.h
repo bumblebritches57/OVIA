@@ -433,7 +433,7 @@ extern "C" {
     
     HuffmanTree *HuffmanTree_Init(uint16_t NumSymbols);
     
-    void PNG_DAT_Decode(PNGOptions *PNG, BitBuffer *BitB, ImageContainer *Image);
+    void PNG_DAT_Decode(void *Options, BitBuffer *BitB, ImageContainer *Image);
     
     HuffmanTree *HuffmanBuildTree(uint64_t NumSymbols, const uint16_t *Lengths);
     
@@ -441,7 +441,7 @@ extern "C" {
     
     uint16_t PNG_Flate_ReadSymbol(BitBuffer *BitB, HuffmanTree *Tree);
     
-    void PNG_Flate_ReadZlibHeader(PNGOptions *PNG, BitBuffer *BitB);
+    void PNG_Flate_ReadZlibHeader(void *Options, BitBuffer *BitB);
     
     /*!
      @abstract                  "Encodes a PNG from ImageContainer to a BitBuffer"
@@ -453,7 +453,7 @@ extern "C" {
     
     void        PNG_SetTextChunk(UTF8 *KeywordString, UTF8 *CommentString);
     
-    uint32_t    PNG_GetNumTextChunks(PNGOptions *PNG);
+    uint32_t    PNG_GetNumTextChunks(void *Options);
     
     /*!
      @abstract                  "Extracts the Keyword and Comment strings from the Instance of the text chunk".
@@ -464,38 +464,38 @@ extern "C" {
      */
     UTF8       *PNG_GetTextChunk(uint32_t Instance, UTF8 *Keyword);
     
-    uint32_t    PNG_GetWidth(PNGOptions *PNG);
+    uint32_t    PNG_GetWidth(void *Options);
     
-    uint32_t    PNG_GetHeight(PNGOptions *PNG);
+    uint32_t    PNG_GetHeight(void *Options);
     
-    uint8_t     PNG_GetBitDepth(PNGOptions *PNG);
+    uint8_t     PNG_GetBitDepth(void *Options);
     
-    uint8_t     PNG_GetColorType(PNGOptions *PNG);
+    uint8_t     PNG_GetColorType(void *Options);
     
-    bool        PNG_GetInterlaceStatus(PNGOptions *PNG);
+    bool        PNG_GetInterlaceStatus(void *Options);
     
-    bool        PNG_GetStereoscopicStatus(PNGOptions *PNG);
+    bool        PNG_GetStereoscopicStatus(void *Options);
     
-    uint32_t    PNG_GetWhitepointX(PNGOptions *PNG);
+    uint32_t    PNG_GetWhitepointX(void *Options);
     
-    uint32_t    PNG_GetWhitepointY(PNGOptions *PNG);
+    uint32_t    PNG_GetWhitepointY(void *Options);
     
-    uint32_t    PNG_GetGamma(PNGOptions *PNG);
+    uint32_t    PNG_GetGamma(void *Options);
     
-    UTF8       *PNG_GetColorProfileName(PNGOptions *PNG);
+    UTF8       *PNG_GetColorProfileName(void *Options);
     
-    uint8_t    *PNG_GetColorProfile(PNGOptions *PNG);
+    uint8_t    *PNG_GetColorProfile(void *Options);
     
     /*
      @param     GammaCorrect only does anything if there is a GAMA chunk present.
      */
-    ImageContainer *PNGExtractImage(PNGOptions *PNG, BitBuffer *BitB);
+    ImageContainer *PNGExtractImage(void *Options, BitBuffer *BitB);
     
     typedef struct HuffmanTree HuffmanTree;
     
     uint8_t             PaethPredictor(int64_t Left, int64_t Above, int64_t UpperLeft);
     
-    void                PNG_ParseChunks(PNGOptions *PNG, BitBuffer *BitB);
+    void                PNG_ParseChunks(void *Options, BitBuffer *BitB);
     
     void                PNG_Filter_Sub(ImageContainer *Image);
     
@@ -505,35 +505,35 @@ extern "C" {
     
     void                PNG_Filter_Paeth(ImageContainer *Image);
     
-    void                WriteIHDRChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteIHDRChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteACTLChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteACTLChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteFCTLChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteFCTLChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteFDATChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteFDATChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteSTERChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteSTERChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteBKGDChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteBKGDChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteCHRMChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteCHRMChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteGAMAChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteGAMAChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteOFFSChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteOFFSChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteICCPChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteICCPChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteSBITChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteSBITChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteSRGBChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteSRGBChunk(void *Options, BitBuffer *BitB);
     
-    void                WritePHYSChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WritePHYSChunk(void *Options, BitBuffer *BitB);
     
-    void                WritePCALChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WritePCALChunk(void *Options, BitBuffer *BitB);
     
-    void                WriteSCALChunk(PNGOptions *PNG, BitBuffer *BitB);
+    void                WriteSCALChunk(void *Options, BitBuffer *BitB);
     
     void                PNGEncodeFilterPaeth(ImageContainer *Image);
     
@@ -548,9 +548,9 @@ extern "C" {
      */
     void                OptimizePNG(uint8_t *Image);
     
-    void                PNGEncodeImage(PNGOptions *PNG, BitBuffer *BitB);
+    void                PNGEncodeImage(void *Options, BitBuffer *BitB);
     
-    void PNGOptions_Deinit(PNGOptions *PNG);
+    void PNGOptions_Deinit(void *Options);
     
     
     
@@ -561,9 +561,9 @@ extern "C" {
     
     uint64_t ReadSymbol(BitBuffer *BitB, HuffmanTree *Tree);
     
-    void PNG_Flate_ReadHuffman(PNGOptions *PNG, BitBuffer *BitB, HuffmanTree *LengthTree, HuffmanTree *DistanceTree, ImageContainer *Image);
+    void PNG_Flate_ReadHuffman(void *Options, BitBuffer *BitB, HuffmanTree *LengthTree, HuffmanTree *DistanceTree, ImageContainer *Image);
     
-    void PNG_Flate_ReadDeflateBlock(PNGOptions *PNG, BitBuffer *BitB, ImageContainer *Image);
+    void PNG_Flate_ReadDeflateBlock(void *Options, BitBuffer *BitB, ImageContainer *Image);
     
     HuffmanTree *PNG_Flate_BuildHuffmanTree(uint16_t *SymbolLengths, uint16_t NumSymbols);
     
