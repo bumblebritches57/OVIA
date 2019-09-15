@@ -1,11 +1,11 @@
 #include "../OVIA.h"
 
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/BitIO.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/ContainerIO.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/CryptographyIO.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/Log.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/Math.h"
-#include "../../../Dependencies/FoundationIO/libFoundationIO/include/StringIO.h"
+#include "../../../Dependencies/FoundationIO/Library/include/BitIO.h"
+#include "../../../Dependencies/FoundationIO/Library/include/ContainerIO.h"
+#include "../../../Dependencies/FoundationIO/Library/include/CryptographyIO.h"
+#include "../../../Dependencies/FoundationIO/Library/include/Log.h"
+#include "../../../Dependencies/FoundationIO/Library/include/Math.h"
+#include "../../../Dependencies/FoundationIO/Library/include/StringIO.h"
 
 #pragma once
 
