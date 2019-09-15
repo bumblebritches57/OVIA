@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		2C21EAE622DD583F00F0232C /* PNGCommon.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CAE214B22C607A9005D24CB /* PNGCommon.c */; };
+		2C2C6CEE232DF5E80025CA05 /* FoundationIO.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2C6CDE232DF5AC0025CA05 /* FoundationIO.dylib */; };
 		2C38256222DBF9F400F5E1DB /* PNGEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F7922BCAB3B00E8DF3C /* PNGEncoder.c */; };
 		2C38256922DBFEDE00F5E1DB /* PNGDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F6822BCAB2A00E8DF3C /* PNGDecoder.c */; };
 		2C6B215F22D5959800E6D227 /* ID3.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C6B215E22D5959700E6D227 /* ID3.c */; };
 		2C6B216722D595E700E6D227 /* ID3Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6B216622D595E700E6D227 /* ID3Common.h */; };
-		2CB4145622D1BE1D00C402EA /* FoundationIO.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CE43FB422BCAC1C00E8DF3C /* FoundationIO.dylib */; };
 		2CB4145722D1BE8100C402EA /* OVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C502EBD228127CB00EB4956 /* OVIA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2CB4145822D1BE8100C402EA /* OVIACommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CEA1E3922C4660700107B55 /* OVIACommon.h */; };
 		2CB4145922D1BE8100C402EA /* AIFCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CE43F8822BCAB6D00E8DF3C /* AIFCommon.h */; };
@@ -43,65 +43,66 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		2CAE214122C606AC005D24CB /* PBXContainerItemProxy */ = {
+		2C2C6CDD232DF5AC0025CA05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 2CCC439222B7E05100798CAB;
-			remoteInfo = Test_CryptographyIO;
-		};
-		2CAE214322C606AC005D24CB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2CCC438622B7E01C00798CAB;
-			remoteInfo = Test_Math;
-		};
-		2CB4145322D1BE1800C402EA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 2CA45B3F2283AA29009BFC25;
+			remoteGlobalIDString = 2CC71D79232B5EC8006DA1B8;
 			remoteInfo = FoundationIO;
 		};
-		2CE43FB322BCAC1C00E8DF3C /* PBXContainerItemProxy */ = {
+		2C2C6CDF232DF5AC0025CA05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 2CA45B402283AA29009BFC25;
-			remoteInfo = FoundationIO;
-		};
-		2CE43FB522BCAC1C00E8DF3C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2CA1BE1A21ABAF8F0035E9F9;
+			remoteGlobalIDString = 2CC71DBF232B5FD9006DA1B8;
 			remoteInfo = Test_BitIO;
 		};
-		2CE43FB722BCAC1C00E8DF3C /* PBXContainerItemProxy */ = {
+		2C2C6CE1232DF5AC0025CA05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 2CA1BE2521ABAFA20035E9F9;
+			remoteGlobalIDString = 2CC71DCB232B5FF4006DA1B8;
 			remoteInfo = Test_CommandLineIO;
 		};
-		2CE43FB922BCAC1C00E8DF3C /* PBXContainerItemProxy */ = {
+		2C2C6CE3232DF5AC0025CA05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 2CA1BE3021ABAFAC0035E9F9;
+			remoteGlobalIDString = 2CC71DD6232B5FFC006DA1B8;
 			remoteInfo = Test_ContainerIO;
 		};
-		2CE43FBB22BCAC1C00E8DF3C /* PBXContainerItemProxy */ = {
+		2C2C6CE5232DF5AC0025CA05 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 2CA1BE3B21ABAFB70035E9F9;
+			remoteGlobalIDString = 2CC71DE1232B6009006DA1B8;
+			remoteInfo = Test_CryptographyIO;
+		};
+		2C2C6CE7232DF5AC0025CA05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2CC71DEC232B6013006DA1B8;
+			remoteInfo = Test_Math;
+		};
+		2C2C6CE9232DF5AC0025CA05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2CC71DF7232B601B006DA1B8;
 			remoteInfo = Test_StringIO;
+		};
+		2C2C6CEB232DF5E30025CA05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CC71D78232B5EC8006DA1B8;
+			remoteInfo = FoundationIO;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FoundationIO.xcodeproj; path = ../Dependencies/FoundationIO/Projects/FoundationIO.xcodeproj; sourceTree = "<group>"; };
 		2C502EBB228127B900EB4956 /* OVIA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = OVIA.c; path = ../Library/src/OVIA.c; sourceTree = "<group>"; };
 		2C502EBD228127CB00EB4956 /* OVIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OVIA.h; path = ../Library/include/OVIA.h; sourceTree = "<group>"; };
 		2C6B215E22D5959700E6D227 /* ID3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ID3.c; sourceTree = "<group>"; };
@@ -135,7 +136,6 @@
 		2CE43F8C22BCAB6D00E8DF3C /* WAVCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WAVCommon.h; path = ../Library/include/Private/WAVCommon.h; sourceTree = "<group>"; };
 		2CE43F8E22BCAB6E00E8DF3C /* FLACCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FLACCommon.h; path = ../Library/include/Private/FLACCommon.h; sourceTree = "<group>"; };
 		2CE43F8F22BCAB6E00E8DF3C /* BMPCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMPCommon.h; path = ../Library/include/Private/BMPCommon.h; sourceTree = "<group>"; };
-		2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FoundationIO.xcodeproj; path = ../Dependencies/FoundationIO/Projects/FoundationIO.xcodeproj; sourceTree = "<group>"; };
 		2CEA1E3922C4660700107B55 /* OVIACommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OVIACommon.h; path = ../Library/include/Private/OVIACommon.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,7 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CB4145622D1BE1D00C402EA /* FoundationIO.dylib in Frameworks */,
+				2C2C6CEE232DF5E80025CA05 /* FoundationIO.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +171,7 @@
 		2C0B19BA21901A8A009659A3 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */,
+				2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */,
 			);
 			name = Dependencies;
 			sourceTree = "<group>";
@@ -236,6 +236,20 @@
 			path = ../Library/src/Decode;
 			sourceTree = "<group>";
 		};
+		2C2C6CD4232DF5AC0025CA05 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2C2C6CDE232DF5AC0025CA05 /* FoundationIO.dylib */,
+				2C2C6CE0232DF5AC0025CA05 /* Test_BitIO */,
+				2C2C6CE2232DF5AC0025CA05 /* Test_CommandLineIO */,
+				2C2C6CE4232DF5AC0025CA05 /* Test_ContainerIO */,
+				2C2C6CE6232DF5AC0025CA05 /* Test_CryptographyIO */,
+				2C2C6CE8232DF5AC0025CA05 /* Test_Math */,
+				2C2C6CEA232DF5AC0025CA05 /* Test_StringIO */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		2C33595121A2199F00141800 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,20 +278,6 @@
 				2C6B216622D595E700E6D227 /* ID3Common.h */,
 			);
 			name = Private;
-			sourceTree = "<group>";
-		};
-		2CE43FAC22BCAC1C00E8DF3C /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				2CE43FB422BCAC1C00E8DF3C /* FoundationIO.dylib */,
-				2CE43FB622BCAC1C00E8DF3C /* Test_BitIO */,
-				2CE43FB822BCAC1C00E8DF3C /* Test_CommandLineIO */,
-				2CE43FBA22BCAC1C00E8DF3C /* Test_ContainerIO */,
-				2CAE214222C606AC005D24CB /* Test_CryptographyIO */,
-				2CAE214422C606AC005D24CB /* Test_Math */,
-				2CE43FBC22BCAC1C00E8DF3C /* Test_StringIO */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,7 +313,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				2CB4145422D1BE1800C402EA /* PBXTargetDependency */,
+				2C2C6CEC232DF5E30025CA05 /* PBXTargetDependency */,
 			);
 			name = OVIA;
 			productName = OVIA;
@@ -347,8 +347,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 2CE43FAC22BCAC1C00E8DF3C /* Products */;
-					ProjectRef = 2CE43FAB22BCAC1C00E8DF3C /* FoundationIO.xcodeproj */;
+					ProductGroup = 2C2C6CD4232DF5AC0025CA05 /* Products */;
+					ProjectRef = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -359,53 +359,53 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		2CAE214222C606AC005D24CB /* Test_CryptographyIO */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = Test_CryptographyIO;
-			remoteRef = 2CAE214122C606AC005D24CB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2CAE214422C606AC005D24CB /* Test_Math */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = Test_Math;
-			remoteRef = 2CAE214322C606AC005D24CB /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		2CE43FB422BCAC1C00E8DF3C /* FoundationIO.dylib */ = {
+		2C2C6CDE232DF5AC0025CA05 /* FoundationIO.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
 			path = FoundationIO.dylib;
-			remoteRef = 2CE43FB322BCAC1C00E8DF3C /* PBXContainerItemProxy */;
+			remoteRef = 2C2C6CDD232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2CE43FB622BCAC1C00E8DF3C /* Test_BitIO */ = {
+		2C2C6CE0232DF5AC0025CA05 /* Test_BitIO */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = Test_BitIO;
-			remoteRef = 2CE43FB522BCAC1C00E8DF3C /* PBXContainerItemProxy */;
+			remoteRef = 2C2C6CDF232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2CE43FB822BCAC1C00E8DF3C /* Test_CommandLineIO */ = {
+		2C2C6CE2232DF5AC0025CA05 /* Test_CommandLineIO */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = Test_CommandLineIO;
-			remoteRef = 2CE43FB722BCAC1C00E8DF3C /* PBXContainerItemProxy */;
+			remoteRef = 2C2C6CE1232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2CE43FBA22BCAC1C00E8DF3C /* Test_ContainerIO */ = {
+		2C2C6CE4232DF5AC0025CA05 /* Test_ContainerIO */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = Test_ContainerIO;
-			remoteRef = 2CE43FB922BCAC1C00E8DF3C /* PBXContainerItemProxy */;
+			remoteRef = 2C2C6CE3232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2CE43FBC22BCAC1C00E8DF3C /* Test_StringIO */ = {
+		2C2C6CE6232DF5AC0025CA05 /* Test_CryptographyIO */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_CryptographyIO;
+			remoteRef = 2C2C6CE5232DF5AC0025CA05 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2C2C6CE8232DF5AC0025CA05 /* Test_Math */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_Math;
+			remoteRef = 2C2C6CE7232DF5AC0025CA05 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2C2C6CEA232DF5AC0025CA05 /* Test_StringIO */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
 			path = Test_StringIO;
-			remoteRef = 2CE43FBB22BCAC1C00E8DF3C /* PBXContainerItemProxy */;
+			remoteRef = 2C2C6CE9232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -444,10 +444,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2CB4145422D1BE1800C402EA /* PBXTargetDependency */ = {
+		2C2C6CEC232DF5E30025CA05 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = FoundationIO;
-			targetProxy = 2CB4145322D1BE1800C402EA /* PBXContainerItemProxy */;
+			targetProxy = 2C2C6CEB232DF5E30025CA05 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -526,22 +526,22 @@
 				MTL_FAST_MATH = NO;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
-                    "-fshort-enums",
-                    "-fstrict-enums",
-                    "-funsigned-char",
-                    "-fsanitize-memory-track-origins",
-                    "-fno-optimize-sibling-calls",
-                    "-fno-omit-frame-pointer",
-                    "-fsanitize-address-use-after-scope",
-                    "-fsanitize-memory-track-origins",
-                    "-fsanitize=pointer-overflow",
-                    "-Weverything",
-                    "-Wno-ignored-attributes",
-                    "-Wno-incompatible-pointer-types-discards-qualifiers",
-                    "-Wno-reserved-id-macro",
-                    "-Wno-varargs",
-                    "-Wno-c99-compat",
-                    "-Wno-assign-enum",
+					"-fshort-enums",
+					"-fstrict-enums",
+					"-funsigned-char",
+					"-fsanitize-memory-track-origins",
+					"-fno-optimize-sibling-calls",
+					"-fno-omit-frame-pointer",
+					"-fsanitize-address-use-after-scope",
+					"-fsanitize-memory-track-origins",
+					"-fsanitize=pointer-overflow",
+					"-Weverything",
+					"-Wno-ignored-attributes",
+					"-Wno-incompatible-pointer-types-discards-qualifiers",
+					"-Wno-reserved-id-macro",
+					"-Wno-varargs",
+					"-Wno-c99-compat",
+					"-Wno-assign-enum",
 				);
 				OTHER_LDFLAGS = "-v";
 				OTHER_LIBTOOLFLAGS = "-v";
