@@ -3,9 +3,9 @@
 #include "../../../Dependencies/FoundationIO/Library/include/BitIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/ContainerIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/CryptographyIO.h"
-#include "../../../Dependencies/FoundationIO/Library/include/Log.h"
-#include "../../../Dependencies/FoundationIO/Library/include/Math.h"
-#include "../../../Dependencies/FoundationIO/Library/include/StringIO.h"
+#include "../../../Dependencies/FoundationIO/Library/include/MathIO.h"
+#include "../../../Dependencies/FoundationIO/Library/include/UnicodeIO/LogIO.h"
+#include "../../../Dependencies/FoundationIO/Library/include/UnicodeIO/StringIO.h"
 
 #pragma once
 
@@ -25,26 +25,26 @@ extern "C" {
     } OVIA_MediaTypes;
     
     typedef enum OVIA_CodecTypes {
-        CodecType_Unknown = 0,
-        CodecType_Decode  = 1,
-        CodecType_Encode  = 2,
+        CodecType_Unknown     = 0,
+        CodecType_Decode      = 1,
+        CodecType_Encode      = 2,
     } OVIA_CodecTypes;
     
     typedef struct OVIADemuxer {
-        void            (*Function_ParseChunks)(void*, BitBuffer*); // Void* = PNGOptions*
+        void              (*Function_ParseChunks)(void*, BitBuffer*); // Void* = PNGOptions*
     } OVIADemuxer;
     
     typedef struct OVIADecoder {
-        void *              (**Function_Initialize)(void);
-        void                (**Function_Parse)(void*, BitBuffer*); // Takes the Init type as a parameter
-        void *              (**Function_Decode)(void*, BitBuffer*); // Returns a Container pointer
-        void                (**Function_Deinitialize)(void*);
-        uint8_t              *MagicID;
-        uint64_t             *MagicIDSize;
-        uint64_t             *MagicIDOffset;
-        uint64_t              NumMagicIDs;
-        OVIA_MediaTypes       MediaType;
-        OVIA_CodecIDs         DecoderID;
+        void *           (**Function_Initialize)(void);
+        void             (**Function_Parse)(void*, BitBuffer*); // Takes the Init type as a parameter
+        void *           (**Function_Decode)(void*, BitBuffer*); // Returns a Container pointer
+        void             (**Function_Deinitialize)(void*);
+        uint8_t            *MagicID;
+        uint64_t           *MagicIDSize;   // in Bits
+        uint64_t           *MagicIDOffset; // in Bits
+        uint64_t            NumMagicIDs;
+        OVIA_MediaTypes     MediaType;
+        OVIA_CodecIDs       DecoderID;
     } OVIADecoder;
     
     typedef struct OVIAEncoder {
@@ -53,8 +53,8 @@ extern "C" {
         void             (**Function_Encode)(void*, BitBuffer*);
         void             (**Function_WriteFooter)(void*, BitBuffer*);
         void             (**Function_Deinitialize)(void*);
-        OVIA_CodecIDs      EncoderID;
-        OVIA_MediaTypes    MediaType;
+        OVIA_CodecIDs       EncoderID;
+        OVIA_MediaTypes     MediaType;
         // How do we identify the encoder to choose? Maybe this should be an enum with a mapping function that maps all known codec names for example JPG, JPEG, JPE, JLS, JPEG-LS, JPEG-Lossless, LosslessJPEG to the CodecID
     } OVIAEncoder;
     
