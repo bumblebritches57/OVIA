@@ -29,6 +29,24 @@ set(OVIA_PublicHeaders
     "${OVIA_Dir}/include/OVIA.h"
 )
 
+option(Encode "Enable Encoding support for all selected codecs" ON)
+
+option(Decode "Enable Decoding support for all selected codecs" ON)
+
+option(Mux "Enable Muxing in OVIA" ON)
+
+option(Demux "Enable Demuxing in OVIA" ON)
+
+
+
+option(PNG "Enable PNG support in OVIA" ON)
+
+option(PCM_Video "Enable BMP, PBM,  support in OVIA (not including AVC PCM)" ON) 
+
+option(PCM_Audio "Enable AIF, WAV, W64, RF64 support in OVIA" ON)
+
+option(AVC "Enable AVC/H.264 support in OVIA" ON)
+
 set(OVIA_Sources
     "${OVIA_Dir}/src/OVIA.c"
 	"${OVIA_Dir}/src/Common/AIFCommon.c"
@@ -53,6 +71,16 @@ set(OVIA_Sources
     "${OVIA_Dir}/src/Encode/PNGEncoder.c"
     "${OVIA_Dir}/src/Encode/PNMEncoder.c"
 )
+
+function(Search What2Search Where2Search)
+if(UNIX)
+execute_process(grep -R -i "${What2Search} "${Where2Search}"
+endif(UNIX)
+if(Windows)
+execute_process(cd "${Where2Search}"
+execute_process(findstr /s /i "${What2Search}"
+endif(Windows)
+endfunction(Search)
 
 if(NOT ${CMAKE_BUILD_TYPE})
   set(CMAKE_BUILD_TYPE "${MinSizeRel}")
