@@ -244,7 +244,7 @@
 				2C2C6CE2232DF5AC0025CA05 /* Test_CommandLineIO */,
 				2C2C6CE4232DF5AC0025CA05 /* Test_ContainerIO */,
 				2C2C6CE6232DF5AC0025CA05 /* Test_CryptographyIO */,
-				2C2C6CE8232DF5AC0025CA05 /* Test_Math */,
+				2C2C6CE8232DF5AC0025CA05 /* Test_MathIO */,
 				2C2C6CEA232DF5AC0025CA05 /* Test_StringIO */,
 			);
 			name = Products;
@@ -394,9 +394,10 @@
 			remoteRef = 2C2C6CE5232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2C2C6CE8232DF5AC0025CA05 /* Test_Math */ = {
+		2C2C6CE8232DF5AC0025CA05 /* Test_MathIO */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
+			name = Test_MathIO;
 			path = Test_Math;
 			remoteRef = 2C2C6CE7232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;

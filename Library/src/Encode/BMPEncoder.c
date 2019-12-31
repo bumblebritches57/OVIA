@@ -31,9 +31,9 @@ extern "C" {
             BitBuffer_WriteBits(BitB, LSByteFirst, LSBitFirst, 32, BMP->ColorsIndexed);
             BitBuffer_WriteBits(BitB, LSByteFirst, LSBitFirst, 32, BMP->IndexedColorsUsed);
         } else if (Options == NULL) {
-            Log(Log_DEBUG, __func__, U8("Options Pointer is NULL"));
+            Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -66,11 +66,11 @@ extern "C" {
                 }
             }
         } else if (Options == NULL) {
-            Log(Log_DEBUG, __func__, U8("Options Pointer is NULL"));
+            Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, __func__, U8("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
         } else if (Image == NULL) {
-            Log(Log_DEBUG, __func__, U8("ImageContainer Pointer is NULL"));
+            Log(Log_DEBUG, __func__, UTF8String("ImageContainer Pointer is NULL"));
         }
     }
     
