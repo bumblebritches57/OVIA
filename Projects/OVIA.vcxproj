@@ -23,6 +23,7 @@
     <ClInclude Include="..\Library\include\Private\AIFCommon.h" />
     <ClInclude Include="..\Library\include\Private\BMPCommon.h" />
     <ClInclude Include="..\Library\include\Private\FLACCommon.h" />
+    <ClInclude Include="..\Library\include\Private\JPEGCommon.h" />
     <ClInclude Include="..\Library\include\Private\OVIACommon.h" />
     <ClInclude Include="..\Library\include\Private\PNGCommon.h" />
     <ClInclude Include="..\Library\include\Private\PNMCommon.h" />
@@ -33,6 +34,7 @@
     <ClCompile Include="..\Library\src\Common\AIFCommon.c" />
     <ClCompile Include="..\Library\src\Common\BMPCommon.c" />
     <ClCompile Include="..\Library\src\Common\FLACCommon.c" />
+    <ClCompile Include="..\Library\src\Common\JPEGCommon.c" />
     <ClCompile Include="..\Library\src\Common\PNGCommon.c" />
     <ClCompile Include="..\Library\src\Common\PNMCommon.c" />
     <ClCompile Include="..\Library\src\Common\W64Common.c" />
@@ -40,6 +42,7 @@
     <ClCompile Include="..\Library\src\Decode\AIFDecoder.c" />
     <ClCompile Include="..\Library\src\Decode\BMPDecoder.c" />
     <ClCompile Include="..\Library\src\Decode\FLACDecoder.c" />
+    <ClCompile Include="..\Library\src\Decode\JPEGDecoder.c" />
     <ClCompile Include="..\Library\src\Decode\PNGDecoder.c" />
     <ClCompile Include="..\Library\src\Decode\PNMDecoder.c" />
     <ClCompile Include="..\Library\src\Decode\W64Decoder.c" />
@@ -47,6 +50,7 @@
     <ClCompile Include="..\Library\src\Encode\AIFEncoder.c" />
     <ClCompile Include="..\Library\src\Encode\BMPEncoder.c" />
     <ClCompile Include="..\Library\src\Encode\FLACEncoder.c" />
+    <ClCompile Include="..\Library\src\Encode\JPEGEncoder.c" />
     <ClCompile Include="..\Library\src\Encode\PNGEncoder.c" />
     <ClCompile Include="..\Library\src\Encode\PNMEncoder.c" />
     <ClCompile Include="..\Library\src\Encode\W64Encoder.c" />
@@ -66,7 +70,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>LLVM_v142</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">

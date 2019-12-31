@@ -36,13 +36,13 @@ extern "C" {
     
     typedef struct OVIADecoder {
         void *           (**Function_Initialize)(void);
-        void             (**Function_Parse)(void*, BitBuffer*); // Takes the Init type as a parameter
         void *           (**Function_Decode)(void*, BitBuffer*); // Returns a Container pointer
+        void             (**Function_Parse)(void*, BitBuffer*); // Takes the Init type as a parameter
         void             (**Function_Deinitialize)(void*);
-        uint8_t            *MagicID;
         uint64_t           *MagicIDSize;   // in Bits
         uint64_t           *MagicIDOffset; // in Bits
         uint64_t            NumMagicIDs;
+        uint8_t            *MagicID;
         OVIA_MediaTypes     MediaType;
         OVIA_CodecIDs       DecoderID;
     } OVIADecoder;

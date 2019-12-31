@@ -48,6 +48,9 @@
     <ClInclude Include="..\Library\include\Private\BMPCommon.h">
       <Filter>Header Files\Private</Filter>
     </ClInclude>
+    <ClInclude Include="..\Library\include\Private\JPEGCommon.h">
+      <Filter>Header Files\Private</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Library\src\OVIA.c">
@@ -115,6 +118,15 @@
     </ClCompile>
     <ClCompile Include="..\Library\src\Common\BMPCommon.c">
       <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\Common\JPEGCommon.c">
+      <Filter>Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\Decode\JPEGDecoder.c">
+      <Filter>Source Files\Decode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\Encode\JPEGEncoder.c">
+      <Filter>Source Files\Encode</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
