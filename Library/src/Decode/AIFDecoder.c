@@ -177,20 +177,20 @@ extern "C" {
     }
     
     static void RegisterDecoder_AIF(OVIA *Ovia) {
-        Ovia->NumDecoders                                 += 1;
-        uint64_t DecoderIndex                              = Ovia->NumDecoders;
-        Ovia->Decoders                                     = realloc(Ovia->Decoders, sizeof(OVIADecoder) * Ovia->NumDecoders);
+        Ovia->NumDecoders                                    += 1;
+        uint64_t DecoderIndex                                 = Ovia->NumDecoders;
+        Ovia->Decoders                                        = realloc(Ovia->Decoders, sizeof(OVIADecoder) * Ovia->NumDecoders);
         
-        Ovia->Decoders[DecoderIndex].DecoderID             = CodecID_AIF;
-        Ovia->Decoders[DecoderIndex].MediaType             = MediaType_Audio2D;
-        Ovia->Decoders[DecoderIndex].NumMagicIDs           = 1;
-        Ovia->Decoders[DecoderIndex].MagicIDOffset[0]      = 0;
-        Ovia->Decoders[DecoderIndex].MagicIDSize[0]        = 4;
-        Ovia->Decoders[DecoderIndex].MagicID[0]            = (uint8_t[4]) {0x46, 0x4F, 0x52, 0x4D};
-        Ovia->Decoders[DecoderIndex].Function_Initialize   = AIFOptions_Init;
-        Ovia->Decoders[DecoderIndex].Function_Parse        = AIFParseMetadata;
-        Ovia->Decoders[DecoderIndex].Function_Decode       = AIFExtractSamples;
-        Ovia->Decoders[DecoderIndex].Function_Deinitialize = AIFOptions_Deinit;
+        Ovia->Decoders[DecoderIndex].DecoderID                = CodecID_AIF;
+        Ovia->Decoders[DecoderIndex].MediaType                = MediaType_Audio2D;
+        Ovia->Decoders[DecoderIndex].NumMagicIDs              = 1;
+        Ovia->Decoders[DecoderIndex].MagicIDOffset[0]         = 0;
+        Ovia->Decoders[DecoderIndex].MagicIDSize[0]           = 4;
+        Ovia->Decoders[DecoderIndex].MagicID[0]               = (uint8_t[4]) {0x46, 0x4F, 0x52, 0x4D};
+        Ovia->Decoders[DecoderIndex].Function_Initialize[0]   = AIFOptions_Init;
+        Ovia->Decoders[DecoderIndex].Function_Parse[0]        = AIFParseMetadata;
+        Ovia->Decoders[DecoderIndex].Function_Decode[0]       = AIFExtractSamples;
+        Ovia->Decoders[DecoderIndex].Function_Deinitialize[0] = AIFOptions_Deinit;
     }
     
     static OVIACodecRegistry Register_AIFDecoder = {
