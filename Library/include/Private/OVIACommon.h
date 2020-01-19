@@ -66,11 +66,24 @@ extern "C" {
         // How do we identify the encoder to choose? Maybe this should be an enum with a mapping function that maps all known codec names for example JPG, JPEG, JPE, JLS, JPEG-LS, JPEG-Lossless, LosslessJPEG to the CodecID
     } OVIAEncoder;
     
+    typedef struct OVIAColorTransform {
+        void                 (*Function_Transform)(ImageContainer*);
+        Image_ChannelMask     InputChannels;
+        Image_ChannelMask     OutputChannels;
+        OVIA_ColorTransforms  Transform;
+        uint8_t               NumInputChannels;
+        uint8_t               NumOutputChannels;
+    } OVIAColorTransform;
+    
     typedef struct OVIA {
-        uint64_t     NumEncoders;
-        uint64_t     NumDecoders;
-        OVIAEncoder *Encoders;
-        OVIADecoder *Decoders;
+        OVIAEncoder          *Encoders;
+        OVIADecoder          *Decoders;
+        OVIAColorTransform   *ForwardTransforms;
+        OVIAColorTransform   *ReverseTransforms;
+        uint64_t              NumEncoders;
+        uint64_t              NumDecoders;
+        uint64_t              NumForwardTransforms;
+        uint64_t              NumReverseTransforms;
     } OVIA;
     
     void OVIA_RegisterFunction_Decode(void (*Function_RegisterDecoder)(OVIA*, OVIADecoder*), OVIA *Ovia, OVIADecoder *Decoder);
@@ -91,6 +104,7 @@ extern "C" {
         
         void (*Function_RegisterDecoder[OVIA_NumCodecs])(OVIA *);
         void (*Function_RegisterEncoder[OVIA_NumCodecs])(OVIA *);
+        void (*Function_ForwardTransform[OVIA_NumTransforms])(OVIA *);
     } OVIACodecRegistry;
     
 #ifdef __cplusplus
