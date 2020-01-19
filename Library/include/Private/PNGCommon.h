@@ -503,7 +503,7 @@ extern "C" {
     
     uint8_t             PaethPredictor(int64_t Left, int64_t Above, int64_t UpperLeft);
     
-    void                PNG_ParseChunks(void *Options, BitBuffer *BitB);
+    void                PNG_ReadChunks(void *Options, BitBuffer *BitB);
     
     void                PNG_Filter_Sub(ImageContainer *Image);
     

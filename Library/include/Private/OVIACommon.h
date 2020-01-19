@@ -45,7 +45,7 @@ extern "C" {
     typedef struct OVIADecoder {
         void *           (**Function_Initialize)(void);
         void *           (**Function_Decode)(void*, BitBuffer*); // Returns a Container pointer, takes Options and BitBuffer pointer
-        void             (**Function_Parse)(void*, BitBuffer*); // Takes the Init type as a parameter
+        void             (**Function_Read)(void*, BitBuffer*); // Takes the Init type as a parameter
         void             (**Function_Deinitialize)(void*);
         uint8_t           **MagicID;
         uint64_t           *MagicIDSize;   // in Bits

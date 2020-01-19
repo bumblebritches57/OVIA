@@ -9,7 +9,7 @@ extern "C" {
      the ChunkSize field does NOT include the ChunkID or ChunkSize fields.
      */
     
-    static void AIFParseCOMMChunk(AIFOptions *AIF, BitBuffer *BitB) {
+    static void AIFReadCOMMChunk(AIFOptions *AIF, BitBuffer *BitB) {
         if (AIF != NULL && BitB != NULL) {
             AIF->NumChannels                   = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 16);
             AIF->NumSamples                    = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32); // A SampleFrame is simply a single sample from all channels.
@@ -29,7 +29,7 @@ extern "C" {
         }
     }
     
-    static void AIFParseNameChunk(AIFOptions *AIF, BitBuffer *BitB) {
+    static void AIFReadNameChunk(AIFOptions *AIF, BitBuffer *BitB) {
         if (AIF != NULL && BitB != NULL) {
             uint32_t TitleSize                 = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
             UTF8    *Title                     = BitBuffer_ReadUTF8(BitB, TitleSize);
@@ -43,7 +43,7 @@ extern "C" {
         }
     }
     
-    static void AIFParseAuthorChunk(AIFOptions *AIF, BitBuffer *BitB) {
+    static void AIFReadAuthorChunk(AIFOptions *AIF, BitBuffer *BitB) {
         if (AIF != NULL && BitB != NULL) {
             uint32_t AuthorSize                = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
             UTF8    *Author                    = BitBuffer_ReadUTF8(BitB, AuthorSize);
@@ -57,7 +57,7 @@ extern "C" {
         }
     }
     
-    static void AIFParseAnnotationChunk(AIFOptions *AIF, BitBuffer *BitB) {
+    static void AIFReadAnnotationChunk(AIFOptions *AIF, BitBuffer *BitB) {
         if (AIF != NULL && BitB != NULL) {
             uint32_t AnnotationSize            = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
             UTF8    *Annotation                = BitBuffer_ReadUTF8(BitB, AnnotationSize);
@@ -71,7 +71,7 @@ extern "C" {
         }
     }
     
-    void AIFParseMetadata(AIFOptions *AIF, BitBuffer *BitB) {
+    void AIFReadMetadata(AIFOptions *AIF, BitBuffer *BitB) {
         if (AIF != NULL && BitB != NULL) {
             AIF->FileSize                      = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
             AIFChunkIDs AIFFChunkID            = BitBuffer_ReadBits(BitB, MSByteFirst, LSBitFirst, 32);
@@ -90,15 +90,15 @@ extern "C" {
                         AIFSkipPadding(BitB, AIFFSubChunkSize);
                         break;
                     case AIF_ANNO:
-                        AIFParseAnnotationChunk(AIF, BitB);
+                        AIFReadAnnotationChunk(AIF, BitB);
                         AIFSkipPadding(BitB, AIFFSubChunkSize);
                         break;
                     case AIF_AUTH:
-                        AIFParseAuthorChunk(AIF, BitB);
+                        AIFReadAuthorChunk(AIF, BitB);
                         AIFSkipPadding(BitB, AIFFSubChunkSize);
                         break;
                     case AIF_COMM:
-                        AIFParseCOMMChunk(AIF, BitB);
+                        AIFReadCOMMChunk(AIF, BitB);
                         AIFSkipPadding(BitB, AIFFSubChunkSize);
                         break;
                     case AIF_COMT:
@@ -122,7 +122,7 @@ extern "C" {
                         AIFSkipPadding(BitB, AIFFSubChunkSize);
                         break;
                     case AIF_NAME:
-                        AIFParseNameChunk(AIF, BitB);
+                        AIFReadNameChunk(AIF, BitB);
                         AIFSkipPadding(BitB, AIFFSubChunkSize);
                         break;
                     case AIF_SSND:
@@ -188,7 +188,7 @@ extern "C" {
         Ovia->Decoders[DecoderIndex].MagicIDSize[0]           = 4;
         Ovia->Decoders[DecoderIndex].MagicID[0]               = (uint8_t[4]) {0x46, 0x4F, 0x52, 0x4D};
         Ovia->Decoders[DecoderIndex].Function_Initialize[0]   = AIFOptions_Init;
-        Ovia->Decoders[DecoderIndex].Function_Parse[0]        = AIFParseMetadata;
+        Ovia->Decoders[DecoderIndex].Function_Read[0]         = AIFReadMetadata;
         Ovia->Decoders[DecoderIndex].Function_Decode[0]       = AIFExtractSamples;
         Ovia->Decoders[DecoderIndex].Function_Deinitialize[0] = AIFOptions_Deinit;
     }
