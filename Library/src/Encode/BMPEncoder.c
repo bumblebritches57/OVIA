@@ -7,7 +7,7 @@ extern "C" {
     void BMPWriteHeader(void *Options, BitBuffer *BitB) {
         if (Options != NULL && BitB != NULL) {
             BMPOptions *BMP        = Options;
-            uint32_t ImageSize     = Bits2Bytes(BMP->Width * AbsoluteI(BMP->Height) * BMP->BitDepth, RoundingType_Up);
+            uint32_t ImageSize     = (uint32_t) Bits2Bytes(BMP->Width * AbsoluteI(BMP->Height) * BMP->BitDepth, RoundingType_Up);
             uint32_t DIBHeaderSize = 40;
             uint64_t FileSize      = DIBHeaderSize + 2 + ImageSize;
             uint16_t NumPlanes     = 1; // Constant
@@ -37,14 +37,16 @@ extern "C" {
         }
     }
     
-    void BMPInsertImage(void *Options, BitBuffer *BitB, ImageContainer *Image) {
-        if (Options != NULL && BitB != NULL && Image != NULL) {
-            BMPOptions *BMP        = Options;
-            uint64_t Width       = ImageContainer_GetWidth(Image);
-            uint64_t Height      = ImageContainer_GetHeight(Image);
-            uint64_t NumChannels = ImageContainer_GetNumChannels(Image);
-            uint64_t BitDepth    = Bits2Bytes(ImageContainer_GetBitDepth(Image), RoundingType_Up);
-            Image_Types Type     = ImageContainer_GetType(Image);
+    void BMPInsertImage(void *Options, void *Container, BitBuffer *BitB) {
+        if (Options != NULL && Container != NULL && BitB != NULL) {
+            BMPOptions *BMP       = Options;
+            ImageContainer *Image = Container;
+            uint64_t Width        = ImageContainer_GetWidth(Image);
+            uint64_t Height       = ImageContainer_GetHeight(Image);
+            ImageChannelMap *Map  = ImageContainer_GetChannelMap(Image);
+            uint64_t NumChannels  = ImageChannelMap_GetNumChannels(Map);
+            uint64_t BitDepth     = Bits2Bytes(ImageContainer_GetBitDepth(Image), RoundingType_Up);
+            Image_Types Type      = ImageContainer_GetType(Image);
             
             if (Type == ImageType_Integer8) {
                 uint8_t ****Array = (uint8_t****) ImageContainer_GetArray(Image);
@@ -67,25 +69,25 @@ extern "C" {
             }
         } else if (Options == NULL) {
             Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
+        } else if (Container == NULL) {
+            Log(Log_DEBUG, __func__, UTF8String("ImageContainer Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
-        } else if (Image == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("ImageContainer Pointer is NULL"));
         }
     }
     
     static void RegisterEncoder_BMP(OVIA *Ovia) {
-        Ovia->NumEncoders                                 += 1;
-        uint64_t EncoderIndex                              = Ovia->NumEncoders;
-        Ovia->Encoders                                     = realloc(Ovia->Encoders, sizeof(OVIAEncoder) * Ovia->NumEncoders);
+        Ovia->NumEncoders                                    += 1;
+        uint64_t EncoderIndex                                 = Ovia->NumEncoders;
+        Ovia->Encoders                                        = realloc(Ovia->Encoders, sizeof(OVIAEncoder) * Ovia->NumEncoders);
         
-        Ovia->Encoders[EncoderIndex].EncoderID             = CodecID_BMP;
-        Ovia->Encoders[EncoderIndex].MediaType             = MediaType_Audio2D;
-        Ovia->Encoders[EncoderIndex].Function_Initialize   = BMPOptions_Init;
-        Ovia->Encoders[EncoderIndex].Function_WriteHeader  = BMPWriteHeader;
-        Ovia->Encoders[EncoderIndex].Function_Encode       = BMPInsertImage;
-        Ovia->Encoders[EncoderIndex].Function_WriteFooter  = NULL;
-        Ovia->Encoders[EncoderIndex].Function_Deinitialize = BMPOptions_Deinit;
+        Ovia->Encoders[EncoderIndex].EncoderID                = CodecID_BMP;
+        Ovia->Encoders[EncoderIndex].MediaType                = MediaType_Audio2D;
+        Ovia->Encoders[EncoderIndex].Function_Initialize[0]   = BMPOptions_Init;
+        Ovia->Encoders[EncoderIndex].Function_WriteHeader[0]  = BMPWriteHeader;
+        Ovia->Encoders[EncoderIndex].Function_Encode[0]       = BMPInsertImage;
+        Ovia->Encoders[EncoderIndex].Function_WriteFooter[0]  = NULL;
+        Ovia->Encoders[EncoderIndex].Function_Deinitialize[0] = BMPOptions_Deinit;
     }
     
     static OVIACodecRegistry Register_BMPEncoder = {

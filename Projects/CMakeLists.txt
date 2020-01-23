@@ -25,10 +25,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHI
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
 set(RUNTIME_OUTPUT_DIRECTORY       "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
 
-set(OVIA_PublicHeaders
-    "${OVIA_Dir}/include/OVIA.h"
-)
-
 option(Encode "Enable Encoding support for all selected codecs" ON)
 
 option(Decode "Enable Decoding support for all selected codecs" ON)
@@ -36,8 +32,6 @@ option(Decode "Enable Decoding support for all selected codecs" ON)
 option(Mux "Enable Muxing in OVIA" ON)
 
 option(Demux "Enable Demuxing in OVIA" ON)
-
-
 
 option(PNG "Enable PNG support in OVIA" ON)
 
@@ -47,29 +41,35 @@ option(PCM_Audio "Enable AIF, WAV, W64, RF64 support in OVIA" ON)
 
 option(AVC "Enable AVC/H.264 support in OVIA" ON)
 
+set(OVIA_PublicHeaders
+    "${OVIA_Dir}/include/OVIA.h"
+)
+
 set(OVIA_Sources
-    "${OVIA_Dir}/src/OVIA.c"
-	"${OVIA_Dir}/src/Common/AIFCommon.c"
-	"${OVIA_Dir}/src/Common/BMPCommon.c"
-	"${OVIA_Dir}/src/Common/PNMCommon.c"
-	"${OVIA_Dir}/src/Common/W64Common.c"
-	"${OVIA_Dir}/src/Common/WAVCommon.c"
-	"${OVIA_Dir}/src/Common/PNGCommon.c"
-	"${OVIA_Dir}/src/Common/FLACCommon.c"
+    "${OVIA_Dir}/src/Common/AIFCommon.c"
+    "${OVIA_Dir}/src/Common/BMPCommon.c"
+    "${OVIA_Dir}/src/Common/FLACCommon.c"
+    "${OVIA_Dir}/src/Common/PNGCommon.c"
+    "${OVIA_Dir}/src/Common/PNMCommon.c"
+    "${OVIA_Dir}/src/Common/W64Common.c"
+    "${OVIA_Dir}/src/Common/WAVCommon.c"
     "${OVIA_Dir}/src/Decode/AIFDecoder.c"
-    "${OVIA_Dir}/src/Decode/FLACDecoder.c"
-    "${OVIA_Dir}/src/Decode/W64Decoder.c"
-    "${OVIA_Dir}/src/Decode/WAVDecoder.c"
     "${OVIA_Dir}/src/Decode/BMPDecoder.c"
+    "${OVIA_Dir}/src/Decode/FLACDecoder.c"
     "${OVIA_Dir}/src/Decode/PNGDecoder.c"
     "${OVIA_Dir}/src/Decode/PNMDecoder.c"
+    "${OVIA_Dir}/src/Decode/ReverseTransform.c"
+    "${OVIA_Dir}/src/Decode/W64Decoder.c"
+    "${OVIA_Dir}/src/Decode/WAVDecoder.c"
     "${OVIA_Dir}/src/Encode/AIFEncoder.c"
-    "${OVIA_Dir}/src/Encode/FLACEncoder.c"
-    "${OVIA_Dir}/src/Encode/W64Encoder.c"
-    "${OVIA_Dir}/src/Encode/WAVEncoder.c"
     "${OVIA_Dir}/src/Encode/BMPEncoder.c"
+    "${OVIA_Dir}/src/Encode/FLACEncoder.c"
+    "${OVIA_Dir}/src/Encode/ForwardTransform.c"
     "${OVIA_Dir}/src/Encode/PNGEncoder.c"
     "${OVIA_Dir}/src/Encode/PNMEncoder.c"
+    "${OVIA_Dir}/src/Encode/W64Encoder.c"
+    "${OVIA_Dir}/src/Encode/WAVEncoder.c"
+    "${OVIA_Dir}/src/OVIA.c"
 )
 
 function(Search What2Search Where2Search)

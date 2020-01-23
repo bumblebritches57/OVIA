@@ -32,16 +32,6 @@ extern "C" {
         MediaType_Video       = 4,
     } OVIA_MediaTypes;
     
-    typedef enum OVIA_CodecTypes {
-        CodecType_Unknown     = 0,
-        CodecType_Decode      = 1,
-        CodecType_Encode      = 2,
-    } OVIA_CodecTypes;
-    
-    typedef struct OVIADemuxer {
-        void              (*Function_ParseChunks)(void*, BitBuffer*); // Void* = PNGOptions*
-    } OVIADemuxer;
-    
     typedef struct OVIADecoder {
         void *           (**Function_Initialize)(void);
         void *           (**Function_Decode)(void*, BitBuffer*); // Returns a Container pointer, takes Options and BitBuffer pointer
@@ -57,10 +47,10 @@ extern "C" {
     
     typedef struct OVIAEncoder {
         void *           (**Function_Initialize)(void);
-        void             (**Function_WriteHeader)(void*, BitBuffer*);
-        void             (**Function_Encode)(void*, BitBuffer*);
-        void             (**Function_WriteFooter)(void*, BitBuffer*);
-        void             (**Function_Deinitialize)(void*);
+        void             (**Function_WriteHeader)(void *Options, BitBuffer *BitB);
+        void             (**Function_Encode)(void *Options, void *Contanier, BitBuffer *BitB); // Image*/Audio*, BitBuffer
+        void             (**Function_WriteFooter)(void *Options, BitBuffer *BitB);
+        void             (**Function_Deinitialize)(void *Options);
         OVIA_CodecIDs       EncoderID;
         OVIA_MediaTypes     MediaType;
         // How do we identify the encoder to choose? Maybe this should be an enum with a mapping function that maps all known codec names for example JPG, JPEG, JPE, JLS, JPEG-LS, JPEG-Lossless, LosslessJPEG to the CodecID
@@ -68,8 +58,8 @@ extern "C" {
     
     typedef struct OVIAColorTransform {
         void                 (*Function_Transform)(ImageContainer*);
-        Image_ChannelMask     InputChannels;
-        Image_ChannelMask     OutputChannels;
+        ImageChannelMask      InputChannels;
+        ImageChannelMask      OutputChannels;
         OVIA_ColorTransforms  Transform;
         uint8_t               NumInputChannels;
         uint8_t               NumOutputChannels;
@@ -91,7 +81,6 @@ extern "C" {
     typedef struct OVIACodecs {
         OVIAEncoder  Encoders[OVIA_NumCodecs];
         OVIADecoder  Decoders[OVIA_NumCodecs];
-        OVIADemuxer  Demuxers[OVIA_NumCodecs];
     } OVIACodecs;
     
     extern OVIACodecs *GlobalCodecs;

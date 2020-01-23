@@ -4,15 +4,15 @@
 extern "C" {
 #endif
     
-    static void AIFWriteCOMM(Audio2DContainer *Audio, BitBuffer *BitB) {
-        if (Audio != NULL && BitB != NULL) {
+    static void AIFWriteCOMM(AIFOptions *AIF, BitBuffer *BitB) {
+        if (AIF != NULL && BitB != NULL) {
             BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_COMM);
             uint16_t COMMSize = 18;
             BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, COMMSize);
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, Audio2DContainer_GetNumChannels(Audio)); // 2
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, Audio2DContainer_GetNumSamples(Audio)); // 7979748
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, Audio2DContainer_GetBitDepth(Audio)); // 16
-            uint64_t SampleRate = ConvertInteger2Double(Audio2DContainer_GetSampleRate(Audio));
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, AIF->NumChannels); // 2
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF->NumSamples); // 7979748
+            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, AIF->BitDepth); // 16
+            uint64_t SampleRate = ConvertInteger2Double(AIF->SampleRate);
             // 44100  = 0x400E 0xAC44000000000000
             // 48000  = 0x400E 0xBB80000000000000
             // 88200  = 0x400F 0xAC44000000000000
@@ -89,8 +89,8 @@ extern "C" {
             
             BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, (SampleRate >> 52) + 15360);
             BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 64, 0x8000000000000000LLU | SampleRate << 11); // SampleRate Mantissa
-        } else if (Audio == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("Audio2DContainer Pointer is NULL"));
+        } else if (AIF == NULL) {
+            Log(Log_DEBUG, __func__, UTF8String("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
         }
@@ -125,7 +125,7 @@ extern "C" {
             uint64_t Offset      = AIF->SampleOffset;
             uint64_t BlockSize   = AIF->BlockSize;
             
-            uint32_t ChunkSize   = 8 + ((NumSamples * NumChannels) * Bits2Bytes(BitDepth, RoundingType_Up));
+            uint32_t ChunkSize   = (uint32_t) 8 + ((NumSamples * NumChannels) * Bits2Bytes(BitDepth, RoundingType_Up));
             BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, ChunkSize);
             BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, Offset);
             BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, BlockSize);
@@ -136,8 +136,9 @@ extern "C" {
         }
     }
     
-    void AIFWriteHeader(AIFOptions *AIF, BitBuffer *BitB) {
-        if (AIF != NULL && BitB != NULL) {
+    void AIFWriteHeader(void *Options, BitBuffer *BitB) {
+        if (Options != NULL && BitB != NULL) {
+            AIFOptions *AIF      = Options;
             BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_SSND);
             uint64_t NumSamples  = AIF->NumSamples;
             uint64_t NumChannels = AIF->NumChannels;
@@ -150,15 +151,17 @@ extern "C" {
             AIFWriteTitle(AIF, BitB);
             AIFWriteArtist(AIF, BitB);
             AIFWriteSSND(AIF, BitB);
-        } else if (AIF == NULL) {
+        } else if (Options == NULL) {
             Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
-    void AIFAppendSamples(AIFOptions *AIF, BitBuffer *BitB, Audio2DContainer *Audio) {
-        if (AIF != NULL && BitB != NULL && Audio != NULL) {
+    void AIFAppendSamples(void *Options, void *Container, BitBuffer *BitB) {
+        if (Options != NULL && Container != NULL && BitB != NULL) {
+            AIFOptions *AIF          = Options;
+            Audio2DContainer *Audio  = Container;
             uint64_t NumSamples      = Audio2DContainer_GetNumSamples(Audio);
             uint64_t NumChannels     = Audio2DContainer_GetNumChannels(Audio);
             uint64_t BitDepth        = Audio2DContainer_GetBitDepth(Audio);
@@ -210,27 +213,27 @@ extern "C" {
                     }
                 }
             }
-        } else if (AIF == NULL) {
+        } else if (Options == NULL) {
             Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
+        } else if (Container == NULL) {
+            Log(Log_DEBUG, __func__, UTF8String("Audio2DContainer Pointer is NULL"));
         } else if (BitB == NULL) {
             Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
-        } else if (Audio == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("Audio2DContainer Pointer is NULL"));
         }
     }
     
     static void RegisterEncoder_AIF(OVIA *Ovia) {
-        Ovia->NumEncoders                                 += 1;
-        uint64_t EncoderIndex                              = Ovia->NumEncoders;
-        Ovia->Encoders                                     = realloc(Ovia->Encoders, sizeof(OVIAEncoder) * Ovia->NumEncoders);
+        Ovia->NumEncoders                                    += 1;
+        uint64_t EncoderIndex                                 = Ovia->NumEncoders;
+        Ovia->Encoders                                        = realloc(Ovia->Encoders, sizeof(OVIAEncoder) * Ovia->NumEncoders);
         
-        Ovia->Encoders[EncoderIndex].EncoderID             = CodecID_AIF;
-        Ovia->Encoders[EncoderIndex].MediaType             = MediaType_Audio2D;
-        Ovia->Encoders[EncoderIndex].Function_Initialize   = AIFOptions_Init;
-        Ovia->Encoders[EncoderIndex].Function_WriteHeader  = AIFWriteHeader;
-        Ovia->Encoders[EncoderIndex].Function_Encode       = AIFAppendSamples;
-        Ovia->Encoders[EncoderIndex].Function_WriteFooter  = NULL;
-        Ovia->Encoders[EncoderIndex].Function_Deinitialize = AIFOptions_Deinit;
+        Ovia->Encoders[EncoderIndex].EncoderID                = CodecID_AIF;
+        Ovia->Encoders[EncoderIndex].MediaType                = MediaType_Audio2D;
+        Ovia->Encoders[EncoderIndex].Function_Initialize[0]   = AIFOptions_Init;
+        Ovia->Encoders[EncoderIndex].Function_WriteHeader[0]  = AIFWriteHeader;
+        Ovia->Encoders[EncoderIndex].Function_Encode[0]       = AIFAppendSamples;
+        Ovia->Encoders[EncoderIndex].Function_WriteFooter[0]  = NULL;
+        Ovia->Encoders[EncoderIndex].Function_Deinitialize[0] = AIFOptions_Deinit;
     }
     
     static OVIACodecRegistry Register_AIFEncoder = {

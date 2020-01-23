@@ -245,12 +245,12 @@ extern "C" {
     } iHDRChunk;
     
     typedef struct PLTEChunk {
-        uint8_t  **Palette;
+        uint8_t   *Palette;
         uint8_t    NumEntries;
     } PLTEChunk;
     
     typedef struct tRNSChunk {
-        uint8_t  **Palette;
+        uint8_t   *Palette;
         uint8_t    NumEntries;
     } tRNSChunk;
     
@@ -457,7 +457,7 @@ extern "C" {
      @param     BitB            "The BitBuffer to contain the encoded png".
      @param     OptimizePNG     "Should this PNG file be optimized by trying all filters? (Huffman optimization is enabled by default)"
      */
-    void        PNG_Image_Insert(ImageContainer *Image, BitBuffer *BitB, bool OptimizePNG);
+    void        PNG_Image_Insert(void *Options, void *Container, BitBuffer *Bit);
     
     void        PNG_SetTextChunk(UTF8 *KeywordString, UTF8 *CommentString);
     
@@ -497,7 +497,7 @@ extern "C" {
     /*
      @param     GammaCorrect only does anything if there is a GAMA chunk present.
      */
-    ImageContainer *PNGExtractImage(void *Options, BitBuffer *BitB);
+    void *PNGExtractImage(void *Options, BitBuffer *BitB);
     
     typedef struct HuffmanTree HuffmanTree;
     
@@ -558,7 +558,7 @@ extern "C" {
     
     void                PNGEncodeImage(void *Options, BitBuffer *BitB);
     
-    void PNGOptions_Deinit(void *Options);
+    void                PNGOptions_Deinit(void *Options);
     
     
     
