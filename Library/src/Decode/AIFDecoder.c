@@ -23,9 +23,9 @@ extern "C" {
                 AIF->SampleRate                = AIF->SampleRate_Mantissa + ((1 << (NegatedExponent - 1)) >> NegatedExponent);
             }
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -37,9 +37,9 @@ extern "C" {
             AIF->Tags[AIF->NumTags - 1]        = *Title;
             AIF->TagTypes[AIF->NumTags - 1]    = TitleTag;
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -51,9 +51,9 @@ extern "C" {
             AIF->Tags[AIF->NumTags - 1]        = *Author;
             AIF->TagTypes[AIF->NumTags - 1]    = AuthorTag;
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -65,9 +65,9 @@ extern "C" {
             AIF->Tags[AIF->NumTags - 1]        = *Annotation;
             AIF->TagTypes[AIF->NumTags - 1]    = AnnotationTag;
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("OVIA Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("OVIA Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -132,12 +132,12 @@ extern "C" {
                         break;
                 }
             } else {
-                Log(Log_DEBUG, __func__, UTF8String("Invalid ChunkID 0x%X"), AIFFChunkID);
+                Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Invalid ChunkID 0x%X"), AIFFChunkID);
             }
         } else if (Options == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -172,9 +172,9 @@ extern "C" {
                 }
             }
         } else if (Options == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("Options Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, __func__, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
         return Audio;
     }

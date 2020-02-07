@@ -9,7 +9,7 @@ extern "C" {
             ImageChannelMap *Map  = ImageContainer_GetChannelMap(Image);
             uint8_t NumChannels  = ImageChannelMap_GetNumChannels(Map);
             if (NumChannels < 2 || NumChannels > 4) {
-                Log(Log_DEBUG, __func__, UTF8String("NumChannels %u must be 3 or 4"), NumChannels);
+                Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("NumChannels %u must be 3 or 4"), NumChannels);
             } else {
                 //ImageChannelMask RGBMask                         = ImageMask_Red | ImageMask_Green | ImageMask_Blue;
                 //ImageChannelMask RGBAMask                        = ImageMask_Red | ImageMask_Green | ImageMask_Blue | ImageMask_Alpha;
@@ -75,12 +75,12 @@ extern "C" {
                 ImageContainer_SetChannelMap(Image, NewMap);
                 /*
                  } else {
-                 Log(Log_DEBUG, __func__, UTF8String("Unsupported Channel Mask %u"), Mask);
+                 Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Unsupported Channel Mask %u"), Mask);
                  }
                  */
             }
         } else {
-            Log(Log_DEBUG, __func__, UTF8String("ImageContainer Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("ImageContainer Pointer is NULL"));
         }
     }
     
@@ -156,14 +156,14 @@ extern "C" {
                 ImageContainer_SetChannelMap(Image, NewMap);
                 /*
                  } else {
-                 Log(Log_DEBUG, __func__, UTF8String("Unsupported Channel Mask %u"), Mask);
+                 Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Unsupported Channel Mask %u"), Mask);
                  }
                  */
             } else {
-                Log(Log_DEBUG, __func__, UTF8String("NumChannels %hhu must be 3 or 4"), NumChannels);
+                Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("NumChannels %hhu must be 3 or 4"), NumChannels);
             }
         } else {
-            Log(Log_DEBUG, __func__, UTF8String("ImageContainer Pointer is NULL"));
+            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("ImageContainer Pointer is NULL"));
         }
     }
     
