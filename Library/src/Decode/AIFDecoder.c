@@ -187,8 +187,8 @@ extern "C" {
         Ovia->Decoders[DecoderIndex].DecoderID                = CodecID_AIF;
         Ovia->Decoders[DecoderIndex].MediaType                = MediaType_Audio2D;
         Ovia->Decoders[DecoderIndex].NumMagicIDs              = 1;
-        Ovia->Decoders[DecoderIndex].MagicIDOffset[0]         = 0;
-        Ovia->Decoders[DecoderIndex].MagicIDSize[0]           = 4;
+        Ovia->Decoders[DecoderIndex].MagicIDOffsetInBits[0]   = 0;
+        Ovia->Decoders[DecoderIndex].MagicIDSizeInBits[0]     = 32;
         Ovia->Decoders[DecoderIndex].MagicID[0]               = (uint8_t[4]) {0x46, 0x4F, 0x52, 0x4D};
         Ovia->Decoders[DecoderIndex].Function_Initialize[0]   = AIFOptions_Init;
         Ovia->Decoders[DecoderIndex].Function_Read[0]         = AIFReadMetadata;

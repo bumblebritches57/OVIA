@@ -38,8 +38,8 @@ extern "C" {
         void             (**Function_Read)(void*, BitBuffer*); // Takes the Init type as a parameter
         void             (**Function_Deinitialize)(void*);
         uint8_t           **MagicID;
-        uint64_t           *MagicIDSize;   // in Bits
-        uint64_t           *MagicIDOffset; // in Bits
+        uint64_t           *MagicIDSizeInBits;
+        uint64_t           *MagicIDOffsetInBits;
         uint64_t            NumMagicIDs;
         OVIA_MediaTypes     MediaType;
         OVIA_CodecIDs       DecoderID;
