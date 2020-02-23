@@ -167,38 +167,18 @@ extern "C" {
         }
     }
     
-    static void RegisterTransform_ForwardRCT(OVIA *Ovia) {
-        Ovia->NumForwardTransforms                                += 1;
-        uint64_t TransformIndex                                    = Ovia->NumForwardTransforms;
-        Ovia->ForwardTransforms                                    = realloc(Ovia->ForwardTransforms, sizeof(OVIAColorTransform) * Ovia->NumForwardTransforms);
-        
-        Ovia->ForwardTransforms[TransformIndex].Transform          = ColorTransform_RCT;
-        Ovia->ForwardTransforms[TransformIndex].InputChannels      = (ImageMask_Red | ImageMask_Green | ImageMask_Blue);
-        Ovia->ForwardTransforms[TransformIndex].OutputChannels     = (ImageMask_Luma | ImageMask_Chroma1 | ImageMask_Chroma2);
-        Ovia->ForwardTransforms[TransformIndex].NumInputChannels   = 3;
-        Ovia->ForwardTransforms[TransformIndex].NumOutputChannels  = 3;
-        Ovia->ForwardTransforms[TransformIndex].Function_Transform = ForwardTransform_RCT;
-    }
-    
-    static void RegisterTransform_ForwardYCoCgR(OVIA *Ovia) {
-        Ovia->NumForwardTransforms                                += 1;
-        uint64_t TransformIndex                                    = Ovia->NumForwardTransforms;
-        Ovia->ForwardTransforms                                    = realloc(Ovia->ForwardTransforms, sizeof(OVIAColorTransform) * Ovia->NumForwardTransforms);
-        
-        Ovia->ForwardTransforms[TransformIndex].Transform          = ColorTransform_YCoCgR;
-        Ovia->ForwardTransforms[TransformIndex].InputChannels      = (ImageMask_Red | ImageMask_Green | ImageMask_Blue);
-        Ovia->ForwardTransforms[TransformIndex].OutputChannels     = (ImageMask_Luma | ImageMask_Chroma1 | ImageMask_Chroma2);
-        Ovia->ForwardTransforms[TransformIndex].NumInputChannels   = 3;
-        Ovia->ForwardTransforms[TransformIndex].NumOutputChannels  = 3;
-        Ovia->ForwardTransforms[TransformIndex].Function_Transform = ForwardTransform_YCoCgR;
-    }
-    
-    static OVIACodecRegistry Register_ForwardTransformRCT = {
-        .Function_ForwardTransform[ColorTransform_RCT - 1]         = &RegisterTransform_ForwardRCT,
+    OVIAColorTransform ForwardRCT = {
+        .Transform             = ColorTransform_RCT,
+        .InputChannels         = (ImageMask_Red | ImageMask_Green | ImageMask_Blue),
+        .OutputChannels        = (ImageMask_Luma | ImageMask_Chroma1 | ImageMask_Chroma2),
+        .Function_Transform    = ForwardTransform_RCT,
     };
     
-    static OVIACodecRegistry Register_ForwardTransformYCoCgR = {
-        .Function_ForwardTransform[ColorTransform_YCoCgR - 1]      = &RegisterTransform_ForwardYCoCgR,
+    OVIAColorTransform ForwardYCoCgR = {
+        .Transform             = ColorTransform_YCoCgR,
+        .InputChannels         = (ImageMask_Red | ImageMask_Green | ImageMask_Blue),
+        .OutputChannels        = (ImageMask_Luma | ImageMask_Chroma1 | ImageMask_Chroma2),
+        .Function_Transform    = ForwardTransform_YCoCgR,
     };
     
 #ifdef __cplusplus

@@ -76,22 +76,22 @@ extern "C" {
         }
     }
     
-    static void RegisterEncoder_BMP(OVIA *Ovia) {
-        Ovia->NumEncoders                                    += 1;
-        uint64_t EncoderIndex                                 = Ovia->NumEncoders;
-        Ovia->Encoders                                        = realloc(Ovia->Encoders, sizeof(OVIAEncoder) * Ovia->NumEncoders);
-        
-        Ovia->Encoders[EncoderIndex].EncoderID                = CodecID_BMP;
-        Ovia->Encoders[EncoderIndex].MediaType                = MediaType_Audio2D;
-        Ovia->Encoders[EncoderIndex].Function_Initialize[0]   = BMPOptions_Init;
-        Ovia->Encoders[EncoderIndex].Function_WriteHeader[0]  = BMPWriteHeader;
-        Ovia->Encoders[EncoderIndex].Function_Encode[0]       = BMPInsertImage;
-        Ovia->Encoders[EncoderIndex].Function_WriteFooter[0]  = NULL;
-        Ovia->Encoders[EncoderIndex].Function_Deinitialize[0] = BMPOptions_Deinit;
-    }
+#define NumBMPExtensions 2
     
-    static OVIACodecRegistry Register_BMPEncoder = {
-        .Function_RegisterEncoder[CodecID_BMP - 1]   = RegisterEncoder_BMP,
+    static const UTF32 *BMPExtensions[NumBMPExtensions] = {
+        [0] = UTF32String("bmp"),
+        [1] = UTF32String("dib"),
+    };
+    
+    static const OVIAEncoder BMPEncoder = {
+        .EncoderID             = CodecID_BMP,
+        .MediaType             = MediaType_Image,
+        .NumExtensions         = NumBMPExtensions,
+        .Extensions            = BMPExtensions,
+        .Function_Initialize   = BMPOptions_Init,
+        .Function_WriteHeader  = BMPWriteHeader,
+        .Function_Encode       = BMPInsertImage,
+        .Function_Deinitialize = BMPOptions_Deinit,
     };
     
 #ifdef __cplusplus

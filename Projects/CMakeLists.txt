@@ -29,17 +29,13 @@ option(Encode "Enable Encoding support for all selected codecs" ON)
 
 option(Decode "Enable Decoding support for all selected codecs" ON)
 
-option(Mux "Enable Muxing in OVIA" ON)
+option(Audio "Enables selected audio codecs" ON)
 
-option(Demux "Enable Demuxing in OVIA" ON)
+option(Image "Enables selected image codecs" ON)
 
-option(PNG "Enable PNG support in OVIA" ON)
+option(PCM "Audio: AIF, WAV, W64; Image: BMP, PNM" ON)
 
-option(PCM_Video "Enable BMP, PBM,  support in OVIA (not including AVC PCM)" ON) 
-
-option(PCM_Audio "Enable AIF, WAV, W64, RF64 support in OVIA" ON)
-
-option(AVC "Enable AVC/H.264 support in OVIA" ON)
+option(Compressed "Audio: FLAC; Image: PNG, JPEG" ON)
 
 set(OVIA_PublicHeaders
     "${OVIA_Dir}/include/OVIA.h"

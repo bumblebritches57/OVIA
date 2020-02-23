@@ -179,25 +179,37 @@ extern "C" {
         return Audio;
     }
     
-    static void RegisterDecoder_AIF(OVIA *Ovia) {
-        Ovia->NumDecoders                                    += 1;
-        uint64_t DecoderIndex                                 = Ovia->NumDecoders;
-        Ovia->Decoders                                        = realloc(Ovia->Decoders, sizeof(OVIADecoder) * Ovia->NumDecoders);
-        
-        Ovia->Decoders[DecoderIndex].DecoderID                = CodecID_AIF;
-        Ovia->Decoders[DecoderIndex].MediaType                = MediaType_Audio2D;
-        Ovia->Decoders[DecoderIndex].NumMagicIDs              = 1;
-        Ovia->Decoders[DecoderIndex].MagicIDOffsetInBits[0]   = 0;
-        Ovia->Decoders[DecoderIndex].MagicIDSizeInBits[0]     = 32;
-        Ovia->Decoders[DecoderIndex].MagicID[0]               = (uint8_t[4]) {0x46, 0x4F, 0x52, 0x4D};
-        Ovia->Decoders[DecoderIndex].Function_Initialize[0]   = AIFOptions_Init;
-        Ovia->Decoders[DecoderIndex].Function_Read[0]         = AIFReadMetadata;
-        Ovia->Decoders[DecoderIndex].Function_Decode[0]       = AIFExtractSamples;
-        Ovia->Decoders[DecoderIndex].Function_Deinitialize[0] = AIFOptions_Deinit;
-    }
+#define NumAIFMagicIDs 2
     
-    static OVIACodecRegistry Register_AIFDecoder = {
-        .Function_RegisterDecoder[CodecID_AIF - 1]   = RegisterDecoder_AIF,
+    static const MagicIDSizes AIFMagicIDSize = {
+        .NumSizes = NumAIFMagicIDs,
+        .Sizes    = {[0] = 1, [1] = 2},
+    };
+    
+    static const MagicIDOffsets AIFMagicIDOffset = {
+        .NumOffsets = NumAIFMagicIDs,
+        .Offsets    = {[0] = 1, [1] = 2},
+    };
+    
+    static const MagicIDNumbers AIFMagicIDNumber = {
+        .NumMagicIDs           = NumAIFMagicIDs,
+        .MagicNumbers          = {[0] = (uint8_t[4]){0x46, 0x4F, 0x52, 0x4D}},
+    };
+    
+    static const MagicIDs AIFMagicIDs = {
+        .Sizes                 = &AIFMagicIDSize,
+        .Offsets               = &AIFMagicIDOffset,
+        .Number                = &AIFMagicIDNumber,
+    };
+    
+    static const OVIADecoder AIFDecoder = {
+        .Function_Initialize   = AIFOptions_Init,
+        .Function_Decode       = AIFExtractSamples,
+        .Function_Read         = AIFReadMetadata,
+        .Function_Deinitialize = AIFOptions_Deinit,
+        .MagicID               = &AIFMagicIDs,
+        .MediaType             = MediaType_Audio2D,
+        .DecoderID             = CodecID_AIF,
     };
     
 #ifdef __cplusplus

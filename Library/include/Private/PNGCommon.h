@@ -223,7 +223,6 @@ extern "C" {
     } HuffmanNode;
     
     typedef struct HuffmanRange {
-        
         uint8_t NumBits;
     } HuffmanRange;
     
@@ -439,141 +438,33 @@ extern "C" {
     
     void *PNGOptions_Init(void);
     
-    HuffmanTree *HuffmanTree_Init(uint16_t NumSymbols);
-    
-    void PNG_DAT_Decode(void *Options, BitBuffer *BitB, ImageContainer *Image);
-    
-    HuffmanTree *HuffmanBuildTree(uint64_t NumSymbols, const uint16_t *Lengths);
-    
-    uint64_t ReadHuffman(BitBuffer *BitB, HuffmanTree *Tree);
-    
-    uint16_t PNG_Flate_ReadSymbol(BitBuffer *BitB, HuffmanTree *Tree);
-    
-    void PNG_Flate_ReadZlibHeader(void *Options, BitBuffer *BitB);
-    
-    /*!
-     @abstract                  "Encodes a PNG from ImageContainer to a BitBuffer"
-     @param     Image           "ImageContainer with the image to encode".
-     @param     BitB            "The BitBuffer to contain the encoded png".
-     @param     OptimizePNG     "Should this PNG file be optimized by trying all filters? (Huffman optimization is enabled by default)"
-     */
-    void        PNG_Image_Insert(void *Options, void *Container, BitBuffer *Bit);
-    
-    void        PNG_SetTextChunk(UTF8 *KeywordString, UTF8 *CommentString);
-    
-    uint32_t    PNG_GetNumTextChunks(void *Options);
-    
-    /*!
-     @abstract                  "Extracts the Keyword and Comment strings from the Instance of the text chunk".
-     @remark                    "If the Keyword or Comment is DEFLATE encoded, we OVIA it to a regular string".
-     @param     Instance        "Which instance of the text chunk should we extract"?
-     @param     Keyword         "Pointer the Keyword string is returned through".
-     @return                    "Returns the actual Comment string".
-     */
-    UTF8       *PNG_GetTextChunk(uint32_t Instance, UTF8 *Keyword);
-    
-    uint32_t    PNG_GetWidth(void *Options);
-    
-    uint32_t    PNG_GetHeight(void *Options);
-    
-    uint8_t     PNG_GetBitDepth(void *Options);
-    
-    uint8_t     PNG_GetColorType(void *Options);
-    
-    bool        PNG_GetInterlaceStatus(void *Options);
-    
-    bool        PNG_GetStereoscopicStatus(void *Options);
-    
-    uint32_t    PNG_GetWhitepointX(void *Options);
-    
-    uint32_t    PNG_GetWhitepointY(void *Options);
-    
-    uint32_t    PNG_GetGamma(void *Options);
-    
-    UTF8       *PNG_GetColorProfileName(void *Options);
-    
-    uint8_t    *PNG_GetColorProfile(void *Options);
-    
-    /*
-     @param     GammaCorrect only does anything if there is a GAMA chunk present.
-     */
-    void *PNGExtractImage(void *Options, BitBuffer *BitB);
-    
-    typedef struct HuffmanTree HuffmanTree;
-    
-    uint8_t             PaethPredictor(int64_t Left, int64_t Above, int64_t UpperLeft);
-    
-    void                PNG_ReadChunks(void *Options, BitBuffer *BitB);
-    
-    void                PNG_Filter_Sub(ImageContainer *Image);
-    
-    void                PNG_Filter_Up(ImageContainer *Image);
-    
-    void                PNG_Filter_Average(ImageContainer *Image);
-    
-    void                PNG_Filter_Paeth(ImageContainer *Image);
-    
-    void                WriteIHDRChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteACTLChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteFCTLChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteFDATChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteSTERChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteBKGDChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteCHRMChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteGAMAChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteOFFSChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteICCPChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteSBITChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteSRGBChunk(void *Options, BitBuffer *BitB);
-    
-    void                WritePHYSChunk(void *Options, BitBuffer *BitB);
-    
-    void                WritePCALChunk(void *Options, BitBuffer *BitB);
-    
-    void                WriteSCALChunk(void *Options, BitBuffer *BitB);
-    
-    void                PNGEncodeFilterPaeth(ImageContainer *Image);
-    
-    void                PNGEncodeFilterSub(ImageContainer *Image);
-    
-    void                PNGEncodeAdam7(BitBuffer *ProgressiveImage, BitBuffer *InterlacedImage);
-    
-    void                OptimizeAdam7(uint8_t *Image);
-    
-    /*!
-     @abstract       "Optimizes the image, by trying the 5 filters on each line, and keeping the best."
-     */
-    void                OptimizePNG(uint8_t *Image);
-    
-    void                PNGEncodeImage(void *Options, BitBuffer *BitB);
-    
-    void                PNGOptions_Deinit(void *Options);
-    
-    
-    
-    
-    
-    
-    
-    
     uint64_t ReadSymbol(BitBuffer *BitB, HuffmanTree *Tree);
     
     void PNG_Flate_ReadHuffman(void *Options, BitBuffer *BitB, HuffmanTree *LengthTree, HuffmanTree *DistanceTree, ImageContainer *Image);
     
-    void PNG_Flate_ReadDeflateBlock(void *Options, BitBuffer *BitB, ImageContainer *Image);
+    void PNG_ReadChunks(void *Options, BitBuffer *BitB);
     
-    HuffmanTree *PNG_Flate_BuildHuffmanTree(uint16_t *SymbolLengths, uint16_t NumSymbols);
+    void *PNGExtractImage(void *Options, BitBuffer *BitB);
+    
+    void PNGWriteHeader(void *Options, BitBuffer *BitB);
+    
+    void PNG_Image_Insert(void *Options, void *Container, BitBuffer *BitB);
+    
+    void PNGWriteFooter(void *Options, BitBuffer *BitB);
+    
+    void PNGOptions_Deinit(void *Options);
+    
+#define NumPNGMIMETypes 2
+    
+    static const UTF32 *PNGMIMETypes[NumPNGMIMETypes] = {
+        [0] = UTF32String("image/png"),
+    };
+    
+#define NumPNGUniformTypeIDs 1
+    
+    static const UTF32 *PNGUniformTypeIDs[NumPNGUniformTypeIDs] = {
+        [0] = UTF32String("public.png"),
+    };
     
 #ifdef __cplusplus
 }

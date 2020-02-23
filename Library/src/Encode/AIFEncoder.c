@@ -222,22 +222,23 @@ extern "C" {
         }
     }
     
-    static void RegisterEncoder_AIF(OVIA *Ovia) {
-        Ovia->NumEncoders                                    += 1;
-        uint64_t EncoderIndex                                 = Ovia->NumEncoders;
-        Ovia->Encoders                                        = realloc(Ovia->Encoders, sizeof(OVIAEncoder) * Ovia->NumEncoders);
-        
-        Ovia->Encoders[EncoderIndex].EncoderID                = CodecID_AIF;
-        Ovia->Encoders[EncoderIndex].MediaType                = MediaType_Audio2D;
-        Ovia->Encoders[EncoderIndex].Function_Initialize[0]   = AIFOptions_Init;
-        Ovia->Encoders[EncoderIndex].Function_WriteHeader[0]  = AIFWriteHeader;
-        Ovia->Encoders[EncoderIndex].Function_Encode[0]       = AIFAppendSamples;
-        Ovia->Encoders[EncoderIndex].Function_WriteFooter[0]  = NULL;
-        Ovia->Encoders[EncoderIndex].Function_Deinitialize[0] = AIFOptions_Deinit;
-    }
+#define NumAIFExtensions 3
     
-    static OVIACodecRegistry Register_AIFEncoder = {
-        .Function_RegisterEncoder[CodecID_AIF - 1]   = RegisterEncoder_AIF,
+    static const UTF32 *AIFExtensions[NumAIFExtensions] = {
+        [0] = UTF32String("aif"),
+        [1] = UTF32String("aiff"),
+        [2] = UTF32String("aifc"),
+    };
+    
+    static const OVIAEncoder AIFEncoder = {
+        .EncoderID             = CodecID_AIF,
+        .MediaType             = MediaType_Audio2D,
+        .NumExtensions         = NumAIFExtensions,
+        .Extensions            = AIFExtensions,
+        .Function_Initialize   = AIFOptions_Init,
+        .Function_WriteHeader  = AIFWriteHeader,
+        .Function_Encode       = AIFAppendSamples,
+        .Function_Deinitialize = AIFOptions_Deinit,
     };
     
 #ifdef __cplusplus
