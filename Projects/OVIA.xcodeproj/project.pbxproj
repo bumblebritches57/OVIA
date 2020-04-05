@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2C1B712E23D208DB0071BCEB /* ReverseTransforms.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B712D23D208DB0071BCEB /* ReverseTransforms.c */; };
-		2C1B713023D20A310071BCEB /* ForwardTransforms.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B712F23D20A310071BCEB /* ForwardTransforms.c */; };
 		2C2C6CEE232DF5E80025CA05 /* FoundationIO.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C2C6CDE232DF5AC0025CA05 /* FoundationIO.dylib */; };
 		2C38256222DBF9F400F5E1DB /* PNGEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F7922BCAB3B00E8DF3C /* PNGEncoder.c */; };
+		2C59F8E024063CA800BDF3EA /* ForwardTransforms.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C59F8DE24063CA800BDF3EA /* ForwardTransforms.c */; };
+		2C59F8E124063CA800BDF3EA /* ReverseTransforms.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C59F8DF24063CA800BDF3EA /* ReverseTransforms.c */; };
 		2C7BAB1123E02495007C0D9C /* W64Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C8628E423C88AFE00F7FDE1 /* W64Common.h */; };
 		2C8628E623C88AFE00F7FDE1 /* ID3Common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C8628DA23C88AFD00F7FDE1 /* ID3Common.h */; };
 		2C8628E723C88AFE00F7FDE1 /* OVIACommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C8628DB23C88AFD00F7FDE1 /* OVIACommon.h */; };
@@ -33,7 +33,7 @@
 		2C86291323C88B4300F7FDE1 /* W64Decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C86290823C88B4300F7FDE1 /* W64Decoder.c */; };
 		2C86291423C88B4300F7FDE1 /* WAVDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C86290923C88B4300F7FDE1 /* WAVDecoder.c */; };
 		2C86291523C88B4300F7FDE1 /* PNMDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C86290A23C88B4300F7FDE1 /* PNMDecoder.c */; };
-		2C86291623C88B4300F7FDE1 /* ID3Decoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C86290B23C88B4300F7FDE1 /* ID3Decoder.c */; };
+		2C86291623C88B4300F7FDE1 /* ID3Tags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C86290B23C88B4300F7FDE1 /* ID3Tags.c */; };
 		2C86291723C88B4300F7FDE1 /* JPEGDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C86290C23C88B4300F7FDE1 /* JPEGDecoder.c */; };
 		2C86291823C88B4300F7FDE1 /* PNGDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C86290D23C88B4300F7FDE1 /* PNGDecoder.c */; };
 		2C86291923C88B4300F7FDE1 /* FLACDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C86290E23C88B4300F7FDE1 /* FLACDecoder.c */; };
@@ -49,6 +49,8 @@
 		2CB4147322D1BE8100C402EA /* PNMEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F7D22BCAB3B00E8DF3C /* PNMEncoder.c */; };
 		2CB4147422D1BE8100C402EA /* W64Encoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F7C22BCAB3B00E8DF3C /* W64Encoder.c */; };
 		2CB4147522D1BE8100C402EA /* WAVEncoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE43F7722BCAB3B00E8DF3C /* WAVEncoder.c */; };
+		2CD22721240392C700CC7FB1 /* VorbisTags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CD22720240392C700CC7FB1 /* VorbisTags.c */; };
+		2CD22723240393ED00CC7FB1 /* APETags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CD22722240393ED00CC7FB1 /* APETags.c */; };
 		2CE68D7B240228EF003E037E /* RIFFMuxer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE68D78240228EF003E037E /* RIFFMuxer.c */; };
 		2CE68D7C240228EF003E037E /* RIFFDemuxer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CE68D7A240228EF003E037E /* RIFFDemuxer.c */; };
 /* End PBXBuildFile section */
@@ -132,11 +134,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2C1B712D23D208DB0071BCEB /* ReverseTransforms.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ReverseTransforms.c; sourceTree = "<group>"; };
-		2C1B712F23D20A310071BCEB /* ForwardTransforms.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ForwardTransforms.c; sourceTree = "<group>"; };
 		2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FoundationIO.xcodeproj; path = ../Dependencies/FoundationIO/Projects/FoundationIO.xcodeproj; sourceTree = "<group>"; };
 		2C502EBB228127B900EB4956 /* OVIA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = OVIA.c; path = ../Library/src/OVIA.c; sourceTree = "<group>"; };
 		2C502EBD228127CB00EB4956 /* OVIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OVIA.h; path = ../Library/include/OVIA.h; sourceTree = "<group>"; };
+		2C59F8DE24063CA800BDF3EA /* ForwardTransforms.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ForwardTransforms.c; path = ../../Library/src/ColorTransforms/ForwardTransforms.c; sourceTree = "<group>"; };
+		2C59F8DF24063CA800BDF3EA /* ReverseTransforms.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ReverseTransforms.c; path = ../../Library/src/ColorTransforms/ReverseTransforms.c; sourceTree = "<group>"; };
 		2C8628DA23C88AFD00F7FDE1 /* ID3Common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ID3Common.h; path = ../Library/include/Private/ID3Common.h; sourceTree = "<group>"; };
 		2C8628DB23C88AFD00F7FDE1 /* OVIACommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OVIACommon.h; path = ../Library/include/Private/OVIACommon.h; sourceTree = "<group>"; };
 		2C8628DD23C88AFD00F7FDE1 /* BMPCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = BMPCommon.h; path = ../Library/include/Private/BMPCommon.h; sourceTree = "<group>"; };
@@ -159,7 +161,7 @@
 		2C86290823C88B4300F7FDE1 /* W64Decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = W64Decoder.c; sourceTree = "<group>"; };
 		2C86290923C88B4300F7FDE1 /* WAVDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = WAVDecoder.c; sourceTree = "<group>"; };
 		2C86290A23C88B4300F7FDE1 /* PNMDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = PNMDecoder.c; sourceTree = "<group>"; };
-		2C86290B23C88B4300F7FDE1 /* ID3Decoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ID3Decoder.c; sourceTree = "<group>"; };
+		2C86290B23C88B4300F7FDE1 /* ID3Tags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ID3Tags.c; sourceTree = "<group>"; };
 		2C86290C23C88B4300F7FDE1 /* JPEGDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = JPEGDecoder.c; sourceTree = "<group>"; };
 		2C86290D23C88B4300F7FDE1 /* PNGDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = PNGDecoder.c; sourceTree = "<group>"; };
 		2C86290E23C88B4300F7FDE1 /* FLACDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = FLACDecoder.c; sourceTree = "<group>"; };
@@ -168,6 +170,8 @@
 		2CB0D18D23EDCF9A00F4C4D4 /* Test_OVIA.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = Test_OVIA.c; path = ../Tests/Test_OVIA.c; sourceTree = "<group>"; };
 		2CB0D19323EDD02000F4C4D4 /* Test_OVIA */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Test_OVIA; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CB4144F22D1BE1000C402EA /* OVIA.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = OVIA.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CD22720240392C700CC7FB1 /* VorbisTags.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = VorbisTags.c; path = ../Library/src/Tagging/VorbisTags.c; sourceTree = "<group>"; };
+		2CD22722240393ED00CC7FB1 /* APETags.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = APETags.c; path = ../Library/src/Tagging/APETags.c; sourceTree = "<group>"; };
 		2CE43F7722BCAB3B00E8DF3C /* WAVEncoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = WAVEncoder.c; sourceTree = "<group>"; };
 		2CE43F7822BCAB3B00E8DF3C /* AIFEncoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AIFEncoder.c; sourceTree = "<group>"; };
 		2CE43F7922BCAB3B00E8DF3C /* PNGEncoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = PNGEncoder.c; sourceTree = "<group>"; };
@@ -240,6 +244,8 @@
 			children = (
 				2C502EBB228127B900EB4956 /* OVIA.c */,
 				2C33595121A2199F00141800 /* Common */,
+				2C59F8DD24063C8A00BDF3EA /* ColorTransforms */,
+				2CD22719240392A100CC7FB1 /* Tagging */,
 				2CE68D79240228EF003E037E /* Demux */,
 				2CE68D77240228EF003E037E /* Mux */,
 				2C0B19D921901EFE009659A3 /* Decode */,
@@ -268,7 +274,6 @@
 				2CE43F7D22BCAB3B00E8DF3C /* PNMEncoder.c */,
 				2CE43F7722BCAB3B00E8DF3C /* WAVEncoder.c */,
 				2CE43F7C22BCAB3B00E8DF3C /* W64Encoder.c */,
-				2C1B712F23D20A310071BCEB /* ForwardTransforms.c */,
 			);
 			name = Encode;
 			path = ../Library/src/Encode;
@@ -280,13 +285,11 @@
 				2C86290723C88B4300F7FDE1 /* AIFDecoder.c */,
 				2C86291023C88B4300F7FDE1 /* BMPDecoder.c */,
 				2C86290E23C88B4300F7FDE1 /* FLACDecoder.c */,
-				2C86290B23C88B4300F7FDE1 /* ID3Decoder.c */,
 				2C86290C23C88B4300F7FDE1 /* JPEGDecoder.c */,
 				2C86290D23C88B4300F7FDE1 /* PNGDecoder.c */,
 				2C86290A23C88B4300F7FDE1 /* PNMDecoder.c */,
 				2C86290823C88B4300F7FDE1 /* W64Decoder.c */,
 				2C86290923C88B4300F7FDE1 /* WAVDecoder.c */,
-				2C1B712D23D208DB0071BCEB /* ReverseTransforms.c */,
 			);
 			name = Decode;
 			path = ../Library/src/Decode;
@@ -321,12 +324,31 @@
 			name = Common;
 			sourceTree = "<group>";
 		};
+		2C59F8DD24063C8A00BDF3EA /* ColorTransforms */ = {
+			isa = PBXGroup;
+			children = (
+				2C59F8DE24063CA800BDF3EA /* ForwardTransforms.c */,
+				2C59F8DF24063CA800BDF3EA /* ReverseTransforms.c */,
+			);
+			path = ColorTransforms;
+			sourceTree = "<group>";
+		};
 		2CB0D18623EDCF7100F4C4D4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				2CB0D18D23EDCF9A00F4C4D4 /* Test_OVIA.c */,
 			);
 			name = Tests;
+			sourceTree = "<group>";
+		};
+		2CD22719240392A100CC7FB1 /* Tagging */ = {
+			isa = PBXGroup;
+			children = (
+				2C86290B23C88B4300F7FDE1 /* ID3Tags.c */,
+				2CD22720240392C700CC7FB1 /* VorbisTags.c */,
+				2CD22722240393ED00CC7FB1 /* APETags.c */,
+			);
+			name = Tagging;
 			sourceTree = "<group>";
 		};
 		2CE43F8622BCAB5D00E8DF3C /* Private */ = {
@@ -539,16 +561,18 @@
 				2C86290323C88B2400F7FDE1 /* WAVCommon.c in Sources */,
 				2C86291B23C88B4300F7FDE1 /* BMPDecoder.c in Sources */,
 				2CB4147322D1BE8100C402EA /* PNMEncoder.c in Sources */,
-				2C1B713023D20A310071BCEB /* ForwardTransforms.c in Sources */,
+				2C59F8E024063CA800BDF3EA /* ForwardTransforms.c in Sources */,
+				2C59F8E124063CA800BDF3EA /* ReverseTransforms.c in Sources */,
 				2CB4147422D1BE8100C402EA /* W64Encoder.c in Sources */,
 				2C8628FD23C88B2400F7FDE1 /* FLACCommon.c in Sources */,
 				2C8628FC23C88B2400F7FDE1 /* JPEGCommon.c in Sources */,
 				2CE68D7B240228EF003E037E /* RIFFMuxer.c in Sources */,
 				2C86291823C88B4300F7FDE1 /* PNGDecoder.c in Sources */,
-				2C86291623C88B4300F7FDE1 /* ID3Decoder.c in Sources */,
+				2CD22721240392C700CC7FB1 /* VorbisTags.c in Sources */,
+				2C86291623C88B4300F7FDE1 /* ID3Tags.c in Sources */,
+				2CD22723240393ED00CC7FB1 /* APETags.c in Sources */,
 				2C86291723C88B4300F7FDE1 /* JPEGDecoder.c in Sources */,
 				2CE68D7C240228EF003E037E /* RIFFDemuxer.c in Sources */,
-				2C1B712E23D208DB0071BCEB /* ReverseTransforms.c in Sources */,
 				2C86290423C88B2400F7FDE1 /* PNGCommon.c in Sources */,
 				2C86290223C88B2400F7FDE1 /* W64Common.c in Sources */,
 				2C86291223C88B4300F7FDE1 /* AIFDecoder.c in Sources */,

@@ -99,6 +99,7 @@ extern "C" {
     
     typedef struct OVIAMuxer {
         const OVIA_MediaTypes   MediaType;
+        const OVIA_ContainerIDs ContainerID;
     } OVIAMuxer;
     
     typedef struct OVIA {

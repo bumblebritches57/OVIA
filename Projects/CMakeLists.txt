@@ -37,6 +37,14 @@ option(PCM "Audio: AIF, WAV, W64; Image: BMP, PNM" ON)
 
 option(Compressed "Audio: FLAC; Image: PNG, JPEG" ON)
 
+if   (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR ${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
+    cd CMAKE_CURRENT_SOURCE_DIR
+    add_custom_command(grep -R "static const OVIADecoder" . 2>/dev/null | awk -F " " '{print $5}' | sort)
+else (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    cd CMAKE_CURRENT_SOURCE_DIR
+    add_custom_command(findstr /s /C:"static const OVIADecoder" *.c | awk -F " " '{print $5}' | sort)
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR ${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
+
 set(OVIA_PublicHeaders
     "${OVIA_Dir}/include/OVIA.h"
 )
