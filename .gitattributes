@@ -1,0 +1,12 @@
+*.c   linguist-language=C
+*.c   linguist-detectable=true
+*.h   linguist-language=C
+*.h   linguist-detectable=true
+
+*.cxx linguist-language=C++
+*.cxx linguist-detectable=true
+*.hxx linguist-language=C++
+*.hxx linguist-detectable=true
+
+*.sh  linguist-language=sh
+*.sh  linguist-detectable=true
