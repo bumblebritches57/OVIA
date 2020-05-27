@@ -1,0 +1,3 @@
+[submodule "Dependencies/FoundationIO"]
+	path = Dependencies/FoundationIO
+	url = https://github.com/MarcusJohnson91/FoundationIO.git
