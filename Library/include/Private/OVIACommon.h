@@ -20,7 +20,7 @@
 #ifndef OVIA_OVIACommon_H
 #define OVIA_OVIACommon_H
 
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 extern "C" {
 #endif
     
@@ -87,8 +87,8 @@ extern "C" {
     
     typedef struct OVIAColorTransform { // Ignore Alpha channels
         void                (*Function_Transform)(ImageContainer*);
-        ImageChannelMask      InputChannels;
-        ImageChannelMask      OutputChannels;
+        ContainerIO_ImageChannelMask InputChannels;
+        ContainerIO_ImageChannelMask OutputChannels;
         OVIA_ColorTransforms  Transform;
     } OVIAColorTransform;
     
@@ -113,7 +113,7 @@ extern "C" {
         uint64_t            NumReverseTransforms;
     } OVIA;
     
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 }
 #endif
 

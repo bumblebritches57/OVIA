@@ -1,6 +1,6 @@
 #include "../../include/Private/OVIACommon.h"
 
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 extern "C" {
 #endif
     
@@ -14,11 +14,11 @@ extern "C" {
     
     void RIFFMuxerWriteHeader(BitBuffer *BitB) {
         if (BitB != NULL) {
-            BitBuffer_WriteBits(BitB, LSByteFirst, LSBitFirst, 32, 0x52494646);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, 0x52494646);
             
             // Write the size of the stream, if it's over 2GB convert to RF64 aka write size as 0xFFFFFFFF and write a DS64 chunk
         } else {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String(""));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String(""));
         }
     }
     
@@ -27,6 +27,6 @@ extern "C" {
         .ContainerID           = ContainerID_RIFF,
     };
     
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 }
 #endif

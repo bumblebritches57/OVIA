@@ -1,17 +1,17 @@
 #include "../../include/Private/AIFCommon.h"
 
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 extern "C" {
 #endif
     
     static void AIFWriteCOMM(AIFOptions *AIF, BitBuffer *BitB) {
         if (AIF != NULL && BitB != NULL) {
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_COMM);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, AIF_COMM);
             uint16_t COMMSize = 18;
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, COMMSize);
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, AIF->NumChannels); // 2
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF->NumSamples); // 7979748
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, AIF->BitDepth); // 16
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, COMMSize);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 16, AIF->NumChannels); // 2
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, AIF->NumSamples); // 7979748
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 16, AIF->BitDepth); // 16
             uint64_t SampleRate = ConvertInteger2Double(AIF->SampleRate);
             // 44100  = 0x400E 0xAC44000000000000
             // 48000  = 0x400E 0xBB80000000000000
@@ -87,12 +87,12 @@ extern "C" {
             // 2 * 250 = 500
             
             
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 16, (SampleRate >> 52) + 15360);
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 64, 0x8000000000000000LLU | SampleRate << 11); // SampleRate Mantissa
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 16, (SampleRate >> 52) + 15360);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 64, 0x8000000000000000LLU | SampleRate << 11); // SampleRate Mantissa
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("AIFOptions Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("AIFOptions Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -100,9 +100,9 @@ extern "C" {
         if (AIF != NULL && BitB != NULL) {
             AIFSkipPadding(BitB, 0);
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -110,15 +110,15 @@ extern "C" {
         if (AIF != NULL && BitB != NULL) {
             AIFSkipPadding(BitB, 0);
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
     static void AIFWriteSSND(AIFOptions *AIF, BitBuffer *BitB) {
         if (AIF != NULL && BitB != NULL) {
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_SSND);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, AIF_SSND);
             uint64_t NumSamples  = AIF->NumSamples;
             uint64_t NumChannels = AIF->NumChannels;
             uint64_t BitDepth    = Bytes2Bits(Bits2Bytes(AIF->BitDepth, RoundingType_Up));
@@ -126,35 +126,35 @@ extern "C" {
             uint64_t BlockSize   = AIF->BlockSize;
             
             uint32_t ChunkSize   = (uint32_t) 8 + ((NumSamples * NumChannels) * Bits2Bytes(BitDepth, RoundingType_Up));
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, ChunkSize);
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, Offset);
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, BlockSize);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, ChunkSize);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, Offset);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, BlockSize);
         } else if (AIF == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
     void AIFWriteHeader(void *Options, BitBuffer *BitB) {
         if (Options != NULL && BitB != NULL) {
             AIFOptions *AIF      = Options;
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_SSND);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, AIF_SSND);
             uint64_t NumSamples  = AIF->NumSamples;
             uint64_t NumChannels = AIF->NumChannels;
             uint64_t BitDepth    = Bytes2Bits(Bits2Bytes(AIF->BitDepth, RoundingType_Up));
             
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_FORM);
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, NumSamples * NumChannels * BitDepth); // FIXME: AIF Size calculation is wrong
-            BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, 32, AIF_AIFF);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, AIF_FORM);
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, NumSamples * NumChannels * BitDepth); // FIXME: AIF Size calculation is wrong
+            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 32, AIF_AIFF);
             AIFWriteCOMM(AIF, BitB);
             AIFWriteTitle(AIF, BitB);
             AIFWriteArtist(AIF, BitB);
             AIFWriteSSND(AIF, BitB);
         } else if (Options == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -169,56 +169,56 @@ extern "C" {
             uint64_t BlockSize       = AIF->BlockSize;
             uint8_t  BitDepthRounded = Bytes2Bits(Bits2Bytes(AIF->BitDepth, RoundingType_Up));
             
-            Audio_Types AudioType = Audio2DContainer_GetType(Audio);
+            ContainerIO_AudioTypes AudioType = Audio2DContainer_GetType(Audio);
             if (AudioType == (AudioType_Signed | AudioType_Integer8)) {
                 int8_t **Samples  = (int8_t**) Audio2DContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepthRounded, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, BitDepthRounded, Samples[Channel][Sample]);
                     }
                 }
             } else if (AudioType == (AudioType_Unsigned | AudioType_Integer8)) {
                 uint8_t **Samples  = (uint8_t**) Audio2DContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepthRounded, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, BitDepthRounded, Samples[Channel][Sample]);
                     }
                 }
             } else if (AudioType == (AudioType_Signed | AudioType_Integer16)) {
                 int16_t **Samples  = (int16_t**) Audio2DContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepthRounded, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, BitDepthRounded, Samples[Channel][Sample]);
                     }
                 }
             } else if (AudioType == (AudioType_Unsigned | AudioType_Integer16)) {
                 uint16_t **Samples  = (uint16_t**) Audio2DContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepthRounded, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, BitDepthRounded, Samples[Channel][Sample]);
                     }
                 }
             } else if (AudioType == (AudioType_Signed | AudioType_Integer32)) {
                 int32_t **Samples  = (int32_t**) Audio2DContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepthRounded, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, BitDepthRounded, Samples[Channel][Sample]);
                     }
                 }
             } else if (AudioType == (AudioType_Unsigned | AudioType_Integer32)) {
                 uint32_t **Samples  = (uint32_t**) Audio2DContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {
                     for (uint64_t Channel = 0; Channel < NumChannels; Channel++) {
-                        BitBuffer_WriteBits(BitB, MSByteFirst, LSBitFirst, BitDepthRounded, Samples[Channel][Sample]);
+                        BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, BitDepthRounded, Samples[Channel][Sample]);
                     }
                 }
             }
         } else if (Options == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Options Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("Options Pointer is NULL"));
         } else if (Container == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Audio2DContainer Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("Audio2DContainer Pointer is NULL"));
         } else if (BitB == NULL) {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("BitBuffer Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
     }
     
@@ -231,7 +231,7 @@ extern "C" {
     };
     
     static const OVIAEncoder AIFEncoder = {
-        .EncoderID             = CodecID_AIF,
+        .EncoderID             = CodecID_PCMAudio,
         .MediaType             = MediaType_Audio2D,
         .NumExtensions         = NumAIFExtensions,
         .Extensions            = AIFExtensions,
@@ -241,6 +241,6 @@ extern "C" {
         .Function_Deinitialize = AIFOptions_Deinit,
     };
     
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 }
 #endif

@@ -9,7 +9,7 @@ extern "C" {
             ImageChannelMap *Map  = ImageContainer_GetChannelMap(Image);
             uint8_t  NumChannels  = ImageChannelMap_GetNumChannels(Map);
             if (NumChannels < 2 || NumChannels > 4) {
-                Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("NumChannels %u must be 3 or 4"), NumChannels);
+                Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("NumChannels %u must be 3 or 4"), NumChannels);
             } else {
                 //Image_ChannelMask RGBMask                         = ImageMask_Red | ImageMask_Green | ImageMask_Blue;
                 //Image_ChannelMask RGBAMask                        = ImageMask_Red | ImageMask_Green | ImageMask_Blue | ImageMask_Alpha;
@@ -76,12 +76,12 @@ extern "C" {
                 ImageContainer_SetChannelMap(Image, NewMap);
                 /*
                  } else {
-                 Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Unsupported Channel Mask %u"), Mask);
+                 Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("Unsupported Channel Mask %u"), Mask);
                  }
                  */
             }
         } else {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("ImageContainer Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("ImageContainer Pointer is NULL"));
         }
     }
     
@@ -90,7 +90,7 @@ extern "C" {
             ImageChannelMap *Map  = ImageContainer_GetChannelMap(Image);
             uint8_t  NumChannels  = ImageChannelMap_GetNumChannels(Map);
             if (NumChannels < 2 || NumChannels > 4) {
-                Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("NumChannels %u must be 3 or 4"), NumChannels);
+                Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("NumChannels %u must be 3 or 4"), NumChannels);
             } else {
                 //Image_ChannelMask RGBMask                         = ImageMask_Red | ImageMask_Green | ImageMask_Blue;
                 //Image_ChannelMask RGBAMask                        = ImageMask_Red | ImageMask_Green | ImageMask_Blue | ImageMask_Alpha;
@@ -155,12 +155,12 @@ extern "C" {
                 ImageContainer_SetChannelMap(Image, NewMap);
                 /*
                  } else {
-                 Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("Unsupported Channel Mask %u"), Mask);
+                 Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("Unsupported Channel Mask %u"), Mask);
                  }
                  */
             }
         } else {
-            Log(Log_DEBUG, FoundationIOFunctionName, UTF8String("ImageContainer Pointer is NULL"));
+            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("ImageContainer Pointer is NULL"));
         }
     }
     

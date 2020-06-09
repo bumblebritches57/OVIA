@@ -13,7 +13,7 @@
 #ifndef OVIA_PNGCommon_H
 #define OVIA_PNGCommon_H
 
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 extern "C" {
 #endif
     
@@ -466,7 +466,7 @@ extern "C" {
         [0] = UTF32String("public.png"),
     };
     
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 }
 #endif
 
