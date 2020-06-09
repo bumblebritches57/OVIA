@@ -169,7 +169,7 @@ extern "C" {
             uint64_t BlockSize       = AIF->BlockSize;
             uint8_t  BitDepthRounded = Bytes2Bits(Bits2Bytes(AIF->BitDepth, RoundingType_Up));
             
-            ContainerIO_AudioTypes AudioType = Audio2DContainer_GetType(Audio);
+            MediaIO_AudioTypes AudioType = Audio2DContainer_GetType(Audio);
             if (AudioType == (AudioType_Signed | AudioType_Integer8)) {
                 int8_t **Samples  = (int8_t**) Audio2DContainer_GetArray(Audio);
                 for (uint64_t Sample = 0; Sample < NumSamples; Sample++) {

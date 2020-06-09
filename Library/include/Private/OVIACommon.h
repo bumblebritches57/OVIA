@@ -7,9 +7,8 @@
  */
 
 #include "../OVIA.h"
-
+#include "MediaIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/BitIO.h"
-#include "../../../Dependencies/FoundationIO/Library/include/ContainerIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/CryptographyIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/MathIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/UnicodeIO/LogIO.h"
@@ -86,10 +85,10 @@ extern "C" {
     } const OVIAEncoder;
     
     typedef struct OVIAColorTransform { // Ignore Alpha channels
-        void                (*Function_Transform)(ImageContainer*);
-        ContainerIO_ImageChannelMask InputChannels;
-        ContainerIO_ImageChannelMask OutputChannels;
-        OVIA_ColorTransforms  Transform;
+        void                    (*Function_Transform)(ImageContainer*);
+        MediaIO_ImageChannelMask  InputChannels;
+        MediaIO_ImageChannelMask  OutputChannels;
+        OVIA_ColorTransforms      Transform;
     } OVIAColorTransform;
     
     typedef struct OVIADemuxer {
