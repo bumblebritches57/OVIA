@@ -12,24 +12,24 @@ extern "C" {
             uint64_t FileSize      = DIBHeaderSize + 2 + ImageSize;
             uint16_t NumPlanes     = 1; // Constant
             
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_LSBit, 16, BMP_BM);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, FileSize);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 16, 0); // Reserved1
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 16, 0); // Reserved2
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, 2 + 40);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, DIBHeaderSize);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsFarthest, BitIO_BitOrder_LSBit, 16, BMP_BM);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, FileSize);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 16, 0); // Reserved1
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 16, 0); // Reserved2
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, 2 + 40);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, DIBHeaderSize);
             /* Write DIB Header */
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, BMP->Width);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, BMP->Height);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, BMP->Width);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, BMP->Height);
             
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 16, NumPlanes);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 16, BMP->BitDepth);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, BMP->CompressionType);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, ImageSize);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, BMP->WidthPixelsPerMeter);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, BMP->HeightPixelsPerMeter);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, BMP->ColorsIndexed);
-            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_LSByte, BitIO_BitOrder_LSBit, 32, BMP->IndexedColorsUsed);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 16, NumPlanes);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 16, BMP->BitDepth);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, BMP->CompressionType);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, ImageSize);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, BMP->WidthPixelsPerMeter);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, BMP->HeightPixelsPerMeter);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, BMP->ColorsIndexed);
+            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32, BMP->IndexedColorsUsed);
         } else if (Options == NULL) {
             Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("Options Pointer is NULL"));
         } else if (BitB == NULL) {
@@ -53,7 +53,7 @@ extern "C" {
                 for (uint64_t W = 0; W < Width; W++) {
                     for (uint64_t H = 0; H < Height; H++) {
                         for (uint16_t C = 0; C < NumChannels; C++) {
-                            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_MSBit, BitDepth, Array[0][W][H][C]);
+                            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsFarthest, BitIO_BitOrder_MSBit, BitDepth, Array[0][W][H][C]);
                         }
                     }
                 }
@@ -62,7 +62,7 @@ extern "C" {
                 for (uint64_t W = 0; W < Width; W++) {
                     for (uint64_t H = 0; H < Height; H++) {
                         for (uint16_t C = 0; C < NumChannels; C++) {
-                            BitBuffer_WriteBits(BitB, BitIO_ByteOrder_MSByte, BitIO_BitOrder_MSBit, BitDepth, Array[0][W][H][C]);
+                            BitBuffer_WriteBits(BitB, ByteOrder_LSByteIsFarthest, BitIO_BitOrder_MSBit, BitDepth, Array[0][W][H][C]);
                         }
                     }
                 }
