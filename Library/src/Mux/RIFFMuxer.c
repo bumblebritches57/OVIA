@@ -21,12 +21,12 @@ extern "C" {
             Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String(""));
         }
     }
-    
+    /*
     static const OVIAMuxer RIFFMuxer = {
         .MediaType             = MediaType_Container,
         .ContainerID           = ContainerID_RIFF,
     };
-    
+    */
 #if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 }
 #endif

@@ -22,38 +22,15 @@ extern "C" {
         }
     }
     */
-    static const MagicIDSizes RIFFMagicIDSize = {
-        .NumSizes     = 1,
-        .Sizes        = {
-            [0]       = 4,
-        },
-    };
-    
-    static const MagicIDOffsets RIFFMagicIDOffset = {
-        .NumOffsets   = 1,
-        .Offsets      = {
-            [0]       = 0,
-        },
-    };
-    
-    static const MagicIDNumbers RIFFMagicIDNumber = {
-        .NumMagicIDs  = 1,
-        .MagicNumbers = {
-            [0]       = (uint8_t[4]){0x52, 0x49, 0x46, 0x46},
-        },
-    };
-    
-    static const MagicIDs RIFFMagicIDs = {
-        .Sizes        = &RIFFMagicIDSize,
-        .Offsets      = &RIFFMagicIDOffset,
-        .Number       = &RIFFMagicIDNumber,
-    };
-    
-    static const OVIADemuxer RIFFDemuxer = {
-        .MagicID      = &RIFFMagicIDs,
-        .MediaType    = MediaType_Container,
-    };
 
+    static const OVIA_MagicIDs RIFFMagicIDs = {
+        .NumMagicIDs         = 1,
+        .MagicIDOffsetInBits = 0,
+        .MagicIDSizeInBits   = 32,
+        .MagicIDNumber = {
+            [0] = (uint8_t[4]){0x52, 0x49, 0x46, 0x46},
+        },
+    };
 #if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 }
 #endif

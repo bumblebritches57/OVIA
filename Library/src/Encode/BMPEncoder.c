@@ -76,18 +76,10 @@ extern "C" {
         }
     }
     
-#define NumBMPExtensions 2
-    
-    static const UTF32 *BMPExtensions[NumBMPExtensions] = {
-        [0] = UTF32String("bmp"),
-        [1] = UTF32String("dib"),
-    };
-    
     static const OVIAEncoder BMPEncoder = {
         .EncoderID             = CodecID_BMP,
         .MediaType             = MediaType_Image,
-        .NumExtensions         = NumBMPExtensions,
-        .Extensions            = BMPExtensions,
+        .Extensions            = &BMPExtensions,
         .Function_Initialize   = BMPOptions_Init,
         .Function_WriteHeader  = BMPWriteHeader,
         .Function_Encode       = BMPInsertImage,

@@ -179,35 +179,13 @@ extern "C" {
         return Audio;
     }
     
-#define NumAIFMagicIDs 2
-    
-    static const MagicIDSizes AIFMagicIDSize = {
-        .NumSizes = NumAIFMagicIDs,
-        .Sizes    = {[0] = 1, [1] = 2},
-    };
-    
-    static const MagicIDOffsets AIFMagicIDOffset = {
-        .NumOffsets = NumAIFMagicIDs,
-        .Offsets    = {[0] = 1, [1] = 2},
-    };
-    
-    static const MagicIDNumbers AIFMagicIDNumber = {
-        .NumMagicIDs           = NumAIFMagicIDs,
-        .MagicNumbers          = {[0] = (uint8_t[4]){0x46, 0x4F, 0x52, 0x4D}},
-    };
-    
-    static const MagicIDs AIFMagicIDs = {
-        .Sizes                 = &AIFMagicIDSize,
-        .Offsets               = &AIFMagicIDOffset,
-        .Number                = &AIFMagicIDNumber,
-    };
-    
     static const OVIADecoder AIFDecoder = {
         .Function_Initialize   = AIFOptions_Init,
         .Function_Decode       = AIFExtractSamples,
         .Function_Read         = AIFReadMetadata,
         .Function_Deinitialize = AIFOptions_Deinit,
-        .MagicID               = &AIFMagicIDs,
+        .MagicIDs              = &AIFMagicIDs,
+        .Extensions            = AIFExtensions,
         .MediaType             = MediaType_Audio2D,
         .DecoderID             = CodecID_PCMAudio,
     };

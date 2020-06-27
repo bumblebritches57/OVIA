@@ -7,6 +7,7 @@
  */
 
 #include "OVIACommon.h"
+#include "StreamIO.h"
 
 #pragma once
 
@@ -453,17 +454,38 @@ extern "C" {
     void PNGWriteFooter(void *Options, BitBuffer *BitB);
     
     void PNGOptions_Deinit(void *Options);
-    
-#define NumPNGMIMETypes 2
-    
-    static const UTF32 *PNGMIMETypes[NumPNGMIMETypes] = {
-        [0] = UTF32String("image/png"),
+
+    static const OVIA_Extensions PNGExtensions = {
+        .NumExtensions = 4,
+        .Extensions    = {
+            [0] = UTF32String("png"),
+            [1] = UTF32String("apng"),
+            [2] = UTF32String("mng"),
+            [3] = UTF32String("jng"),
+        },
     };
-    
-#define NumPNGUniformTypeIDs 1
-    
-    static const UTF32 *PNGUniformTypeIDs[NumPNGUniformTypeIDs] = {
-        [0] = UTF32String("public.png"),
+
+    static const OVIA_MIMETypes PNGMIMETypes = {
+        .NumMIMETypes = 6,
+        .MIMETypes    = {
+            [0]       = UTF32String("image/png"),
+            [1]       = UTF32String("image/apng"),
+            [2]       = UTF32String("video/apng"),
+            [3]       = UTF32String("image/mng"),
+            [4]       = UTF32String("video/mng"),
+            [5]       = UTF32String("image/x-jng"),
+        },
+    };
+
+    static const OVIA_MagicIDs PNGMagicIDs = {
+        .NumMagicIDs         = 3,
+        .MagicIDOffsetInBits = 0,
+        .MagicIDSizeInBits   = 64,
+        .MagicIDNumber = {
+            [0] = (uint8_t[8]){0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A},
+            [1] = (uint8_t[8]){0x8A, 0x4D, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A},
+            [2] = (uint8_t[8]){0x8B, 0x4A, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A},
+        },
     };
     
 #if (PlatformIO_Language == PlatformIO_LanguageIsCXX)

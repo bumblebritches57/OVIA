@@ -8,6 +8,7 @@
 
 #include "../OVIA.h"
 #include "MediaIO.h"
+#include "OVIAInternal.h"
 #include "../../../Dependencies/FoundationIO/Library/include/BitIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/CryptographyIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/MathIO.h"
@@ -39,7 +40,7 @@ extern "C" {
         MediaType_Image     = 4,
         MediaType_Video     = 5,
     } OVIA_MediaTypes;
-    
+    /*
     typedef struct MagicIDSizes {
         const uint64_t NumSizes;
         const uint64_t Sizes[];
@@ -60,13 +61,14 @@ extern "C" {
         const MagicIDOffsets *Offsets;
         const MagicIDNumbers *Number;
     } MagicIDs;
+    */
     
     typedef struct OVIADecoder {
         void*                 (*Function_Initialize)(void);
         void*                 (*Function_Decode)(void*, BitBuffer*); // Returns a Container pointer, takes Options and BitBuffer pointer
         void                  (*Function_Read)(void*, BitBuffer*); // Takes the Init type as a parameter
         void                  (*Function_Deinitialize)(void*);
-        const MagicIDs         *MagicID;
+        OVIA_MagicIDs          *MagicIDs;
         const OVIA_MediaTypes   MediaType;
         const OVIA_CodecIDs     DecoderID;
     } OVIADecoder;
@@ -77,10 +79,9 @@ extern "C" {
         void                  (*Function_Encode)(void *Options, void *Contanier, BitBuffer *BitB); // Image*/Audio*, BitBuffer
         void                  (*Function_WriteFooter)(void *Options, BitBuffer *BitB);
         void                  (*Function_Deinitialize)(void *Options);
-        const uint64_t          NumExtensions;
         const OVIA_CodecIDs     EncoderID;
         const OVIA_MediaTypes   MediaType;
-        const UTF32           **Extensions;
+        const OVIA_Extensions   Extensions;
         // How do we identify the encoder to choose? Maybe this should be an enum with a mapping function that maps all known codec names for example JPG, JPEG, JPE, JLS, JPEG-LS, JPEG-Lossless, LosslessJPEG to the CodecID
     } const OVIAEncoder;
     
@@ -90,16 +91,6 @@ extern "C" {
         MediaIO_ImageChannelMask  OutputChannels;
         OVIA_ColorTransforms      Transform;
     } OVIAColorTransform;
-    
-    typedef struct OVIADemuxer {
-        const MagicIDs         *MagicID;
-        const OVIA_MediaTypes   MediaType;
-    } OVIADemuxer;
-    
-    typedef struct OVIAMuxer {
-        const OVIA_MediaTypes   MediaType;
-        const OVIA_ContainerIDs ContainerID;
-    } OVIAMuxer;
     
     typedef struct OVIA {
         OVIAEncoder        *Encoders;

@@ -222,19 +222,10 @@ extern "C" {
         }
     }
     
-#define NumAIFExtensions 3
-    
-    static const UTF32 *AIFExtensions[NumAIFExtensions] = {
-        [0] = UTF32String("aif"),
-        [1] = UTF32String("aiff"),
-        [2] = UTF32String("aifc"),
-    };
-    
     static const OVIAEncoder AIFEncoder = {
         .EncoderID             = CodecID_PCMAudio,
         .MediaType             = MediaType_Audio2D,
-        .NumExtensions         = NumAIFExtensions,
-        .Extensions            = AIFExtensions,
+        .Extensions            = &AIFExtensions,
         .Function_Initialize   = AIFOptions_Init,
         .Function_WriteHeader  = AIFWriteHeader,
         .Function_Encode       = AIFAppendSamples,
