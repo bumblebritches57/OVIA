@@ -71,6 +71,7 @@ extern "C" {
         OVIA_MagicIDs          *MagicIDs;
         const OVIA_MediaTypes   MediaType;
         const OVIA_CodecIDs     DecoderID;
+        const OVIA_Extensions  *Extensions;
     } OVIADecoder;
     
     typedef struct OVIAEncoder {
@@ -81,7 +82,7 @@ extern "C" {
         void                  (*Function_Deinitialize)(void *Options);
         const OVIA_CodecIDs     EncoderID;
         const OVIA_MediaTypes   MediaType;
-        const OVIA_Extensions   Extensions;
+        const OVIA_Extensions  *Extensions;
         // How do we identify the encoder to choose? Maybe this should be an enum with a mapping function that maps all known codec names for example JPG, JPEG, JPE, JLS, JPEG-LS, JPEG-Lossless, LosslessJPEG to the CodecID
     } const OVIAEncoder;
     

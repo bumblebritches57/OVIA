@@ -185,7 +185,7 @@ extern "C" {
         .Function_Read         = AIFReadMetadata,
         .Function_Deinitialize = AIFOptions_Deinit,
         .MagicIDs              = &AIFMagicIDs,
-        .Extensions            = AIFExtensions,
+        .Extensions            = &AIFExtensions,
         .MediaType             = MediaType_Audio2D,
         .DecoderID             = CodecID_PCMAudio,
     };
