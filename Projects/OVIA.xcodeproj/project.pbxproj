@@ -12,6 +12,8 @@
 		2C341BAA248FE52700CCD300 /* MediaIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C341BA9248FE52700CCD300 /* MediaIO.h */; };
 		2C341BAD248FECDC00CCD300 /* StreamIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C341BAB248FECDC00CCD300 /* StreamIO.h */; };
 		2C341BAE248FECDC00CCD300 /* CodecIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C341BAC248FECDC00CCD300 /* CodecIO.h */; };
+		2C3A9EBF24A96AAC00E65BCC /* TransformIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9EBE24A96AAC00E65BCC /* TransformIO.c */; };
+		2C3A9EC624A96AF600E65BCC /* TransformIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C3A9EC524A96AF600E65BCC /* TransformIO.h */; };
 		2C3E057F24A67F280081AF41 /* EntropyIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C3E057E24A67F280081AF41 /* EntropyIO.c */; };
 		2C4E93852490C7CE002F1B5B /* OVIAInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4E93842490C7CE002F1B5B /* OVIAInternal.h */; };
 		2C7583972480B970002B29C1 /* OVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C7583962480B970002B29C1 /* OVIA.h */; };
@@ -28,8 +30,6 @@
 		2C7583E22480BA24002B29C1 /* VorbisTags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B12480BA24002B29C1 /* VorbisTags.c */; };
 		2C7583E32480BA24002B29C1 /* APETags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B22480BA24002B29C1 /* APETags.c */; };
 		2C7583E42480BA24002B29C1 /* ID3Tags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B32480BA24002B29C1 /* ID3Tags.c */; };
-		2C7583E52480BA24002B29C1 /* ForwardTransforms.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B52480BA24002B29C1 /* ForwardTransforms.c */; };
-		2C7583E62480BA25002B29C1 /* ReverseTransforms.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B62480BA24002B29C1 /* ReverseTransforms.c */; };
 		2C7583E72480BA25002B29C1 /* RIFFDemuxer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B82480BA24002B29C1 /* RIFFDemuxer.c */; };
 		2C7583E82480BA25002B29C1 /* AIFDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583BA2480BA24002B29C1 /* AIFDecoder.c */; };
 		2C7583E92480BA25002B29C1 /* WAVDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583BB2480BA24002B29C1 /* WAVDecoder.c */; };
@@ -139,6 +139,8 @@
 		2C341BA9248FE52700CCD300 /* MediaIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MediaIO.h; path = ../Library/include/Private/MediaIO.h; sourceTree = "<group>"; };
 		2C341BAB248FECDC00CCD300 /* StreamIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = StreamIO.h; path = ../Library/include/Private/StreamIO.h; sourceTree = "<group>"; };
 		2C341BAC248FECDC00CCD300 /* CodecIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CodecIO.h; path = ../Library/include/Private/CodecIO.h; sourceTree = "<group>"; };
+		2C3A9EBE24A96AAC00E65BCC /* TransformIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = TransformIO.c; path = ../Library/src/TransformIO.c; sourceTree = "<group>"; };
+		2C3A9EC524A96AF600E65BCC /* TransformIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TransformIO.h; path = ../Library/include/Private/TransformIO.h; sourceTree = "<group>"; };
 		2C3E057E24A67F280081AF41 /* EntropyIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = EntropyIO.c; path = ../Library/src/EntropyIO.c; sourceTree = "<group>"; };
 		2C4E93842490C7CE002F1B5B /* OVIAInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OVIAInternal.h; path = ../Library/include/Private/OVIAInternal.h; sourceTree = "<group>"; };
 		2C7583962480B970002B29C1 /* OVIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OVIA.h; path = ../Library/include/OVIA.h; sourceTree = "<group>"; };
@@ -155,8 +157,6 @@
 		2C7583B12480BA24002B29C1 /* VorbisTags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = VorbisTags.c; sourceTree = "<group>"; };
 		2C7583B22480BA24002B29C1 /* APETags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = APETags.c; sourceTree = "<group>"; };
 		2C7583B32480BA24002B29C1 /* ID3Tags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ID3Tags.c; sourceTree = "<group>"; };
-		2C7583B52480BA24002B29C1 /* ForwardTransforms.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ForwardTransforms.c; sourceTree = "<group>"; };
-		2C7583B62480BA24002B29C1 /* ReverseTransforms.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ReverseTransforms.c; sourceTree = "<group>"; };
 		2C7583B82480BA24002B29C1 /* RIFFDemuxer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = RIFFDemuxer.c; sourceTree = "<group>"; };
 		2C7583BA2480BA24002B29C1 /* AIFDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AIFDecoder.c; sourceTree = "<group>"; };
 		2C7583BB2480BA24002B29C1 /* WAVDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = WAVDecoder.c; sourceTree = "<group>"; };
@@ -252,7 +252,7 @@
 				2C7583AE2480BA1A002B29C1 /* OVIA.c */,
 				2C341BA7248FE4F800CCD300 /* MediaIO.c */,
 				2C3E057E24A67F280081AF41 /* EntropyIO.c */,
-				2C7583B42480BA24002B29C1 /* ColorTransforms */,
+				2C3A9EBE24A96AAC00E65BCC /* TransformIO.c */,
 				2C7583C92480BA24002B29C1 /* Common */,
 				2C7583B92480BA24002B29C1 /* Decode */,
 				2C7583B72480BA24002B29C1 /* Demux */,
@@ -294,16 +294,6 @@
 			);
 			name = Tagging;
 			path = ../Library/src/Tagging;
-			sourceTree = "<group>";
-		};
-		2C7583B42480BA24002B29C1 /* ColorTransforms */ = {
-			isa = PBXGroup;
-			children = (
-				2C7583B52480BA24002B29C1 /* ForwardTransforms.c */,
-				2C7583B62480BA24002B29C1 /* ReverseTransforms.c */,
-			);
-			name = ColorTransforms;
-			path = ../Library/src/ColorTransforms;
 			sourceTree = "<group>";
 		};
 		2C7583B72480BA24002B29C1 /* Demux */ = {
@@ -389,6 +379,7 @@
 				2C341BAC248FECDC00CCD300 /* CodecIO.h */,
 				2C9B676424A2D1E8003DD568 /* TagIO.h */,
 				2CF1438924A56D8C0047F344 /* EntropyIO.h */,
+				2C3A9EC524A96AF600E65BCC /* TransformIO.h */,
 				2C7583A22480B99C002B29C1 /* OVIACommon.h */,
 				2C7583A32480B99C002B29C1 /* AIFCommon.h */,
 				2C75839C2480B99C002B29C1 /* BMPCommon.h */,
@@ -409,6 +400,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C3A9EC624A96AF600E65BCC /* TransformIO.h in Headers */,
 				2C7583AD2480B99C002B29C1 /* AIFCommon.h in Headers */,
 				2C7583AC2480B99C002B29C1 /* OVIACommon.h in Headers */,
 				2C4E93852490C7CE002F1B5B /* OVIAInternal.h in Headers */,
@@ -578,13 +570,12 @@
 				2C7583E82480BA25002B29C1 /* AIFDecoder.c in Sources */,
 				2C7583EA2480BA25002B29C1 /* PNMDecoder.c in Sources */,
 				2C7583F82480BA25002B29C1 /* WAVCommon.c in Sources */,
-				2C7583E52480BA24002B29C1 /* ForwardTransforms.c in Sources */,
-				2C7583E62480BA25002B29C1 /* ReverseTransforms.c in Sources */,
 				2C7583FD2480BA25002B29C1 /* FLACCommon.c in Sources */,
 				2C7583EB2480BA25002B29C1 /* PNGDecoder.c in Sources */,
 				2C7583AF2480BA1B002B29C1 /* OVIA.c in Sources */,
 				2C7583FC2480BA25002B29C1 /* BMPCommon.c in Sources */,
 				2C7583F72480BA25002B29C1 /* PNMCommon.c in Sources */,
+				2C3A9EBF24A96AAC00E65BCC /* TransformIO.c in Sources */,
 				2CB0D18E23EDCF9A00F4C4D4 /* Test_OVIA.c in Sources */,
 				2C7583FB2480BA25002B29C1 /* JPEGCommon.c in Sources */,
 				2C7583EC2480BA25002B29C1 /* BMPDecoder.c in Sources */,
