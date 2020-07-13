@@ -7,7 +7,7 @@ extern "C" {
     uint32_t GetRIFFSize(BitBuffer *BitB) {
         uint32_t Size = 0;
         if (BitB != NULL) {
-            Size      = BitBuffer_ReadBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32);
+            Size      = BitBuffer_ReadBits(BitB, ByteOrder_LSByteIsNearest, BitOrder_LSBitIsNearest, 32);
         } else {
             Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
@@ -16,7 +16,7 @@ extern "C" {
     /*
     void GetRIFFType(BitBuffer *BitB) {
         if (BitB != NULL) {
-            Size      = (uint32_t) BitBuffer_ReadBits(BitB, ByteOrder_LSByteIsNearest, BitIO_BitOrder_LSBit, 32);
+            Size      = (uint32_t) BitBuffer_ReadBits(BitB, ByteOrder_LSByteIsNearest, BitOrder_LSBitIsNearest, 32);
         } else {
             Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String("BitBuffer Pointer is NULL"));
         }
