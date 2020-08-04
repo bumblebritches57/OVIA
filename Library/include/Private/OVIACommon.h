@@ -13,8 +13,8 @@
 #include "../../../Dependencies/FoundationIO/Library/include/FileIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/CryptographyIO.h"
 #include "../../../Dependencies/FoundationIO/Library/include/MathIO.h"
-#include "../../../Dependencies/FoundationIO/Library/include/UnicodeIO/LogIO.h"
-#include "../../../Dependencies/FoundationIO/Library/include/UnicodeIO/StringIO.h"
+#include "../../../Dependencies/FoundationIO/Library/include/TextIO/LogIO.h"
+#include "../../../Dependencies/FoundationIO/Library/include/TextIO/StringIO.h"
 
 #pragma once
 

@@ -18,6 +18,8 @@
 		2C3A9EC824A97C2F00E65BCC /* PacketIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C3A9EC724A97C2F00E65BCC /* PacketIO.c */; };
 		2C3E057F24A67F280081AF41 /* EntropyIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C3E057E24A67F280081AF41 /* EntropyIO.c */; };
 		2C4E93852490C7CE002F1B5B /* OVIAInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4E93842490C7CE002F1B5B /* OVIAInternal.h */; };
+		2C64ABA824BD5C3F00A4C104 /* VorbisTags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C64ABA724BD5C3F00A4C104 /* VorbisTags.c */; };
+		2C64ABAA24BD5C5000A4C104 /* ID3Tags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C64ABA924BD5C5000A4C104 /* ID3Tags.c */; };
 		2C7583972480B970002B29C1 /* OVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C7583962480B970002B29C1 /* OVIA.h */; };
 		2C7583A42480B99C002B29C1 /* PNGCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C75839A2480B99C002B29C1 /* PNGCommon.h */; };
 		2C7583A52480B99C002B29C1 /* FLACCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C75839B2480B99C002B29C1 /* FLACCommon.h */; };
@@ -29,9 +31,6 @@
 		2C7583AC2480B99C002B29C1 /* OVIACommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C7583A22480B99C002B29C1 /* OVIACommon.h */; };
 		2C7583AD2480B99C002B29C1 /* AIFCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C7583A32480B99C002B29C1 /* AIFCommon.h */; };
 		2C7583AF2480BA1B002B29C1 /* OVIA.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583AE2480BA1A002B29C1 /* OVIA.c */; };
-		2C7583E22480BA24002B29C1 /* VorbisTags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B12480BA24002B29C1 /* VorbisTags.c */; };
-		2C7583E32480BA24002B29C1 /* APETags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B22480BA24002B29C1 /* APETags.c */; };
-		2C7583E42480BA24002B29C1 /* ID3Tags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B32480BA24002B29C1 /* ID3Tags.c */; };
 		2C7583E72480BA25002B29C1 /* RIFFDemuxer.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583B82480BA24002B29C1 /* RIFFDemuxer.c */; };
 		2C7583E82480BA25002B29C1 /* AIFDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583BA2480BA24002B29C1 /* AIFDecoder.c */; };
 		2C7583E92480BA25002B29C1 /* WAVDecoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C7583BB2480BA24002B29C1 /* WAVDecoder.c */; };
@@ -114,6 +113,27 @@
 			remoteGlobalIDString = 2CC71D78232B5EC8006DA1B8;
 			remoteInfo = FoundationIO;
 		};
+		2C64AB9D24BD5C1900A4C104 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2C88501124BCB48600DAD7ED;
+			remoteInfo = Test_FileIO;
+		};
+		2C64AB9F24BD5C1900A4C104 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2C88501C24BCB49F00DAD7ED;
+			remoteInfo = Test_NetworkIO;
+		};
+		2C64ABA124BD5C1900A4C104 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C2C6CD3232DF5AC0025CA05 /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2C88502924BCB6AD00DAD7ED;
+			remoteInfo = Test_FormatIO;
+		};
 		2CB0D19A23EDD04300F4C4D4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2C0B19AB21901A68009659A3 /* Project object */;
@@ -147,6 +167,8 @@
 		2C3A9EC724A97C2F00E65BCC /* PacketIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PacketIO.c; path = ../Library/NewSrc/PacketIO.c; sourceTree = "<group>"; };
 		2C3E057E24A67F280081AF41 /* EntropyIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = EntropyIO.c; path = ../Library/src/EntropyIO.c; sourceTree = "<group>"; };
 		2C4E93842490C7CE002F1B5B /* OVIAInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OVIAInternal.h; path = ../Library/include/Private/OVIAInternal.h; sourceTree = "<group>"; };
+		2C64ABA724BD5C3F00A4C104 /* VorbisTags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = VorbisTags.c; path = ../../Library/src/Tags/VorbisTags.c; sourceTree = "<group>"; };
+		2C64ABA924BD5C5000A4C104 /* ID3Tags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ID3Tags.c; path = ../../Library/src/Tags/ID3Tags.c; sourceTree = "<group>"; };
 		2C7583962480B970002B29C1 /* OVIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OVIA.h; path = ../Library/include/OVIA.h; sourceTree = "<group>"; };
 		2C75839A2480B99C002B29C1 /* PNGCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PNGCommon.h; path = ../Library/include/Private/PNGCommon.h; sourceTree = "<group>"; };
 		2C75839B2480B99C002B29C1 /* FLACCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FLACCommon.h; path = ../Library/include/Private/FLACCommon.h; sourceTree = "<group>"; };
@@ -158,9 +180,6 @@
 		2C7583A22480B99C002B29C1 /* OVIACommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OVIACommon.h; path = ../Library/include/Private/OVIACommon.h; sourceTree = "<group>"; };
 		2C7583A32480B99C002B29C1 /* AIFCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AIFCommon.h; path = ../Library/include/Private/AIFCommon.h; sourceTree = "<group>"; };
 		2C7583AE2480BA1A002B29C1 /* OVIA.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = OVIA.c; path = ../Library/src/OVIA.c; sourceTree = "<group>"; };
-		2C7583B12480BA24002B29C1 /* VorbisTags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = VorbisTags.c; sourceTree = "<group>"; };
-		2C7583B22480BA24002B29C1 /* APETags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = APETags.c; sourceTree = "<group>"; };
-		2C7583B32480BA24002B29C1 /* ID3Tags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ID3Tags.c; sourceTree = "<group>"; };
 		2C7583B82480BA24002B29C1 /* RIFFDemuxer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = RIFFDemuxer.c; sourceTree = "<group>"; };
 		2C7583BA2480BA24002B29C1 /* AIFDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AIFDecoder.c; sourceTree = "<group>"; };
 		2C7583BB2480BA24002B29C1 /* WAVDecoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = WAVDecoder.c; sourceTree = "<group>"; };
@@ -264,7 +283,7 @@
 				2C7583B72480BA24002B29C1 /* Demux */,
 				2C7583D22480BA24002B29C1 /* Encode */,
 				2C7583E02480BA24002B29C1 /* Mux */,
-				2C7583B02480BA24002B29C1 /* Tagging */,
+				2C64ABA624BD5C3400A4C104 /* Tagging */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -282,24 +301,25 @@
 			isa = PBXGroup;
 			children = (
 				2C2C6CDE232DF5AC0025CA05 /* FoundationIO.dylib */,
-				2C2C6CE0232DF5AC0025CA05 /* Test_BitIO */,
+				2C2C6CE0232DF5AC0025CA05 /* Test_BufferIO */,
 				2C2C6CE2232DF5AC0025CA05 /* Test_CommandLineIO */,
 				2C2C6CE6232DF5AC0025CA05 /* Test_CryptographyIO */,
 				2C2C6CE8232DF5AC0025CA05 /* Test_MathIO */,
 				2C2C6CEA232DF5AC0025CA05 /* Test_StringIO */,
+				2C64AB9E24BD5C1900A4C104 /* Test_FileIO */,
+				2C64ABA024BD5C1900A4C104 /* Test_NetworkIO */,
+				2C64ABA224BD5C1900A4C104 /* Test_FormatIO */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2C7583B02480BA24002B29C1 /* Tagging */ = {
+		2C64ABA624BD5C3400A4C104 /* Tagging */ = {
 			isa = PBXGroup;
 			children = (
-				2C7583B12480BA24002B29C1 /* VorbisTags.c */,
-				2C7583B22480BA24002B29C1 /* APETags.c */,
-				2C7583B32480BA24002B29C1 /* ID3Tags.c */,
+				2C64ABA924BD5C5000A4C104 /* ID3Tags.c */,
+				2C64ABA724BD5C3F00A4C104 /* VorbisTags.c */,
 			);
-			name = Tagging;
-			path = ../Library/src/Tagging;
+			path = Tagging;
 			sourceTree = "<group>";
 		};
 		2C7583B72480BA24002B29C1 /* Demux */ = {
@@ -515,10 +535,10 @@
 			remoteRef = 2C2C6CDD232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		2C2C6CE0232DF5AC0025CA05 /* Test_BitIO */ = {
+		2C2C6CE0232DF5AC0025CA05 /* Test_BufferIO */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			path = Test_BitIO;
+			path = Test_BufferIO;
 			remoteRef = 2C2C6CDF232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -539,8 +559,7 @@
 		2C2C6CE8232DF5AC0025CA05 /* Test_MathIO */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.executable";
-			name = Test_MathIO;
-			path = Test_Math;
+			path = Test_MathIO;
 			remoteRef = 2C2C6CE7232DF5AC0025CA05 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -549,6 +568,27 @@
 			fileType = "compiled.mach-o.executable";
 			path = Test_StringIO;
 			remoteRef = 2C2C6CE9232DF5AC0025CA05 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2C64AB9E24BD5C1900A4C104 /* Test_FileIO */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_FileIO;
+			remoteRef = 2C64AB9D24BD5C1900A4C104 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2C64ABA024BD5C1900A4C104 /* Test_NetworkIO */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_NetworkIO;
+			remoteRef = 2C64AB9F24BD5C1900A4C104 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2C64ABA224BD5C1900A4C104 /* Test_FormatIO */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_FormatIO;
+			remoteRef = 2C64ABA124BD5C1900A4C104 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -583,22 +623,21 @@
 				2C7583FC2480BA25002B29C1 /* BMPCommon.c in Sources */,
 				2C7583F72480BA25002B29C1 /* PNMCommon.c in Sources */,
 				2C3A9EBF24A96AAC00E65BCC /* TransformIO.c in Sources */,
+				2C64ABAA24BD5C5000A4C104 /* ID3Tags.c in Sources */,
 				2CB0D18E23EDCF9A00F4C4D4 /* Test_OVIA.c in Sources */,
 				2C7583FB2480BA25002B29C1 /* JPEGCommon.c in Sources */,
 				2C7583EC2480BA25002B29C1 /* BMPDecoder.c in Sources */,
+				2C64ABA824BD5C3F00A4C104 /* VorbisTags.c in Sources */,
 				2C7583EF2480BA25002B29C1 /* JPEGDecoder.c in Sources */,
 				2C7583E92480BA25002B29C1 /* WAVDecoder.c in Sources */,
 				2C3E057F24A67F280081AF41 /* EntropyIO.c in Sources */,
 				2C27A28224B1829700119351 /* TagIO.c in Sources */,
 				2C7583FF2480BA25002B29C1 /* FLACEncoder.c in Sources */,
 				2C7583FE2480BA25002B29C1 /* JPEGEncoder.c in Sources */,
-				2C7583E22480BA24002B29C1 /* VorbisTags.c in Sources */,
 				2C7583F62480BA25002B29C1 /* W64Common.c in Sources */,
 				2C7583FA2480BA25002B29C1 /* AIFCommon.c in Sources */,
 				2C7584012480BA25002B29C1 /* BMPEncoder.c in Sources */,
-				2C7583E42480BA24002B29C1 /* ID3Tags.c in Sources */,
 				2C7584032480BA25002B29C1 /* WAVEncoder.c in Sources */,
-				2C7583E32480BA24002B29C1 /* APETags.c in Sources */,
 				2C7583E72480BA25002B29C1 /* RIFFDemuxer.c in Sources */,
 				2C7584052480BA25002B29C1 /* AIFEncoder.c in Sources */,
 			);

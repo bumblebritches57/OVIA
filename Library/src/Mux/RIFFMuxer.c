@@ -18,7 +18,7 @@ extern "C" {
             
             // Write the size of the stream, if it's over 2GB convert to RF64 aka write size as 0xFFFFFFFF and write a DS64 chunk
         } else {
-            Log(Severity_DEBUG, UnicodeIOTypes_FunctionName, UTF8String(""));
+            Log(Severity_DEBUG, PlatformIO_FunctionName, UTF8String(""));
         }
     }
     /*
