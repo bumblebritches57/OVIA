@@ -20,42 +20,44 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Library\include\OVIA.h" />
-    <ClInclude Include="..\Library\include\Private\AIFCommon.h" />
-    <ClInclude Include="..\Library\include\Private\BMPCommon.h" />
-    <ClInclude Include="..\Library\include\Private\FLACCommon.h" />
-    <ClInclude Include="..\Library\include\Private\JPEGCommon.h" />
-    <ClInclude Include="..\Library\include\Private\OVIACommon.h" />
-    <ClInclude Include="..\Library\include\Private\PNGCommon.h" />
-    <ClInclude Include="..\Library\include\Private\PNMCommon.h" />
-    <ClInclude Include="..\Library\include\Private\W64Common.h" />
-    <ClInclude Include="..\Library\include\Private\WAVCommon.h" />
+    <ClInclude Include="..\Library\include\Private\MediaIO.h" />
+    <ClInclude Include="..\Library\include\Private\CodecIO\CodecIO.h" />
+    <ClInclude Include="..\Library\include\Private\EntropyIO\EntropyIO.h" />
+    <ClInclude Include="..\Library\include\Private\StreamIO\AIFStream.h" />
+    <ClInclude Include="..\Library\include\Private\StreamIO\RIFFStream.h" />
+    <ClInclude Include="..\Library\include\Private\StreamIO\StreamIO.h" />
+    <ClInclude Include="..\Library\include\Private\StreamIO\W64Stream.h" />
+    <ClInclude Include="..\Library\include\Private\TagIO\AIFTags.h" />
+    <ClInclude Include="..\Library\include\Private\TagIO\APETags.h" />
+    <ClInclude Include="..\Library\include\Private\TagIO\ID3Tags.h" />
+    <ClInclude Include="..\Library\include\Private\TagIO\TagIO.h" />
+    <ClInclude Include="..\Library\include\Private\TagIO\WAVTags.h" />
+    <ClInclude Include="..\Library\include\Private\TransformIO\TransformIO.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Library\src\Common\AIFCommon.c" />
-    <ClCompile Include="..\Library\src\Common\BMPCommon.c" />
-    <ClCompile Include="..\Library\src\Common\FLACCommon.c" />
-    <ClCompile Include="..\Library\src\Common\JPEGCommon.c" />
-    <ClCompile Include="..\Library\src\Common\PNGCommon.c" />
-    <ClCompile Include="..\Library\src\Common\PNMCommon.c" />
-    <ClCompile Include="..\Library\src\Common\W64Common.c" />
-    <ClCompile Include="..\Library\src\Common\WAVCommon.c" />
-    <ClCompile Include="..\Library\src\Decode\AIFDecoder.c" />
-    <ClCompile Include="..\Library\src\Decode\BMPDecoder.c" />
-    <ClCompile Include="..\Library\src\Decode\FLACDecoder.c" />
-    <ClCompile Include="..\Library\src\Decode\JPEGDecoder.c" />
-    <ClCompile Include="..\Library\src\Decode\PNGDecoder.c" />
-    <ClCompile Include="..\Library\src\Decode\PNMDecoder.c" />
-    <ClCompile Include="..\Library\src\Decode\W64Decoder.c" />
-    <ClCompile Include="..\Library\src\Decode\WAVDecoder.c" />
-    <ClCompile Include="..\Library\src\Encode\AIFEncoder.c" />
-    <ClCompile Include="..\Library\src\Encode\BMPEncoder.c" />
-    <ClCompile Include="..\Library\src\Encode\FLACEncoder.c" />
-    <ClCompile Include="..\Library\src\Encode\JPEGEncoder.c" />
-    <ClCompile Include="..\Library\src\Encode\PNGEncoder.c" />
-    <ClCompile Include="..\Library\src\Encode\PNMEncoder.c" />
-    <ClCompile Include="..\Library\src\Encode\W64Encoder.c" />
-    <ClCompile Include="..\Library\src\Encode\WAVEncoder.c" />
     <ClCompile Include="..\Library\src\OVIA.c" />
+    <ClCompile Include="..\Library\src\MediaIO.c" />
+    <ClCompile Include="..\Library\src\CodecIO\FLACCodec.c" />
+    <ClCompile Include="..\Library\src\CodecIO\JPEGCodec.c" />
+    <ClCompile Include="..\Library\src\CodecIO\PCMCodec.c" />
+    <ClCompile Include="..\Library\src\CodecIO\PNGCodec.c" />
+    <ClCompile Include="..\Library\src\EntropyIO\ArthimeticEntropy.c" />
+    <ClCompile Include="..\Library\src\EntropyIO\EntropyIO.c" />
+    <ClCompile Include="..\Library\src\EntropyIO\FlateEntropy.c" />
+    <ClCompile Include="..\Library\src\EntropyIO\HuffmanEntropy.c" />
+    <ClCompile Include="..\Library\src\StreamIO\AIFStream.c" />
+    <ClCompile Include="..\Library\src\StreamIO\BMPStream.c" />
+    <ClCompile Include="..\Library\src\StreamIO\PNMStream.c" />
+    <ClCompile Include="..\Library\src\StreamIO\RIFFStream.c" />
+    <ClCompile Include="..\Library\src\StreamIO\W64Stream.c" />
+    <ClCompile Include="..\Library\src\TagIO\AIFTags.c" />
+    <ClCompile Include="..\Library\src\TagIO\APETags.c" />
+    <ClCompile Include="..\Library\src\TagIO\ID3Tags.c" />
+    <ClCompile Include="..\Library\src\TagIO\TagIO.c" />
+    <ClCompile Include="..\Library\src\TagIO\VorbisTags.c" />
+    <ClCompile Include="..\Library\src\TagIO\WAVTags.c" />
+    <ClCompile Include="..\Library\src\TransformIO\RCT.c" />
+    <ClCompile Include="..\Library\src\TransformIO\YCoCgR.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

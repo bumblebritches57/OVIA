@@ -2,89 +2,100 @@ cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
 
 project(OVIA C)
 
-if (${CMAKE_CONFIGURATION_TYPES} MATCHES "Debug" OR ${CMAKE_CONFIGURATION_TYPES} MATCHES "RelWithDebInfo")
-enable_testing()
-endif (${CMAKE_CONFIGURATION_TYPES} MATCHES "Debug" OR ${CMAKE_CONFIGURATION_TYPES} MATCHES "RelWithDebInfo")
+if(CMAKE_CONFIGURATION_TYPES MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "RelWithDebInfo")
+    enable_testing()
+endif(CMAKE_CONFIGURATION_TYPES MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "RelWithDebInfo")
 
-if   (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR ${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
-    set(libMATH -lm)
+if(NOT OVIA_VERSION)
+    execute_process(COMMAND ${GIT_EXECUTABLE} git rev-parse --abbrev-ref HEAD WORKING_DIRECTORY CMAKE_CURRENT_SOURCE_DIR OUTPUT_VARIABLE GIT_BRANCH_NAME RESULT_VARIABLE STDOUT ERROR_VARIABLE STDOUT)
+
+    execute_process(COMMAND ${GIT_EXECUTABLE} git rev-parse --verify ${GIT_BRANCH_NAME} WORKING_DIRECTORY CMAKE_CURRENT_SOURCE_DIR OUTPUT_VARIABLE GIT_COMMIT_ID RESULT_VARIABLE STDOUT ERROR_VARIABLE STDOUT)
+
+    set(OVIA_VERSION_CommitID ${GIT_COMMIT_ID})
+    set(OVIA_VERSION ${OVIA_VERSION_MAJOR}.${OVIA_VERSION_MINOR}.${OVIA_VERSION_CommitID})
+endif(NOT OVIA_VERSION)
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "UNIX" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     add_definitions(-D_LARGEFILE_SOURCE)
     add_definitions(-D_LARGEFILE64_SOURCE)
     add_definitions(-D_FILE_OFFSET_BITS=64)
-else (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    add_definitions(-D_LIB)
+    add_definitions(-D__STDC_WANT_LIB_EXT1__)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     add_definitions(-DUNICODE)
     add_definitions(-D_UNICODE)
     add_definitions(-D_ATL_ALLOW_CHAR_UNSIGNED)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR ${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
+endif(${CMAKE_SYSTEM_NAME} MATCHES "UNIX" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
-set(OVIA_Dir "${CMAKE_CURRENT_SOURCE_DIR}/../Library")
+set(Library_Dir "${CMAKE_CURRENT_SOURCE_DIR}/../Library")
+
+set(Test_Dir "${CMAKE_CURRENT_SOURCE_DIR}/../Tests")
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
 set(RUNTIME_OUTPUT_DIRECTORY       "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
 
-option(Encode "Enable Encoding support for all selected codecs" ON)
+configure_file("${Library_Dir}/../Resources/OVIA.pc.in" "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/OVIA.pc")
 
-option(Decode "Enable Decoding support for all selected codecs" ON)
+if(NOT ${CMAKE_BUILD_TYPE})
+    set(CMAKE_BUILD_TYPE "${MinSizeRel}")
+endif(NOT ${CMAKE_BUILD_TYPE})
 
-option(Audio "Enables selected audio codecs" ON)
+option(BUILD_SHARED_LIBS "Should FoundationIO be compiled as a dynamic library (.dylib/.dll/.so)?" ON)
 
-option(Image "Enables selected image codecs" ON)
-
-option(PCM "Audio: AIF, WAV, W64; Image: BMP, PNM" ON)
-
-option(Compressed "Audio: FLAC; Image: PNG, JPEG" ON)
-
-if   (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR ${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
-    cd CMAKE_CURRENT_SOURCE_DIR
-    add_custom_command(grep -R "static const OVIADecoder" . 2>/dev/null | awk -F " " '{print $5}' | sort)
-else (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    cd CMAKE_CURRENT_SOURCE_DIR
-    add_custom_command(findstr /s /C:"static const OVIADecoder" *.c | awk -F " " '{print $5}' | sort)
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin" OR ${CMAKE_SYSTEM_NAME} MATCHES "UNIX")
-
-set(OVIA_PublicHeaders
-    "${OVIA_Dir}/include/OVIA.h"
+set(OVIA_PUBLICHEADERS
+    "${Library_Dir}/include/OVIA.h"
 )
 
-set(OVIA_Sources
-    "${OVIA_Dir}/src/Common/AIFCommon.c"
-    "${OVIA_Dir}/src/Common/BMPCommon.c"
-    "${OVIA_Dir}/src/Common/FLACCommon.c"
-    "${OVIA_Dir}/src/Common/PNGCommon.c"
-    "${OVIA_Dir}/src/Common/PNMCommon.c"
-    "${OVIA_Dir}/src/Common/W64Common.c"
-    "${OVIA_Dir}/src/Common/WAVCommon.c"
-    "${OVIA_Dir}/src/Decode/AIFDecoder.c"
-    "${OVIA_Dir}/src/Decode/BMPDecoder.c"
-    "${OVIA_Dir}/src/Decode/FLACDecoder.c"
-    "${OVIA_Dir}/src/Decode/PNGDecoder.c"
-    "${OVIA_Dir}/src/Decode/PNMDecoder.c"
-    "${OVIA_Dir}/src/Decode/ReverseTransform.c"
-    "${OVIA_Dir}/src/Decode/W64Decoder.c"
-    "${OVIA_Dir}/src/Decode/WAVDecoder.c"
-    "${OVIA_Dir}/src/Encode/AIFEncoder.c"
-    "${OVIA_Dir}/src/Encode/BMPEncoder.c"
-    "${OVIA_Dir}/src/Encode/FLACEncoder.c"
-    "${OVIA_Dir}/src/Encode/ForwardTransform.c"
-    "${OVIA_Dir}/src/Encode/PNGEncoder.c"
-    "${OVIA_Dir}/src/Encode/PNMEncoder.c"
-    "${OVIA_Dir}/src/Encode/W64Encoder.c"
-    "${OVIA_Dir}/src/Encode/WAVEncoder.c"
-    "${OVIA_Dir}/src/OVIA.c"
+set(Library_Sources
+    "${Library_Dir}/src/OVIA.c"
+    "${Library_Dir}/src/MediaIO.c"
+    "${Library_Dir}/src/CodecIO/FLAC.c"
+    "${Library_Dir}/src/CodecIO/JPEG.c"
+    "${Library_Dir}/src/CodecIO/PNG.c"
+    "${Library_Dir}/src/CodecIO/SamplesIO.c"
+    "${Library_Dir}/src/EntropyIO/EntropyIO.c"
+    "${Library_Dir}/src/EntropyIO/Arithmetic.c"
+    "${Library_Dir}/src/EntropyIO/Flate.c"
+    "${Library_Dir}/src/EntropyIO/Huffman.c"
+    "${Library_Dir}/src/StreamIO/AIF.c"
+    "${Library_Dir}/src/StreamIO/BMP.c"
+    "${Library_Dir}/src/StreamIO/PNM.c"
+    "${Library_Dir}/src/StreamIO/W64.c"
+    "${Library_Dir}/src/StreamIO/RIFF.c"
+    "${Library_Dir}/src/TagIO/TagIO.c"
+    "${Library_Dir}/src/TagIO/AIFTags.c"
+    "${Library_Dir}/src/TagIO/APETags.c"
+    "${Library_Dir}/src/TagIO/ID3.c"
+    "${Library_Dir}/src/TagIO/Vorbis.c"
+    "${Library_Dir}/src/TagIO/WAVTags.c"
+    "${Library_Dir}/src/TransformIO/RCT.c"
+    "${Library_Dir}/src/TransformIO/YCoCgR.c"
 )
 
-function(Search What2Search Where2Search)
-if(UNIX)
-execute_process(grep -R -i "${What2Search} "${Where2Search}"
-endif(UNIX)
-if(Windows)
-execute_process(cd "${Where2Search}"
-execute_process(findstr /s /i "${What2Search}"
-endif(Windows)
-endfunction(Search)
+if(${BUILD_SHARED_LIBS} MATCHES OFF)
+    add_library(OVIA STATIC ${Library_Sources})
+elseif(${BUILD_SHARED_LIBS} MATCHES ON)
+    add_library(OVIA SHARED ${Library_Sources})
+endif(${BUILD_SHARED_LIBS} MATCHES OFF)
+
+target_include_directories(OVIA PUBLIC "${Library_Dir}/include")
+
+if(NOT DEFINED ${CMAKE_INSTALL_PREFIX})
+if(${CMAKE_SYSTEM_NAME} MATCHES "UNIX" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(CMAKE_INSTALL_PREFIX "/usr/local")
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    if(${CMAKE_GENERATOR_PLATFORM} MATCHES x64)
+        set(CMAKE_INSTALL_PREFIX "%ProgramFiles%\FoundationIO")
+    elseif(${CMAKE_GENERATOR_PLATFORM} MATCHES x86)
+        set(CMAKE_INSTALL_PREFIX "%ProgramFiles(x86)%\FoundationIO")
+    endif(${CMAKE_GENERATOR_PLATFORM} MATCHES x64)
+endif(${CMAKE_SYSTEM_NAME} MATCHES "UNIX" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+endif(NOT DEFINED ${CMAKE_INSTALL_PREFIX})
+
+install(TARGETS OVIA DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+install(FILES ${OVIA_PUBLICHEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
+install(FILES "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/OVIA.pc" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/pkgconfig")
 
 if(NOT ${CMAKE_BUILD_TYPE})
   set(CMAKE_BUILD_TYPE "${MinSizeRel}")
@@ -92,22 +103,18 @@ endif()
 
 add_subdirectory(../Dependencies/FoundationIO/Projects "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../Dependencies/FoundationIO/BUILD")
 
-add_library(OVIA ${OVIA_Sources} ${OVIA_PublicHeaders})
-
 set_target_properties(OVIA PROPERTIES PREFIX "")
 
 TARGET_LINK_LIBRARIES(OVIA FoundationIO)
 
-if (${CMAKE_C_COMPILER_ID} MATCHES "AppleClang" OR ${CMAKE_C_COMPILER_ID} MATCHES "Clang")
+if(${CMAKE_C_COMPILER_ID} MATCHES "AppleClang" OR ${CMAKE_C_COMPILER_ID} MATCHES "Clang")
 
 set(CMAKE_C_FLAGS " \
 ${CMAKE_C_FLAGS} \
 -fPIC \
--fPIE \
 -fshort-enums \
--funroll-loops \
 -funsigned-char \
--std=c17 \
+-std=c18 \
 -Weverything \
 -Wall \
 -Wextra \
@@ -120,13 +127,21 @@ ${CMAKE_C_FLAGS} \
 -Wno-pointer-sign \
 -Wno-reserved-id-macro \
 -Wno-sign-conversion \
--Wno-varargs \
+-Wsuggest-attribute=const \
+-Wsuggest-attribute=pure \
+-Wsuggest-attribute=malloc \
+-Wsuggest-attribute=noreturn \
+-Wsuggest-attribute=format \
+-Wmissing-format-attribute \
+-Wmissing-noreturn \
+-Wenum-conversion \
 -v \
 ")
 
 set(CMAKE_C_FLAGS_DEBUG " \
 ${CMAKE_C_FLAGS} \
 -fsanitize=address,undefined \
+-fno-omit-frame-pointer \
 -DDEBUG=1 \
 -g \
 -O1 \
@@ -139,6 +154,8 @@ ${CMAKE_C_FLAGS} \
 
 set(CMAKE_C_FLAGS_RELWITHDEBINFO " \
 ${CMAKE_C_FLAGS} \
+-fsanitize=address,undefined \
+-fno-omit-frame-pointer \
 -DDEBUG=1 \
 -g \
 -Ofast \
@@ -149,7 +166,16 @@ ${CMAKE_C_FLAGS} \
 -Oz \
 ")
 
-set(LINK_FLAGS ${LINK_FLAGS} "-flto=full")
+set(LINK_FLAGS ${LINK_FLAGS} " \
+-flto=full \
+-lm \
+")
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+set(LINK_FLAGS ${LINK_FLAGS} " \
+-dead_strip_dylibs
+")
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 set(LINK_FLAGS_DEBUG " \
 ${LINK_FLAGS} \
@@ -167,16 +193,15 @@ set(LINK_FLAGS_MINSIZEREL " \
 ${LINK_FLAGS} \
 ")
 
-elseif (${CMAKE_C_COMPILER_ID} MATCHES "GNU")
+elseif(${CMAKE_C_COMPILER_ID} MATCHES "GNU")
 
 set(CMAKE_C_FLAGS " \
 ${CMAKE_C_FLAGS} \
 -fPIC \
--fPIE \
 -fshort-enums \
 -funroll-loops \
 -funsigned-char \
--std=c17 \
+-std=c2x \
 -Wall \
 -Wextra \
 -Wpedantic \
@@ -185,7 +210,13 @@ ${CMAKE_C_FLAGS} \
 -Wno-pointer-sign \
 -Wno-sign-conversion \
 -Wno-varargs \
--Wno-discarded-qualifier \
+-Wsuggest-attribute=const \
+-Wsuggest-attribute=pure \
+-Wsuggest-attribute=malloc \
+-Wsuggest-attribute=noreturn \
+-Wsuggest-attribute=format \
+-Wmissing-format-attribute \
+-Wmissing-noreturn \
 ")
 
 set(CMAKE_C_FLAGS_DEBUG " \
@@ -203,6 +234,8 @@ ${CMAKE_C_FLAGS} \
 
 set(CMAKE_C_FLAGS_RELWITHDEBINFO " \
 ${CMAKE_C_FLAGS} \
+-fsanitize=address,undefined \
+-fno-omit-frame-pointer \
 -DDEBUG=1 \
 -g \
 -Ofast \
@@ -213,7 +246,16 @@ ${CMAKE_C_FLAGS} \
 -Os \
 ")
 
-set(LINK_FLAGS ${LINK_FLAGS} "-flto=full")
+set(LINK_FLAGS ${LINK_FLAGS} " \
+-flto=full \
+-lm \
+")
+
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+set(LINK_FLAGS ${LINK_FLAGS} " \
+-dead_strip_dylibs
+")
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 
 set(LINK_FLAGS_DEBUG " \
 ${LINK_FLAGS} \
@@ -231,7 +273,7 @@ set(LINK_FLAGS_MINSIZEREL " \
 ${LINK_FLAGS} \
 ")
 
-elseif (${MAKE_C_COMPILER_ID} MATCHES "MSVC")
+elseif(${MAKE_C_COMPILER_ID} MATCHES "MSVC")
 
 set(CMAKE_C_FLAGS " \
 ${CMAKE_C_FLAGS} \
@@ -320,4 +362,4 @@ ${LINK_FLAGS} \
 /RELEASE \
 ")
 
-endif (${CMAKE_C_COMPILER_ID} MATCHES "AppleClang" OR ${CMAKE_C_COMPILER_ID} MATCHES "Clang")
+endif(${CMAKE_C_COMPILER_ID} MATCHES "AppleClang" OR ${CMAKE_C_COMPILER_ID} MATCHES "Clang")
