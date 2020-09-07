@@ -1,113 +1,164 @@
-cmake_minimum_required(VERSION 3.3 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
+
+# Ok, so new structure: Globals, followed by Options, followed by config-specific variables.
 
 project(OVIA C)
+include(CTest)
 
-if(CMAKE_CONFIGURATION_TYPES MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "RelWithDebInfo")
-    enable_testing()
-endif(CMAKE_CONFIGURATION_TYPES MATCHES "Debug" OR CMAKE_CONFIGURATION_TYPES MATCHES "RelWithDebInfo")
+if(DEFINED CMAKE_BUILD_TYPE AND CMAKE_BUILD_TYPE STREQUAL "")
+    set(CMAKE_BUILD_TYPE "Debug")
+elseif(NOT DEFINED CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Debug")
+endif(DEFINED CMAKE_BUILD_TYPE AND CMAKE_BUILD_TYPE STREQUAL "")
 
-if(NOT OVIA_VERSION)
-    execute_process(COMMAND ${GIT_EXECUTABLE} git rev-parse --abbrev-ref HEAD WORKING_DIRECTORY CMAKE_CURRENT_SOURCE_DIR OUTPUT_VARIABLE GIT_BRANCH_NAME RESULT_VARIABLE STDOUT ERROR_VARIABLE STDOUT)
 
-    execute_process(COMMAND ${GIT_EXECUTABLE} git rev-parse --verify ${GIT_BRANCH_NAME} WORKING_DIRECTORY CMAKE_CURRENT_SOURCE_DIR OUTPUT_VARIABLE GIT_COMMIT_ID RESULT_VARIABLE STDOUT ERROR_VARIABLE STDOUT)
 
-    set(OVIA_VERSION_CommitID ${GIT_COMMIT_ID})
-    set(OVIA_VERSION ${OVIA_VERSION_MAJOR}.${OVIA_VERSION_MINOR}.${OVIA_VERSION_CommitID})
-endif(NOT OVIA_VERSION)
+include(../Dependencies/FoundationIO/Projects/DetectArchitecture.cmake)
 
-if(${CMAKE_SYSTEM_NAME} MATCHES "UNIX" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+FindTargetArchitecture(TargetArchitecture)
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${TargetArchitecture}/${CMAKE_BUILD_TYPE}")
+set(CMAKE_OUTPUT_DIRECTORY         "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${TargetArchitecture}/${CMAKE_BUILD_TYPE}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${TargetArchitecture}/${CMAKE_BUILD_TYPE}")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${TargetArchitecture}/${CMAKE_BUILD_TYPE}")
+set(OVIA_Library_Dir               "${CMAKE_CURRENT_SOURCE_DIR}/../Library")
+set(OVIA_Test_Dir                  "${CMAKE_CURRENT_SOURCE_DIR}/../Tests")
+set(OVIA_Resource_Dir              "${CMAKE_CURRENT_SOURCE_DIR}/../Resources")
+
+set(OVIA_SOURCE
+    "${OVIA_Library_Dir}/src/OVIA.c"
+    "${OVIA_Library_Dir}/src/MediaIO.c"
+    "${OVIA_Library_Dir}/src/CodecIO/FLACCodec.c"
+    "${OVIA_Library_Dir}/src/CodecIO/JPEGCodec.c"
+    "${OVIA_Library_Dir}/src/CodecIO/PNGCodec.c"
+    "${OVIA_Library_Dir}/src/CodecIO/PCMCodec.c"
+    "${OVIA_Library_Dir}/src/EntropyIO/EntropyIO.c"
+    "${OVIA_Library_Dir}/src/EntropyIO/ArthimeticEntropy.c"
+    "${OVIA_Library_Dir}/src/EntropyIO/FlateEntropy.c"
+    "${OVIA_Library_Dir}/src/EntropyIO/HuffmanEntropy.c"
+    "${OVIA_Library_Dir}/src/StreamIO/AIFStream.c"
+    "${OVIA_Library_Dir}/src/StreamIO/BMPStream.c"
+    "${OVIA_Library_Dir}/src/StreamIO/PNMStream.c"
+    "${OVIA_Library_Dir}/src/StreamIO/RIFFStream.c"
+    "${OVIA_Library_Dir}/src/StreamIO/W64Stream.c"
+    "${OVIA_Library_Dir}/src/TagIO/TagIO.c"
+    "${OVIA_Library_Dir}/src/TagIO/AIFTags.c"
+    "${OVIA_Library_Dir}/src/TagIO/APETags.c"
+    "${OVIA_Library_Dir}/src/TagIO/ID3Tags.c"
+    "${OVIA_Library_Dir}/src/TagIO/VorbisTags.c"
+    "${OVIA_Library_Dir}/src/TagIO/WAVTags.c"
+    "${OVIA_Library_Dir}/src/TransformIO/RCT.c"
+    "${OVIA_Library_Dir}/src/TransformIO/YCoCgR.c"
+)
+
+if(CMAKE_HOST_UNIX)
     add_definitions(-D_LARGEFILE_SOURCE)
     add_definitions(-D_LARGEFILE64_SOURCE)
     add_definitions(-D_FILE_OFFSET_BITS=64)
     add_definitions(-D__STDC_WANT_LIB_EXT1__)
-elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+elseif(CMAKE_HOST_WIN32)
     add_definitions(-DUNICODE)
     add_definitions(-D_UNICODE)
     add_definitions(-D_ATL_ALLOW_CHAR_UNSIGNED)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
-endif(${CMAKE_SYSTEM_NAME} MATCHES "UNIX" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+endif(CMAKE_HOST_UNIX)
 
-set(Library_Dir "${CMAKE_CURRENT_SOURCE_DIR}/../Library")
+find_package(Git)
 
-set(Test_Dir "${CMAKE_CURRENT_SOURCE_DIR}/../Tests")
+if(GIT_FOUND)
+    file(READ "../Library/include/Private/Version.h" OVIA_Version_Header)
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
-set(RUNTIME_OUTPUT_DIRECTORY       "${CMAKE_CURRENT_SOURCE_DIR}/../BUILD/${ARCHITECTURE}/${BUILDTYPE}")
+    string(REGEX MATCH "#define OVIA_Version_Major [0-9]+" _ "${OVIA_Version_Header}")
+    string(REGEX MATCH "[0-9]+" VERSION_MAJOR "${_}")
 
-configure_file("${Library_Dir}/../Resources/OVIA.pc.in" "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/OVIA.pc")
+    string(REGEX MATCH "#define OVIA_Version_Minor [0-9]+" _ "${OVIA_Version_Header}")
+    string(REGEX MATCH "[0-9]+" VERSION_MINOR "${_}")
 
-if(NOT ${CMAKE_BUILD_TYPE})
-    set(CMAKE_BUILD_TYPE "${MinSizeRel}")
-endif(NOT ${CMAKE_BUILD_TYPE})
+    string(REGEX MATCH "#define OVIA_Version_Patch [0-9]+" _ "${OVIA_Version_Header}")
+    string(REGEX MATCH "[0-9]+" VERSION_PATCH "${_}")
 
-option(BUILD_SHARED_LIBS "Should FoundationIO be compiled as a dynamic library (.dylib/.dll/.so)?" ON)
 
-set(OVIA_PUBLICHEADERS
-    "${Library_Dir}/include/OVIA.h"
-)
+    execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --verify master WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE GIT_COMMIT_ID RESULTS_VARIABLE STDOUT ERROR_VARIABLE STDERR)
+    string(REGEX REPLACE "\n$" "" GIT_COMMIT_ID_STRIPPED "${GIT_COMMIT_ID}")
+    string(TOUPPER "${GIT_COMMIT_ID_STRIPPED}" GIT_COMMIT_ID_STRIPPED_CAPS)
 
-set(Library_Sources
-    "${Library_Dir}/src/OVIA.c"
-    "${Library_Dir}/src/MediaIO.c"
-    "${Library_Dir}/src/CodecIO/FLAC.c"
-    "${Library_Dir}/src/CodecIO/JPEG.c"
-    "${Library_Dir}/src/CodecIO/PNG.c"
-    "${Library_Dir}/src/CodecIO/SamplesIO.c"
-    "${Library_Dir}/src/EntropyIO/EntropyIO.c"
-    "${Library_Dir}/src/EntropyIO/Arithmetic.c"
-    "${Library_Dir}/src/EntropyIO/Flate.c"
-    "${Library_Dir}/src/EntropyIO/Huffman.c"
-    "${Library_Dir}/src/StreamIO/AIF.c"
-    "${Library_Dir}/src/StreamIO/BMP.c"
-    "${Library_Dir}/src/StreamIO/PNM.c"
-    "${Library_Dir}/src/StreamIO/W64.c"
-    "${Library_Dir}/src/StreamIO/RIFF.c"
-    "${Library_Dir}/src/TagIO/TagIO.c"
-    "${Library_Dir}/src/TagIO/AIFTags.c"
-    "${Library_Dir}/src/TagIO/APETags.c"
-    "${Library_Dir}/src/TagIO/ID3.c"
-    "${Library_Dir}/src/TagIO/Vorbis.c"
-    "${Library_Dir}/src/TagIO/WAVTags.c"
-    "${Library_Dir}/src/TransformIO/RCT.c"
-    "${Library_Dir}/src/TransformIO/YCoCgR.c"
-)
+    set(OVIA_VERSION_STRING "")
+    string(APPEND OVIA_VERSION_STRING "${VERSION_MAJOR}" "." "${VERSION_MINOR}" "." "${VERSION_PATCH}" ":" "${GIT_COMMIT_ID_STRIPPED_CAPS}")
 
-if(${BUILD_SHARED_LIBS} MATCHES OFF)
-    add_library(OVIA STATIC ${Library_Sources})
-elseif(${BUILD_SHARED_LIBS} MATCHES ON)
-    add_library(OVIA SHARED ${Library_Sources})
-endif(${BUILD_SHARED_LIBS} MATCHES OFF)
+    set(FoundationIO_VERSION_RESOURCE "")
+    string(APPEND OVIA_VERSION_RESOURCE "${VERSION_MAJOR}" "," "${VERSION_MINOR}" "," "${VERSION_PATCH}" "," "${GIT_COMMIT_ID_STRIPPED_CAPS}")
+endif(GIT_FOUND)
 
-target_include_directories(OVIA PUBLIC "${Library_Dir}/include")
+configure_file("${OVIA_Resource_Dir}/OVIA.pc.in" "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Resources/OVIA.pc")
+configure_file("${OVIA_Resource_Dir}/OVIA.rc.in" "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Resources/OVIA.rc")
 
-if(NOT DEFINED ${CMAKE_INSTALL_PREFIX})
-if(${CMAKE_SYSTEM_NAME} MATCHES "UNIX" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+option(BUILD_AS_SHARED_LIBRARY "Should OVIA be compiled as a dynamic library (.dylib/.dll/.so)?" ON)
+
+if(BUILD_AS_SHARED_LIBRARY MATCHES ON)
+    add_library(OVIA SHARED ${OVIA_SOURCE})
+elseif(BUILD_AS_SHARED_LIBRARY MATCHES OFF)
+    add_library(OVIA STATIC ${OVIA_SOURCE})
+endif(BUILD_AS_SHARED_LIBRARY MATCHES ON)
+
+set_target_properties(OVIA PROPERTIES PREFIX "")
+
+target_include_directories(OVIA PUBLIC "${OVIA_Library_Dir}/include")
+
+if(NOT DEFINED CMAKE_INSTALL_PREFIX AND CMAKE_HOST_UNIX)
     set(CMAKE_INSTALL_PREFIX "/usr/local")
-elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-    if(${CMAKE_GENERATOR_PLATFORM} MATCHES x64)
-        set(CMAKE_INSTALL_PREFIX "%ProgramFiles%\FoundationIO")
-    elseif(${CMAKE_GENERATOR_PLATFORM} MATCHES x86)
-        set(CMAKE_INSTALL_PREFIX "%ProgramFiles(x86)%\FoundationIO")
-    endif(${CMAKE_GENERATOR_PLATFORM} MATCHES x64)
-endif(${CMAKE_SYSTEM_NAME} MATCHES "UNIX" OR ${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-endif(NOT DEFINED ${CMAKE_INSTALL_PREFIX})
+elseif(NOT DEFINED CMAKE_INSTALL_PREFIX AND CMAKE_HOST_WIN32)
+    set(CMAKE_INSTALL_PREFIX "%ProgramFiles%\OVIA")
+endif(NOT DEFINED CMAKE_INSTALL_PREFIX AND CMAKE_HOST_UNIX)
+
+install(TARGETS OVIA                          DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+install(FILES  ${OVIA_PUBLIC_HEADERS}         DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
+install(FILES "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Resources/OVIA.pc" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/pkgconfig")
+
+if(BUILD_TESTING)
+    enable_testing()
+
+    add_executable(Test_CodecIO                     "${OVIA_Test_Dir}/Test_CodecIO.c")
+    add_executable(Test_EntropyIO                   "${OVIA_Test_Dir}/Test_EntropyIO.c")
+    add_executable(Test_StreamIO                    "${OVIA_Test_Dir}/Test_StreamIO.c")
+    add_executable(Test_TagIO                       "${OVIA_Test_Dir}/Test_TagIO.c")
+    add_executable(Test_TransformIO                 "${OVIA_Test_Dir}/Test_TransformIO.c")
+    add_executable(Test_OVIA                        "${OVIA_Test_Dir}/Test_OVIA.c")
+
+    target_link_libraries(Test_CodecIO              OVIA)
+    target_link_libraries(Test_EntropyIO            OVIA)
+    target_link_libraries(Test_StreamIO             OVIA)
+    target_link_libraries(Test_TagIO                OVIA)
+    target_link_libraries(Test_TransformIO          OVIA)
+    target_link_libraries(Test_OVIA                 OVIA)
+
+    add_test(Test_CodecIO                           "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_CodecIO")
+    add_test(Test_EntropyIO                         "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_EntropyIO")
+    add_test(Test_StreamIO                          "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_StreamIO")
+    add_test(Test_TagIO                             "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_TagIO")
+    add_test(Test_TransformIO                       "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_TransformIO")
+    add_test(Test_OVIA                              "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/Test_OVIA")
+
+    install(TARGETS Test_CodecIO                    DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    install(TARGETS Test_EntropyIO                  DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    install(TARGETS Test_StreamIO                   DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    install(TARGETS Test_TagIO                      DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    install(TARGETS Test_TransformIO                DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+    install(TARGETS Test_OVIA                       DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+
+    add_custom_command(TARGET OVIA POST_BUILD COMMAND ctest ARGS --output-on-failure WORKING_DIRECTORY ${CMAKE_OUTPUT_DIRECTORY})
+
+endif(BUILD_TESTING)
 
 install(TARGETS OVIA DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 install(FILES ${OVIA_PUBLICHEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
-install(FILES "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/OVIA.pc" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/pkgconfig")
-
-if(NOT ${CMAKE_BUILD_TYPE})
-  set(CMAKE_BUILD_TYPE "${MinSizeRel}")
-endif()
 
 add_subdirectory(../Dependencies/FoundationIO/Projects "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/../Dependencies/FoundationIO/BUILD")
 
 set_target_properties(OVIA PROPERTIES PREFIX "")
 
-TARGET_LINK_LIBRARIES(OVIA FoundationIO)
+target_link_libraries(OVIA PUBLIC FoundationIO)
 
-if(${CMAKE_C_COMPILER_ID} MATCHES "AppleClang" OR ${CMAKE_C_COMPILER_ID} MATCHES "Clang")
+if(${CMAKE_C_COMPILER_ID} STREQUAL "AppleClang" OR ${CMAKE_C_COMPILER_ID} STREQUAL "Clang")
 
 set(CMAKE_C_FLAGS " \
 ${CMAKE_C_FLAGS} \
@@ -128,12 +179,6 @@ ${CMAKE_C_FLAGS} \
 -Wno-reserved-id-macro \
 -Wno-sign-conversion \
 -Wsuggest-attribute=const \
--Wsuggest-attribute=pure \
--Wsuggest-attribute=malloc \
--Wsuggest-attribute=noreturn \
--Wsuggest-attribute=format \
--Wmissing-format-attribute \
--Wmissing-noreturn \
 -Wenum-conversion \
 -v \
 ")
@@ -171,11 +216,11 @@ set(LINK_FLAGS ${LINK_FLAGS} " \
 -lm \
 ")
 
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+if(CMAKE_HOST_APPLE)
 set(LINK_FLAGS ${LINK_FLAGS} " \
 -dead_strip_dylibs
 ")
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+endif(CMAKE_HOST_APPLE)
 
 set(LINK_FLAGS_DEBUG " \
 ${LINK_FLAGS} \
@@ -193,7 +238,7 @@ set(LINK_FLAGS_MINSIZEREL " \
 ${LINK_FLAGS} \
 ")
 
-elseif(${CMAKE_C_COMPILER_ID} MATCHES "GNU")
+elseif(${CMAKE_C_COMPILER_ID} STREQUAL "GNU")
 
 set(CMAKE_C_FLAGS " \
 ${CMAKE_C_FLAGS} \
@@ -251,11 +296,11 @@ set(LINK_FLAGS ${LINK_FLAGS} " \
 -lm \
 ")
 
-if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+if(CMAKE_HOST_APPLE)
 set(LINK_FLAGS ${LINK_FLAGS} " \
 -dead_strip_dylibs
 ")
-endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+endif(CMAKE_HOST_APPLE)
 
 set(LINK_FLAGS_DEBUG " \
 ${LINK_FLAGS} \
@@ -273,7 +318,7 @@ set(LINK_FLAGS_MINSIZEREL " \
 ${LINK_FLAGS} \
 ")
 
-elseif(${MAKE_C_COMPILER_ID} MATCHES "MSVC")
+elseif(${CMAKE_C_COMPILER_ID} STREQUAL "MSVC")
 
 set(CMAKE_C_FLAGS " \
 ${CMAKE_C_FLAGS} \
@@ -362,4 +407,4 @@ ${LINK_FLAGS} \
 /RELEASE \
 ")
 
-endif(${CMAKE_C_COMPILER_ID} MATCHES "AppleClang" OR ${CMAKE_C_COMPILER_ID} MATCHES "Clang")
+endif(${CMAKE_C_COMPILER_ID} STREQUAL "AppleClang" OR ${CMAKE_C_COMPILER_ID} STREQUAL "Clang")

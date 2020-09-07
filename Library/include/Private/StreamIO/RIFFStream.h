@@ -11,7 +11,7 @@
 
 #include "StreamIO.h"
 
-#pragma  once
+#pragma once
 
 #ifndef OVIA_StreamIO_RIFFStream_H
 #define OVIA_StreamIO_RIFFStream_H

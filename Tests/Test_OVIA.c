@@ -1,8 +1,7 @@
 #include "../Dependencies/FoundationIO/Library/include/TestIO.h"
-#include "../Dependencies/FoundationIO/Library/include/BufferIO.h"
 #include "../Library/include/OVIA.h"
 
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 extern "C" {
 #endif
     
@@ -44,6 +43,6 @@ extern "C" {
         return Test_OVIA();
     }
     
-#ifdef __cplusplus
+#if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 }
 #endif
