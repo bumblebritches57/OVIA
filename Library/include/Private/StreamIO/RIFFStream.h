@@ -86,11 +86,11 @@ extern "C" {
         WAVInfo   *Info;
         BEXTChunk *BEXT;
         uint64_t   NumSamplesWritten;
-        uint32_t   SampleRate;
-        uint32_t   ByteRate;
-        uint32_t   BlockAlign;
-        uint32_t   SpeakerMask;
-        uint32_t   ChannelMask;
+        uint64_t   SampleRate;
+        uint64_t   ByteRate;
+        uint64_t   BlockAlign;
+        uint64_t   SpeakerMask;
+        uint64_t   ChannelMask;
         uint16_t   CompressionFormat;
         uint16_t   BlockAlignment;
         uint16_t   NumChannels;

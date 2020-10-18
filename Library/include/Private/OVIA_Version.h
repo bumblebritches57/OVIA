@@ -2,7 +2,7 @@
  @header          OVIA_Version.h
  @author          Marcus Johnson
  @copyright       2020+
- @version         1.0.0
+ @version         0.7.9
  @brief           This header contains macros that define OVIA's version.
  */
 
