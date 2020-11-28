@@ -13,7 +13,6 @@
 		2C14B0F625062D6C00D7F120 /* FLACEncode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C14B0F525062D6C00D7F120 /* FLACEncode.c */; };
 		2C14B0F825062DE100D7F120 /* FLACDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C14B0F725062DE100D7F120 /* FLACDecode.c */; };
 		2C14B0FA25062E6300D7F120 /* FLACCodec.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C14B0F925062E6300D7F120 /* FLACCodec.h */; };
-		2C14B0FC250630B700D7F120 /* OVIA_Version.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C14B0FB250630B700D7F120 /* OVIA_Version.h */; };
 		2C18FFC625023A4100AC4F78 /* PNGDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C18FFC525023A4100AC4F78 /* PNGDecode.c */; };
 		2C18FFC825023A4500AC4F78 /* PNGEncode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C18FFC725023A4500AC4F78 /* PNGEncode.c */; };
 		2C18FFCA25023BEB00AC4F78 /* PNGCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C18FFC925023BEB00AC4F78 /* PNGCodec.c */; };
@@ -32,16 +31,22 @@
 		2C18FFF22502572D00AC4F78 /* FoundationIO.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4D5FA424C3ACEB00AAAB77 /* FoundationIO.dylib */; };
 		2C40316925344FF70002C046 /* Arithmetic.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C40315F25344FF70002C046 /* Arithmetic.h */; };
 		2C403172253450ED0002C046 /* CanonicalHuffman.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C403171253450ED0002C046 /* CanonicalHuffman.h */; };
+		2C46F89E2570FA4600785587 /* StatisticsIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F8982570FA4600785587 /* StatisticsIO.h */; };
+		2C46F89F2570FA4600785587 /* CodecIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F8992570FA4600785587 /* CodecIO.h */; };
+		2C46F8A02570FA4600785587 /* EntropyIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89A2570FA4600785587 /* EntropyIO.h */; };
+		2C46F8A12570FA4600785587 /* StreamIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89B2570FA4600785587 /* StreamIO.h */; };
+		2C46F8A22570FA4600785587 /* TagIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89C2570FA4600785587 /* TagIO.h */; };
+		2C46F8A32570FA4600785587 /* TransformIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89D2570FA4600785587 /* TransformIO.h */; };
+		2C46F8C7257105E100785587 /* Flate.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F8C3257105E100785587 /* Flate.c */; };
+		2C46F8C8257105E100785587 /* Huffman.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F8C4257105E100785587 /* Huffman.c */; };
+		2C46F8C9257105E100785587 /* Rice.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F8C5257105E100785587 /* Rice.c */; };
+		2C46F8CA257105E100785587 /* Arthimetic.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F8C6257105E100785587 /* Arthimetic.c */; };
+		2C46F97D2571460D00785587 /* CodecIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F97C2571460D00785587 /* CodecIO.c */; };
 		2C4CDE8424C3F9280085725E /* ID3Tags.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4CDE8324C3F9280085725E /* ID3Tags.h */; };
 		2C4D5FB824C3AD0100AAAB77 /* FoundationIO.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4D5FA424C3ACEB00AAAB77 /* FoundationIO.dylib */; };
-		2C4D5FC324C3ADBE00AAAB77 /* CodecIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FC224C3ADBE00AAAB77 /* CodecIO.h */; };
-		2C4D5FC524C3ADD600AAAB77 /* EntropyIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FC424C3ADD600AAAB77 /* EntropyIO.h */; };
-		2C4D5FCA24C3ADF100AAAB77 /* StreamIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FC724C3ADF100AAAB77 /* StreamIO.h */; };
 		2C4D5FCB24C3ADF100AAAB77 /* AIFStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FC824C3ADF100AAAB77 /* AIFStream.h */; };
 		2C4D5FCF24C3ADFE00AAAB77 /* AIFTags.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FCC24C3ADFE00AAAB77 /* AIFTags.h */; };
 		2C4D5FD024C3ADFE00AAAB77 /* WAVTags.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FCD24C3ADFE00AAAB77 /* WAVTags.h */; };
-		2C4D5FD124C3ADFE00AAAB77 /* TagIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FCE24C3ADFE00AAAB77 /* TagIO.h */; };
-		2C4D5FD324C3AE0D00AAAB77 /* TransformIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FD224C3AE0D00AAAB77 /* TransformIO.h */; };
 		2C4D5FD524C3AE1A00AAAB77 /* MediaIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FD424C3AE1A00AAAB77 /* MediaIO.h */; };
 		2C4D5FD724C3AE2B00AAAB77 /* OVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FD624C3AE2B00AAAB77 /* OVIA.h */; };
 		2C4D600524C3AEB300AAAB77 /* RCT.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C4D600324C3AEB300AAAB77 /* RCT.c */; };
@@ -57,14 +62,12 @@
 		2C50628225327CE9005BBD9D /* APETags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C50627A25327CE9005BBD9D /* APETags.c */; };
 		2C50628325327CE9005BBD9D /* AIFTags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C50627B25327CE9005BBD9D /* AIFTags.c */; };
 		2C50628C25327D45005BBD9D /* VorbisDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C50628B25327D45005BBD9D /* VorbisDecode.c */; };
-		2C57A98F24E6202200C9A2FB /* ArthimeticEncode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A98B24E6202200C9A2FB /* ArthimeticEncode.c */; };
-		2C57A99024E6202200C9A2FB /* HuffmanEncode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A98C24E6202200C9A2FB /* HuffmanEncode.c */; };
 		2C57A99124E6202200C9A2FB /* EntropyIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A98D24E6202200C9A2FB /* EntropyIO.c */; };
-		2C57A99224E6202200C9A2FB /* FlateEncode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A98E24E6202200C9A2FB /* FlateEncode.c */; };
 		2C57A99824E6204800C9A2FB /* FLACCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A99424E6204800C9A2FB /* FLACCodec.c */; };
 		2C57A99924E6204800C9A2FB /* JPEGCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A99524E6204800C9A2FB /* JPEGCodec.c */; };
 		2C57A99A24E6204800C9A2FB /* PCMCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A99624E6204800C9A2FB /* PCMCodec.c */; };
 		2C6C75D124D94919009368B4 /* RIFFStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6C75D024D94919009368B4 /* RIFFStream.h */; };
+		2C94331325609AAE007035FE /* StreamIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C94331225609AAE007035FE /* StreamIO.c */; };
 		2CA4C55524EF9529007803FD /* Test_EntropyIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CA4C51024EF94A0007803FD /* Test_EntropyIO.c */; };
 		2CA4C55624EF952F007803FD /* Test_OVIA.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CA4C51124EF94A0007803FD /* Test_OVIA.c */; };
 		2CA4C55724EF9532007803FD /* Test_TransformIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CA4C50F24EF94A0007803FD /* Test_TransformIO.c */; };
@@ -88,12 +91,10 @@
 		2CB4C1742531C214009D6EA0 /* W64Decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1652531C214009D6EA0 /* W64Decode.c */; };
 		2CB4C17D2531C34E009D6EA0 /* BMPStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB4C17C2531C34E009D6EA0 /* BMPStream.h */; };
 		2CB4C1862531C409009D6EA0 /* PNMStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB4C1852531C409009D6EA0 /* PNMStream.h */; };
-		2CB4C2862531E7B5009D6EA0 /* FlateDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C2852531E7B5009D6EA0 /* FlateDecode.c */; };
 		2CB4C2A72531E8C4009D6EA0 /* Flate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB4C2A62531E8C4009D6EA0 /* Flate.h */; };
-		2CB4C2B72531EA7A009D6EA0 /* ArthimeticDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C2B62531EA7A009D6EA0 /* ArthimeticDecode.c */; };
-		2CB4C2C72531EAA6009D6EA0 /* HuffmanDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C2C62531EAA6009D6EA0 /* HuffmanDecode.c */; };
 		2CBB46CC253AC2F700D38E6F /* StatisticsIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CBB46CB253AC2F700D38E6F /* StatisticsIO.h */; };
 		2CBB46DE253AC32B00D38E6F /* StatisticsIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CBB46DD253AC32B00D38E6F /* StatisticsIO.c */; };
+		2CD3C8E5253DADFE006D9278 /* Rice.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CD3C8E4253DADFE006D9278 /* Rice.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -324,24 +325,29 @@
 		2C14B0F525062D6C00D7F120 /* FLACEncode.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = FLACEncode.c; path = ../Library/src/CodecIO/FLACEncode.c; sourceTree = "<group>"; };
 		2C14B0F725062DE100D7F120 /* FLACDecode.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = FLACDecode.c; path = ../Library/src/CodecIO/FLACDecode.c; sourceTree = "<group>"; };
 		2C14B0F925062E6300D7F120 /* FLACCodec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLACCodec.h; path = ../Library/include/Private/CodecIO/FLACCodec.h; sourceTree = "<group>"; };
-		2C14B0FB250630B700D7F120 /* OVIA_Version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OVIA_Version.h; path = ../Library/include/Private/OVIA_Version.h; sourceTree = "<group>"; };
 		2C18FFC525023A4100AC4F78 /* PNGDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PNGDecode.c; path = ../Library/src/CodecIO/PNGDecode.c; sourceTree = "<group>"; };
 		2C18FFC725023A4500AC4F78 /* PNGEncode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PNGEncode.c; path = ../Library/src/CodecIO/PNGEncode.c; sourceTree = "<group>"; };
 		2C18FFC925023BEB00AC4F78 /* PNGCodec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PNGCodec.c; path = ../Library/src/CodecIO/PNGCodec.c; sourceTree = "<group>"; };
 		2C18FFCB25023C5300AC4F78 /* PNGCodec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PNGCodec.h; path = ../Library/include/Private/CodecIO/PNGCodec.h; sourceTree = "<group>"; };
 		2C40315F25344FF70002C046 /* Arithmetic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Arithmetic.h; path = ../Library/include/Private/EntropyIO/Arithmetic.h; sourceTree = "<group>"; };
 		2C403171253450ED0002C046 /* CanonicalHuffman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CanonicalHuffman.h; path = ../Library/include/Private/EntropyIO/CanonicalHuffman.h; sourceTree = "<group>"; };
+		2C46F8982570FA4600785587 /* StatisticsIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatisticsIO.h; path = ../Library/include/StatisticsIO.h; sourceTree = "<group>"; };
+		2C46F8992570FA4600785587 /* CodecIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CodecIO.h; path = ../Library/include/CodecIO.h; sourceTree = "<group>"; };
+		2C46F89A2570FA4600785587 /* EntropyIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EntropyIO.h; path = ../Library/include/EntropyIO.h; sourceTree = "<group>"; };
+		2C46F89B2570FA4600785587 /* StreamIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StreamIO.h; path = ../Library/include/StreamIO.h; sourceTree = "<group>"; };
+		2C46F89C2570FA4600785587 /* TagIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagIO.h; path = ../Library/include/TagIO.h; sourceTree = "<group>"; };
+		2C46F89D2570FA4600785587 /* TransformIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransformIO.h; path = ../Library/include/TransformIO.h; sourceTree = "<group>"; };
+		2C46F8C3257105E100785587 /* Flate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Flate.c; path = ../Library/src/EntropyIO/Flate.c; sourceTree = "<group>"; };
+		2C46F8C4257105E100785587 /* Huffman.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Huffman.c; path = ../Library/src/EntropyIO/Huffman.c; sourceTree = "<group>"; };
+		2C46F8C5257105E100785587 /* Rice.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Rice.c; path = ../Library/src/EntropyIO/Rice.c; sourceTree = "<group>"; };
+		2C46F8C6257105E100785587 /* Arthimetic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Arthimetic.c; path = ../Library/src/EntropyIO/Arthimetic.c; sourceTree = "<group>"; };
+		2C46F97C2571460D00785587 /* CodecIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = CodecIO.c; path = ../Library/src/CodecIO/CodecIO.c; sourceTree = "<group>"; };
 		2C4CDE8324C3F9280085725E /* ID3Tags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ID3Tags.h; path = ../Library/include/Private/TagIO/ID3Tags.h; sourceTree = "<group>"; };
 		2C4D5F8F24C3ACC700AAAB77 /* OVIA.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = OVIA.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C4D5F9724C3ACEB00AAAB77 /* FoundationIO.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FoundationIO.xcodeproj; path = ../Dependencies/FoundationIO/Projects/FoundationIO.xcodeproj; sourceTree = "<group>"; };
-		2C4D5FC224C3ADBE00AAAB77 /* CodecIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = CodecIO.h; path = ../Library/include/Private/CodecIO/CodecIO.h; sourceTree = "<group>"; };
-		2C4D5FC424C3ADD600AAAB77 /* EntropyIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = EntropyIO.h; path = ../Library/include/Private/EntropyIO/EntropyIO.h; sourceTree = "<group>"; };
-		2C4D5FC724C3ADF100AAAB77 /* StreamIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = StreamIO.h; path = ../Library/include/Private/StreamIO/StreamIO.h; sourceTree = "<group>"; };
 		2C4D5FC824C3ADF100AAAB77 /* AIFStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AIFStream.h; path = ../Library/include/Private/StreamIO/AIFStream.h; sourceTree = "<group>"; };
 		2C4D5FCC24C3ADFE00AAAB77 /* AIFTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = AIFTags.h; path = ../Library/include/Private/TagIO/AIFTags.h; sourceTree = "<group>"; };
 		2C4D5FCD24C3ADFE00AAAB77 /* WAVTags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = WAVTags.h; path = ../Library/include/Private/TagIO/WAVTags.h; sourceTree = "<group>"; };
-		2C4D5FCE24C3ADFE00AAAB77 /* TagIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = TagIO.h; path = ../Library/include/Private/TagIO/TagIO.h; sourceTree = "<group>"; };
-		2C4D5FD224C3AE0D00AAAB77 /* TransformIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = TransformIO.h; path = ../Library/include/Private/TransformIO/TransformIO.h; sourceTree = "<group>"; };
 		2C4D5FD424C3AE1A00AAAB77 /* MediaIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MediaIO.h; path = ../Library/include/Private/MediaIO.h; sourceTree = "<group>"; };
 		2C4D5FD624C3AE2B00AAAB77 /* OVIA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = OVIA.h; path = ../Library/include/OVIA.h; sourceTree = "<group>"; };
 		2C4D600324C3AEB300AAAB77 /* RCT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = RCT.c; path = ../Library/src/TransformIO/RCT.c; sourceTree = "<group>"; };
@@ -357,14 +363,12 @@
 		2C50627A25327CE9005BBD9D /* APETags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = APETags.c; path = ../Library/src/TagIO/APETags.c; sourceTree = "<group>"; };
 		2C50627B25327CE9005BBD9D /* AIFTags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFTags.c; path = ../Library/src/TagIO/AIFTags.c; sourceTree = "<group>"; };
 		2C50628B25327D45005BBD9D /* VorbisDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = VorbisDecode.c; path = ../Library/src/TagIO/VorbisDecode.c; sourceTree = "<group>"; };
-		2C57A98B24E6202200C9A2FB /* ArthimeticEncode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = ArthimeticEncode.c; path = ../Library/src/EntropyIO/ArthimeticEncode.c; sourceTree = "<group>"; };
-		2C57A98C24E6202200C9A2FB /* HuffmanEncode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = HuffmanEncode.c; path = ../Library/src/EntropyIO/HuffmanEncode.c; sourceTree = "<group>"; };
 		2C57A98D24E6202200C9A2FB /* EntropyIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = EntropyIO.c; path = ../Library/src/EntropyIO/EntropyIO.c; sourceTree = "<group>"; };
-		2C57A98E24E6202200C9A2FB /* FlateEncode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = FlateEncode.c; path = ../Library/src/EntropyIO/FlateEncode.c; sourceTree = "<group>"; };
 		2C57A99424E6204800C9A2FB /* FLACCodec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = FLACCodec.c; path = ../Library/src/CodecIO/FLACCodec.c; sourceTree = "<group>"; };
 		2C57A99524E6204800C9A2FB /* JPEGCodec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = JPEGCodec.c; path = ../Library/src/CodecIO/JPEGCodec.c; sourceTree = "<group>"; };
 		2C57A99624E6204800C9A2FB /* PCMCodec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PCMCodec.c; path = ../Library/src/CodecIO/PCMCodec.c; sourceTree = "<group>"; };
 		2C6C75D024D94919009368B4 /* RIFFStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = RIFFStream.h; path = ../Library/include/Private/StreamIO/RIFFStream.h; sourceTree = "<group>"; };
+		2C94331225609AAE007035FE /* StreamIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = StreamIO.c; path = ../Library/src/StreamIO/StreamIO.c; sourceTree = "<group>"; };
 		2CA4C50C24EF94A0007803FD /* Test_StreamIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Test_StreamIO.c; path = ../Tests/Test_StreamIO.c; sourceTree = "<group>"; };
 		2CA4C50D24EF94A0007803FD /* Test_CodecIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Test_CodecIO.c; path = ../Tests/Test_CodecIO.c; sourceTree = "<group>"; };
 		2CA4C50E24EF94A0007803FD /* Test_TagIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Test_TagIO.c; path = ../Tests/Test_TagIO.c; sourceTree = "<group>"; };
@@ -395,12 +399,10 @@
 		2CB4C1652531C214009D6EA0 /* W64Decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Decode.c; path = ../Library/src/StreamIO/W64Decode.c; sourceTree = "<group>"; };
 		2CB4C17C2531C34E009D6EA0 /* BMPStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BMPStream.h; path = ../Library/include/Private/StreamIO/BMPStream.h; sourceTree = "<group>"; };
 		2CB4C1852531C409009D6EA0 /* PNMStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PNMStream.h; path = ../Library/include/Private/StreamIO/PNMStream.h; sourceTree = "<group>"; };
-		2CB4C2852531E7B5009D6EA0 /* FlateDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = FlateDecode.c; path = ../Library/src/EntropyIO/FlateDecode.c; sourceTree = "<group>"; };
 		2CB4C2A62531E8C4009D6EA0 /* Flate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Flate.h; path = ../Library/include/Private/EntropyIO/Flate.h; sourceTree = "<group>"; };
-		2CB4C2B62531EA7A009D6EA0 /* ArthimeticDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = ArthimeticDecode.c; path = ../Library/src/EntropyIO/ArthimeticDecode.c; sourceTree = "<group>"; };
-		2CB4C2C62531EAA6009D6EA0 /* HuffmanDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = HuffmanDecode.c; path = ../Library/src/EntropyIO/HuffmanDecode.c; sourceTree = "<group>"; };
 		2CBB46CB253AC2F700D38E6F /* StatisticsIO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StatisticsIO.h; path = ../Library/include/StatisticsIO.h; sourceTree = "<group>"; };
 		2CBB46DD253AC32B00D38E6F /* StatisticsIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = StatisticsIO.c; path = ../Library/src/StatisticsIO.c; sourceTree = "<group>"; };
+		2CD3C8E4253DADFE006D9278 /* Rice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Rice.h; path = ../Library/include/Private/EntropyIO/Rice.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -546,6 +548,12 @@
 			isa = PBXGroup;
 			children = (
 				2C4D5FD624C3AE2B00AAAB77 /* OVIA.h */,
+				2C46F8992570FA4600785587 /* CodecIO.h */,
+				2C46F89A2570FA4600785587 /* EntropyIO.h */,
+				2C46F8982570FA4600785587 /* StatisticsIO.h */,
+				2C46F89B2570FA4600785587 /* StreamIO.h */,
+				2C46F89C2570FA4600785587 /* TagIO.h */,
+				2C46F89D2570FA4600785587 /* TransformIO.h */,
 				2C4D5FBC24C3AD7400AAAB77 /* Private */,
 			);
 			name = Headers;
@@ -554,7 +562,6 @@
 		2C4D5FBC24C3AD7400AAAB77 /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				2C14B0FB250630B700D7F120 /* OVIA_Version.h */,
 				2C4D5FD424C3AE1A00AAAB77 /* MediaIO.h */,
 				2CBB46CB253AC2F700D38E6F /* StatisticsIO.h */,
 				2C4D5FC124C3ADB300AAAB77 /* CodecIO */,
@@ -569,7 +576,6 @@
 		2C4D5FBD24C3AD8900AAAB77 /* TransformIO */ = {
 			isa = PBXGroup;
 			children = (
-				2C4D5FD224C3AE0D00AAAB77 /* TransformIO.h */,
 			);
 			name = TransformIO;
 			sourceTree = "<group>";
@@ -577,7 +583,6 @@
 		2C4D5FBE24C3AD9600AAAB77 /* TagIO */ = {
 			isa = PBXGroup;
 			children = (
-				2C4D5FCE24C3ADFE00AAAB77 /* TagIO.h */,
 				2C4D5FCC24C3ADFE00AAAB77 /* AIFTags.h */,
 				2CB1D71924E5132700861A8C /* APETags.h */,
 				2C4D5FCD24C3ADFE00AAAB77 /* WAVTags.h */,
@@ -589,7 +594,6 @@
 		2C4D5FBF24C3AD9E00AAAB77 /* StreamIO */ = {
 			isa = PBXGroup;
 			children = (
-				2C4D5FC724C3ADF100AAAB77 /* StreamIO.h */,
 				2C4D5FC824C3ADF100AAAB77 /* AIFStream.h */,
 				2CB4C17C2531C34E009D6EA0 /* BMPStream.h */,
 				2CB4C1852531C409009D6EA0 /* PNMStream.h */,
@@ -601,10 +605,10 @@
 		2C4D5FC024C3ADA900AAAB77 /* EntropyIO */ = {
 			isa = PBXGroup;
 			children = (
-				2C4D5FC424C3ADD600AAAB77 /* EntropyIO.h */,
 				2C40315F25344FF70002C046 /* Arithmetic.h */,
 				2C403171253450ED0002C046 /* CanonicalHuffman.h */,
 				2CB4C2A62531E8C4009D6EA0 /* Flate.h */,
+				2CD3C8E4253DADFE006D9278 /* Rice.h */,
 			);
 			name = EntropyIO;
 			sourceTree = "<group>";
@@ -612,7 +616,6 @@
 		2C4D5FC124C3ADB300AAAB77 /* CodecIO */ = {
 			isa = PBXGroup;
 			children = (
-				2C4D5FC224C3ADBE00AAAB77 /* CodecIO.h */,
 				2C18FFCB25023C5300AC4F78 /* PNGCodec.h */,
 				2C14B0C22505438D00D7F120 /* JPEGCodec.h */,
 				2C14B0F925062E6300D7F120 /* FLACCodec.h */,
@@ -648,6 +651,7 @@
 		2C4D5FDA24C3AE5000AAAB77 /* StreamIO */ = {
 			isa = PBXGroup;
 			children = (
+				2C94331225609AAE007035FE /* StreamIO.c */,
 				2CB4C1582531C213009D6EA0 /* AIFDecode.c */,
 				2CB4C15C2531C214009D6EA0 /* AIFEncode.c */,
 				2CB4C15E2531C214009D6EA0 /* AIFStream.c */,
@@ -670,13 +674,11 @@
 		2C4D5FDB24C3AE5A00AAAB77 /* EntropyIO */ = {
 			isa = PBXGroup;
 			children = (
+				2C46F8C6257105E100785587 /* Arthimetic.c */,
+				2C46F8C3257105E100785587 /* Flate.c */,
+				2C46F8C4257105E100785587 /* Huffman.c */,
+				2C46F8C5257105E100785587 /* Rice.c */,
 				2C57A98D24E6202200C9A2FB /* EntropyIO.c */,
-				2CB4C2B62531EA7A009D6EA0 /* ArthimeticDecode.c */,
-				2C57A98B24E6202200C9A2FB /* ArthimeticEncode.c */,
-				2CB4C2852531E7B5009D6EA0 /* FlateDecode.c */,
-				2C57A98E24E6202200C9A2FB /* FlateEncode.c */,
-				2CB4C2C62531EAA6009D6EA0 /* HuffmanDecode.c */,
-				2C57A98C24E6202200C9A2FB /* HuffmanEncode.c */,
 			);
 			name = EntropyIO;
 			sourceTree = "<group>";
@@ -684,6 +686,7 @@
 		2C4D5FDC24C3AE6600AAAB77 /* CodecIO */ = {
 			isa = PBXGroup;
 			children = (
+				2C46F97C2571460D00785587 /* CodecIO.c */,
 				2C18FFC925023BEB00AC4F78 /* PNGCodec.c */,
 				2C18FFC525023A4100AC4F78 /* PNGDecode.c */,
 				2C18FFC725023A4500AC4F78 /* PNGEncode.c */,
@@ -718,29 +721,30 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C4D5FCA24C3ADF100AAAB77 /* StreamIO.h in Headers */,
-				2C4D5FD124C3ADFE00AAAB77 /* TagIO.h in Headers */,
-				2C4D5FC524C3ADD600AAAB77 /* EntropyIO.h in Headers */,
 				2C4D5FD524C3AE1A00AAAB77 /* MediaIO.h in Headers */,
-				2C4D5FC324C3ADBE00AAAB77 /* CodecIO.h in Headers */,
-				2C14B0FC250630B700D7F120 /* OVIA_Version.h in Headers */,
+				2C46F89F2570FA4600785587 /* CodecIO.h in Headers */,
 				2CBB46CC253AC2F700D38E6F /* StatisticsIO.h in Headers */,
+				2CD3C8E5253DADFE006D9278 /* Rice.h in Headers */,
 				2C40316925344FF70002C046 /* Arithmetic.h in Headers */,
 				2C14B0FA25062E6300D7F120 /* FLACCodec.h in Headers */,
 				2C14B0CC2505438E00D7F120 /* JPEGCodec.h in Headers */,
 				2CB4C17D2531C34E009D6EA0 /* BMPStream.h in Headers */,
+				2C46F8A22570FA4600785587 /* TagIO.h in Headers */,
 				2C6C75D124D94919009368B4 /* RIFFStream.h in Headers */,
 				2C4D5FCB24C3ADF100AAAB77 /* AIFStream.h in Headers */,
+				2C46F8A12570FA4600785587 /* StreamIO.h in Headers */,
 				2C4D5FCF24C3ADFE00AAAB77 /* AIFTags.h in Headers */,
 				2C403172253450ED0002C046 /* CanonicalHuffman.h in Headers */,
 				2C4D5FD724C3AE2B00AAAB77 /* OVIA.h in Headers */,
-				2C4D5FD324C3AE0D00AAAB77 /* TransformIO.h in Headers */,
 				2C4D5FD024C3ADFE00AAAB77 /* WAVTags.h in Headers */,
 				2C4CDE8424C3F9280085725E /* ID3Tags.h in Headers */,
+				2C46F8A32570FA4600785587 /* TransformIO.h in Headers */,
 				2C18FFCC25023C5300AC4F78 /* PNGCodec.h in Headers */,
 				2CB4C2A72531E8C4009D6EA0 /* Flate.h in Headers */,
 				2CB1D72224E5132700861A8C /* APETags.h in Headers */,
 				2CB4C1862531C409009D6EA0 /* PNMStream.h in Headers */,
+				2C46F8A02570FA4600785587 /* EntropyIO.h in Headers */,
+				2C46F89E2570FA4600785587 /* StatisticsIO.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1027,30 +1031,31 @@
 				2C57A99A24E6204800C9A2FB /* PCMCodec.c in Sources */,
 				2C57A99124E6202200C9A2FB /* EntropyIO.c in Sources */,
 				2C57A99824E6204800C9A2FB /* FLACCodec.c in Sources */,
+				2C46F8C8257105E100785587 /* Huffman.c in Sources */,
 				2CB4C16F2531C214009D6EA0 /* W64Stream.c in Sources */,
 				2C4D600924C3AECA00AAAB77 /* OVIA.c in Sources */,
 				2C50627F25327CE9005BBD9D /* WAVTags.c in Sources */,
-				2C57A98F24E6202200C9A2FB /* ArthimeticEncode.c in Sources */,
 				2CB4C16B2531C214009D6EA0 /* AIFEncode.c in Sources */,
-				2C57A99224E6202200C9A2FB /* FlateEncode.c in Sources */,
 				2CB4C1712531C214009D6EA0 /* RIFFStream.c in Sources */,
+				2C46F97D2571460D00785587 /* CodecIO.c in Sources */,
 				2CB4C1662531C214009D6EA0 /* PNMDecode.c in Sources */,
 				2CB4C1682531C214009D6EA0 /* W64Encode.c in Sources */,
-				2CB4C2B72531EA7A009D6EA0 /* ArthimeticDecode.c in Sources */,
-				2CB4C2862531E7B5009D6EA0 /* FlateDecode.c in Sources */,
+				2C94331325609AAE007035FE /* StreamIO.c in Sources */,
 				2C50628125327CE9005BBD9D /* ID3Decode.c in Sources */,
 				2C50627C25327CE9005BBD9D /* VorbisEncode.c in Sources */,
 				2CB4C1722531C214009D6EA0 /* BMPDecode.c in Sources */,
 				2C4D600A24C3AECA00AAAB77 /* MediaIO.c in Sources */,
 				2CB4C1692531C214009D6EA0 /* BMPEncode.c in Sources */,
+				2C46F8C9257105E100785587 /* Rice.c in Sources */,
 				2C14B0CF250543E700D7F120 /* JPEGDecode.c in Sources */,
 				2CB4C1732531C214009D6EA0 /* RIFFEncode.c in Sources */,
 				2C50628225327CE9005BBD9D /* APETags.c in Sources */,
-				2CB4C2C72531EAA6009D6EA0 /* HuffmanDecode.c in Sources */,
+				2C46F8C7257105E100785587 /* Flate.c in Sources */,
 				2CB4C1672531C214009D6EA0 /* AIFDecode.c in Sources */,
 				2C14B0F625062D6C00D7F120 /* FLACEncode.c in Sources */,
 				2CBB46DE253AC32B00D38E6F /* StatisticsIO.c in Sources */,
 				2C50627D25327CE9005BBD9D /* ID3Encode.c in Sources */,
+				2C46F8CA257105E100785587 /* Arthimetic.c in Sources */,
 				2C18FFCA25023BEB00AC4F78 /* PNGCodec.c in Sources */,
 				2CB4C16C2531C214009D6EA0 /* PNMStream.c in Sources */,
 				2C50628325327CE9005BBD9D /* AIFTags.c in Sources */,
@@ -1064,7 +1069,6 @@
 				2CB4C1742531C214009D6EA0 /* W64Decode.c in Sources */,
 				2CB4C1702531C214009D6EA0 /* BMPStream.c in Sources */,
 				2CB4C16D2531C214009D6EA0 /* AIFStream.c in Sources */,
-				2C57A99024E6202200C9A2FB /* HuffmanEncode.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1224,7 +1228,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = c18;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1232,7 +1236,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -1258,6 +1262,7 @@
 					"-fsanitize-recover=address",
 					"-Wenum-conversion",
 					"-Wno-assign-enum",
+					"-Wno-gnu-flexible-array-initializer",
 				);
 				SDKROOT = macosx;
 			};
@@ -1301,10 +1306,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = c18;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = z;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -1318,6 +1323,7 @@
 					"-fno-common",
 					"-Wenum-conversion",
 					"-Wno-assign-enum",
+					"-Wno-gnu-flexible-array-initializer",
 				);
 				SDKROOT = macosx;
 			};
@@ -1363,6 +1369,7 @@
 					"-Wmissing-noreturn",
 					"-Wenum-conversion",
 					"-v",
+					"-Wno-gnu-flexible-array-initializer",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

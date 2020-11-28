@@ -6,7 +6,7 @@
  @brief               This header contains code for BMP streams.
  */
 
-#include "StreamIO.h"
+#include "../../StreamIO.h"
 
 #pragma once
 

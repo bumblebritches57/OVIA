@@ -1,5 +1,5 @@
 #include "../../../Dependencies/FoundationIO/Library/include/TextIO/LogIO.h"
-#include "../../include/Private/StreamIO/StreamIO.h"
+#include "../../include/StreamIO.h"
 #include "../../include/Private/MediaIO.h"
 
 #if (PlatformIO_Language == PlatformIO_LanguageIsCXX)

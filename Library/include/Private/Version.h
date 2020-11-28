@@ -8,11 +8,7 @@
 
 #pragma once
 
-#ifndef OVIA_Version_H
-#define OVIA_Version_H
-
 #define OVIA_Version_Major 0
 #define OVIA_Version_Minor 7
 #define OVIA_Version_Patch 9
-
-#endif /* OVIA_Version_H */
+#include "CommitID.h"

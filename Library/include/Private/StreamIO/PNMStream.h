@@ -6,7 +6,7 @@
  @brief               This header contains code for PNM streams.
  */
 
-#include "StreamIO.h"
+#include "../../StreamIO.h"
 
 #pragma once
 

@@ -23,6 +23,8 @@ extern "C" {
      BW64 is used instead of RIFF
      DS64 replaces WAVE
 
+     Also, W64 needs to be included here too
+
      */
 
     void WAVParseChunk_DS64(void *Options, BitBuffer *BitB) {

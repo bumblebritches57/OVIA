@@ -6,12 +6,12 @@
  @brief           This header contains types, functions, and tables for measuring entropy of arrays.
  */
 
-#include "PlatformIO.h"         /* Included for Platform Independence macros */
+#include "../../Dependencies/FoundationIO/Library/include/PlatformIO.h"         /* Included for Platform Independence macros */
 
 #pragma once
 
-#ifndef FoundationIO_StatisticsIO_H
-#define FoundationIO_StatisticsIO_H
+#ifndef OVIA_StatisticsIO_H
+#define OVIA_StatisticsIO_H
 
 #if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 extern "C" {
@@ -39,4 +39,4 @@ extern "C" {
 }
 #endif /* Extern C */
 
-#endif /* FoundationIO_StatisticsIO_H */
+#endif /* OVIA_StatisticsIO_H */
