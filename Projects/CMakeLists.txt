@@ -11,8 +11,6 @@ elseif(NOT DEFINED CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug")
 endif(DEFINED CMAKE_BUILD_TYPE AND CMAKE_BUILD_TYPE STREQUAL "")
 
-
-
 include(../Dependencies/FoundationIO/Projects/DetectArchitecture.cmake)
 
 FindTargetArchitecture(TargetArchitecture)
@@ -70,31 +68,8 @@ elseif(CMAKE_HOST_WIN32)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif(CMAKE_HOST_UNIX)
 
-find_package(Git)
-
-if(GIT_FOUND)
-    file(READ "../Library/include/Private/Version.h" OVIA_Version_Header)
-
-    string(REGEX MATCH "#define OVIA_Version_Major [0-9]+" _ "${OVIA_Version_Header}")
-    string(REGEX MATCH "[0-9]+" VERSION_MAJOR "${_}")
-
-    string(REGEX MATCH "#define OVIA_Version_Minor [0-9]+" _ "${OVIA_Version_Header}")
-    string(REGEX MATCH "[0-9]+" VERSION_MINOR "${_}")
-
-    string(REGEX MATCH "#define OVIA_Version_Patch [0-9]+" _ "${OVIA_Version_Header}")
-    string(REGEX MATCH "[0-9]+" VERSION_PATCH "${_}")
-
-
-    execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --verify master WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE GIT_COMMIT_ID RESULTS_VARIABLE STDOUT ERROR_VARIABLE STDERR)
-    string(REGEX REPLACE "\n$" "" GIT_COMMIT_ID_STRIPPED "${GIT_COMMIT_ID}")
-    string(TOUPPER "${GIT_COMMIT_ID_STRIPPED}" GIT_COMMIT_ID_STRIPPED_CAPS)
-
-    set(OVIA_VERSION_STRING "")
-    string(APPEND OVIA_VERSION_STRING "${VERSION_MAJOR}" "." "${VERSION_MINOR}" "." "${VERSION_PATCH}" ":" "${GIT_COMMIT_ID_STRIPPED_CAPS}")
-
-    set(FoundationIO_VERSION_RESOURCE "")
-    string(APPEND OVIA_VERSION_RESOURCE "${VERSION_MAJOR}" "," "${VERSION_MINOR}" "," "${VERSION_PATCH}" "," "${GIT_COMMIT_ID_STRIPPED_CAPS}")
-endif(GIT_FOUND)
+include(../Dependencies/FoundationIO/Projects/GetVersion.cmake)
+GetVersionString(VERSION_STRING "/Library/include/Private")
 
 configure_file("${OVIA_Resource_Dir}/OVIA.pc.in" "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Resources/OVIA.pc")
 configure_file("${OVIA_Resource_Dir}/OVIA.rc.in" "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/Resources/OVIA.rc")
