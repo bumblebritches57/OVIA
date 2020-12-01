@@ -10,123 +10,249 @@
     <Filter Include="Header Files\Private">
       <UniqueIdentifier>{6e215331-9d01-4148-be10-821e20088c13}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Common">
-      <UniqueIdentifier>{925222c9-e511-410b-819e-665e32c8f717}</UniqueIdentifier>
+    <Filter Include="Header Files\Private\CodecIO">
+      <UniqueIdentifier>{67ca9daf-c2ec-4e19-a9a2-11c04ea91fb3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Decode">
-      <UniqueIdentifier>{f0abaea9-0565-4428-a152-ceb33ed17f27}</UniqueIdentifier>
+    <Filter Include="Header Files\Private\EntropyIO">
+      <UniqueIdentifier>{1c0e2bfa-27fa-4bf2-97e5-fcc980e7bcc6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Encode">
-      <UniqueIdentifier>{89fcdd47-bfbf-42d5-9f87-164d976c80ed}</UniqueIdentifier>
+    <Filter Include="Header Files\Private\StreamIO">
+      <UniqueIdentifier>{e599f86d-5fb1-470c-8e3c-263895f6bac5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Private\TagIO">
+      <UniqueIdentifier>{03919218-3e52-4f26-a895-a6ebe0535d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CodecIO">
+      <UniqueIdentifier>{0477cf45-ef90-4af1-8942-a507f2bfe518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TransformIO">
+      <UniqueIdentifier>{60cb111f-8ca7-41a5-ac22-1b7594640af0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\StreamIO">
+      <UniqueIdentifier>{48bc61ae-fe7b-4c5f-9f6e-9d8dd98d1cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TagIO">
+      <UniqueIdentifier>{664add33-92df-40af-a41a-c1985f40d41e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EntropyIO">
+      <UniqueIdentifier>{75d3a8a3-fe68-4cc6-a678-626a7210c538}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Library\include\CodecIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\EntropyIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\Library\include\OVIA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\include\Private\FLACCommon.h">
+    <ClInclude Include="..\Library\include\StatisticsIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\StreamIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\TagIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\TransformIO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\Private\MediaIO.h">
       <Filter>Header Files\Private</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\include\Private\OVIACommon.h">
+    <ClInclude Include="..\Library\include\Private\Version.h">
       <Filter>Header Files\Private</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\include\Private\PNGCommon.h">
-      <Filter>Header Files\Private</Filter>
+    <ClInclude Include="..\Library\include\Private\CodecIO\FLACCodec.h">
+      <Filter>Header Files\Private\CodecIO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\include\Private\PNMCommon.h">
-      <Filter>Header Files\Private</Filter>
+    <ClInclude Include="..\Library\include\Private\CodecIO\JPEGCodec.h">
+      <Filter>Header Files\Private\CodecIO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\include\Private\W64Common.h">
-      <Filter>Header Files\Private</Filter>
+    <ClInclude Include="..\Library\include\Private\CodecIO\PNGCodec.h">
+      <Filter>Header Files\Private\CodecIO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\include\Private\WAVCommon.h">
-      <Filter>Header Files\Private</Filter>
+    <ClInclude Include="..\Library\include\Private\EntropyIO\Arithmetic.h">
+      <Filter>Header Files\Private\EntropyIO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\include\Private\AIFCommon.h">
-      <Filter>Header Files\Private</Filter>
+    <ClInclude Include="..\Library\include\Private\EntropyIO\CanonicalHuffman.h">
+      <Filter>Header Files\Private\EntropyIO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\include\Private\BMPCommon.h">
-      <Filter>Header Files\Private</Filter>
+    <ClInclude Include="..\Library\include\Private\EntropyIO\Flate.h">
+      <Filter>Header Files\Private\EntropyIO</Filter>
     </ClInclude>
-    <ClInclude Include="..\Library\include\Private\JPEGCommon.h">
-      <Filter>Header Files\Private</Filter>
+    <ClInclude Include="..\Library\include\Private\EntropyIO\Rice.h">
+      <Filter>Header Files\Private\EntropyIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\Private\TagIO\AIFTags.h">
+      <Filter>Header Files\Private\TagIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\Private\TagIO\APETags.h">
+      <Filter>Header Files\Private\TagIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\Private\TagIO\ID3Tags.h">
+      <Filter>Header Files\Private\TagIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\Private\TagIO\WAVTags.h">
+      <Filter>Header Files\Private\TagIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\Private\StreamIO\AIFStream.h">
+      <Filter>Header Files\Private\StreamIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\Private\StreamIO\BMPStream.h">
+      <Filter>Header Files\Private\StreamIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\Private\StreamIO\PNMStream.h">
+      <Filter>Header Files\Private\StreamIO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\include\Private\StreamIO\RIFFStream.h">
+      <Filter>Header Files\Private\StreamIO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Library\src\MediaIO.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="..\Library\src\OVIA.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Encode\BMPEncoder.c">
-      <Filter>Source Files\Encode</Filter>
+    <ClCompile Include="..\Library\src\StatisticsIO.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Encode\FLACEncoder.c">
-      <Filter>Source Files\Encode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\CodecIO.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Encode\PNGEncoder.c">
-      <Filter>Source Files\Encode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\FLACCodec.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Encode\PNMEncoder.c">
-      <Filter>Source Files\Encode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\FLACDecode.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Encode\W64Encoder.c">
-      <Filter>Source Files\Encode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\FLACEncode.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Encode\WAVEncoder.c">
-      <Filter>Source Files\Encode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\JPEGCodec.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Encode\AIFEncoder.c">
-      <Filter>Source Files\Encode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\JPEGDecode.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Decode\FLACDecoder.c">
-      <Filter>Source Files\Decode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\JPEGEncode.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Decode\PNGDecoder.c">
-      <Filter>Source Files\Decode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\PCMCodec.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Decode\PNMDecoder.c">
-      <Filter>Source Files\Decode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\PNGCodec.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Decode\W64Decoder.c">
-      <Filter>Source Files\Decode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\PNGDecode.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Decode\WAVDecoder.c">
-      <Filter>Source Files\Decode</Filter>
+    <ClCompile Include="..\Library\src\CodecIO\PNGEncode.c">
+      <Filter>Source Files\CodecIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Decode\AIFDecoder.c">
-      <Filter>Source Files\Decode</Filter>
+    <ClCompile Include="..\Library\src\EntropyIO\Arthimetic.c">
+      <Filter>Source Files\EntropyIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Decode\BMPDecoder.c">
-      <Filter>Source Files\Decode</Filter>
+    <ClCompile Include="..\Library\src\EntropyIO\EntropyIO.c">
+      <Filter>Source Files\EntropyIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Common\FLACCommon.c">
-      <Filter>Source Files\Common</Filter>
+    <ClCompile Include="..\Library\src\EntropyIO\Flate.c">
+      <Filter>Source Files\EntropyIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Common\PNGCommon.c">
-      <Filter>Source Files\Common</Filter>
+    <ClCompile Include="..\Library\src\EntropyIO\Huffman.c">
+      <Filter>Source Files\EntropyIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Common\PNMCommon.c">
-      <Filter>Source Files\Common</Filter>
+    <ClCompile Include="..\Library\src\EntropyIO\Rice.c">
+      <Filter>Source Files\EntropyIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Common\W64Common.c">
-      <Filter>Source Files\Common</Filter>
+    <ClCompile Include="..\Library\src\TagIO\AIFTags.c">
+      <Filter>Source Files\TagIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Common\WAVCommon.c">
-      <Filter>Source Files\Common</Filter>
+    <ClCompile Include="..\Library\src\TagIO\APETags.c">
+      <Filter>Source Files\TagIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Common\AIFCommon.c">
-      <Filter>Source Files\Common</Filter>
+    <ClCompile Include="..\Library\src\TagIO\ID3Decode.c">
+      <Filter>Source Files\TagIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Common\BMPCommon.c">
-      <Filter>Source Files\Common</Filter>
+    <ClCompile Include="..\Library\src\TagIO\ID3Encode.c">
+      <Filter>Source Files\TagIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Common\JPEGCommon.c">
-      <Filter>Source Files\Common</Filter>
+    <ClCompile Include="..\Library\src\TagIO\ID3Tags.c">
+      <Filter>Source Files\TagIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Decode\JPEGDecoder.c">
-      <Filter>Source Files\Decode</Filter>
+    <ClCompile Include="..\Library\src\TagIO\TagIO.c">
+      <Filter>Source Files\TagIO</Filter>
     </ClCompile>
-    <ClCompile Include="..\Library\src\Encode\JPEGEncoder.c">
-      <Filter>Source Files\Encode</Filter>
+    <ClCompile Include="..\Library\src\TagIO\VorbisDecode.c">
+      <Filter>Source Files\TagIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\TagIO\VorbisEncode.c">
+      <Filter>Source Files\TagIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\TagIO\VorbisTags.c">
+      <Filter>Source Files\TagIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\TagIO\WAVTags.c">
+      <Filter>Source Files\TagIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\AIFDecode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\AIFEncode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\AIFStream.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\BMPDecode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\BMPEncode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\BMPStream.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\PNMDecode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\PNMEncode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\PNMStream.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\RIFFDecode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\RIFFEncode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\RIFFStream.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\StreamIO.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\W64Decode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\W64Encode.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\StreamIO\W64Stream.c">
+      <Filter>Source Files\StreamIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\TransformIO\RCT.c">
+      <Filter>Source Files\TransformIO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\src\TransformIO\YCoCgR.c">
+      <Filter>Source Files\TransformIO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
