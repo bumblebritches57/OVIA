@@ -42,6 +42,8 @@
 		2C46F8C9257105E100785587 /* Rice.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F8C5257105E100785587 /* Rice.c */; };
 		2C46F8CA257105E100785587 /* Arthimetic.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F8C6257105E100785587 /* Arthimetic.c */; };
 		2C46F97D2571460D00785587 /* CodecIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F97C2571460D00785587 /* CodecIO.c */; };
+		2C46FABC25729C4700785587 /* OGGStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46FABB25729C4700785587 /* OGGStream.h */; };
+		2C46FACE25729CBC00785587 /* FLACNativeStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46FACD25729CBC00785587 /* FLACNativeStream.h */; };
 		2C4CDE8424C3F9280085725E /* ID3Tags.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4CDE8324C3F9280085725E /* ID3Tags.h */; };
 		2C4D5FB824C3AD0100AAAB77 /* FoundationIO.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4D5FA424C3ACEB00AAAB77 /* FoundationIO.dylib */; };
 		2C4D5FCB24C3ADF100AAAB77 /* AIFStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FC824C3ADF100AAAB77 /* AIFStream.h */; };
@@ -342,6 +344,8 @@
 		2C46F8C5257105E100785587 /* Rice.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Rice.c; path = ../Library/src/EntropyIO/Rice.c; sourceTree = "<group>"; };
 		2C46F8C6257105E100785587 /* Arthimetic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Arthimetic.c; path = ../Library/src/EntropyIO/Arthimetic.c; sourceTree = "<group>"; };
 		2C46F97C2571460D00785587 /* CodecIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = CodecIO.c; path = ../Library/src/CodecIO/CodecIO.c; sourceTree = "<group>"; };
+		2C46FABB25729C4700785587 /* OGGStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OGGStream.h; path = ../Library/include/Private/StreamIO/OGGStream.h; sourceTree = "<group>"; };
+		2C46FACD25729CBC00785587 /* FLACNativeStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLACNativeStream.h; path = ../Library/include/Private/StreamIO/FLACNativeStream.h; sourceTree = "<group>"; };
 		2C4CDE8324C3F9280085725E /* ID3Tags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ID3Tags.h; path = ../Library/include/Private/TagIO/ID3Tags.h; sourceTree = "<group>"; };
 		2C4D5F8F24C3ACC700AAAB77 /* OVIA.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = OVIA.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C4D5F9724C3ACEB00AAAB77 /* FoundationIO.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FoundationIO.xcodeproj; path = ../Dependencies/FoundationIO/Projects/FoundationIO.xcodeproj; sourceTree = "<group>"; };
@@ -548,10 +552,10 @@
 			isa = PBXGroup;
 			children = (
 				2C4D5FD624C3AE2B00AAAB77 /* OVIA.h */,
+				2C46F89B2570FA4600785587 /* StreamIO.h */,
 				2C46F8992570FA4600785587 /* CodecIO.h */,
 				2C46F89A2570FA4600785587 /* EntropyIO.h */,
 				2C46F8982570FA4600785587 /* StatisticsIO.h */,
-				2C46F89B2570FA4600785587 /* StreamIO.h */,
 				2C46F89C2570FA4600785587 /* TagIO.h */,
 				2C46F89D2570FA4600785587 /* TransformIO.h */,
 				2C4D5FBC24C3AD7400AAAB77 /* Private */,
@@ -598,6 +602,8 @@
 				2CB4C17C2531C34E009D6EA0 /* BMPStream.h */,
 				2CB4C1852531C409009D6EA0 /* PNMStream.h */,
 				2C6C75D024D94919009368B4 /* RIFFStream.h */,
+				2C46FABB25729C4700785587 /* OGGStream.h */,
+				2C46FACD25729CBC00785587 /* FLACNativeStream.h */,
 			);
 			name = StreamIO;
 			sourceTree = "<group>";
@@ -729,6 +735,7 @@
 				2C14B0FA25062E6300D7F120 /* FLACCodec.h in Headers */,
 				2C14B0CC2505438E00D7F120 /* JPEGCodec.h in Headers */,
 				2CB4C17D2531C34E009D6EA0 /* BMPStream.h in Headers */,
+				2C46FABC25729C4700785587 /* OGGStream.h in Headers */,
 				2C46F8A22570FA4600785587 /* TagIO.h in Headers */,
 				2C6C75D124D94919009368B4 /* RIFFStream.h in Headers */,
 				2C4D5FCB24C3ADF100AAAB77 /* AIFStream.h in Headers */,
@@ -745,6 +752,7 @@
 				2CB4C1862531C409009D6EA0 /* PNMStream.h in Headers */,
 				2C46F8A02570FA4600785587 /* EntropyIO.h in Headers */,
 				2C46F89E2570FA4600785587 /* StatisticsIO.h in Headers */,
+				2C46FACE25729CBC00785587 /* FLACNativeStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
