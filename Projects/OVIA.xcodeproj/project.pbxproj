@@ -78,19 +78,16 @@
 		2CB1D72224E5132700861A8C /* APETags.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB1D71924E5132700861A8C /* APETags.h */; };
 		2CB4C1662531C214009D6EA0 /* PNMDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1572531C213009D6EA0 /* PNMDecode.c */; };
 		2CB4C1672531C214009D6EA0 /* AIFDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1582531C213009D6EA0 /* AIFDecode.c */; };
-		2CB4C1682531C214009D6EA0 /* W64Encode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1592531C213009D6EA0 /* W64Encode.c */; };
 		2CB4C1692531C214009D6EA0 /* BMPEncode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C15A2531C213009D6EA0 /* BMPEncode.c */; };
 		2CB4C16A2531C214009D6EA0 /* RIFFDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C15B2531C214009D6EA0 /* RIFFDecode.c */; };
 		2CB4C16B2531C214009D6EA0 /* AIFEncode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C15C2531C214009D6EA0 /* AIFEncode.c */; };
 		2CB4C16C2531C214009D6EA0 /* PNMStream.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C15D2531C214009D6EA0 /* PNMStream.c */; };
 		2CB4C16D2531C214009D6EA0 /* AIFStream.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C15E2531C214009D6EA0 /* AIFStream.c */; };
 		2CB4C16E2531C214009D6EA0 /* PNMEncode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C15F2531C214009D6EA0 /* PNMEncode.c */; };
-		2CB4C16F2531C214009D6EA0 /* W64Stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1602531C214009D6EA0 /* W64Stream.c */; };
 		2CB4C1702531C214009D6EA0 /* BMPStream.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1612531C214009D6EA0 /* BMPStream.c */; };
 		2CB4C1712531C214009D6EA0 /* RIFFStream.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1622531C214009D6EA0 /* RIFFStream.c */; };
 		2CB4C1722531C214009D6EA0 /* BMPDecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1632531C214009D6EA0 /* BMPDecode.c */; };
 		2CB4C1732531C214009D6EA0 /* RIFFEncode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1642531C214009D6EA0 /* RIFFEncode.c */; };
-		2CB4C1742531C214009D6EA0 /* W64Decode.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4C1652531C214009D6EA0 /* W64Decode.c */; };
 		2CB4C17D2531C34E009D6EA0 /* BMPStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB4C17C2531C34E009D6EA0 /* BMPStream.h */; };
 		2CB4C1862531C409009D6EA0 /* PNMStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB4C1852531C409009D6EA0 /* PNMStream.h */; };
 		2CB4C2A72531E8C4009D6EA0 /* Flate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB4C2A62531E8C4009D6EA0 /* Flate.h */; };
@@ -343,9 +340,9 @@
 		2C46F8C4257105E100785587 /* Huffman.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Huffman.c; path = ../Library/src/EntropyIO/Huffman.c; sourceTree = "<group>"; };
 		2C46F8C5257105E100785587 /* Rice.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Rice.c; path = ../Library/src/EntropyIO/Rice.c; sourceTree = "<group>"; };
 		2C46F8C6257105E100785587 /* Arthimetic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Arthimetic.c; path = ../Library/src/EntropyIO/Arthimetic.c; sourceTree = "<group>"; };
-		2C46F97C2571460D00785587 /* CodecIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = CodecIO.c; path = ../Library/src/CodecIO/CodecIO.c; sourceTree = "<group>"; };
+		2C46F97C2571460D00785587 /* CodecIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = CodecIO.c; path = ../Library/src/CodecIO/CodecIO.c; sourceTree = "<group>"; };
 		2C46FABB25729C4700785587 /* OGGStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OGGStream.h; path = ../Library/include/Private/StreamIO/OGGStream.h; sourceTree = "<group>"; };
-		2C46FACD25729CBC00785587 /* FLACNativeStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FLACNativeStream.h; path = ../Library/include/Private/StreamIO/FLACNativeStream.h; sourceTree = "<group>"; };
+		2C46FACD25729CBC00785587 /* FLACNativeStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FLACNativeStream.h; path = ../Library/include/Private/StreamIO/FLACNativeStream.h; sourceTree = "<group>"; };
 		2C4CDE8324C3F9280085725E /* ID3Tags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ID3Tags.h; path = ../Library/include/Private/TagIO/ID3Tags.h; sourceTree = "<group>"; };
 		2C4D5F8F24C3ACC700AAAB77 /* OVIA.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = OVIA.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C4D5F9724C3ACEB00AAAB77 /* FoundationIO.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FoundationIO.xcodeproj; path = ../Dependencies/FoundationIO/Projects/FoundationIO.xcodeproj; sourceTree = "<group>"; };
@@ -388,19 +385,16 @@
 		2CB1D71924E5132700861A8C /* APETags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APETags.h; path = ../Library/include/Private/TagIO/APETags.h; sourceTree = "<group>"; };
 		2CB4C1572531C213009D6EA0 /* PNMDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PNMDecode.c; path = ../Library/src/StreamIO/PNMDecode.c; sourceTree = "<group>"; };
 		2CB4C1582531C213009D6EA0 /* AIFDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFDecode.c; path = ../Library/src/StreamIO/AIFDecode.c; sourceTree = "<group>"; };
-		2CB4C1592531C213009D6EA0 /* W64Encode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Encode.c; path = ../Library/src/StreamIO/W64Encode.c; sourceTree = "<group>"; };
 		2CB4C15A2531C213009D6EA0 /* BMPEncode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BMPEncode.c; path = ../Library/src/StreamIO/BMPEncode.c; sourceTree = "<group>"; };
-		2CB4C15B2531C214009D6EA0 /* RIFFDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RIFFDecode.c; path = ../Library/src/StreamIO/RIFFDecode.c; sourceTree = "<group>"; };
+		2CB4C15B2531C214009D6EA0 /* RIFFDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = RIFFDecode.c; path = ../Library/src/StreamIO/RIFFDecode.c; sourceTree = "<group>"; };
 		2CB4C15C2531C214009D6EA0 /* AIFEncode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFEncode.c; path = ../Library/src/StreamIO/AIFEncode.c; sourceTree = "<group>"; };
 		2CB4C15D2531C214009D6EA0 /* PNMStream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PNMStream.c; path = ../Library/src/StreamIO/PNMStream.c; sourceTree = "<group>"; };
 		2CB4C15E2531C214009D6EA0 /* AIFStream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = AIFStream.c; path = ../Library/src/StreamIO/AIFStream.c; sourceTree = "<group>"; };
 		2CB4C15F2531C214009D6EA0 /* PNMEncode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PNMEncode.c; path = ../Library/src/StreamIO/PNMEncode.c; sourceTree = "<group>"; };
-		2CB4C1602531C214009D6EA0 /* W64Stream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Stream.c; path = ../Library/src/StreamIO/W64Stream.c; sourceTree = "<group>"; };
 		2CB4C1612531C214009D6EA0 /* BMPStream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BMPStream.c; path = ../Library/src/StreamIO/BMPStream.c; sourceTree = "<group>"; };
-		2CB4C1622531C214009D6EA0 /* RIFFStream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RIFFStream.c; path = ../Library/src/StreamIO/RIFFStream.c; sourceTree = "<group>"; };
+		2CB4C1622531C214009D6EA0 /* RIFFStream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = RIFFStream.c; path = ../Library/src/StreamIO/RIFFStream.c; sourceTree = "<group>"; };
 		2CB4C1632531C214009D6EA0 /* BMPDecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = BMPDecode.c; path = ../Library/src/StreamIO/BMPDecode.c; sourceTree = "<group>"; };
-		2CB4C1642531C214009D6EA0 /* RIFFEncode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RIFFEncode.c; path = ../Library/src/StreamIO/RIFFEncode.c; sourceTree = "<group>"; };
-		2CB4C1652531C214009D6EA0 /* W64Decode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = W64Decode.c; path = ../Library/src/StreamIO/W64Decode.c; sourceTree = "<group>"; };
+		2CB4C1642531C214009D6EA0 /* RIFFEncode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = RIFFEncode.c; path = ../Library/src/StreamIO/RIFFEncode.c; sourceTree = "<group>"; };
 		2CB4C17C2531C34E009D6EA0 /* BMPStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BMPStream.h; path = ../Library/include/Private/StreamIO/BMPStream.h; sourceTree = "<group>"; };
 		2CB4C1852531C409009D6EA0 /* PNMStream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PNMStream.h; path = ../Library/include/Private/StreamIO/PNMStream.h; sourceTree = "<group>"; };
 		2CB4C2A62531E8C4009D6EA0 /* Flate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Flate.h; path = ../Library/include/Private/EntropyIO/Flate.h; sourceTree = "<group>"; };
@@ -670,9 +664,6 @@
 				2CB4C15B2531C214009D6EA0 /* RIFFDecode.c */,
 				2CB4C1642531C214009D6EA0 /* RIFFEncode.c */,
 				2CB4C1622531C214009D6EA0 /* RIFFStream.c */,
-				2CB4C1652531C214009D6EA0 /* W64Decode.c */,
-				2CB4C1592531C213009D6EA0 /* W64Encode.c */,
-				2CB4C1602531C214009D6EA0 /* W64Stream.c */,
 			);
 			name = StreamIO;
 			sourceTree = "<group>";
@@ -1040,14 +1031,12 @@
 				2C57A99124E6202200C9A2FB /* EntropyIO.c in Sources */,
 				2C57A99824E6204800C9A2FB /* FLACCodec.c in Sources */,
 				2C46F8C8257105E100785587 /* Huffman.c in Sources */,
-				2CB4C16F2531C214009D6EA0 /* W64Stream.c in Sources */,
 				2C4D600924C3AECA00AAAB77 /* OVIA.c in Sources */,
 				2C50627F25327CE9005BBD9D /* WAVTags.c in Sources */,
 				2CB4C16B2531C214009D6EA0 /* AIFEncode.c in Sources */,
 				2CB4C1712531C214009D6EA0 /* RIFFStream.c in Sources */,
 				2C46F97D2571460D00785587 /* CodecIO.c in Sources */,
 				2CB4C1662531C214009D6EA0 /* PNMDecode.c in Sources */,
-				2CB4C1682531C214009D6EA0 /* W64Encode.c in Sources */,
 				2C94331325609AAE007035FE /* StreamIO.c in Sources */,
 				2C50628125327CE9005BBD9D /* ID3Decode.c in Sources */,
 				2C50627C25327CE9005BBD9D /* VorbisEncode.c in Sources */,
@@ -1074,7 +1063,6 @@
 				2C4D600524C3AEB300AAAB77 /* RCT.c in Sources */,
 				2C50628025327CE9005BBD9D /* TagIO.c in Sources */,
 				2C57A99924E6204800C9A2FB /* JPEGCodec.c in Sources */,
-				2CB4C1742531C214009D6EA0 /* W64Decode.c in Sources */,
 				2CB4C1702531C214009D6EA0 /* BMPStream.c in Sources */,
 				2CB4C16D2531C214009D6EA0 /* AIFStream.c in Sources */,
 			);
