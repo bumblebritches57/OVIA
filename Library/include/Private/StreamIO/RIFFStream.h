@@ -171,24 +171,46 @@ extern "C" {
      */
     
 #ifdef OVIA_StreamIO_RIFF
-    extern OVIA_MagicIDs RIFFSignature = {
-        .NumMagicIDs         = 3,
-        .MagicIDOffsetInBits = 0,
-        .MagicIDSizeInBits   = 32,
-        .MagicIDNumber       = {
-            [0]              = (uint8_t[2]){0x52, 0x49, 0x46, 0x46},
-            [1]              = (uint8_t[2]){0x42, 0x57, 0x36, 0x34},
-            [2]              = (uint8_t[4]){0x66, 0x66, 0x69, 0x72},
-        }
+    extern const OVIA_MagicIDs RIFFSignatures = {
+        .NumMagicIDs          = 3,
+        .MagicIDs             = {
+            [0]               = {
+                .OffsetInBits = 0,
+                .SizeInBits   = 32,
+                .Signature    = (uint8_t[4]){0x52, 0x49, 0x46, 0x46}, // RIFF
+            },
+            [1]               = {
+                .OffsetInBits = 0,
+                .SizeInBits   = 32,
+                .Signature    = (uint8_t[4]){0x42, 0x57, 0x36, 0x34}, // BW64
+            },
+            [2]               = {
+                .OffsetInBits = 0,
+                .SizeInBits   = 128,
+                .Signature    = (uint8_t[16]){0x66, 0x66, 0x69, 0x72, 0x91, 0x2E, 0x11, 0xCF, 0xA5, 0xD6, 0x28, 0xDB, 0x04, 0xC1, 0x00, 0x00},
+            },
+        },
     };
 
     extern const OVIA_Extensions RIFFExtensions = {
         .NumExtensions = 4,
         .Extensions    = {
-            [0]        = UTF32String("wav"),
-            [1]        = UTF32String("wave"),
-            [2]        = UTF32String("bwf"),
-            [3]        = UTF32String("w64"),
+            [0]            = {
+                .Size      = 4,
+                .Extension = UTF32String("wave"),
+            },
+            [1]            = {
+                .Size      = 3,
+                .Extension = UTF32String("wav"),
+            },
+            [2]            = {
+                .Size      = 3,
+                .Extension = UTF32String("bwf"),
+            },
+            [3]            = {
+                .Size      = 3,
+                .Extension = UTF32String("w64"),
+            }
         },
     };
 
@@ -201,19 +223,24 @@ extern "C" {
             [3]       = UTF32String("audio/x-wav"),
         },
     };
-#endif /* OVIA_StreamIO_RIFF */
     
-#if defined(OVIA_StreamIO_Encode) && defined(OVIA_StreamIO_RIFF)
-    extern OVIA_Stream RIFFEncoder = {
-        .MagicID = &RIFFMagicIDs,
-    };
-#endif /* OVIA_StreamIO_Encode && OVIA_StreamIO_RIFF */
+#if defined(OVIA_StreamIO_Encode)
+    extern const OVIA_Stream RIFFEncoder;
     
-#if defined(OVIA_StreamIO_Decode) && defined(OVIA_StreamIO_RIFF)
-    extern OVIA_Stream RIFFDecoder = {
-        .MagicID = &RIFFMagicIDs,
+    const OVIA_Stream RIFFEncoder = {
+        .MagicID = &RIFFSignatures,
     };
-#endif /* OVIA_StreamIO_Decode && OVIA_StreamIO_RIFF */
+#endif /* OVIA_StreamIO_Encode */
+    
+#if defined(OVIA_StreamIO_Decode)
+    extern const OVIA_Stream RIFFDecoder;
+    
+    const OVIA_Stream RIFFDecoder = {
+        .MagicID = &RIFFSignatures,
+    };
+#endif /* OVIA_StreamIO_Decode */
+    
+#endif /* RIFF Literals */
 
 #if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 }
