@@ -181,6 +181,27 @@
 			remoteGlobalIDString = 2CC71D78232B5EC8006DA1B8;
 			remoteInfo = FoundationIO;
 		};
+		2C2EDC0C25C662DE002C4EAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C4D5F9724C3ACEB00AAAB77 /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2C3157EA2578257E00AF9697;
+			remoteInfo = Test_AsynchronousIO;
+		};
+		2C2EDC0E25C662DE002C4EAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C4D5F9724C3ACEB00AAAB77 /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2C315822257825A400AF9697;
+			remoteInfo = Test_PlatformIO;
+		};
+		2C2EDC1025C662DE002C4EAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C4D5F9724C3ACEB00AAAB77 /* FoundationIO.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2C7CD386258C5E890039F608;
+			remoteInfo = Test_LogIO;
+		};
 		2C4D5FA324C3ACEB00AAAB77 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2C4D5F9724C3ACEB00AAAB77 /* FoundationIO.xcodeproj */;
@@ -505,15 +526,18 @@
 			isa = PBXGroup;
 			children = (
 				2C4D5FA424C3ACEB00AAAB77 /* FoundationIO.dylib */,
+				2C2EDC0D25C662DE002C4EAB /* Test_AsynchronousIO */,
 				2C4D5FA624C3ACEB00AAAB77 /* Test_BufferIO */,
-				2C4D5FA824C3ACEB00AAAB77 /* Test_CommandLineIO */,
 				2C4D5FAA24C3ACEB00AAAB77 /* Test_CryptographyIO */,
-				2C4D5FAC24C3ACEB00AAAB77 /* Test_MathIO */,
-				2C4D5FAE24C3ACEB00AAAB77 /* Test_StringIO */,
 				2C4D5FB024C3ACEB00AAAB77 /* Test_FileIO */,
+				2C4D5FAC24C3ACEB00AAAB77 /* Test_MathIO */,
 				2C4D5FB224C3ACEB00AAAB77 /* Test_NetworkIO */,
+				2C2EDC0F25C662DE002C4EAB /* Test_PlatformIO */,
+				2C4D5FA824C3ACEB00AAAB77 /* Test_CommandLineIO */,
 				2C4D5FB424C3ACEB00AAAB77 /* Test_FormatIO */,
 				2CA4C50B24EF9482007803FD /* Test_LocalizationIO */,
+				2C4D5FAE24C3ACEB00AAAB77 /* Test_StringIO */,
+				2C2EDC1125C662DE002C4EAB /* Test_LogIO */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -534,9 +558,9 @@
 				2C4D600824C3AECA00AAAB77 /* MediaIO.c */,
 				2CBB46DD253AC32B00D38E6F /* StatisticsIO.c */,
 				2C4D5FDC24C3AE6600AAAB77 /* CodecIO */,
-				2C4D5FDB24C3AE5A00AAAB77 /* EntropyIO */,
 				2C4D5FDA24C3AE5000AAAB77 /* StreamIO */,
 				2C4D5FD924C3AE4B00AAAB77 /* TagIO */,
+				2C4D5FDB24C3AE5A00AAAB77 /* EntropyIO */,
 				2C4D5FD824C3AE3F00AAAB77 /* TransformIO */,
 			);
 			name = Source;
@@ -563,9 +587,9 @@
 				2C4D5FD424C3AE1A00AAAB77 /* MediaIO.h */,
 				2CBB46CB253AC2F700D38E6F /* StatisticsIO.h */,
 				2C4D5FC124C3ADB300AAAB77 /* CodecIO */,
-				2C4D5FC024C3ADA900AAAB77 /* EntropyIO */,
 				2C4D5FBF24C3AD9E00AAAB77 /* StreamIO */,
 				2C4D5FBE24C3AD9600AAAB77 /* TagIO */,
+				2C4D5FC024C3ADA900AAAB77 /* EntropyIO */,
 				2C4D5FBD24C3AD8900AAAB77 /* TransformIO */,
 			);
 			name = Private;
@@ -888,7 +912,7 @@
 		2C4D5F8724C3ACC700AAAB77 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Marcus Johnson";
 				TargetAttributes = {
 					2C4D5F8E24C3ACC700AAAB77 = {
@@ -945,6 +969,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		2C2EDC0D25C662DE002C4EAB /* Test_AsynchronousIO */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_AsynchronousIO;
+			remoteRef = 2C2EDC0C25C662DE002C4EAB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2C2EDC0F25C662DE002C4EAB /* Test_PlatformIO */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_PlatformIO;
+			remoteRef = 2C2EDC0E25C662DE002C4EAB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2C2EDC1125C662DE002C4EAB /* Test_LogIO */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = Test_LogIO;
+			remoteRef = 2C2EDC1025C662DE002C4EAB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		2C4D5FA424C3ACEB00AAAB77 /* FoundationIO.dylib */ = {
 			isa = PBXReferenceProxy;
 			fileType = "compiled.mach-o.dylib";
@@ -1219,9 +1264,11 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 628J9L7WK5;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1230,7 +1277,19 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"$(inherited)",
+					"OVIA_CodecIO_Decode=1",
+					"OVIA_CodecIO_Encode=1",
+					"OVIA_CodecIO_FLAC=1",
+					"OVIA_CodecIO_JPEG=1",
+					"OVIA_CodecIO_PNG=1",
+					"OVIA_StreamIO_AIF=1",
+					"OVIA_StreamIO_BMP=1",
+					"OVIA_StreamIO_Decode=1",
+					"OVIA_StreamIO_Encode=1",
+					"OVIA_StreamIO_FLAC=1",
+					"OVIA_StreamIO_OGG=1",
+					"OVIA_StreamIO_PNM=1",
+					"OVIA_StreamIO_RIFF=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1239,7 +1298,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1297,14 +1356,31 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 628J9L7WK5;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = z;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"OVIA_CodecIO_Decode=1",
+					"OVIA_CodecIO_Encode=1",
+					"OVIA_CodecIO_FLAC=1",
+					"OVIA_CodecIO_JPEG=1",
+					"OVIA_CodecIO_PNG=1",
+					"OVIA_StreamIO_AIF=1",
+					"OVIA_StreamIO_BMP=1",
+					"OVIA_StreamIO_Decode=1",
+					"OVIA_StreamIO_Encode=1",
+					"OVIA_StreamIO_FLAC=1",
+					"OVIA_StreamIO_OGG=1",
+					"OVIA_StreamIO_PNM=1",
+					"OVIA_StreamIO_RIFF=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1312,7 +1388,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				OTHER_CFLAGS = (
@@ -1375,11 +1451,11 @@
 		2CA4C51B24EF94B3007803FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1388,11 +1464,11 @@
 		2CA4C51C24EF94B3007803FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1401,11 +1477,11 @@
 		2CA4C52624EF94C9007803FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1414,11 +1490,11 @@
 		2CA4C52724EF94C9007803FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1427,11 +1503,11 @@
 		2CA4C53124EF94DA007803FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1440,11 +1516,11 @@
 		2CA4C53224EF94DA007803FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1453,11 +1529,11 @@
 		2CA4C53C24EF94EA007803FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1466,11 +1542,11 @@
 		2CA4C53D24EF94EA007803FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1479,11 +1555,11 @@
 		2CA4C54724EF94F9007803FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1492,11 +1568,11 @@
 		2CA4C54824EF94F9007803FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1505,11 +1581,11 @@
 		2CA4C55224EF9508007803FD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1518,11 +1594,11 @@
 		2CA4C55324EF9508007803FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CODE_SIGN_IDENTITY = "-";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CODE_SIGN_IDENTITY = "Apple Development: bumblebritches571@gmail.com (JLFPN349F8)";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 628J9L7WK5;
-				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_HARDENED_RUNTIME = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

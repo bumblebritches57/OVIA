@@ -169,6 +169,51 @@ extern "C" {
 
      W64Stream = W64
      */
+    
+#ifdef OVIA_StreamIO_RIFF
+    extern OVIA_MagicIDs RIFFSignature = {
+        .NumMagicIDs         = 3,
+        .MagicIDOffsetInBits = 0,
+        .MagicIDSizeInBits   = 32,
+        .MagicIDNumber       = {
+            [0]              = (uint8_t[2]){0x52, 0x49, 0x46, 0x46},
+            [1]              = (uint8_t[2]){0x42, 0x57, 0x36, 0x34},
+            [2]              = (uint8_t[4]){0x66, 0x66, 0x69, 0x72},
+        }
+    };
+
+    extern const OVIA_Extensions RIFFExtensions = {
+        .NumExtensions = 4,
+        .Extensions    = {
+            [0]        = UTF32String("wav"),
+            [1]        = UTF32String("wave"),
+            [2]        = UTF32String("bwf"),
+            [3]        = UTF32String("w64"),
+        },
+    };
+
+    extern const OVIA_MIMETypes RIFFMIMETypes = {
+        .NumMIMETypes = 4,
+        .MIMETypes    = {
+            [0]       = UTF32String("audio/vnd.wave"),
+            [1]       = UTF32String("audio/wav"),
+            [2]       = UTF32String("audio/wave"),
+            [3]       = UTF32String("audio/x-wav"),
+        },
+    };
+#endif /* OVIA_StreamIO_RIFF */
+    
+#if defined(OVIA_StreamIO_Encode) && defined(OVIA_StreamIO_RIFF)
+    extern OVIA_Stream RIFFEncoder = {
+        .MagicID = &RIFFMagicIDs,
+    };
+#endif /* OVIA_StreamIO_Encode && OVIA_StreamIO_RIFF */
+    
+#if defined(OVIA_StreamIO_Decode) && defined(OVIA_StreamIO_RIFF)
+    extern OVIA_Stream RIFFDecoder = {
+        .MagicID = &RIFFMagicIDs,
+    };
+#endif /* OVIA_StreamIO_Decode && OVIA_StreamIO_RIFF */
 
 #if (PlatformIO_Language == PlatformIO_LanguageIsCXX)
 }
