@@ -31,12 +31,6 @@
 		2C18FFF22502572D00AC4F78 /* FoundationIO.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4D5FA424C3ACEB00AAAB77 /* FoundationIO.dylib */; };
 		2C40316925344FF70002C046 /* Arithmetic.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C40315F25344FF70002C046 /* Arithmetic.h */; };
 		2C403172253450ED0002C046 /* CanonicalHuffman.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C403171253450ED0002C046 /* CanonicalHuffman.h */; };
-		2C46F89E2570FA4600785587 /* StatisticsIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F8982570FA4600785587 /* StatisticsIO.h */; };
-		2C46F89F2570FA4600785587 /* CodecIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F8992570FA4600785587 /* CodecIO.h */; };
-		2C46F8A02570FA4600785587 /* EntropyIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89A2570FA4600785587 /* EntropyIO.h */; };
-		2C46F8A12570FA4600785587 /* StreamIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89B2570FA4600785587 /* StreamIO.h */; };
-		2C46F8A22570FA4600785587 /* TagIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89C2570FA4600785587 /* TagIO.h */; };
-		2C46F8A32570FA4600785587 /* TransformIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89D2570FA4600785587 /* TransformIO.h */; };
 		2C46F8C7257105E100785587 /* Flate.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F8C3257105E100785587 /* Flate.c */; };
 		2C46F8C8257105E100785587 /* Huffman.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F8C4257105E100785587 /* Huffman.c */; };
 		2C46F8C9257105E100785587 /* Rice.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C46F8C5257105E100785587 /* Rice.c */; };
@@ -49,8 +43,7 @@
 		2C4D5FCB24C3ADF100AAAB77 /* AIFStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FC824C3ADF100AAAB77 /* AIFStream.h */; };
 		2C4D5FCF24C3ADFE00AAAB77 /* AIFTags.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FCC24C3ADFE00AAAB77 /* AIFTags.h */; };
 		2C4D5FD024C3ADFE00AAAB77 /* WAVTags.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FCD24C3ADFE00AAAB77 /* WAVTags.h */; };
-		2C4D5FD524C3AE1A00AAAB77 /* MediaIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FD424C3AE1A00AAAB77 /* MediaIO.h */; };
-		2C4D5FD724C3AE2B00AAAB77 /* OVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FD624C3AE2B00AAAB77 /* OVIA.h */; };
+		2C4D5FD724C3AE2B00AAAB77 /* OVIA.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FD624C3AE2B00AAAB77 /* OVIA.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2C4D600524C3AEB300AAAB77 /* RCT.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C4D600324C3AEB300AAAB77 /* RCT.c */; };
 		2C4D600624C3AEB400AAAB77 /* YCoCgR.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C4D600424C3AEB300AAAB77 /* YCoCgR.c */; };
 		2C4D600924C3AECA00AAAB77 /* OVIA.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C4D600724C3AECA00AAAB77 /* OVIA.c */; };
@@ -70,6 +63,13 @@
 		2C57A99A24E6204800C9A2FB /* PCMCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A99624E6204800C9A2FB /* PCMCodec.c */; };
 		2C6C75D124D94919009368B4 /* RIFFStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6C75D024D94919009368B4 /* RIFFStream.h */; };
 		2C94331325609AAE007035FE /* StreamIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C94331225609AAE007035FE /* StreamIO.c */; };
+		2C98D8D425C7A99000ADC705 /* StreamIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89B2570FA4600785587 /* StreamIO.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2C98D8D525C7A99000ADC705 /* CodecIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F8992570FA4600785587 /* CodecIO.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2C98D8D625C7A99000ADC705 /* EntropyIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89A2570FA4600785587 /* EntropyIO.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2C98D8D725C7A99000ADC705 /* StatisticsIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F8982570FA4600785587 /* StatisticsIO.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2C98D8D825C7A99000ADC705 /* TagIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89C2570FA4600785587 /* TagIO.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2C98D8D925C7A99000ADC705 /* TransformIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89D2570FA4600785587 /* TransformIO.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		2C98D8E125C7A9AC00ADC705 /* MediaIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4D5FD424C3AE1A00AAAB77 /* MediaIO.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		2CA4C55524EF9529007803FD /* Test_EntropyIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CA4C51024EF94A0007803FD /* Test_EntropyIO.c */; };
 		2CA4C55624EF952F007803FD /* Test_OVIA.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CA4C51124EF94A0007803FD /* Test_OVIA.c */; };
 		2CA4C55724EF9532007803FD /* Test_TransformIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CA4C50F24EF94A0007803FD /* Test_TransformIO.c */; };
@@ -91,7 +91,6 @@
 		2CB4C17D2531C34E009D6EA0 /* BMPStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB4C17C2531C34E009D6EA0 /* BMPStream.h */; };
 		2CB4C1862531C409009D6EA0 /* PNMStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB4C1852531C409009D6EA0 /* PNMStream.h */; };
 		2CB4C2A72531E8C4009D6EA0 /* Flate.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CB4C2A62531E8C4009D6EA0 /* Flate.h */; };
-		2CBB46CC253AC2F700D38E6F /* StatisticsIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CBB46CB253AC2F700D38E6F /* StatisticsIO.h */; };
 		2CBB46DE253AC32B00D38E6F /* StatisticsIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2CBB46DD253AC32B00D38E6F /* StatisticsIO.c */; };
 		2CD3C8E5253DADFE006D9278 /* Rice.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CD3C8E4253DADFE006D9278 /* Rice.h */; };
 /* End PBXBuildFile section */
@@ -742,31 +741,30 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C4D5FD524C3AE1A00AAAB77 /* MediaIO.h in Headers */,
-				2C46F89F2570FA4600785587 /* CodecIO.h in Headers */,
-				2CBB46CC253AC2F700D38E6F /* StatisticsIO.h in Headers */,
+				2C4D5FD724C3AE2B00AAAB77 /* OVIA.h in Headers */,
+				2C98D8D425C7A99000ADC705 /* StreamIO.h in Headers */,
+				2C98D8D525C7A99000ADC705 /* CodecIO.h in Headers */,
+				2C98D8D625C7A99000ADC705 /* EntropyIO.h in Headers */,
+				2C98D8D825C7A99000ADC705 /* TagIO.h in Headers */,
+				2C98D8D925C7A99000ADC705 /* TransformIO.h in Headers */,
+				2C98D8E125C7A9AC00ADC705 /* MediaIO.h in Headers */,
+				2C98D8D725C7A99000ADC705 /* StatisticsIO.h in Headers */,
 				2CD3C8E5253DADFE006D9278 /* Rice.h in Headers */,
 				2C40316925344FF70002C046 /* Arithmetic.h in Headers */,
 				2C14B0FA25062E6300D7F120 /* FLACCodec.h in Headers */,
 				2C14B0CC2505438E00D7F120 /* JPEGCodec.h in Headers */,
 				2CB4C17D2531C34E009D6EA0 /* BMPStream.h in Headers */,
 				2C46FABC25729C4700785587 /* OGGStream.h in Headers */,
-				2C46F8A22570FA4600785587 /* TagIO.h in Headers */,
 				2C6C75D124D94919009368B4 /* RIFFStream.h in Headers */,
 				2C4D5FCB24C3ADF100AAAB77 /* AIFStream.h in Headers */,
-				2C46F8A12570FA4600785587 /* StreamIO.h in Headers */,
 				2C4D5FCF24C3ADFE00AAAB77 /* AIFTags.h in Headers */,
 				2C403172253450ED0002C046 /* CanonicalHuffman.h in Headers */,
-				2C4D5FD724C3AE2B00AAAB77 /* OVIA.h in Headers */,
 				2C4D5FD024C3ADFE00AAAB77 /* WAVTags.h in Headers */,
 				2C4CDE8424C3F9280085725E /* ID3Tags.h in Headers */,
-				2C46F8A32570FA4600785587 /* TransformIO.h in Headers */,
 				2C18FFCC25023C5300AC4F78 /* PNGCodec.h in Headers */,
 				2CB4C2A72531E8C4009D6EA0 /* Flate.h in Headers */,
 				2CB1D72224E5132700861A8C /* APETags.h in Headers */,
 				2CB4C1862531C409009D6EA0 /* PNMStream.h in Headers */,
-				2C46F8A02570FA4600785587 /* EntropyIO.h in Headers */,
-				2C46F89E2570FA4600785587 /* StatisticsIO.h in Headers */,
 				2C46FACE25729CBC00785587 /* FLACNativeStream.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

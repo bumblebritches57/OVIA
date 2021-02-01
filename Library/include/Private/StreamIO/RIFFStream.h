@@ -171,7 +171,9 @@ extern "C" {
      */
     
 #ifdef OVIA_StreamIO_RIFF
-    extern const OVIA_MagicIDs RIFFSignatures = {
+    extern const OVIA_MagicIDs RIFFSignatures;
+    
+    const OVIA_MagicIDs RIFFSignatures = {
         .NumMagicIDs          = 3,
         .MagicIDs             = {
             [0]               = {
@@ -192,9 +194,11 @@ extern "C" {
         },
     };
 
-    extern const OVIA_Extensions RIFFExtensions = {
-        .NumExtensions = 4,
-        .Extensions    = {
+    extern const OVIA_Extensions RIFFExtensions;
+    
+    const OVIA_Extensions RIFFExtensions = {
+        .NumExtensions     = 4,
+        .Extensions        = {
             [0]            = {
                 .Size      = 4,
                 .Extension = UTF32String("wave"),
@@ -213,14 +217,28 @@ extern "C" {
             }
         },
     };
-
-    extern const OVIA_MIMETypes RIFFMIMETypes = {
-        .NumMIMETypes = 4,
-        .MIMETypes    = {
-            [0]       = UTF32String("audio/vnd.wave"),
-            [1]       = UTF32String("audio/wav"),
-            [2]       = UTF32String("audio/wave"),
-            [3]       = UTF32String("audio/x-wav"),
+    
+    extern const OVIA_MIMETypes RIFFMIMETypes;
+    
+    const OVIA_MIMETypes RIFFMIMETypes = {
+        .NumMIMETypes     = 4,
+        .MIMETypes        = {
+            [0]           = {
+                .Size     = 9,
+                .MIMEType = UTF32String("audio/wav"),
+            },
+            [1]           = {
+                .Size     = 10,
+                .MIMEType = UTF32String("audio/wave"),
+            },
+            [2]           = {
+                .Size     = 11,
+                .MIMEType = UTF32String("audio/x-wav"),
+            },
+            [3]           = {
+                .Size     = 14,
+                .MIMEType = UTF32String("audio/vnd.wave"),
+            },
         },
     };
     
