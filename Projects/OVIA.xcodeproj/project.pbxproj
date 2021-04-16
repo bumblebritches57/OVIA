@@ -60,7 +60,6 @@
 		2C57A99124E6202200C9A2FB /* EntropyIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A98D24E6202200C9A2FB /* EntropyIO.c */; };
 		2C57A99824E6204800C9A2FB /* FLACCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A99424E6204800C9A2FB /* FLACCodec.c */; };
 		2C57A99924E6204800C9A2FB /* JPEGCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A99524E6204800C9A2FB /* JPEGCodec.c */; };
-		2C57A99A24E6204800C9A2FB /* PCMCodec.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C57A99624E6204800C9A2FB /* PCMCodec.c */; };
 		2C6C75D124D94919009368B4 /* RIFFStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C6C75D024D94919009368B4 /* RIFFStream.h */; };
 		2C94331325609AAE007035FE /* StreamIO.c in Sources */ = {isa = PBXBuildFile; fileRef = 2C94331225609AAE007035FE /* StreamIO.c */; };
 		2C98D8D425C7A99000ADC705 /* StreamIO.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C46F89B2570FA4600785587 /* StreamIO.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -387,7 +386,6 @@
 		2C57A98D24E6202200C9A2FB /* EntropyIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = EntropyIO.c; path = ../Library/src/EntropyIO/EntropyIO.c; sourceTree = "<group>"; };
 		2C57A99424E6204800C9A2FB /* FLACCodec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = FLACCodec.c; path = ../Library/src/CodecIO/FLACCodec.c; sourceTree = "<group>"; };
 		2C57A99524E6204800C9A2FB /* JPEGCodec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = JPEGCodec.c; path = ../Library/src/CodecIO/JPEGCodec.c; sourceTree = "<group>"; };
-		2C57A99624E6204800C9A2FB /* PCMCodec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PCMCodec.c; path = ../Library/src/CodecIO/PCMCodec.c; sourceTree = "<group>"; };
 		2C6C75D024D94919009368B4 /* RIFFStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = RIFFStream.h; path = ../Library/include/Private/StreamIO/RIFFStream.h; sourceTree = "<group>"; };
 		2C94331225609AAE007035FE /* StreamIO.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = StreamIO.c; path = ../Library/src/StreamIO/StreamIO.c; sourceTree = "<group>"; };
 		2CA4C50C24EF94A0007803FD /* Test_StreamIO.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Test_StreamIO.c; path = ../Tests/Test_StreamIO.c; sourceTree = "<group>"; };
@@ -716,7 +714,6 @@
 				2C57A99524E6204800C9A2FB /* JPEGCodec.c */,
 				2C14B0CD250543E700D7F120 /* JPEGDecode.c */,
 				2C14B0CE250543E700D7F120 /* JPEGEncode.c */,
-				2C57A99624E6204800C9A2FB /* PCMCodec.c */,
 			);
 			name = CodecIO;
 			sourceTree = "<group>";
@@ -1070,7 +1067,6 @@
 				2C18FFC825023A4500AC4F78 /* PNGEncode.c in Sources */,
 				2CB4C16E2531C214009D6EA0 /* PNMEncode.c in Sources */,
 				2C14B0D0250543E700D7F120 /* JPEGEncode.c in Sources */,
-				2C57A99A24E6204800C9A2FB /* PCMCodec.c in Sources */,
 				2C57A99124E6202200C9A2FB /* EntropyIO.c in Sources */,
 				2C57A99824E6204800C9A2FB /* FLACCodec.c in Sources */,
 				2C46F8C8257105E100785587 /* Huffman.c in Sources */,

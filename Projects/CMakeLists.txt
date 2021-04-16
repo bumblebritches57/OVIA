@@ -35,7 +35,6 @@ set(OVIA_SOURCE
     "${OVIA_Library_Dir}/src/CodecIO/PNGCodec.c"
     "${OVIA_Library_Dir}/src/CodecIO/PNGDecode.c"
     "${OVIA_Library_Dir}/src/CodecIO/PNGEncode.c"
-    "${OVIA_Library_Dir}/src/CodecIO/PCMCodec.c"
     "${OVIA_Library_Dir}/src/EntropyIO/EntropyIO.c"
     "${OVIA_Library_Dir}/src/EntropyIO/Arthimetic.c"
     "${OVIA_Library_Dir}/src/EntropyIO/Flate.c"
